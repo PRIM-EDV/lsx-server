@@ -1,0 +1,12 @@
+div.dashboard {
+    background-color: #262626;
+
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    grid-template-rows: 48px 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+
+    position: absolute;
+    inset: 0;
+}
