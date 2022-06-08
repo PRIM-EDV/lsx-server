@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@anygular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ph-window',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@anygular/core';
   styleUrls: ['./ph-window.component.scss']
 })
 export class PhWindowComponent implements OnInit {
+
+  public title = '';
 
   constructor() { }
 

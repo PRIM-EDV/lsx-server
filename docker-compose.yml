@@ -1,0 +1,15 @@
+version: '3.1'
+
+services:
+  server:
+    image: prim/lsx-server:1.0.0
+    build:
+      context: "."
+    restart: always
+    container_name: "lsx_server"
+    ports:
+      - "3100:3100"
+    #   - "${WEBSTAT_INTERNAL_PORT}:3001"
+    # environment:
+    #   MYSQL_HOST: database
+
