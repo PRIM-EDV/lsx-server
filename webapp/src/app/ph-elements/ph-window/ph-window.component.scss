@@ -2,17 +2,36 @@
 
 
 
-// :host {
-//     display: flex;
-//     position: absolute;
-//     background-color: rgba(0, 0, 0, 0.5);
-//     min-width: 362px;
-//     min-height: 184px;
-//     padding: 6px;
+:host {
+    display: grid;
+    grid-template-rows: 32px 1fr;
+    grid-template-columns: 1fr;
+    margin: 6px;
+    background-color: #28343e;
+}
 
-//     top: 50px;
-//     left: 50px;
-// }
+div.title-bar {
+    display: flex;
+    div.title {
+        font-family: 'Fira Code';
+        font-size: 12px;
+        line-height: 33px;
+        margin-left: 12px;
+        color: white;
+    }
+    div.subtitle {
+        font-family: 'Fira Code';
+        font-size: 10px;
+        line-height: 34px;
+        color: #a9aaac;
+        margin-left: 2px;
+    }
+}
+
+div.workspace {
+    background-color: #252526;
+    margin: 0 2px 2px 2px;
+}
 
 // div.shader {
 //     position: absolute;

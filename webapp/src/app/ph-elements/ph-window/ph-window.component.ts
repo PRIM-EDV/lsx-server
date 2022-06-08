@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ph-window',
@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PhWindowComponent implements OnInit {
 
-  public title = '';
+  @Input() public title = '';
+  @Input() public subtitle = '';
+
 
   constructor() { }
 
