@@ -1,0 +1,19 @@
+:host {
+    height: 18px;
+
+    div.label {
+        background-color: #1e1e1e;
+
+        font-family: 'Fira Code';
+        font-size: 12px;
+        color: #a9aaac;
+        line-height: 18px;
+        padding: 1px 10px 0px 10px;
+    }
+
+    div.label.active {
+        background-color: #f8a403;
+        color: #000000;
+    }
+
+}

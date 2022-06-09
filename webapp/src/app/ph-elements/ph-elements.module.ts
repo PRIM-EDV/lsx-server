@@ -5,6 +5,7 @@ import { PhSidebarComponent } from './ph-sidebar/ph-sidebar.component';
 import { PhTopbarComponent } from './ph-topbar/ph-topbar.component';
 import { PhFormComponent } from './ph-form/ph-form.component';
 import { PhInputComponent } from './ph-input/ph-input.component';
+import { PhButtonComponent } from './ph-button/ph-button.component';
 
 @NgModule({
   declarations: [
@@ -13,13 +14,17 @@ import { PhInputComponent } from './ph-input/ph-input.component';
     PhSidebarComponent,
     PhTopbarComponent,
     PhFormComponent,
-    PhInputComponent
+    PhInputComponent,
+    PhButtonComponent
   ],
   imports: [],
   exports: [
     PhWindowComponent,
     PhSidebarComponent,
-    PhTopbarComponent
+    PhTopbarComponent,
+    PhFormComponent,
+    PhButtonListComponent,
+    PhButtonComponent
   ],
   providers: [],
   bootstrap: []
