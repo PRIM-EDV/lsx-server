@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ph-button',
@@ -6,6 +6,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./ph-button.component.scss']
 })
 export class PhButtonComponent implements OnInit {
+
+  @Input() value: string | number = '';
 
   public isActive: boolean = false;
 

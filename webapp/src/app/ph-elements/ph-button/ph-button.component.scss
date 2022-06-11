@@ -1,5 +1,7 @@
 :host {
     height: 18px;
+    cursor: pointer;
+
 
     div.label {
         background-color: #1e1e1e;
@@ -9,6 +11,8 @@
         color: #a9aaac;
         line-height: 18px;
         padding: 1px 10px 0px 10px;
+
+        user-select: none;
     }
 
     div.label.active {

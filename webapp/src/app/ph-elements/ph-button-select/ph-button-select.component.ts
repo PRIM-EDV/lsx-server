@@ -8,15 +8,17 @@ export interface PhButtonListOption {
 } 
 
 @Component({
-  selector: 'ph-button-list',
-  templateUrl: './ph-button-list.component.html',
-  styleUrls: ['./ph-button-list.component.scss']
+  selector: 'ph-button-select',
+  templateUrl: './ph-button-select.component.html',
+  styleUrls: ['./ph-button-select.component.scss']
 })
-export class PhButtonListComponent implements OnInit, AfterContentInit {
+export class PhButtonSelectComponent implements OnInit, AfterContentInit {
 
   @Input() label: string = '';
 
   @ContentChildren(PhButtonComponent) buttonComponents!: QueryList<PhButtonComponent>;
+
+  public value: string | number = '';
 
   constructor() { }
 
@@ -26,11 +28,14 @@ export class PhButtonListComponent implements OnInit, AfterContentInit {
     }
   }
 
-  onButtonClick(button: PhButtonComponent, evt: MouseEvent): void {
+  onButtonClick(target: PhButtonComponent, evt: MouseEvent): void {
     for(const button of this.buttonComponents) {
-      button.isActive = false;
+      if(button.value == target.value) {
+        button.isActive = true;
+      }else{
+        button.isActive = false;
+      }
     }
-    button.isActive = true;
   }
 
   ngOnInit(): void {

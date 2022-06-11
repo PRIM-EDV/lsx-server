@@ -1,21 +1,23 @@
 import { NgModule } from '@angular/core';
 import { PhWindowComponent } from './ph-window/ph-window.component';
-import { PhButtonListComponent } from './ph-button-list/ph-button-list.component';
+import { PhButtonSelectComponent } from './ph-button-select/ph-button-select.component';
 import { PhSidebarComponent } from './ph-sidebar/ph-sidebar.component';
 import { PhTopbarComponent } from './ph-topbar/ph-topbar.component';
 import { PhFormComponent } from './ph-form/ph-form.component';
 import { PhInputComponent } from './ph-input/ph-input.component';
 import { PhButtonComponent } from './ph-button/ph-button.component';
+import { PhCommandListComponent } from './ph-command-list/ph-command-list.component';
 
 @NgModule({
   declarations: [
     PhWindowComponent,
-    PhButtonListComponent,
+    PhButtonSelectComponent,
     PhSidebarComponent,
     PhTopbarComponent,
     PhFormComponent,
     PhInputComponent,
-    PhButtonComponent
+    PhButtonComponent,
+    PhCommandListComponent
   ],
   imports: [],
   exports: [
@@ -23,8 +25,9 @@ import { PhButtonComponent } from './ph-button/ph-button.component';
     PhSidebarComponent,
     PhTopbarComponent,
     PhFormComponent,
-    PhButtonListComponent,
-    PhButtonComponent
+    PhButtonSelectComponent,
+    PhButtonComponent,
+    PhCommandListComponent
   ],
   providers: [],
   bootstrap: []
