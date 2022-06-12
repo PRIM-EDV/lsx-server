@@ -1,6 +1,8 @@
 div.dashboard {
     background-color: #262626;
-
+    position: absolute;
+    top:0; bottom: 0; left: 0; right: 0;
+    overflow: hidden;
     display: grid;
     grid-template-columns: 96px 1fr;
     grid-template-rows: 48px 1fr;
@@ -15,7 +17,7 @@ div.dashboard {
         grid-column: 2;
         
         display: grid;
-        grid-template-columns: repeat(8, 1fr);
-        grid-template-rows: repeat(8, 1fr);
+        grid-template-columns: repeat(16, 6.25%);
+        grid-template-rows: repeat(16, 6.25%);
     }
 }

@@ -3,14 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { PhElementsModule } from './ph-elements/ph-elements.module';
+import { PowerControlModule } from './power-control/power-control.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
-    PhElementsModule
+    PhElementsModule,
+    PowerControlModule
   ],
   providers: [],
   bootstrap: [AppComponent]
