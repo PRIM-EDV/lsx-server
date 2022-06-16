@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+enum PowerPlantState {
+    STATE_EMPTY = 0;
+    STATE_NORMAL = 1;
+    STATE_POWER_SAVING = 2;
+    STATE_CRITICAL = 3;
+    STATE_OFFLINE = 4;
+}
+
+message Error {
+    string message = 1;
+}
+
+
+message LsxMessage {
+    string id = 1;
+
+    oneof message {
+        GetPowerPlantState get_power_plant_state = 2;
+    }
+}
+
+
+message GetPowerPlantState {
+    message Response {
+        PowerPlantState state = 1;
+    }
+    oneof message {
+        google.protobuf.Empty request = 1;
+        Response response = 2;
+        Error error = 3;
+    }
+}
+
+message SetPowerPlantState {
+    message Request {
+        PowerPlantState state = 1;
+    }
+    oneof message {
+        Request request = 1;
+        google.protobuf.Empty response = 2;
+        Error error = 3;
+    }
+}
