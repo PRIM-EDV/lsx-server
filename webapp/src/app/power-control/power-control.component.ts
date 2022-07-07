@@ -10,6 +10,9 @@ export class PowerControlComponent implements OnInit {
   public poweredStateBaseMedicine: boolean = false;
   public poweredStateUpperLeft: boolean = false;
   public poweredStateUpperRight: boolean = false;
+  public poweredStateLowerRight: boolean = false;
+  public poweredStateLowerLeft: boolean = false;
+
 
   constructor() { }
 
