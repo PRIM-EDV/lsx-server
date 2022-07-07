@@ -20,8 +20,11 @@ message LsxMessage {
 
     oneof message {
         GetPowerPlantState get_power_plant_state = 2;
+        SetPowerPlantState set_power_plant_state = 3;
     }
 }
+
+// message 
 
 
 message GetPowerPlantState {

@@ -7,13 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PowerControlComponent implements OnInit {
 
+  public poweredStateBaseMedicine: boolean = false;
+  public poweredStateUpperLeft: boolean = false;
+  public poweredStateUpperRight: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  onClick() {
-    alert();
+  changeState(func: () => {}) {
+    func();
   }
 
 }

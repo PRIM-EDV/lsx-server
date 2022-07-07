@@ -71,7 +71,7 @@
 	<line class="st4" x1="436.33" y1="277.91" x2="60.06" y2="277.91"/>
 	<circle class="st3" cx="60.06" cy="277.91" r="1.94"/>
 </g>
-<g id="Ebene_4">
+<g id="Ebene_4" [ngClass]="{'hidden': !poweredStateUpperRight}">
 	<circle class="st3" cx="251.79" cy="187.26" r="1.81"/>
 	<circle class="st3" cx="155.83" cy="187.26" r="1.81"/>
 	<circle class="st3" cx="203.81" cy="187.26" r="1.81"/>
@@ -81,7 +81,7 @@
 	<circle class="st3" cx="393.02" cy="187.26" r="1.81"/>
 	<circle class="st3" cx="440.1" cy="187.26" r="1.81"/>
 </g>
-<g id="Ebene_5">
+<g id="Ebene_5" [ngClass]="{'hidden': !poweredStateUpperRight}">
 	<circle class="st3" cx="226.89" cy="187.26" r="1.81"/>
 	<circle class="st3" cx="130.94" cy="187.26" r="1.81"/>
 	<circle class="st3" cx="178.92" cy="187.26" r="1.81"/>
@@ -91,7 +91,7 @@
 	<circle class="st3" cx="368.13" cy="187.26" r="1.81"/>
 	<circle class="st3" cx="415.2" cy="187.26" r="1.81"/>
 </g>
-<g id="Ebene_6">
+<g id="Ebene_6" [ngClass]="{'hidden': !poweredStateUpperLeft}">
 	<circle class="st3" cx="251.79" cy="277.91" r="1.81"/>
 	<circle class="st3" cx="155.83" cy="277.91" r="1.81"/>
 	<circle class="st3" cx="203.81" cy="277.91" r="1.81"/>
@@ -101,7 +101,7 @@
 	<circle class="st3" cx="393.02" cy="277.91" r="1.81"/>
 	<circle class="st3" cx="440.1" cy="277.91" r="1.81"/>
 </g>
-<g id="Ebene_7">
+<g id="Ebene_7" [ngClass]="{'hidden': !poweredStateUpperLeft}">
 	<circle class="st3" cx="226.89" cy="277.91" r="1.81"/>
 	<circle class="st3" cx="130.94" cy="277.91" r="1.81"/>
 	<circle class="st3" cx="178.92" cy="277.91" r="1.81"/>
@@ -111,15 +111,15 @@
 	<circle class="st3" cx="368.13" cy="277.91" r="1.81"/>
 	<circle class="st3" cx="415.2" cy="277.91" r="1.81"/>
 </g>
-<g id="Ebene_8">
+<g id="Ebene_8" [ngClass]="{'hidden': !poweredStateBaseMedicine}">
 	<circle class="st3" cx="278.1" cy="154.42" r="1.81"/>
 	<circle class="st3" cx="278.1" cy="154.42" r="1.81"/>
 	<circle class="st3" cx="278.1" cy="154.42" r="1.81"/>
 	<circle class="st3" cx="278.1" cy="154.42" r="1.81"/>
 </g>
 <g>
-	<circle class="btn" cx="278.1" cy="154.42" r="4"/>
-	<circle class="btn" cx="440.13" cy="187.26" r="4"/>
-	<circle class="btn" cx="440.13" cy="277.91" r="4"/>
+	<circle class="btn" cx="278.1" cy="154.42" r="4" (click)="poweredStateBaseMedicine = !poweredStateBaseMedicine"/>
+	<circle class="btn" cx="440.13" cy="187.26" r="4" (click)="poweredStateUpperRight = !poweredStateUpperRight"/>
+	<circle class="btn" cx="440.13" cy="277.91" r="4" (click)="poweredStateUpperLeft = !poweredStateUpperLeft"/>
 </g>
 </svg>
