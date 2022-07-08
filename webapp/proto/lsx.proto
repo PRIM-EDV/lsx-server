@@ -26,8 +26,6 @@ message LsxMessage {
     oneof message {
         GetPowerPlantState get_power_plant_state = 2;
         SetPowerPlantState set_power_plant_state = 3;
-        GetPowerGridState get_power_grid_state = 4;
-        SetPowerGridState set_power_grid_state = 5;
     }
 }
 

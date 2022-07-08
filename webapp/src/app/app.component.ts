@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BackendService } from './backend/backend.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'webapp';
+
+  constructor(private readonly backend: BackendService) {}
 }

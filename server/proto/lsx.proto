@@ -10,6 +10,11 @@ enum PowerPlantState {
     STATE_OFFLINE = 4;
 }
 
+enum PowerLineState {
+    STATE_POWERED = 0;
+    STATE_UNPOWERED = 1;
+}
+
 message Error {
     string message = 1;
 }
@@ -20,9 +25,43 @@ message LsxMessage {
 
     oneof message {
         GetPowerPlantState get_power_plant_state = 2;
+        SetPowerPlantState set_power_plant_state = 3;
+        GetPowerGridState get_power_grid_state = 4;
+        SetPowerGridState set_power_grid_state = 5;
     }
 }
 
+message PowerGridState {
+    PowerLineState og_base_med = 1;
+    PowerLineState og_parcel_left = 2;
+    PowerLineState og_parcel_right = 3;
+    PowerLineState ug_parcel_left = 4;
+    PowerLineState ug_parcel_right = 5;
+}
+
+message GetPowerGridState {
+    message Response {
+        PowerGridState state = 1;
+    }
+
+    oneof message {
+        google.protobuf.Empty request = 1;
+        Response response = 2;
+        Error error = 3;
+    }
+}
+
+message SetPowerGridState {
+    message Request {
+        PowerGridState state = 1;
+    }
+
+    oneof message {
+        Request request = 1;
+        google.protobuf.Empty response = 2;
+        Error error = 3;
+    }
+}
 
 message GetPowerPlantState {
     message Response {

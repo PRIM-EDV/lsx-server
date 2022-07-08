@@ -1,8 +1,8 @@
 /* eslint-disable */
-import { Empty } from '../google/protobuf/empty';
-import * as _m0 from 'protobufjs/minimal';
+import { Empty } from "../google/protobuf/empty";
+import * as _m0 from "protobufjs/minimal";
 
-export const protobufPackage = '';
+export const protobufPackage = "";
 
 export enum PowerPlantState {
   STATE_EMPTY = 0,
@@ -16,22 +16,22 @@ export enum PowerPlantState {
 export function powerPlantStateFromJSON(object: any): PowerPlantState {
   switch (object) {
     case 0:
-    case 'STATE_EMPTY':
+    case "STATE_EMPTY":
       return PowerPlantState.STATE_EMPTY;
     case 1:
-    case 'STATE_NORMAL':
+    case "STATE_NORMAL":
       return PowerPlantState.STATE_NORMAL;
     case 2:
-    case 'STATE_POWER_SAVING':
+    case "STATE_POWER_SAVING":
       return PowerPlantState.STATE_POWER_SAVING;
     case 3:
-    case 'STATE_CRITICAL':
+    case "STATE_CRITICAL":
       return PowerPlantState.STATE_CRITICAL;
     case 4:
-    case 'STATE_OFFLINE':
+    case "STATE_OFFLINE":
       return PowerPlantState.STATE_OFFLINE;
     case -1:
-    case 'UNRECOGNIZED':
+    case "UNRECOGNIZED":
     default:
       return PowerPlantState.UNRECOGNIZED;
   }
@@ -40,18 +40,18 @@ export function powerPlantStateFromJSON(object: any): PowerPlantState {
 export function powerPlantStateToJSON(object: PowerPlantState): string {
   switch (object) {
     case PowerPlantState.STATE_EMPTY:
-      return 'STATE_EMPTY';
+      return "STATE_EMPTY";
     case PowerPlantState.STATE_NORMAL:
-      return 'STATE_NORMAL';
+      return "STATE_NORMAL";
     case PowerPlantState.STATE_POWER_SAVING:
-      return 'STATE_POWER_SAVING';
+      return "STATE_POWER_SAVING";
     case PowerPlantState.STATE_CRITICAL:
-      return 'STATE_CRITICAL';
+      return "STATE_CRITICAL";
     case PowerPlantState.STATE_OFFLINE:
-      return 'STATE_OFFLINE';
+      return "STATE_OFFLINE";
     case PowerPlantState.UNRECOGNIZED:
     default:
-      return 'UNRECOGNIZED';
+      return "UNRECOGNIZED";
   }
 }
 
@@ -64,13 +64,13 @@ export enum PowerLineState {
 export function powerLineStateFromJSON(object: any): PowerLineState {
   switch (object) {
     case 0:
-    case 'STATE_POWERED':
+    case "STATE_POWERED":
       return PowerLineState.STATE_POWERED;
     case 1:
-    case 'STATE_UNPOWERED':
+    case "STATE_UNPOWERED":
       return PowerLineState.STATE_UNPOWERED;
     case -1:
-    case 'UNRECOGNIZED':
+    case "UNRECOGNIZED":
     default:
       return PowerLineState.UNRECOGNIZED;
   }
@@ -79,12 +79,12 @@ export function powerLineStateFromJSON(object: any): PowerLineState {
 export function powerLineStateToJSON(object: PowerLineState): string {
   switch (object) {
     case PowerLineState.STATE_POWERED:
-      return 'STATE_POWERED';
+      return "STATE_POWERED";
     case PowerLineState.STATE_UNPOWERED:
-      return 'STATE_UNPOWERED';
+      return "STATE_UNPOWERED";
     case PowerLineState.UNRECOGNIZED:
     default:
-      return 'UNRECOGNIZED';
+      return "UNRECOGNIZED";
   }
 }
 
@@ -96,8 +96,6 @@ export interface LsxMessage {
   id: string;
   getPowerPlantState?: GetPowerPlantState | undefined;
   setPowerPlantState?: SetPowerPlantState | undefined;
-  getPowerGridState?: GetPowerGridState | undefined;
-  setPowerGridState?: SetPowerGridState | undefined;
 }
 
 export interface PowerGridState {
@@ -149,12 +147,12 @@ export interface SetPowerPlantState_Request {
 }
 
 function createBaseError(): Error {
-  return { message: '' };
+  return { message: "" };
 }
 
 export const Error = {
   encode(message: Error, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.message !== '') {
+    if (message.message !== "") {
       writer.uint32(10).string(message.message);
     }
     return writer;
@@ -180,7 +178,7 @@ export const Error = {
 
   fromJSON(object: any): Error {
     return {
-      message: isSet(object.message) ? String(object.message) : '',
+      message: isSet(object.message) ? String(object.message) : "",
     };
   },
 
@@ -192,51 +190,37 @@ export const Error = {
 
   fromPartial<I extends Exact<DeepPartial<Error>, I>>(object: I): Error {
     const message = createBaseError();
-    message.message = object.message ?? '';
+    message.message = object.message ?? "";
     return message;
   },
 };
 
 function createBaseLsxMessage(): LsxMessage {
   return {
-    id: '',
+    id: "",
     getPowerPlantState: undefined,
     setPowerPlantState: undefined,
-    getPowerGridState: undefined,
-    setPowerGridState: undefined,
   };
 }
 
 export const LsxMessage = {
   encode(
     message: LsxMessage,
-    writer: _m0.Writer = _m0.Writer.create(),
+    writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.id !== '') {
+    if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
     if (message.getPowerPlantState !== undefined) {
       GetPowerPlantState.encode(
         message.getPowerPlantState,
-        writer.uint32(18).fork(),
+        writer.uint32(18).fork()
       ).ldelim();
     }
     if (message.setPowerPlantState !== undefined) {
       SetPowerPlantState.encode(
         message.setPowerPlantState,
-        writer.uint32(26).fork(),
-      ).ldelim();
-    }
-    if (message.getPowerGridState !== undefined) {
-      GetPowerGridState.encode(
-        message.getPowerGridState,
-        writer.uint32(34).fork(),
-      ).ldelim();
-    }
-    if (message.setPowerGridState !== undefined) {
-      SetPowerGridState.encode(
-        message.setPowerGridState,
-        writer.uint32(42).fork(),
+        writer.uint32(26).fork()
       ).ldelim();
     }
     return writer;
@@ -255,25 +239,13 @@ export const LsxMessage = {
         case 2:
           message.getPowerPlantState = GetPowerPlantState.decode(
             reader,
-            reader.uint32(),
+            reader.uint32()
           );
           break;
         case 3:
           message.setPowerPlantState = SetPowerPlantState.decode(
             reader,
-            reader.uint32(),
-          );
-          break;
-        case 4:
-          message.getPowerGridState = GetPowerGridState.decode(
-            reader,
-            reader.uint32(),
-          );
-          break;
-        case 5:
-          message.setPowerGridState = SetPowerGridState.decode(
-            reader,
-            reader.uint32(),
+            reader.uint32()
           );
           break;
         default:
@@ -286,18 +258,12 @@ export const LsxMessage = {
 
   fromJSON(object: any): LsxMessage {
     return {
-      id: isSet(object.id) ? String(object.id) : '',
+      id: isSet(object.id) ? String(object.id) : "",
       getPowerPlantState: isSet(object.getPowerPlantState)
         ? GetPowerPlantState.fromJSON(object.getPowerPlantState)
         : undefined,
       setPowerPlantState: isSet(object.setPowerPlantState)
         ? SetPowerPlantState.fromJSON(object.setPowerPlantState)
-        : undefined,
-      getPowerGridState: isSet(object.getPowerGridState)
-        ? GetPowerGridState.fromJSON(object.getPowerGridState)
-        : undefined,
-      setPowerGridState: isSet(object.setPowerGridState)
-        ? SetPowerGridState.fromJSON(object.setPowerGridState)
         : undefined,
     };
   },
@@ -313,22 +279,14 @@ export const LsxMessage = {
       (obj.setPowerPlantState = message.setPowerPlantState
         ? SetPowerPlantState.toJSON(message.setPowerPlantState)
         : undefined);
-    message.getPowerGridState !== undefined &&
-      (obj.getPowerGridState = message.getPowerGridState
-        ? GetPowerGridState.toJSON(message.getPowerGridState)
-        : undefined);
-    message.setPowerGridState !== undefined &&
-      (obj.setPowerGridState = message.setPowerGridState
-        ? SetPowerGridState.toJSON(message.setPowerGridState)
-        : undefined);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<LsxMessage>, I>>(
-    object: I,
+    object: I
   ): LsxMessage {
     const message = createBaseLsxMessage();
-    message.id = object.id ?? '';
+    message.id = object.id ?? "";
     message.getPowerPlantState =
       object.getPowerPlantState !== undefined &&
       object.getPowerPlantState !== null
@@ -338,16 +296,6 @@ export const LsxMessage = {
       object.setPowerPlantState !== undefined &&
       object.setPowerPlantState !== null
         ? SetPowerPlantState.fromPartial(object.setPowerPlantState)
-        : undefined;
-    message.getPowerGridState =
-      object.getPowerGridState !== undefined &&
-      object.getPowerGridState !== null
-        ? GetPowerGridState.fromPartial(object.getPowerGridState)
-        : undefined;
-    message.setPowerGridState =
-      object.setPowerGridState !== undefined &&
-      object.setPowerGridState !== null
-        ? SetPowerGridState.fromPartial(object.setPowerGridState)
         : undefined;
     return message;
   },
@@ -366,7 +314,7 @@ function createBasePowerGridState(): PowerGridState {
 export const PowerGridState = {
   encode(
     message: PowerGridState,
-    writer: _m0.Writer = _m0.Writer.create(),
+    writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.ogBaseMed !== 0) {
       writer.uint32(8).int32(message.ogBaseMed);
@@ -452,7 +400,7 @@ export const PowerGridState = {
   },
 
   fromPartial<I extends Exact<DeepPartial<PowerGridState>, I>>(
-    object: I,
+    object: I
   ): PowerGridState {
     const message = createBasePowerGridState();
     message.ogBaseMed = object.ogBaseMed ?? 0;
@@ -471,7 +419,7 @@ function createBaseGetPowerGridState(): GetPowerGridState {
 export const GetPowerGridState = {
   encode(
     message: GetPowerGridState,
-    writer: _m0.Writer = _m0.Writer.create(),
+    writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.request !== undefined) {
       Empty.encode(message.request, writer.uint32(10).fork()).ldelim();
@@ -479,7 +427,7 @@ export const GetPowerGridState = {
     if (message.response !== undefined) {
       GetPowerGridState_Response.encode(
         message.response,
-        writer.uint32(18).fork(),
+        writer.uint32(18).fork()
       ).ldelim();
     }
     if (message.error !== undefined) {
@@ -501,7 +449,7 @@ export const GetPowerGridState = {
         case 2:
           message.response = GetPowerGridState_Response.decode(
             reader,
-            reader.uint32(),
+            reader.uint32()
           );
           break;
         case 3:
@@ -543,7 +491,7 @@ export const GetPowerGridState = {
   },
 
   fromPartial<I extends Exact<DeepPartial<GetPowerGridState>, I>>(
-    object: I,
+    object: I
   ): GetPowerGridState {
     const message = createBaseGetPowerGridState();
     message.request =
@@ -569,7 +517,7 @@ function createBaseGetPowerGridState_Response(): GetPowerGridState_Response {
 export const GetPowerGridState_Response = {
   encode(
     message: GetPowerGridState_Response,
-    writer: _m0.Writer = _m0.Writer.create(),
+    writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.state !== undefined) {
       PowerGridState.encode(message.state, writer.uint32(10).fork()).ldelim();
@@ -579,7 +527,7 @@ export const GetPowerGridState_Response = {
 
   decode(
     input: _m0.Reader | Uint8Array,
-    length?: number,
+    length?: number
   ): GetPowerGridState_Response {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
@@ -616,7 +564,7 @@ export const GetPowerGridState_Response = {
   },
 
   fromPartial<I extends Exact<DeepPartial<GetPowerGridState_Response>, I>>(
-    object: I,
+    object: I
   ): GetPowerGridState_Response {
     const message = createBaseGetPowerGridState_Response();
     message.state =
@@ -634,12 +582,12 @@ function createBaseSetPowerGridState(): SetPowerGridState {
 export const SetPowerGridState = {
   encode(
     message: SetPowerGridState,
-    writer: _m0.Writer = _m0.Writer.create(),
+    writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.request !== undefined) {
       SetPowerGridState_Request.encode(
         message.request,
-        writer.uint32(10).fork(),
+        writer.uint32(10).fork()
       ).ldelim();
     }
     if (message.response !== undefined) {
@@ -661,7 +609,7 @@ export const SetPowerGridState = {
         case 1:
           message.request = SetPowerGridState_Request.decode(
             reader,
-            reader.uint32(),
+            reader.uint32()
           );
           break;
         case 2:
@@ -706,7 +654,7 @@ export const SetPowerGridState = {
   },
 
   fromPartial<I extends Exact<DeepPartial<SetPowerGridState>, I>>(
-    object: I,
+    object: I
   ): SetPowerGridState {
     const message = createBaseSetPowerGridState();
     message.request =
@@ -732,7 +680,7 @@ function createBaseSetPowerGridState_Request(): SetPowerGridState_Request {
 export const SetPowerGridState_Request = {
   encode(
     message: SetPowerGridState_Request,
-    writer: _m0.Writer = _m0.Writer.create(),
+    writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.state !== undefined) {
       PowerGridState.encode(message.state, writer.uint32(10).fork()).ldelim();
@@ -742,7 +690,7 @@ export const SetPowerGridState_Request = {
 
   decode(
     input: _m0.Reader | Uint8Array,
-    length?: number,
+    length?: number
   ): SetPowerGridState_Request {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
@@ -779,7 +727,7 @@ export const SetPowerGridState_Request = {
   },
 
   fromPartial<I extends Exact<DeepPartial<SetPowerGridState_Request>, I>>(
-    object: I,
+    object: I
   ): SetPowerGridState_Request {
     const message = createBaseSetPowerGridState_Request();
     message.state =
@@ -797,7 +745,7 @@ function createBaseGetPowerPlantState(): GetPowerPlantState {
 export const GetPowerPlantState = {
   encode(
     message: GetPowerPlantState,
-    writer: _m0.Writer = _m0.Writer.create(),
+    writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.request !== undefined) {
       Empty.encode(message.request, writer.uint32(10).fork()).ldelim();
@@ -805,7 +753,7 @@ export const GetPowerPlantState = {
     if (message.response !== undefined) {
       GetPowerPlantState_Response.encode(
         message.response,
-        writer.uint32(18).fork(),
+        writer.uint32(18).fork()
       ).ldelim();
     }
     if (message.error !== undefined) {
@@ -827,7 +775,7 @@ export const GetPowerPlantState = {
         case 2:
           message.response = GetPowerPlantState_Response.decode(
             reader,
-            reader.uint32(),
+            reader.uint32()
           );
           break;
         case 3:
@@ -869,7 +817,7 @@ export const GetPowerPlantState = {
   },
 
   fromPartial<I extends Exact<DeepPartial<GetPowerPlantState>, I>>(
-    object: I,
+    object: I
   ): GetPowerPlantState {
     const message = createBaseGetPowerPlantState();
     message.request =
@@ -895,7 +843,7 @@ function createBaseGetPowerPlantState_Response(): GetPowerPlantState_Response {
 export const GetPowerPlantState_Response = {
   encode(
     message: GetPowerPlantState_Response,
-    writer: _m0.Writer = _m0.Writer.create(),
+    writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.state !== 0) {
       writer.uint32(8).int32(message.state);
@@ -905,7 +853,7 @@ export const GetPowerPlantState_Response = {
 
   decode(
     input: _m0.Reader | Uint8Array,
-    length?: number,
+    length?: number
   ): GetPowerPlantState_Response {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
@@ -938,7 +886,7 @@ export const GetPowerPlantState_Response = {
   },
 
   fromPartial<I extends Exact<DeepPartial<GetPowerPlantState_Response>, I>>(
-    object: I,
+    object: I
   ): GetPowerPlantState_Response {
     const message = createBaseGetPowerPlantState_Response();
     message.state = object.state ?? 0;
@@ -953,12 +901,12 @@ function createBaseSetPowerPlantState(): SetPowerPlantState {
 export const SetPowerPlantState = {
   encode(
     message: SetPowerPlantState,
-    writer: _m0.Writer = _m0.Writer.create(),
+    writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.request !== undefined) {
       SetPowerPlantState_Request.encode(
         message.request,
-        writer.uint32(10).fork(),
+        writer.uint32(10).fork()
       ).ldelim();
     }
     if (message.response !== undefined) {
@@ -980,7 +928,7 @@ export const SetPowerPlantState = {
         case 1:
           message.request = SetPowerPlantState_Request.decode(
             reader,
-            reader.uint32(),
+            reader.uint32()
           );
           break;
         case 2:
@@ -1025,7 +973,7 @@ export const SetPowerPlantState = {
   },
 
   fromPartial<I extends Exact<DeepPartial<SetPowerPlantState>, I>>(
-    object: I,
+    object: I
   ): SetPowerPlantState {
     const message = createBaseSetPowerPlantState();
     message.request =
@@ -1051,7 +999,7 @@ function createBaseSetPowerPlantState_Request(): SetPowerPlantState_Request {
 export const SetPowerPlantState_Request = {
   encode(
     message: SetPowerPlantState_Request,
-    writer: _m0.Writer = _m0.Writer.create(),
+    writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.state !== 0) {
       writer.uint32(8).int32(message.state);
@@ -1061,7 +1009,7 @@ export const SetPowerPlantState_Request = {
 
   decode(
     input: _m0.Reader | Uint8Array,
-    length?: number,
+    length?: number
   ): SetPowerPlantState_Request {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
@@ -1094,7 +1042,7 @@ export const SetPowerPlantState_Request = {
   },
 
   fromPartial<I extends Exact<DeepPartial<SetPowerPlantState_Request>, I>>(
-    object: I,
+    object: I
   ): SetPowerPlantState_Request {
     const message = createBaseSetPowerPlantState_Request();
     message.state = object.state ?? 0;
