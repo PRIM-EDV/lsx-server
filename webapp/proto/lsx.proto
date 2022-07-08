@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-import "google/protobuf/empty.proto";
-
 enum PowerPlantState {
     STATE_EMPTY = 0;
     STATE_NORMAL = 1;
@@ -19,13 +17,31 @@ message Error {
     string message = 1;
 }
 
+message Request {
+    oneof request {
+        GetPowerPlantState.Request get_power_plant_state = 2;
+        SetPowerPlantState.Request set_power_plant_state = 3;
+        GetPowerGridState.Request get_power_grid_state = 4;
+        SetPowerGridState.Request set_power_grid_state = 5;
+    }
+}
+
+message Response {
+    oneof response {
+        GetPowerPlantState.Response get_power_plant_state = 1;
+        SetPowerPlantState.Response set_power_plant_state = 2;
+        GetPowerGridState.Response get_power_grid_state = 3;
+        SetPowerGridState.Response set_power_grid_state =5;      
+    }
+}
+
 
 message LsxMessage {
     string id = 1;
 
-    oneof message {
-        GetPowerPlantState get_power_plant_state = 2;
-        SetPowerPlantState set_power_plant_state = 3;
+    oneof message{
+        Request request = 2;
+        Response response = 3;
     }
 }
 
@@ -42,8 +58,12 @@ message GetPowerGridState {
         PowerGridState state = 1;
     }
 
+    message Request {
+
+    }
+
     oneof message {
-        google.protobuf.Empty request = 1;
+        Request request = 1;
         Response response = 2;
         Error error = 3;
     }
@@ -54,19 +74,26 @@ message SetPowerGridState {
         PowerGridState state = 1;
     }
 
+    message Response {
+
+    }
+
     oneof message {
         Request request = 1;
-        google.protobuf.Empty response = 2;
+        Response response = 2;
         Error error = 3;
     }
 }
 
 message GetPowerPlantState {
+    message Request {
+
+    }
     message Response {
         PowerPlantState state = 1;
     }
     oneof message {
-        google.protobuf.Empty request = 1;
+        Request request = 1;
         Response response = 2;
         Error error = 3;
     }
@@ -76,9 +103,12 @@ message SetPowerPlantState {
     message Request {
         PowerPlantState state = 1;
     }
+    message Response {
+
+    }
     oneof message {
         Request request = 1;
-        google.protobuf.Empty response = 2;
+        Response response = 2;
         Error error = 3;
     }
 }

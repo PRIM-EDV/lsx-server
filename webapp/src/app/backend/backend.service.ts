@@ -1,43 +1,92 @@
 import { Injectable } from "@angular/core";
 
+import { v4 as uuidv4 } from 'uuid';
 import { Subject } from "rxjs";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
-import { LsxMessage } from "proto/lsx";
+import { GetPowerGridState, GetPowerPlantState, LsxMessage, PowerGridState, Request, Response } from "proto/lsx";
+
+export type LsxRequest = GetPowerGridState | GetPowerPlantState
 
 
 @Injectable({providedIn: 'root'})
 export class BackendService {
-    public on_message: Subject<LsxMessage> = new Subject<LsxMessage>();
-    public on_open: Subject<void> = new Subject<void>();
-    public on_close: Subject<void> = new Subject<void>();
+    public onMessage: Subject<LsxMessage> = new Subject<LsxMessage>();
+    public onOpen: Subject<void> = new Subject<void>();
+    public onClose: Subject<void> = new Subject<void>();
 
-    private _ws!: WebSocketSubject<any>;
+    private requests: Map<string, (value: Response) => void> = new Map<string, (value: Response) => void>();
+    private ws!: WebSocketSubject<any>;
 
     constructor() {
-        this._ws = webSocket({url: 'ws://localhost:3000', openObserver: { next: () => {this.on_open.next()} }});
+        this.ws = webSocket({url: 'ws://localhost:3000', openObserver: { next: () => {this.onOpen.next()} }});
 
-        this._ws.subscribe({
-            next: this._on_message.bind(this),
+        this.ws.subscribe({
+            next: this.handleMessage.bind(this),
             error: (err) => {},
-            complete: this._on_close.bind(this)
+            complete: this.handleClose.bind(this)
         });
     }
 
+    public async getPowerGridState(): Promise<PowerGridState> {
+        const req: Request = {
+            getPowerGridState: {}
+        }
+        const res: Response = await this.request(req);
 
-    public send_message(msg: LsxMessage) {
-        this._ws.next({event: 'msg', data: JSON.stringify(LsxMessage.toJSON(msg))});
+        return res.getPowerGridState!.state!;
     }
 
-    private _on_message(buffer: {event: 'msg', data: string}) {
+    public async setPowerGridState(state: PowerGridState) {
+        const req: Request = {
+            setPowerGridState: {state: state}
+        }
+        const res: Response = await this.request(req);
+
+        return
+    }
+
+    private handleMessage(buffer: {event: 'msg', data: string}) {
         const msg = LsxMessage.fromJSON(JSON.parse(buffer.data));
 
-        // this.on_message.next(msg);
-
+        if(msg.request) {
+            if(msg.request.setPowerGridState){
+                this.respond(msg.id, {setPowerGridState: {}})
+            }
+        }
+        
+        if(msg.response) {
+            if(this.requests.has(msg.id)) {
+                this.requests.get(msg.id)!(msg.response);
+                this.requests.delete(msg.id);
+            }
+        }
         console.log(msg)
     }
 
-    private _on_close() {
-        this.on_close.next();
+    private handleClose() {
+        this.onClose.next();
+    }
+
+    private request(req: Request): Promise<Response> {
+        return new Promise((resolve, reject) => {
+            const msg: LsxMessage = {
+                id: uuidv4(),
+                request: req
+            }
+
+            this.requests.set(msg.id, resolve.bind(this));
+            setTimeout(() => { this.requests.delete(msg.id); reject(); }, 5000);
+            this.ws.next({event: 'msg', data: JSON.stringify(LsxMessage.toJSON(msg))});
+        });
+       
+    }
+
+    private respond(id: string, res: Response) {
+        const msg: LsxMessage = {
+            id: id,
+            response: res
+        }
+        this.ws.next({event: 'msg', data: JSON.stringify(LsxMessage.toJSON(msg))});
     }
 }

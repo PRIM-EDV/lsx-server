@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { BackendService } from './backend/backend.service';
 
 @Component({
@@ -6,8 +6,16 @@ import { BackendService } from './backend/backend.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
-  title = 'webapp';
+export class AppComponent implements AfterViewInit{
+  
 
-  constructor(private readonly backend: BackendService) {}
+  constructor(private readonly backend: BackendService) {
+
+  }
+
+  ngAfterViewInit(): void {
+    this.backend.onOpen.subscribe(() => {
+
+    })
+  }
 }

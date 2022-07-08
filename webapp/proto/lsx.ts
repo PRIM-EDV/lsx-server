@@ -1,5 +1,4 @@
 /* eslint-disable */
-import { Empty } from "../google/protobuf/empty";
 import * as _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "";
@@ -92,10 +91,24 @@ export interface Error {
   message: string;
 }
 
+export interface Request {
+  getPowerPlantState?: GetPowerPlantState_Request | undefined;
+  setPowerPlantState?: SetPowerPlantState_Request | undefined;
+  getPowerGridState?: GetPowerGridState_Request | undefined;
+  setPowerGridState?: SetPowerGridState_Request | undefined;
+}
+
+export interface Response {
+  getPowerPlantState?: GetPowerPlantState_Response | undefined;
+  setPowerPlantState?: SetPowerPlantState_Response | undefined;
+  getPowerGridState?: GetPowerGridState_Response | undefined;
+  setPowerGridState?: SetPowerGridState_Response | undefined;
+}
+
 export interface LsxMessage {
   id: string;
-  getPowerPlantState?: GetPowerPlantState | undefined;
-  setPowerPlantState?: SetPowerPlantState | undefined;
+  request?: Request | undefined;
+  response?: Response | undefined;
 }
 
 export interface PowerGridState {
@@ -107,7 +120,7 @@ export interface PowerGridState {
 }
 
 export interface GetPowerGridState {
-  request?: Empty | undefined;
+  request?: GetPowerGridState_Request | undefined;
   response?: GetPowerGridState_Response | undefined;
   error?: Error | undefined;
 }
@@ -116,9 +129,11 @@ export interface GetPowerGridState_Response {
   state?: PowerGridState;
 }
 
+export interface GetPowerGridState_Request {}
+
 export interface SetPowerGridState {
   request?: SetPowerGridState_Request | undefined;
-  response?: Empty | undefined;
+  response?: SetPowerGridState_Response | undefined;
   error?: Error | undefined;
 }
 
@@ -126,11 +141,15 @@ export interface SetPowerGridState_Request {
   state?: PowerGridState;
 }
 
+export interface SetPowerGridState_Response {}
+
 export interface GetPowerPlantState {
-  request?: Empty | undefined;
+  request?: GetPowerPlantState_Request | undefined;
   response?: GetPowerPlantState_Response | undefined;
   error?: Error | undefined;
 }
+
+export interface GetPowerPlantState_Request {}
 
 export interface GetPowerPlantState_Response {
   state: PowerPlantState;
@@ -138,13 +157,15 @@ export interface GetPowerPlantState_Response {
 
 export interface SetPowerPlantState {
   request?: SetPowerPlantState_Request | undefined;
-  response?: Empty | undefined;
+  response?: SetPowerPlantState_Response | undefined;
   error?: Error | undefined;
 }
 
 export interface SetPowerPlantState_Request {
   state: PowerPlantState;
 }
+
+export interface SetPowerPlantState_Response {}
 
 function createBaseError(): Error {
   return { message: "" };
@@ -195,12 +216,296 @@ export const Error = {
   },
 };
 
-function createBaseLsxMessage(): LsxMessage {
+function createBaseRequest(): Request {
   return {
-    id: "",
     getPowerPlantState: undefined,
     setPowerPlantState: undefined,
+    getPowerGridState: undefined,
+    setPowerGridState: undefined,
   };
+}
+
+export const Request = {
+  encode(
+    message: Request,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.getPowerPlantState !== undefined) {
+      GetPowerPlantState_Request.encode(
+        message.getPowerPlantState,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    if (message.setPowerPlantState !== undefined) {
+      SetPowerPlantState_Request.encode(
+        message.setPowerPlantState,
+        writer.uint32(26).fork()
+      ).ldelim();
+    }
+    if (message.getPowerGridState !== undefined) {
+      GetPowerGridState_Request.encode(
+        message.getPowerGridState,
+        writer.uint32(34).fork()
+      ).ldelim();
+    }
+    if (message.setPowerGridState !== undefined) {
+      SetPowerGridState_Request.encode(
+        message.setPowerGridState,
+        writer.uint32(42).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Request {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 2:
+          message.getPowerPlantState = GetPowerPlantState_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 3:
+          message.setPowerPlantState = SetPowerPlantState_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 4:
+          message.getPowerGridState = GetPowerGridState_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 5:
+          message.setPowerGridState = SetPowerGridState_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Request {
+    return {
+      getPowerPlantState: isSet(object.getPowerPlantState)
+        ? GetPowerPlantState_Request.fromJSON(object.getPowerPlantState)
+        : undefined,
+      setPowerPlantState: isSet(object.setPowerPlantState)
+        ? SetPowerPlantState_Request.fromJSON(object.setPowerPlantState)
+        : undefined,
+      getPowerGridState: isSet(object.getPowerGridState)
+        ? GetPowerGridState_Request.fromJSON(object.getPowerGridState)
+        : undefined,
+      setPowerGridState: isSet(object.setPowerGridState)
+        ? SetPowerGridState_Request.fromJSON(object.setPowerGridState)
+        : undefined,
+    };
+  },
+
+  toJSON(message: Request): unknown {
+    const obj: any = {};
+    message.getPowerPlantState !== undefined &&
+      (obj.getPowerPlantState = message.getPowerPlantState
+        ? GetPowerPlantState_Request.toJSON(message.getPowerPlantState)
+        : undefined);
+    message.setPowerPlantState !== undefined &&
+      (obj.setPowerPlantState = message.setPowerPlantState
+        ? SetPowerPlantState_Request.toJSON(message.setPowerPlantState)
+        : undefined);
+    message.getPowerGridState !== undefined &&
+      (obj.getPowerGridState = message.getPowerGridState
+        ? GetPowerGridState_Request.toJSON(message.getPowerGridState)
+        : undefined);
+    message.setPowerGridState !== undefined &&
+      (obj.setPowerGridState = message.setPowerGridState
+        ? SetPowerGridState_Request.toJSON(message.setPowerGridState)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Request>, I>>(object: I): Request {
+    const message = createBaseRequest();
+    message.getPowerPlantState =
+      object.getPowerPlantState !== undefined &&
+      object.getPowerPlantState !== null
+        ? GetPowerPlantState_Request.fromPartial(object.getPowerPlantState)
+        : undefined;
+    message.setPowerPlantState =
+      object.setPowerPlantState !== undefined &&
+      object.setPowerPlantState !== null
+        ? SetPowerPlantState_Request.fromPartial(object.setPowerPlantState)
+        : undefined;
+    message.getPowerGridState =
+      object.getPowerGridState !== undefined &&
+      object.getPowerGridState !== null
+        ? GetPowerGridState_Request.fromPartial(object.getPowerGridState)
+        : undefined;
+    message.setPowerGridState =
+      object.setPowerGridState !== undefined &&
+      object.setPowerGridState !== null
+        ? SetPowerGridState_Request.fromPartial(object.setPowerGridState)
+        : undefined;
+    return message;
+  },
+};
+
+function createBaseResponse(): Response {
+  return {
+    getPowerPlantState: undefined,
+    setPowerPlantState: undefined,
+    getPowerGridState: undefined,
+    setPowerGridState: undefined,
+  };
+}
+
+export const Response = {
+  encode(
+    message: Response,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.getPowerPlantState !== undefined) {
+      GetPowerPlantState_Response.encode(
+        message.getPowerPlantState,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    if (message.setPowerPlantState !== undefined) {
+      SetPowerPlantState_Response.encode(
+        message.setPowerPlantState,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    if (message.getPowerGridState !== undefined) {
+      GetPowerGridState_Response.encode(
+        message.getPowerGridState,
+        writer.uint32(26).fork()
+      ).ldelim();
+    }
+    if (message.setPowerGridState !== undefined) {
+      SetPowerGridState_Response.encode(
+        message.setPowerGridState,
+        writer.uint32(42).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Response {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.getPowerPlantState = GetPowerPlantState_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 2:
+          message.setPowerPlantState = SetPowerPlantState_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 3:
+          message.getPowerGridState = GetPowerGridState_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 5:
+          message.setPowerGridState = SetPowerGridState_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Response {
+    return {
+      getPowerPlantState: isSet(object.getPowerPlantState)
+        ? GetPowerPlantState_Response.fromJSON(object.getPowerPlantState)
+        : undefined,
+      setPowerPlantState: isSet(object.setPowerPlantState)
+        ? SetPowerPlantState_Response.fromJSON(object.setPowerPlantState)
+        : undefined,
+      getPowerGridState: isSet(object.getPowerGridState)
+        ? GetPowerGridState_Response.fromJSON(object.getPowerGridState)
+        : undefined,
+      setPowerGridState: isSet(object.setPowerGridState)
+        ? SetPowerGridState_Response.fromJSON(object.setPowerGridState)
+        : undefined,
+    };
+  },
+
+  toJSON(message: Response): unknown {
+    const obj: any = {};
+    message.getPowerPlantState !== undefined &&
+      (obj.getPowerPlantState = message.getPowerPlantState
+        ? GetPowerPlantState_Response.toJSON(message.getPowerPlantState)
+        : undefined);
+    message.setPowerPlantState !== undefined &&
+      (obj.setPowerPlantState = message.setPowerPlantState
+        ? SetPowerPlantState_Response.toJSON(message.setPowerPlantState)
+        : undefined);
+    message.getPowerGridState !== undefined &&
+      (obj.getPowerGridState = message.getPowerGridState
+        ? GetPowerGridState_Response.toJSON(message.getPowerGridState)
+        : undefined);
+    message.setPowerGridState !== undefined &&
+      (obj.setPowerGridState = message.setPowerGridState
+        ? SetPowerGridState_Response.toJSON(message.setPowerGridState)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Response>, I>>(object: I): Response {
+    const message = createBaseResponse();
+    message.getPowerPlantState =
+      object.getPowerPlantState !== undefined &&
+      object.getPowerPlantState !== null
+        ? GetPowerPlantState_Response.fromPartial(object.getPowerPlantState)
+        : undefined;
+    message.setPowerPlantState =
+      object.setPowerPlantState !== undefined &&
+      object.setPowerPlantState !== null
+        ? SetPowerPlantState_Response.fromPartial(object.setPowerPlantState)
+        : undefined;
+    message.getPowerGridState =
+      object.getPowerGridState !== undefined &&
+      object.getPowerGridState !== null
+        ? GetPowerGridState_Response.fromPartial(object.getPowerGridState)
+        : undefined;
+    message.setPowerGridState =
+      object.setPowerGridState !== undefined &&
+      object.setPowerGridState !== null
+        ? SetPowerGridState_Response.fromPartial(object.setPowerGridState)
+        : undefined;
+    return message;
+  },
+};
+
+function createBaseLsxMessage(): LsxMessage {
+  return { id: "", request: undefined, response: undefined };
 }
 
 export const LsxMessage = {
@@ -211,17 +516,11 @@ export const LsxMessage = {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
-    if (message.getPowerPlantState !== undefined) {
-      GetPowerPlantState.encode(
-        message.getPowerPlantState,
-        writer.uint32(18).fork()
-      ).ldelim();
+    if (message.request !== undefined) {
+      Request.encode(message.request, writer.uint32(18).fork()).ldelim();
     }
-    if (message.setPowerPlantState !== undefined) {
-      SetPowerPlantState.encode(
-        message.setPowerPlantState,
-        writer.uint32(26).fork()
-      ).ldelim();
+    if (message.response !== undefined) {
+      Response.encode(message.response, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
@@ -237,16 +536,10 @@ export const LsxMessage = {
           message.id = reader.string();
           break;
         case 2:
-          message.getPowerPlantState = GetPowerPlantState.decode(
-            reader,
-            reader.uint32()
-          );
+          message.request = Request.decode(reader, reader.uint32());
           break;
         case 3:
-          message.setPowerPlantState = SetPowerPlantState.decode(
-            reader,
-            reader.uint32()
-          );
+          message.response = Response.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -259,11 +552,11 @@ export const LsxMessage = {
   fromJSON(object: any): LsxMessage {
     return {
       id: isSet(object.id) ? String(object.id) : "",
-      getPowerPlantState: isSet(object.getPowerPlantState)
-        ? GetPowerPlantState.fromJSON(object.getPowerPlantState)
+      request: isSet(object.request)
+        ? Request.fromJSON(object.request)
         : undefined,
-      setPowerPlantState: isSet(object.setPowerPlantState)
-        ? SetPowerPlantState.fromJSON(object.setPowerPlantState)
+      response: isSet(object.response)
+        ? Response.fromJSON(object.response)
         : undefined,
     };
   },
@@ -271,13 +564,13 @@ export const LsxMessage = {
   toJSON(message: LsxMessage): unknown {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
-    message.getPowerPlantState !== undefined &&
-      (obj.getPowerPlantState = message.getPowerPlantState
-        ? GetPowerPlantState.toJSON(message.getPowerPlantState)
+    message.request !== undefined &&
+      (obj.request = message.request
+        ? Request.toJSON(message.request)
         : undefined);
-    message.setPowerPlantState !== undefined &&
-      (obj.setPowerPlantState = message.setPowerPlantState
-        ? SetPowerPlantState.toJSON(message.setPowerPlantState)
+    message.response !== undefined &&
+      (obj.response = message.response
+        ? Response.toJSON(message.response)
         : undefined);
     return obj;
   },
@@ -287,15 +580,13 @@ export const LsxMessage = {
   ): LsxMessage {
     const message = createBaseLsxMessage();
     message.id = object.id ?? "";
-    message.getPowerPlantState =
-      object.getPowerPlantState !== undefined &&
-      object.getPowerPlantState !== null
-        ? GetPowerPlantState.fromPartial(object.getPowerPlantState)
+    message.request =
+      object.request !== undefined && object.request !== null
+        ? Request.fromPartial(object.request)
         : undefined;
-    message.setPowerPlantState =
-      object.setPowerPlantState !== undefined &&
-      object.setPowerPlantState !== null
-        ? SetPowerPlantState.fromPartial(object.setPowerPlantState)
+    message.response =
+      object.response !== undefined && object.response !== null
+        ? Response.fromPartial(object.response)
         : undefined;
     return message;
   },
@@ -422,7 +713,10 @@ export const GetPowerGridState = {
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.request !== undefined) {
-      Empty.encode(message.request, writer.uint32(10).fork()).ldelim();
+      GetPowerGridState_Request.encode(
+        message.request,
+        writer.uint32(10).fork()
+      ).ldelim();
     }
     if (message.response !== undefined) {
       GetPowerGridState_Response.encode(
@@ -444,7 +738,10 @@ export const GetPowerGridState = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.request = Empty.decode(reader, reader.uint32());
+          message.request = GetPowerGridState_Request.decode(
+            reader,
+            reader.uint32()
+          );
           break;
         case 2:
           message.response = GetPowerGridState_Response.decode(
@@ -466,7 +763,7 @@ export const GetPowerGridState = {
   fromJSON(object: any): GetPowerGridState {
     return {
       request: isSet(object.request)
-        ? Empty.fromJSON(object.request)
+        ? GetPowerGridState_Request.fromJSON(object.request)
         : undefined,
       response: isSet(object.response)
         ? GetPowerGridState_Response.fromJSON(object.response)
@@ -479,7 +776,7 @@ export const GetPowerGridState = {
     const obj: any = {};
     message.request !== undefined &&
       (obj.request = message.request
-        ? Empty.toJSON(message.request)
+        ? GetPowerGridState_Request.toJSON(message.request)
         : undefined);
     message.response !== undefined &&
       (obj.response = message.response
@@ -496,7 +793,7 @@ export const GetPowerGridState = {
     const message = createBaseGetPowerGridState();
     message.request =
       object.request !== undefined && object.request !== null
-        ? Empty.fromPartial(object.request)
+        ? GetPowerGridState_Request.fromPartial(object.request)
         : undefined;
     message.response =
       object.response !== undefined && object.response !== null
@@ -575,6 +872,53 @@ export const GetPowerGridState_Response = {
   },
 };
 
+function createBaseGetPowerGridState_Request(): GetPowerGridState_Request {
+  return {};
+}
+
+export const GetPowerGridState_Request = {
+  encode(
+    _: GetPowerGridState_Request,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GetPowerGridState_Request {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetPowerGridState_Request();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): GetPowerGridState_Request {
+    return {};
+  },
+
+  toJSON(_: GetPowerGridState_Request): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GetPowerGridState_Request>, I>>(
+    _: I
+  ): GetPowerGridState_Request {
+    const message = createBaseGetPowerGridState_Request();
+    return message;
+  },
+};
+
 function createBaseSetPowerGridState(): SetPowerGridState {
   return { request: undefined, response: undefined, error: undefined };
 }
@@ -591,7 +935,10 @@ export const SetPowerGridState = {
       ).ldelim();
     }
     if (message.response !== undefined) {
-      Empty.encode(message.response, writer.uint32(18).fork()).ldelim();
+      SetPowerGridState_Response.encode(
+        message.response,
+        writer.uint32(18).fork()
+      ).ldelim();
     }
     if (message.error !== undefined) {
       Error.encode(message.error, writer.uint32(26).fork()).ldelim();
@@ -613,7 +960,10 @@ export const SetPowerGridState = {
           );
           break;
         case 2:
-          message.response = Empty.decode(reader, reader.uint32());
+          message.response = SetPowerGridState_Response.decode(
+            reader,
+            reader.uint32()
+          );
           break;
         case 3:
           message.error = Error.decode(reader, reader.uint32());
@@ -632,7 +982,7 @@ export const SetPowerGridState = {
         ? SetPowerGridState_Request.fromJSON(object.request)
         : undefined,
       response: isSet(object.response)
-        ? Empty.fromJSON(object.response)
+        ? SetPowerGridState_Response.fromJSON(object.response)
         : undefined,
       error: isSet(object.error) ? Error.fromJSON(object.error) : undefined,
     };
@@ -646,7 +996,7 @@ export const SetPowerGridState = {
         : undefined);
     message.response !== undefined &&
       (obj.response = message.response
-        ? Empty.toJSON(message.response)
+        ? SetPowerGridState_Response.toJSON(message.response)
         : undefined);
     message.error !== undefined &&
       (obj.error = message.error ? Error.toJSON(message.error) : undefined);
@@ -663,7 +1013,7 @@ export const SetPowerGridState = {
         : undefined;
     message.response =
       object.response !== undefined && object.response !== null
-        ? Empty.fromPartial(object.response)
+        ? SetPowerGridState_Response.fromPartial(object.response)
         : undefined;
     message.error =
       object.error !== undefined && object.error !== null
@@ -738,6 +1088,53 @@ export const SetPowerGridState_Request = {
   },
 };
 
+function createBaseSetPowerGridState_Response(): SetPowerGridState_Response {
+  return {};
+}
+
+export const SetPowerGridState_Response = {
+  encode(
+    _: SetPowerGridState_Response,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): SetPowerGridState_Response {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSetPowerGridState_Response();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): SetPowerGridState_Response {
+    return {};
+  },
+
+  toJSON(_: SetPowerGridState_Response): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<SetPowerGridState_Response>, I>>(
+    _: I
+  ): SetPowerGridState_Response {
+    const message = createBaseSetPowerGridState_Response();
+    return message;
+  },
+};
+
 function createBaseGetPowerPlantState(): GetPowerPlantState {
   return { request: undefined, response: undefined, error: undefined };
 }
@@ -748,7 +1145,10 @@ export const GetPowerPlantState = {
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.request !== undefined) {
-      Empty.encode(message.request, writer.uint32(10).fork()).ldelim();
+      GetPowerPlantState_Request.encode(
+        message.request,
+        writer.uint32(10).fork()
+      ).ldelim();
     }
     if (message.response !== undefined) {
       GetPowerPlantState_Response.encode(
@@ -770,7 +1170,10 @@ export const GetPowerPlantState = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.request = Empty.decode(reader, reader.uint32());
+          message.request = GetPowerPlantState_Request.decode(
+            reader,
+            reader.uint32()
+          );
           break;
         case 2:
           message.response = GetPowerPlantState_Response.decode(
@@ -792,7 +1195,7 @@ export const GetPowerPlantState = {
   fromJSON(object: any): GetPowerPlantState {
     return {
       request: isSet(object.request)
-        ? Empty.fromJSON(object.request)
+        ? GetPowerPlantState_Request.fromJSON(object.request)
         : undefined,
       response: isSet(object.response)
         ? GetPowerPlantState_Response.fromJSON(object.response)
@@ -805,7 +1208,7 @@ export const GetPowerPlantState = {
     const obj: any = {};
     message.request !== undefined &&
       (obj.request = message.request
-        ? Empty.toJSON(message.request)
+        ? GetPowerPlantState_Request.toJSON(message.request)
         : undefined);
     message.response !== undefined &&
       (obj.response = message.response
@@ -822,7 +1225,7 @@ export const GetPowerPlantState = {
     const message = createBaseGetPowerPlantState();
     message.request =
       object.request !== undefined && object.request !== null
-        ? Empty.fromPartial(object.request)
+        ? GetPowerPlantState_Request.fromPartial(object.request)
         : undefined;
     message.response =
       object.response !== undefined && object.response !== null
@@ -832,6 +1235,53 @@ export const GetPowerPlantState = {
       object.error !== undefined && object.error !== null
         ? Error.fromPartial(object.error)
         : undefined;
+    return message;
+  },
+};
+
+function createBaseGetPowerPlantState_Request(): GetPowerPlantState_Request {
+  return {};
+}
+
+export const GetPowerPlantState_Request = {
+  encode(
+    _: GetPowerPlantState_Request,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GetPowerPlantState_Request {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetPowerPlantState_Request();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): GetPowerPlantState_Request {
+    return {};
+  },
+
+  toJSON(_: GetPowerPlantState_Request): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GetPowerPlantState_Request>, I>>(
+    _: I
+  ): GetPowerPlantState_Request {
+    const message = createBaseGetPowerPlantState_Request();
     return message;
   },
 };
@@ -910,7 +1360,10 @@ export const SetPowerPlantState = {
       ).ldelim();
     }
     if (message.response !== undefined) {
-      Empty.encode(message.response, writer.uint32(18).fork()).ldelim();
+      SetPowerPlantState_Response.encode(
+        message.response,
+        writer.uint32(18).fork()
+      ).ldelim();
     }
     if (message.error !== undefined) {
       Error.encode(message.error, writer.uint32(26).fork()).ldelim();
@@ -932,7 +1385,10 @@ export const SetPowerPlantState = {
           );
           break;
         case 2:
-          message.response = Empty.decode(reader, reader.uint32());
+          message.response = SetPowerPlantState_Response.decode(
+            reader,
+            reader.uint32()
+          );
           break;
         case 3:
           message.error = Error.decode(reader, reader.uint32());
@@ -951,7 +1407,7 @@ export const SetPowerPlantState = {
         ? SetPowerPlantState_Request.fromJSON(object.request)
         : undefined,
       response: isSet(object.response)
-        ? Empty.fromJSON(object.response)
+        ? SetPowerPlantState_Response.fromJSON(object.response)
         : undefined,
       error: isSet(object.error) ? Error.fromJSON(object.error) : undefined,
     };
@@ -965,7 +1421,7 @@ export const SetPowerPlantState = {
         : undefined);
     message.response !== undefined &&
       (obj.response = message.response
-        ? Empty.toJSON(message.response)
+        ? SetPowerPlantState_Response.toJSON(message.response)
         : undefined);
     message.error !== undefined &&
       (obj.error = message.error ? Error.toJSON(message.error) : undefined);
@@ -982,7 +1438,7 @@ export const SetPowerPlantState = {
         : undefined;
     message.response =
       object.response !== undefined && object.response !== null
-        ? Empty.fromPartial(object.response)
+        ? SetPowerPlantState_Response.fromPartial(object.response)
         : undefined;
     message.error =
       object.error !== undefined && object.error !== null
@@ -1046,6 +1502,53 @@ export const SetPowerPlantState_Request = {
   ): SetPowerPlantState_Request {
     const message = createBaseSetPowerPlantState_Request();
     message.state = object.state ?? 0;
+    return message;
+  },
+};
+
+function createBaseSetPowerPlantState_Response(): SetPowerPlantState_Response {
+  return {};
+}
+
+export const SetPowerPlantState_Response = {
+  encode(
+    _: SetPowerPlantState_Response,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): SetPowerPlantState_Response {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSetPowerPlantState_Response();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): SetPowerPlantState_Response {
+    return {};
+  },
+
+  toJSON(_: SetPowerPlantState_Response): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<SetPowerPlantState_Response>, I>>(
+    _: I
+  ): SetPowerPlantState_Response {
+    const message = createBaseSetPowerPlantState_Response();
     return message;
   },
 };
