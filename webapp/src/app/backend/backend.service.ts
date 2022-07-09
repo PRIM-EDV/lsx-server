@@ -20,7 +20,7 @@ export class BackendService {
     private ws!: WebSocketSubject<any>;
 
     constructor() {
-        this.ws = webSocket({url: 'ws://localhost:3000', openObserver: { next: () => {this.onOpen.next()} }});
+        this.ws = webSocket({url: `ws://${window.location.host}`, openObserver: { next: () => {this.onOpen.next()} }});
 
         this.ws.subscribe({
             next: this.handleMessage.bind(this),
