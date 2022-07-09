@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Subject } from "rxjs";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
-import { GetPowerGridState, GetPowerPlantState, LsxMessage, PowerGridState, Request, Response } from "proto/lsx";
+import { GetPowerGridState, GetPowerPlantState, LsxMessage, PowerGridState, PowerPlantState, Request, Response } from "proto/lsx";
 
 export type LsxRequest = GetPowerGridState | GetPowerPlantState
 
@@ -41,6 +41,23 @@ export class BackendService {
     public async setPowerGridState(state: PowerGridState) {
         const req: Request = {
             setPowerGridState: {state: state}
+        }
+
+        const res: Response = await this.request(req);
+    }
+
+    public async getPowerPlantState(): Promise<PowerPlantState> {
+        const req: Request = {
+            getPowerPlantState: {}
+        }
+
+        const res: Response = await this.request(req);
+        return res.getPowerPlantState!.state!;
+    }
+
+    public async setPowerPlantState(state: PowerPlantState) {
+        const req: Request = {
+            setPowerPlantState: {state: state}
         }
 
         const res: Response = await this.request(req);
@@ -89,8 +106,6 @@ export class BackendService {
     private handleClose() {
         this.onClose.next();
     }
-
-
 
     private rejectOnTimeout(id: string, reject: (reason?: any) => void) {
         if(this.requests.delete(id)) {

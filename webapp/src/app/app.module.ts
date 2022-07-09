@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { PhElementsModule } from './ph-elements/ph-elements.module';
 import { PowerControlModule } from './power-control/power-control.module';
+import { PowerPlantComponent } from './power-plant/power-plant.component';
+import { PowerPlantModule } from './power-plant/power-plant.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +14,8 @@ import { PowerControlModule } from './power-control/power-control.module';
   imports: [
     BrowserModule,
     PhElementsModule,
-    PowerControlModule
+    PowerControlModule,
+    PowerPlantModule
   ],
   providers: [],
   bootstrap: [AppComponent]
