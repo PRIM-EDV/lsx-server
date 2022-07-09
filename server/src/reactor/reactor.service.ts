@@ -30,7 +30,7 @@ export class ReactorService {
     public setPowerPlantState(state: PowerPlantState) {
         this.powerPlantState = state;
         this.onStateChange.next({
-            powerGridState: this.powerGridState
+            powerPlantState: this.powerPlantState
         })
     }
 

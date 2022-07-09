@@ -29,7 +29,7 @@ export class ReactorGateway {
   @SubscribeMessage('msg')
   handleMessage(client: Ws, payload: string): void {
     const msg = LsxMessage.fromJSON(JSON.parse(payload))
-    console.log(msg)
+
     if(msg.request) {
       if(msg.request.getPowerGridState){
         this.respond(client, msg.id, {getPowerGridState: {state: this.reactorService.getPowerGridState()}})
@@ -37,6 +37,13 @@ export class ReactorGateway {
       if(msg.request.setPowerGridState){
         this.reactorService.setPowerGridState(msg.request.setPowerGridState.state)
         this.respond(client, msg.id, {setPowerGridState: {}})
+      }
+      if(msg.request.getPowerPlantState){
+        this.respond(client, msg.id, {getPowerPlantState: {state: this.reactorService.getPowerPlantState()}})
+      }
+      if(msg.request.setPowerPlantState){
+        this.reactorService.setPowerPlantState(msg.request.setPowerPlantState.state)
+        this.respond(client, msg.id, {setPowerPlantState: {}})
       }
     }
   
@@ -47,37 +54,6 @@ export class ReactorGateway {
       }
     }
     
-  }
-
-  private async requestAll(req: Request) {
-    const requests: Promise<Response>[] = [];
-    for (const [id, activeClient] of this.activeClients) {
-      requests.push(this.request(activeClient, req))
-    }
-
-    return Promise.allSettled(requests);
-  }
-
-  private async requestAllButOne(client: Ws, req: Request) {
-    const requests: Promise<Response>[] = [];
-    for (const [id, activeClient] of this.activeClients) {
-      if (activeClient != client) {
-        requests.push(this.request(activeClient, req))
-      }
-    }
-
-    return Promise.allSettled(requests);
-  }
-
-  sendToAllClient(msg: LsxMessage) {
-    for (const [id, client] of this.activeClients) {
-      this.sendToClient(client, msg);
-    }
-  }
-
-  sendToClient(client: Ws, msg: LsxMessage) {
-    const buffer = {event: 'msg', data: JSON.stringify(LsxMessage.toJSON(msg))};
-    client.send(JSON.stringify(buffer))
   }
 
   handleDisconnect(client: Ws) {
@@ -116,6 +92,26 @@ export class ReactorGateway {
     });
   }
 
+  private async requestAll(req: Request) {
+    const requests: Promise<Response>[] = [];
+    for (const [id, activeClient] of this.activeClients) {
+      requests.push(this.request(activeClient, req))
+    }
+
+    return Promise.allSettled(requests);
+  }
+
+  private async requestAllButOne(client: Ws, req: Request) {
+    const requests: Promise<Response>[] = [];
+    for (const [id, activeClient] of this.activeClients) {
+      if (activeClient != client) {
+        requests.push(this.request(activeClient, req))
+      }
+    }
+
+    return Promise.allSettled(requests);
+  }
+
   private respond(client: Ws, id: string, res: Response) {
     const msg: LsxMessage = {
         id: id,
@@ -128,5 +124,16 @@ export class ReactorGateway {
     if(this.requests.delete(id)) {
         reject();
     }
+  }
+
+  private sendToAllClients(msg: LsxMessage) {
+    for (const [id, client] of this.activeClients) {
+      this.sendToClient(client, msg);
+    }
+  }
+
+  private sendToClient(client: Ws, msg: LsxMessage) {
+    const buffer = {event: 'msg', data: JSON.stringify(LsxMessage.toJSON(msg))};
+    client.send(JSON.stringify(buffer))
   }
 }
