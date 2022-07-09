@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Subject } from 'rxjs';
 
-import { PowerGridState, PowerLineState } from 'proto/lsx';
+import { PowerGridState, PowerLineState, PowerPlantState } from 'proto/lsx';
 
 export interface ReactorStates {
-    powerGridState?: PowerGridState
+    powerGridState?: PowerGridState,
+    powerPlantState?: PowerPlantState
 } 
 
 @Injectable()
@@ -18,6 +19,19 @@ export class ReactorService {
         'ogParcelRight': PowerLineState.STATE_UNPOWERED,
         'ugParcelLeft': PowerLineState.STATE_UNPOWERED,
         'ugParcelRight': PowerLineState.STATE_UNPOWERED
+    }
+
+    private powerPlantState: PowerPlantState = PowerPlantState.STATE_NORMAL;
+
+    public getPowerPlantState(): PowerPlantState {
+        return this.powerPlantState;
+    }
+
+    public setPowerPlantState(state: PowerPlantState) {
+        this.powerPlantState = state;
+        this.onStateChange.next({
+            powerGridState: this.powerGridState
+        })
     }
 
     public getPowerGridState(): PowerGridState {
