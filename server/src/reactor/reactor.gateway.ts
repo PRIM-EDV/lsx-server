@@ -35,6 +35,9 @@ export class ReactorGateway {
       if(msg.request.setPowerGridState){
         this.reactorService.setPowerGridState(msg.request.setPowerGridState.state)
         this.respond(client, msg.id, {setPowerGridState: {}})
+
+        this.requestAllButOne(client, {setPowerGridState: {state: this.reactorService.getPowerGridState()}});
+
       }
     }
   
@@ -47,7 +50,18 @@ export class ReactorGateway {
     
   }
 
-  private request(client: Ws, req: Request): Promise<Response> {
+  private async requestAllButOne(client: Ws, req: Request) {
+    const requests: Promise<Response>[] = [];
+    for (const [id, activeClient] of this.activeClients) {
+      if (activeClient != client) {
+        requests.push(this.request(activeClient, req))
+      }
+    }
+
+    return Promise.allSettled(requests);
+  }
+
+  private async request(client: Ws, req: Request): Promise<Response> {
     return new Promise((resolve, reject) => {
         const msg: LsxMessage = {
             id: uuidv4(),
@@ -55,7 +69,7 @@ export class ReactorGateway {
       }
 
       this.requests.set(msg.id, resolve.bind(this));
-      setTimeout(() => { this.requests.delete(msg.id); reject(); }, 5000);
+      setTimeout(this.rejectOnTimeout.bind(this, msg.id, reject), 5000);
       this.sendToClient(client, msg);
     });
   }
@@ -88,5 +102,11 @@ export class ReactorGateway {
     client.id = uuidv4();
     this.activeClients.set(client.id, client);
     this.log.info(`Client connected: ${client.id}`);
+  }
+
+  private rejectOnTimeout(id: string, reject: (reason?: any) => void) {
+    if(this.requests.delete(id)) {
+        reject();
+    }
   }
 }
