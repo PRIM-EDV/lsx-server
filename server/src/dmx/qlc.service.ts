@@ -14,11 +14,10 @@ export class QlcService {
 
     public setWidgetValue(widgetId: number, value: number) {
         if(this.ws.readyState == WebSocket.OPEN) {
-
         } else {
             this.log.error(`Could not set widget value: WebSocket not connected`)
         }
-    }
+    } 
 
     private onConnectionError() {
         this.log.info(`Could not connect to ${URL} trying to reconnect...`)
@@ -32,6 +31,18 @@ export class QlcService {
 
     private onConnectionSuccess() {
         this.log.info(`Connected to ${URL}`)
+        this.ws.send("QLC+API|getWidgetsList");
+
+    }
+
+    private onMessage(message: Uint8Array) {
+        const payload = String.fromCharCode.apply(null, new Uint16Array(message)).split('|') as string[];
+
+        if(payload[0] == "QLC+API"){
+            switch(payload[1]) {
+                case "getWidgetsList":  console.log(payload.slice(2))
+            }
+        }
     }
 
     private reconnectWebsocket() {
@@ -43,7 +54,8 @@ export class QlcService {
     private connectWebsocket() {
         this.ws = new WebSocket(URL);
         this.ws.on('error', this.onConnectionError.bind(this));
-        this.ws.on('close', this.onConnectionClosed.bind(this))
-        this.ws.on('open', this.onConnectionSuccess.bind(this))
+        this.ws.on('close', this.onConnectionClosed.bind(this));
+        this.ws.on('open', this.onConnectionSuccess.bind(this));
+        this.ws.on('message', this.onMessage.bind(this));
     }
 }
