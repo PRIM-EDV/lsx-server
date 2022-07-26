@@ -1,4 +1,9 @@
 import { Injectable } from "@angular/core";
+import {
+    HttpClient,
+    HttpHeaders,
+    HttpErrorResponse,
+  } from '@angular/common/http';
 
 import { v4 as uuidv4 } from 'uuid';
 import { Subject } from "rxjs";
@@ -6,8 +11,10 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
 import { GetPowerGridState, GetPowerPlantState, LsxMessage, PowerGridState, PowerPlantState, Request, Response } from "proto/lsx";
 
-export type LsxRequest = GetPowerGridState | GetPowerPlantState
+const REST_API_URL = `http://${window.location.host}`;
+const WS_URL = `ws://${window.location.host}`;
 
+export type LsxRequest = GetPowerGridState | GetPowerPlantState;
 
 @Injectable({providedIn: 'root'})
 export class BackendService {
@@ -19,8 +26,8 @@ export class BackendService {
     private requests: Map<string, (value: Response) => void> = new Map<string, (value: Response) => void>();
     private ws!: WebSocketSubject<any>;
 
-    constructor() {
-        this.ws = webSocket({url: `ws://${window.location.host}`, openObserver: { next: () => {this.onOpen.next()} }});
+    constructor(private http: HttpClient) {
+        this.ws = webSocket({url: WS_URL, openObserver: { next: () => {this.onOpen.next()} }});
 
         this.ws.subscribe({
             next: this.handleMessage.bind(this),
@@ -74,7 +81,7 @@ export class BackendService {
             setTimeout(this.rejectOnTimeout.bind(this, msg.id, reject), 5000);
             this.ws.next({event: 'msg', data: JSON.stringify(LsxMessage.toJSON(msg))});
         });
-       
+
     }
 
     public respond(id: string, res: Response) {
@@ -91,7 +98,7 @@ export class BackendService {
         if(msg.request) {
             this.onRequest.next({id: msg.id, request: msg.request});
         }
-        
+
         if(msg.response) {
             if(this.requests.has(msg.id)) {
                 this.requests.get(msg.id)!(msg.response);

@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
+const USERS : {name: string, password: string}[] = [
+  {name: "admin", password: "admin"}
+]
+
 @Injectable()
 export class AuthService {
 
@@ -9,7 +13,7 @@ export class AuthService {
       ) {}
 
     async validateUser(username: string, pass: string): Promise<any> {
-        return {username}
+        return USERS.find((user) => user.name == username && user.password == pass);
     }
 
     async login(user: any) {

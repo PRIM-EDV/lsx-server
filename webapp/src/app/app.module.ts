@@ -6,6 +6,7 @@ import { PhElementsModule } from './ph-elements/ph-elements.module';
 import { PowerControlModule } from './power-control/power-control.module';
 import { PowerPlantComponent } from './power-plant/power-plant.component';
 import { PowerPlantModule } from './power-plant/power-plant.module';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { PowerPlantModule } from './power-plant/power-plant.module';
     BrowserModule,
     PhElementsModule,
     PowerControlModule,
-    PowerPlantModule
+    PowerPlantModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
