@@ -27,6 +27,7 @@ import { PhCommandListComponent } from './ph-command-list/ph-command-list.compon
     PhFormComponent,
     PhButtonSelectComponent,
     PhButtonComponent,
+    PhInputComponent,
     PhCommandListComponent
   ],
   providers: [],

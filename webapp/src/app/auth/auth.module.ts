@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthComponent } from './auth.component';
+import { PhElementsModule } from '../ph-elements/ph-elements.module';
 
 
 
@@ -9,7 +10,8 @@ import { AuthComponent } from './auth.component';
     AuthComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    PhElementsModule
   ]
 })
 export class AuthModule { }

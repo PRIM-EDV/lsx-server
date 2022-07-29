@@ -7,13 +7,17 @@ import { PowerControlModule } from './power-control/power-control.module';
 import { PowerPlantComponent } from './power-plant/power-plant.component';
 import { PowerPlantModule } from './power-plant/power-plant.module';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthModule } from './auth/auth.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    AuthModule,
     BrowserModule,
+    HttpClientModule,
     PhElementsModule,
     PowerControlModule,
     PowerPlantModule,

@@ -1,0 +1,11 @@
+div.dashboard {
+    background-color: #262626;
+    position: absolute;
+    top:0; bottom: 0; left: 0; right: 0;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(16, 6.25%);
+    grid-template-rows: repeat(16, 6.25%);
+
+    inset: 0;
+}
