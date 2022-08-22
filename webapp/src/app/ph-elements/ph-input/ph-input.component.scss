@@ -27,17 +27,19 @@
         overflow: hidden;
 
         input {
-            background-color: rgba(70, 70, 70, 0.5);
+            background-color: #1e1e1e;
+            // background-color: #28343e;
             border-radius: 0;
             border: 0px solid;
-            border-bottom: 1px solid #afafaf;
-            color: #afafaf;
+            border-bottom: 1px solid #1e1e1e;
+            color: #a9aaac;
             font-family: 'Fira Code';
-            font-weight: 500;
+            text-align: right;
+            // font-weight: 500;
             font-size: 12px;
             padding-left: 4px;
-            padding-top: 2px;
-            height: 15px;
+            padding-top: 3px;
+            height: 12px;
         }
 
         input:focus {

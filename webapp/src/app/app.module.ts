@@ -15,13 +15,13 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
   ],
   imports: [
+    AppRoutingModule,
     AuthModule,
     BrowserModule,
     HttpClientModule,
     PhElementsModule,
     PowerControlModule,
     PowerPlantModule,
-    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

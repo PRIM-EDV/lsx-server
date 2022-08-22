@@ -7,7 +7,7 @@ const URL = 'ws://127.0.0.1:9999/qlcplusWS'
 @Injectable()
 export class QlcService {
     private ws: WebSocket;
-    
+
     constructor(private readonly log: LoggingService) {
        this.connectWebsocket();
     }
@@ -17,10 +17,10 @@ export class QlcService {
         } else {
             this.log.error(`Could not set widget value: WebSocket not connected`)
         }
-    } 
+    }
 
     private onConnectionError() {
-        this.log.info(`Could not connect to ${URL} trying to reconnect...`)
+        // this.log.info(`Could not connect to ${URL} trying to reconnect...`)
         // setTimeout(this.reconnectWebsocket.bind(this), 5000);
     }
 

@@ -1,8 +1,13 @@
 <div class="dashboard">
     <ph-window [title]="'Authentication'" style="grid-row:7/9; grid-column: 7/11">
         <ph-form>
-            <ph-input [label]="'USERID'"></ph-input>
-            <ph-input [label]="'PASSWORD'"></ph-input>
+            <ph-input [label]="'USERID'" [(value)]="this.username"></ph-input>
+            <ph-input [label]="'PASSWORD'" [type]="'password'" [(value)]="this.password"></ph-input>
+            <ph-command-list [label]="'CMD'">
+                <ph-button (click)="login()">
+                    LOGIN
+                </ph-button>
+            </ph-command-list>
         </ph-form>
     </ph-window>
 </div>

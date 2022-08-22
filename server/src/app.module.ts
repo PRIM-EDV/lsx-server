@@ -10,11 +10,11 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    AuthModule,
     ReactorModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
-    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, LoggingService, QlcService],

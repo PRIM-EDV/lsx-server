@@ -5,7 +5,7 @@ import { PhButtonComponent } from '../ph-button/ph-button.component';
 export interface PhButtonListOption {
   label: string;
   func: any;
-} 
+}
 
 @Component({
   selector: 'ph-button-select',
@@ -24,7 +24,7 @@ export class PhButtonSelectComponent implements OnInit, AfterContentInit, AfterV
 
   constructor() { }
 
-  @Input() 
+  @Input()
   public set value(value: string | number) {
     this._value = value;
     this.updateButtonStates();
@@ -38,10 +38,11 @@ export class PhButtonSelectComponent implements OnInit, AfterContentInit, AfterV
     for(const button of this.buttonComponents) {
       button.onClick = this.onButtonClick.bind(this, button);
     }
+
+    this.updateButtonStates();
   }
 
   ngAfterViewInit(): void {
-    this.updateButtonStates();
   }
 
   onButtonClick(target: PhButtonComponent, evt: MouseEvent): void {
@@ -54,6 +55,8 @@ export class PhButtonSelectComponent implements OnInit, AfterContentInit, AfterV
   }
 
   private updateButtonStates() {
+    if(this.buttonComponents == undefined) return;
+
     for(const button of this.buttonComponents) {
       if(button.value == this.value) {
         button.isActive = true;

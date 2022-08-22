@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthComponent implements OnInit {
 
-  constructor() { }
+  public username: string = 'admin';
+  public password: string = 'admin';
+
+  constructor(private readonly authService: AuthService) { }
 
   ngOnInit(): void {
+  }
+
+  login() {
+    this.authService.requestJwt(this.username, this.password);
   }
 
 }

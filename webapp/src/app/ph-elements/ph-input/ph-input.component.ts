@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'ph-input',
@@ -8,10 +8,18 @@ import { Component, Input, OnInit } from '@angular/core';
 export class PhInputComponent implements OnInit {
 
   @Input() label: string = "";
+  @Input() type: string = "text";
+  @Input() value: string = "";
+
+  @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onValueChange(event: any) {
+    this.valueChange.emit(event.target.value);
   }
 
 }
