@@ -8,6 +8,7 @@ import { PhInputComponent } from './ph-input/ph-input.component';
 import { PhButtonComponent } from './ph-button/ph-button.component';
 import { PhCommandListComponent } from './ph-command-list/ph-command-list.component';
 import { PhButtonListComponent } from './ph-button-list/ph-button-list.component';
+import { PhTableComponent } from './ph-table/ph-table.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { PhButtonListComponent } from './ph-button-list/ph-button-list.component
     PhInputComponent,
     PhButtonComponent,
     PhCommandListComponent,
-    PhButtonListComponent
+    PhButtonListComponent,
+    PhTableComponent
   ],
   imports: [],
   exports: [
@@ -31,7 +33,8 @@ import { PhButtonListComponent } from './ph-button-list/ph-button-list.component
     PhButtonSelectComponent,
     PhButtonComponent,
     PhInputComponent,
-    PhCommandListComponent
+    PhCommandListComponent,
+    PhTableComponent
   ],
   providers: [],
   bootstrap: []

@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard.component';
 import { PhElementsModule } from '../ph-elements/ph-elements.module';
 import { PowerControlModule } from '../power-control/power-control.module';
 import { PowerPlantModule } from '../power-plant/power-plant.module';
+import { BaseLockdownModule } from '../base-lockdown/base-lockdown.module';
 
 
 
@@ -13,6 +14,7 @@ import { PowerPlantModule } from '../power-plant/power-plant.module';
   ],
   imports: [
     CommonModule,
+    BaseLockdownModule,
     PhElementsModule,
     PowerControlModule,
     PowerPlantModule,
