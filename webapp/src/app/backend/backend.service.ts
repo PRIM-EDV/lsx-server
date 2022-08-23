@@ -11,8 +11,11 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
 import { GetPowerGridState, GetPowerPlantState, LsxMessage, PowerGridState, PowerPlantState, Request, Response } from "proto/lsx";
 
+const LSX_SERVER_HOSTNAME = window?.__env?.lsxServerHostname != null ? `${window.__env.lsxServerHostname}` : 'localhost';
+const LSX_SERVER_PORT = window?.__env?.lsxServerPort != null ? window.__env.lsxServerPort : 3000;
+
 const REST_API_URL = `http://${window.location.host}`;
-const WS_URL = `ws://${window.location.host}`;
+const WS_URL = `ws://${LSX_SERVER_HOSTNAME}:${LSX_SERVER_PORT}`;
 
 export type LsxRequest = GetPowerGridState | GetPowerPlantState;
 
