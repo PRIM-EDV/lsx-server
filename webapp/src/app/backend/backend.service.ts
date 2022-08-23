@@ -27,11 +27,15 @@ export class BackendService {
     private ws!: WebSocketSubject<any>;
 
     constructor(private http: HttpClient) {
+
+    }
+
+    public async connect() {
         this.ws = webSocket({url: WS_URL, openObserver: { next: () => {this.onOpen.next()} }});
 
         this.ws.subscribe({
             next: this.handleMessage.bind(this),
-            error: (err) => {},
+            error: (err) => {console.log(err)},
             complete: this.handleClose.bind(this)
         });
     }

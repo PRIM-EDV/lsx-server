@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { BackendService } from '../backend/backend.service';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -8,16 +10,23 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent implements OnInit {
 
-  public username: string = 'admin';
-  public password: string = 'admin';
+  public username: string = '';
+  public password: string = '';
 
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService, private readonly backend: BackendService, private readonly router: Router) { }
 
   ngOnInit(): void {
   }
 
-  login() {
-    this.authService.requestJwt(this.username, this.password);
+  public async login() {
+    try {
+      const jwt = await this.authService.requestJwt(this.username, this.password);
+      await this.backend.connect();
+      this.router.navigateByUrl('/dashboard');
+    }
+    catch(e){
+
+    }
   }
 
 }

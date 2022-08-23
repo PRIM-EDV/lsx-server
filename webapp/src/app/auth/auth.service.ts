@@ -1,30 +1,36 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 @Injectable()
 export class AuthService {
+
+  private token: string = "";
 
   constructor(private readonly http: HttpClient) {
 
   }
 
-  public requestJwt(username: string, password: string)
+  public async requestJwt(username: string, password: string): Promise<string>
   {
-    const options = {headers: {'Content-Type': 'application/json'}};
     const data = {username: username, password: password};
     const route = `${window.location.protocol}//${window.location.hostname}:3000/api/auth/login`;
 
-    console.log(data);
-
-    this.http.post(route, data).subscribe((res) => {
-      console.log(res);
+    return new Promise<string>((resolve, reject) => {
+      this.http.post<{access_token: string}>(route, data).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.token = res.access_token;
+          resolve(res.access_token);
+        },
+        error: (err) => {
+          reject(err);
+        }
+      })
     });
   }
 
   public isAuthenticated(): boolean {
-    // const token = localStorage.getItem('token');
-    // Check whether the token is expired and return
-    // true or false
-    return true;
+    return this.token != '';
   }
 }

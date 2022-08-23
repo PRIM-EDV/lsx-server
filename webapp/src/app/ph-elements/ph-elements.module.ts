@@ -7,6 +7,7 @@ import { PhFormComponent } from './ph-form/ph-form.component';
 import { PhInputComponent } from './ph-input/ph-input.component';
 import { PhButtonComponent } from './ph-button/ph-button.component';
 import { PhCommandListComponent } from './ph-command-list/ph-command-list.component';
+import { PhButtonListComponent } from './ph-button-list/ph-button-list.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { PhCommandListComponent } from './ph-command-list/ph-command-list.compon
     PhFormComponent,
     PhInputComponent,
     PhButtonComponent,
-    PhCommandListComponent
+    PhCommandListComponent,
+    PhButtonListComponent
   ],
   imports: [],
   exports: [
@@ -25,6 +27,7 @@ import { PhCommandListComponent } from './ph-command-list/ph-command-list.compon
     PhSidebarComponent,
     PhTopbarComponent,
     PhFormComponent,
+    PhButtonListComponent,
     PhButtonSelectComponent,
     PhButtonComponent,
     PhInputComponent,

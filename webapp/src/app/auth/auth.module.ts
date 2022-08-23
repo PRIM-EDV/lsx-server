@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthComponent } from './auth.component';
 import { PhElementsModule } from '../ph-elements/ph-elements.module';
 import { AuthService } from './auth.service';
+import { AuthGuardService } from './auth-guard.service';
 
 
 
@@ -15,7 +16,8 @@ import { AuthService } from './auth.service';
     PhElementsModule
   ],
   providers: [
-    AuthService
+    AuthService,
+    AuthGuardService
   ]
 })
 export class AuthModule { }

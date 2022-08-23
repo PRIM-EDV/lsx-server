@@ -1,13 +1,15 @@
 <div class="dashboard">
-    <ph-window [title]="'Authentication'" style="grid-row:7/9; grid-column: 7/11">
-        <ph-form>
-            <ph-input [label]="'USERID'" [(value)]="this.username"></ph-input>
-            <ph-input [label]="'PASSWORD'" [type]="'password'" [(value)]="this.password"></ph-input>
-            <ph-command-list [label]="'CMD'">
+    <div class="content">
+        <ph-window [title]="'Authentication'" style="grid-row:1/6; grid-column: 1/14">
+            <ph-form>
+                <ph-input [label]="'USERID'" [(value)]="this.username"></ph-input>
+                <ph-input [label]="'PASSWORD'" [type]="'password'" [(value)]="this.password"></ph-input>
+            </ph-form>
+            <ph-button-list>
                 <ph-button (click)="login()">
                     LOGIN
                 </ph-button>
-            </ph-command-list>
-        </ph-form>
-    </ph-window>
+            </ph-button-list>
+        </ph-window>
+    </div>
 </div>

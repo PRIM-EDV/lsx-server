@@ -9,6 +9,7 @@ import { PowerPlantModule } from './power-plant/power-plant.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -18,10 +19,9 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     AuthModule,
     BrowserModule,
+    DashboardModule,
     HttpClientModule,
     PhElementsModule,
-    PowerControlModule,
-    PowerPlantModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
