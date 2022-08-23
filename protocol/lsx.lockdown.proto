@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+enum BaseState {
+    BASE_STATE_EMPTY = 0;
+    BASE_STATE_NORMAL = 1;
+    BASE_STATE_LOCKDOWN = 2;
+}
+
+message GetAutoLockdown {
+    message Response {
+        bool state = 1;
+    }
+
+    message Request {
+
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message SetAutoLockdown {
+    message Request {
+        bool state = 1;
+    }
+
+    message Response {
+
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message GetBaseState {
+    message Response {
+        BaseState state = 1;
+    }
+
+    message Request {
+
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message SetBaseState {
+    message Request {
+        BaseState state = 1;
+    }
+
+    message Response {
+
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message GetLockdownAnnouncements {
+    message Response {
+        bool state = 1;
+    }
+
+    message Request {
+
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message SetLockdownAnnouncements {
+    message Request {
+        bool state = 1;
+    }
+
+    message Response {
+
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
