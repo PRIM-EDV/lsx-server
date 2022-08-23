@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ph-table',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ph-table.component.scss']
 })
 export class PhTableComponent implements OnInit {
+
+  @Input() label: string = '';
 
   constructor() { }
 
