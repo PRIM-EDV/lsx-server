@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BackendService } from '../backend/backend.service';
 
 @Component({
   selector: 'speaker-announcements',
@@ -7,7 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SpeakerAnnouncementsComponent implements OnInit {
 
-  constructor() { }
+  public announcementFiles: string[] = [];
+
+  constructor(private readonly backend: BackendService) {
+    this.backend.onOpen.subscribe(async () => {
+      this.backend.getAnnouncementFiles().then((files) => {
+        this.announcementFiles = files;
+      });
+    });
+   }
 
   ngOnInit(): void {
   }

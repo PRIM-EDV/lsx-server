@@ -7,6 +7,7 @@ import { QlcService } from './dmx/qlc.service';
 import { LoggingService } from './logging/logging.service';
 import { ReactorModule } from './reactor/reactor.module';
 import { AuthModule } from './auth/auth.module';
+import { AnnouncementsModule } from './announcements/announcements.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { AuthModule } from './auth/auth.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
+    AnnouncementsModule,
   ],
   controllers: [AppController],
   providers: [AppService, LoggingService, QlcService],

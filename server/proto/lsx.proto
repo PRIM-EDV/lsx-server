@@ -23,6 +23,7 @@ message Request {
         SetPowerPlantState.Request set_power_plant_state = 3;
         GetPowerGridState.Request get_power_grid_state = 4;
         SetPowerGridState.Request set_power_grid_state = 5;
+        GetAnnouncementFiles.Request get_announcement_files = 6;
     }
 }
 
@@ -31,7 +32,8 @@ message Response {
         GetPowerPlantState.Response get_power_plant_state = 1;
         SetPowerPlantState.Response set_power_plant_state = 2;
         GetPowerGridState.Response get_power_grid_state = 3;
-        SetPowerGridState.Response set_power_grid_state =5;      
+        SetPowerGridState.Response set_power_grid_state = 5;
+        GetAnnouncementFiles.Response get_announcement_files = 6;
     }
 }
 
@@ -42,6 +44,22 @@ message LsxMessage {
     oneof message{
         Request request = 2;
         Response response = 3;
+    }
+}
+
+message GetAnnouncementFiles {
+    message Response {
+        repeated string files = 1;
+    }
+
+    message Request {
+
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        Error error = 3;
     }
 }
 

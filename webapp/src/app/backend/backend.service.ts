@@ -43,6 +43,15 @@ export class BackendService {
         });
     }
 
+    public async getAnnouncementFiles(): Promise<string[]> {
+        const req: Request = {
+            getAnnouncementFiles: {}
+        }
+
+        const res: Response = await this.request(req);
+        return res.getAnnouncementFiles!.files!;
+    }
+
     public async getPowerGridState(): Promise<PowerGridState> {
         const req: Request = {
             getPowerGridState: {}

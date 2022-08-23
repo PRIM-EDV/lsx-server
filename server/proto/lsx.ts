@@ -96,6 +96,7 @@ export interface Request {
   setPowerPlantState?: SetPowerPlantState_Request | undefined;
   getPowerGridState?: GetPowerGridState_Request | undefined;
   setPowerGridState?: SetPowerGridState_Request | undefined;
+  getAnnouncementFiles?: GetAnnouncementFiles_Request | undefined;
 }
 
 export interface Response {
@@ -103,6 +104,7 @@ export interface Response {
   setPowerPlantState?: SetPowerPlantState_Response | undefined;
   getPowerGridState?: GetPowerGridState_Response | undefined;
   setPowerGridState?: SetPowerGridState_Response | undefined;
+  getAnnouncementFiles?: GetAnnouncementFiles_Response | undefined;
 }
 
 export interface LsxMessage {
@@ -110,6 +112,18 @@ export interface LsxMessage {
   request?: Request | undefined;
   response?: Response | undefined;
 }
+
+export interface GetAnnouncementFiles {
+  request?: GetAnnouncementFiles_Request | undefined;
+  response?: GetAnnouncementFiles_Response | undefined;
+  error?: Error | undefined;
+}
+
+export interface GetAnnouncementFiles_Response {
+  files: string[];
+}
+
+export interface GetAnnouncementFiles_Request {}
 
 export interface PowerGridState {
   ogBaseMed: PowerLineState;
@@ -222,6 +236,7 @@ function createBaseRequest(): Request {
     setPowerPlantState: undefined,
     getPowerGridState: undefined,
     setPowerGridState: undefined,
+    getAnnouncementFiles: undefined,
   };
 }
 
@@ -252,6 +267,12 @@ export const Request = {
       SetPowerGridState_Request.encode(
         message.setPowerGridState,
         writer.uint32(42).fork(),
+      ).ldelim();
+    }
+    if (message.getAnnouncementFiles !== undefined) {
+      GetAnnouncementFiles_Request.encode(
+        message.getAnnouncementFiles,
+        writer.uint32(50).fork(),
       ).ldelim();
     }
     return writer;
@@ -288,6 +309,12 @@ export const Request = {
             reader.uint32(),
           );
           break;
+        case 6:
+          message.getAnnouncementFiles = GetAnnouncementFiles_Request.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -310,6 +337,9 @@ export const Request = {
       setPowerGridState: isSet(object.setPowerGridState)
         ? SetPowerGridState_Request.fromJSON(object.setPowerGridState)
         : undefined,
+      getAnnouncementFiles: isSet(object.getAnnouncementFiles)
+        ? GetAnnouncementFiles_Request.fromJSON(object.getAnnouncementFiles)
+        : undefined,
     };
   },
 
@@ -330,6 +360,10 @@ export const Request = {
     message.setPowerGridState !== undefined &&
       (obj.setPowerGridState = message.setPowerGridState
         ? SetPowerGridState_Request.toJSON(message.setPowerGridState)
+        : undefined);
+    message.getAnnouncementFiles !== undefined &&
+      (obj.getAnnouncementFiles = message.getAnnouncementFiles
+        ? GetAnnouncementFiles_Request.toJSON(message.getAnnouncementFiles)
         : undefined);
     return obj;
   },
@@ -356,6 +390,11 @@ export const Request = {
       object.setPowerGridState !== null
         ? SetPowerGridState_Request.fromPartial(object.setPowerGridState)
         : undefined;
+    message.getAnnouncementFiles =
+      object.getAnnouncementFiles !== undefined &&
+      object.getAnnouncementFiles !== null
+        ? GetAnnouncementFiles_Request.fromPartial(object.getAnnouncementFiles)
+        : undefined;
     return message;
   },
 };
@@ -366,6 +405,7 @@ function createBaseResponse(): Response {
     setPowerPlantState: undefined,
     getPowerGridState: undefined,
     setPowerGridState: undefined,
+    getAnnouncementFiles: undefined,
   };
 }
 
@@ -396,6 +436,12 @@ export const Response = {
       SetPowerGridState_Response.encode(
         message.setPowerGridState,
         writer.uint32(42).fork(),
+      ).ldelim();
+    }
+    if (message.getAnnouncementFiles !== undefined) {
+      GetAnnouncementFiles_Response.encode(
+        message.getAnnouncementFiles,
+        writer.uint32(50).fork(),
       ).ldelim();
     }
     return writer;
@@ -432,6 +478,12 @@ export const Response = {
             reader.uint32(),
           );
           break;
+        case 6:
+          message.getAnnouncementFiles = GetAnnouncementFiles_Response.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -454,6 +506,9 @@ export const Response = {
       setPowerGridState: isSet(object.setPowerGridState)
         ? SetPowerGridState_Response.fromJSON(object.setPowerGridState)
         : undefined,
+      getAnnouncementFiles: isSet(object.getAnnouncementFiles)
+        ? GetAnnouncementFiles_Response.fromJSON(object.getAnnouncementFiles)
+        : undefined,
     };
   },
 
@@ -474,6 +529,10 @@ export const Response = {
     message.setPowerGridState !== undefined &&
       (obj.setPowerGridState = message.setPowerGridState
         ? SetPowerGridState_Response.toJSON(message.setPowerGridState)
+        : undefined);
+    message.getAnnouncementFiles !== undefined &&
+      (obj.getAnnouncementFiles = message.getAnnouncementFiles
+        ? GetAnnouncementFiles_Response.toJSON(message.getAnnouncementFiles)
         : undefined);
     return obj;
   },
@@ -499,6 +558,11 @@ export const Response = {
       object.setPowerGridState !== undefined &&
       object.setPowerGridState !== null
         ? SetPowerGridState_Response.fromPartial(object.setPowerGridState)
+        : undefined;
+    message.getAnnouncementFiles =
+      object.getAnnouncementFiles !== undefined &&
+      object.getAnnouncementFiles !== null
+        ? GetAnnouncementFiles_Response.fromPartial(object.getAnnouncementFiles)
         : undefined;
     return message;
   },
@@ -588,6 +652,223 @@ export const LsxMessage = {
       object.response !== undefined && object.response !== null
         ? Response.fromPartial(object.response)
         : undefined;
+    return message;
+  },
+};
+
+function createBaseGetAnnouncementFiles(): GetAnnouncementFiles {
+  return { request: undefined, response: undefined, error: undefined };
+}
+
+export const GetAnnouncementFiles = {
+  encode(
+    message: GetAnnouncementFiles,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
+    if (message.request !== undefined) {
+      GetAnnouncementFiles_Request.encode(
+        message.request,
+        writer.uint32(10).fork(),
+      ).ldelim();
+    }
+    if (message.response !== undefined) {
+      GetAnnouncementFiles_Response.encode(
+        message.response,
+        writer.uint32(18).fork(),
+      ).ldelim();
+    }
+    if (message.error !== undefined) {
+      Error.encode(message.error, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number,
+  ): GetAnnouncementFiles {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetAnnouncementFiles();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.request = GetAnnouncementFiles_Request.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
+        case 2:
+          message.response = GetAnnouncementFiles_Response.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
+        case 3:
+          message.error = Error.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GetAnnouncementFiles {
+    return {
+      request: isSet(object.request)
+        ? GetAnnouncementFiles_Request.fromJSON(object.request)
+        : undefined,
+      response: isSet(object.response)
+        ? GetAnnouncementFiles_Response.fromJSON(object.response)
+        : undefined,
+      error: isSet(object.error) ? Error.fromJSON(object.error) : undefined,
+    };
+  },
+
+  toJSON(message: GetAnnouncementFiles): unknown {
+    const obj: any = {};
+    message.request !== undefined &&
+      (obj.request = message.request
+        ? GetAnnouncementFiles_Request.toJSON(message.request)
+        : undefined);
+    message.response !== undefined &&
+      (obj.response = message.response
+        ? GetAnnouncementFiles_Response.toJSON(message.response)
+        : undefined);
+    message.error !== undefined &&
+      (obj.error = message.error ? Error.toJSON(message.error) : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GetAnnouncementFiles>, I>>(
+    object: I,
+  ): GetAnnouncementFiles {
+    const message = createBaseGetAnnouncementFiles();
+    message.request =
+      object.request !== undefined && object.request !== null
+        ? GetAnnouncementFiles_Request.fromPartial(object.request)
+        : undefined;
+    message.response =
+      object.response !== undefined && object.response !== null
+        ? GetAnnouncementFiles_Response.fromPartial(object.response)
+        : undefined;
+    message.error =
+      object.error !== undefined && object.error !== null
+        ? Error.fromPartial(object.error)
+        : undefined;
+    return message;
+  },
+};
+
+function createBaseGetAnnouncementFiles_Response(): GetAnnouncementFiles_Response {
+  return { files: [] };
+}
+
+export const GetAnnouncementFiles_Response = {
+  encode(
+    message: GetAnnouncementFiles_Response,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
+    for (const v of message.files) {
+      writer.uint32(10).string(v!);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number,
+  ): GetAnnouncementFiles_Response {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetAnnouncementFiles_Response();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.files.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GetAnnouncementFiles_Response {
+    return {
+      files: Array.isArray(object?.files)
+        ? object.files.map((e: any) => String(e))
+        : [],
+    };
+  },
+
+  toJSON(message: GetAnnouncementFiles_Response): unknown {
+    const obj: any = {};
+    if (message.files) {
+      obj.files = message.files.map((e) => e);
+    } else {
+      obj.files = [];
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GetAnnouncementFiles_Response>, I>>(
+    object: I,
+  ): GetAnnouncementFiles_Response {
+    const message = createBaseGetAnnouncementFiles_Response();
+    message.files = object.files?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseGetAnnouncementFiles_Request(): GetAnnouncementFiles_Request {
+  return {};
+}
+
+export const GetAnnouncementFiles_Request = {
+  encode(
+    _: GetAnnouncementFiles_Request,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number,
+  ): GetAnnouncementFiles_Request {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetAnnouncementFiles_Request();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): GetAnnouncementFiles_Request {
+    return {};
+  },
+
+  toJSON(_: GetAnnouncementFiles_Request): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GetAnnouncementFiles_Request>, I>>(
+    _: I,
+  ): GetAnnouncementFiles_Request {
+    const message = createBaseGetAnnouncementFiles_Request();
     return message;
   },
 };
