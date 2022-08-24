@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { LsxMessage, Request } from 'proto/lsx';
+import { PowerGridState, PowerPlantState, PowerLineState } from 'proto/lsx.power';
 import { Subject } from 'rxjs';
-
-import { PowerGridState, PowerLineState, PowerPlantState } from 'proto/lsx';
+import { AppGateway } from 'src/gateway/app.gateway';
 
 export interface ReactorStates {
     powerGridState?: PowerGridState,
     powerPlantState?: PowerPlantState
-} 
+}
 
 @Injectable()
 export class ReactorService {
@@ -23,15 +24,40 @@ export class ReactorService {
 
     private powerPlantState: PowerPlantState = PowerPlantState.STATE_NORMAL;
 
+    constructor(private readonly gateway: AppGateway) {
+        this.gateway.onRequest.subscribe(this.handleRequest.bind(this));
+    }
+
+    handleRequest(event: {clientId: string, msgId: string, request: Request}): void {
+        if(event.request.getPowerGridState){
+            this.gateway.respond(event.clientId, event.msgId, {getPowerGridState: {state: this.getPowerGridState()}})
+        }
+        if(event.request.setPowerGridState){
+            this.setPowerGridState(event.request.setPowerGridState.state)
+            this.gateway.respond(event.clientId, event.msgId, {setPowerGridState: {}})
+        }
+        if(event.request.getPowerPlantState){
+            this.gateway.respond(event.clientId, event.msgId, {getPowerPlantState: {state: this.getPowerPlantState()}})
+        }
+        if(event.request.setPowerPlantState){
+            this.setPowerPlantState(event.request.setPowerPlantState.state)
+            this.gateway.respond(event.clientId, event.msgId, {setPowerPlantState: {}})
+        }
+    }
+
     public getPowerPlantState(): PowerPlantState {
         return this.powerPlantState;
     }
 
     public setPowerPlantState(state: PowerPlantState) {
+        const req: Request = {setPowerPlantState: {state: state}};
+
         this.powerPlantState = state;
         this.onStateChange.next({
             powerPlantState: this.powerPlantState
         })
+
+        this.gateway.requestAll(req).then();
     }
 
     public getPowerGridState(): PowerGridState {
@@ -39,9 +65,12 @@ export class ReactorService {
     }
 
     public setPowerGridState(state: PowerGridState) {
+        const req: Request = {setPowerGridState: {state: state}};
+
         this.powerGridState = state;
         this.onStateChange.next({
             powerGridState: this.powerGridState
         })
+        this.gateway.requestAll(req).then();
     }
 }

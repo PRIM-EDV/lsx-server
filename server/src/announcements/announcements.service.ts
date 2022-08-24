@@ -1,10 +1,23 @@
 import * as fs from 'fs';
 
 import { Injectable } from '@nestjs/common';
-import { resolve } from 'path';
+import { AppGateway } from 'src/gateway/app.gateway';
+import { Request } from 'proto/lsx';
 
 @Injectable()
 export class AnnouncementsService {
+
+    constructor(private readonly gateway: AppGateway) {
+        this.gateway.onRequest.subscribe(this.handleRequest.bind(this));
+    }
+
+    handleRequest(event: {clientId: string, msgId: string, request: Request}): void {
+        if(event.request.getAnnouncementFiles){
+            this.getAnnoucementFiles().then((files) => {
+              this.gateway.respond(event.clientId, event.msgId, {getAnnouncementFiles: {files: files}})
+            })
+        }
+    }
 
     public async getAnnoucementFiles(): Promise<string[]> {
         return new Promise<string[]>((resolve, reject) => {

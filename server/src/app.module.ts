@@ -8,6 +8,9 @@ import { LoggingService } from './logging/logging.service';
 import { ReactorModule } from './reactor/reactor.module';
 import { AuthModule } from './auth/auth.module';
 import { AnnouncementsModule } from './announcements/announcements.module';
+import { AppGateway } from './gateway/app.gateway';
+import { LoggingModule } from './logging/logging.module';
+import { GatewayModule } from './gateway/gateway.module';
 
 @Module({
   imports: [
@@ -17,8 +20,10 @@ import { AnnouncementsModule } from './announcements/announcements.module';
       rootPath: join(__dirname, '..', 'public'),
     }),
     AnnouncementsModule,
+    GatewayModule,
+    LoggingModule
   ],
   controllers: [AppController],
-  providers: [AppService, LoggingService, QlcService],
+  providers: [AppService, QlcService],
 })
 export class AppModule {}
