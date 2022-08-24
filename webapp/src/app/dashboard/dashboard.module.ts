@@ -6,6 +6,7 @@ import { PowerControlModule } from '../power-control/power-control.module';
 import { PowerPlantModule } from '../power-plant/power-plant.module';
 import { BaseLockdownModule } from '../base-lockdown/base-lockdown.module';
 import { SpeakerAnnouncementsModule } from '../speaker-announcements/speaker-announcements.module';
+import { SpeakerFluffModule } from '../speaker-fluff/speaker-fluff.module';
 
 
 
@@ -19,7 +20,8 @@ import { SpeakerAnnouncementsModule } from '../speaker-announcements/speaker-ann
     PhElementsModule,
     PowerControlModule,
     PowerPlantModule,
-    SpeakerAnnouncementsModule
+    SpeakerAnnouncementsModule,
+    SpeakerFluffModule
   ]
 })
 export class DashboardModule { }

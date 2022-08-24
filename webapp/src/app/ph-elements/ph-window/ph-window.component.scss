@@ -31,6 +31,9 @@ div.title-bar {
 div.workspace {
     background-color: #252526;
     margin: 0 2px 2px 2px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 // div.shader {

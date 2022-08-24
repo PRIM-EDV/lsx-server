@@ -39,6 +39,7 @@ export interface Request {
   setAutoLockdown?: SetAutoLockdown_Request | undefined;
   getLockdownAnnouncements?: GetLockdownAnnouncements_Request | undefined;
   setLockdownAnnouncements?: SetLockdownAnnouncements_Request | undefined;
+  getFluffFiles?: GetFluffFiles_Request | undefined;
 }
 
 export interface Response {
@@ -53,6 +54,7 @@ export interface Response {
   setAutoLockdown?: SetAutoLockdown_Response | undefined;
   getLockdownAnnouncements?: GetLockdownAnnouncements_Response | undefined;
   setLockdownAnnouncements?: SetLockdownAnnouncements_Response | undefined;
+  getFluffFiles?: GetFluffFiles_Response | undefined;
 }
 
 export interface LsxMessage {
@@ -73,6 +75,18 @@ export interface GetAnnouncementFiles_Response {
 
 export interface GetAnnouncementFiles_Request {}
 
+export interface GetFluffFiles {
+  request?: GetFluffFiles_Request | undefined;
+  response?: GetFluffFiles_Response | undefined;
+  error: string | undefined;
+}
+
+export interface GetFluffFiles_Response {
+  files: string[];
+}
+
+export interface GetFluffFiles_Request {}
+
 function createBaseRequest(): Request {
   return {
     getPowerPlantState: undefined,
@@ -86,6 +100,7 @@ function createBaseRequest(): Request {
     setAutoLockdown: undefined,
     getLockdownAnnouncements: undefined,
     setLockdownAnnouncements: undefined,
+    getFluffFiles: undefined,
   };
 }
 
@@ -160,6 +175,12 @@ export const Request = {
         writer.uint32(98).fork(),
       ).ldelim();
     }
+    if (message.getFluffFiles !== undefined) {
+      GetFluffFiles_Request.encode(
+        message.getFluffFiles,
+        writer.uint32(106).fork(),
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -232,6 +253,12 @@ export const Request = {
           message.setLockdownAnnouncements =
             SetLockdownAnnouncements_Request.decode(reader, reader.uint32());
           break;
+        case 13:
+          message.getFluffFiles = GetFluffFiles_Request.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -278,6 +305,9 @@ export const Request = {
         ? SetLockdownAnnouncements_Request.fromJSON(
             object.setLockdownAnnouncements,
           )
+        : undefined,
+      getFluffFiles: isSet(object.getFluffFiles)
+        ? GetFluffFiles_Request.fromJSON(object.getFluffFiles)
         : undefined,
     };
   },
@@ -331,6 +361,10 @@ export const Request = {
         ? SetLockdownAnnouncements_Request.toJSON(
             message.setLockdownAnnouncements,
           )
+        : undefined);
+    message.getFluffFiles !== undefined &&
+      (obj.getFluffFiles = message.getFluffFiles
+        ? GetFluffFiles_Request.toJSON(message.getFluffFiles)
         : undefined);
     return obj;
   },
@@ -392,6 +426,10 @@ export const Request = {
             object.setLockdownAnnouncements,
           )
         : undefined;
+    message.getFluffFiles =
+      object.getFluffFiles !== undefined && object.getFluffFiles !== null
+        ? GetFluffFiles_Request.fromPartial(object.getFluffFiles)
+        : undefined;
     return message;
   },
 };
@@ -409,6 +447,7 @@ function createBaseResponse(): Response {
     setAutoLockdown: undefined,
     getLockdownAnnouncements: undefined,
     setLockdownAnnouncements: undefined,
+    getFluffFiles: undefined,
   };
 }
 
@@ -483,6 +522,12 @@ export const Response = {
         writer.uint32(98).fork(),
       ).ldelim();
     }
+    if (message.getFluffFiles !== undefined) {
+      GetFluffFiles_Response.encode(
+        message.getFluffFiles,
+        writer.uint32(106).fork(),
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -555,6 +600,12 @@ export const Response = {
           message.setLockdownAnnouncements =
             SetLockdownAnnouncements_Response.decode(reader, reader.uint32());
           break;
+        case 13:
+          message.getFluffFiles = GetFluffFiles_Response.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -601,6 +652,9 @@ export const Response = {
         ? SetLockdownAnnouncements_Response.fromJSON(
             object.setLockdownAnnouncements,
           )
+        : undefined,
+      getFluffFiles: isSet(object.getFluffFiles)
+        ? GetFluffFiles_Response.fromJSON(object.getFluffFiles)
         : undefined,
     };
   },
@@ -654,6 +708,10 @@ export const Response = {
         ? SetLockdownAnnouncements_Response.toJSON(
             message.setLockdownAnnouncements,
           )
+        : undefined);
+    message.getFluffFiles !== undefined &&
+      (obj.getFluffFiles = message.getFluffFiles
+        ? GetFluffFiles_Response.toJSON(message.getFluffFiles)
         : undefined);
     return obj;
   },
@@ -714,6 +772,10 @@ export const Response = {
         ? SetLockdownAnnouncements_Response.fromPartial(
             object.setLockdownAnnouncements,
           )
+        : undefined;
+    message.getFluffFiles =
+      object.getFluffFiles !== undefined && object.getFluffFiles !== null
+        ? GetFluffFiles_Response.fromPartial(object.getFluffFiles)
         : undefined;
     return message;
   },
@@ -1016,6 +1078,216 @@ export const GetAnnouncementFiles_Request = {
     _: I,
   ): GetAnnouncementFiles_Request {
     const message = createBaseGetAnnouncementFiles_Request();
+    return message;
+  },
+};
+
+function createBaseGetFluffFiles(): GetFluffFiles {
+  return { request: undefined, response: undefined, error: undefined };
+}
+
+export const GetFluffFiles = {
+  encode(
+    message: GetFluffFiles,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
+    if (message.request !== undefined) {
+      GetFluffFiles_Request.encode(
+        message.request,
+        writer.uint32(10).fork(),
+      ).ldelim();
+    }
+    if (message.response !== undefined) {
+      GetFluffFiles_Response.encode(
+        message.response,
+        writer.uint32(18).fork(),
+      ).ldelim();
+    }
+    if (message.error !== undefined) {
+      writer.uint32(26).string(message.error);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetFluffFiles {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetFluffFiles();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.request = GetFluffFiles_Request.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
+        case 2:
+          message.response = GetFluffFiles_Response.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
+        case 3:
+          message.error = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GetFluffFiles {
+    return {
+      request: isSet(object.request)
+        ? GetFluffFiles_Request.fromJSON(object.request)
+        : undefined,
+      response: isSet(object.response)
+        ? GetFluffFiles_Response.fromJSON(object.response)
+        : undefined,
+      error: isSet(object.error) ? String(object.error) : undefined,
+    };
+  },
+
+  toJSON(message: GetFluffFiles): unknown {
+    const obj: any = {};
+    message.request !== undefined &&
+      (obj.request = message.request
+        ? GetFluffFiles_Request.toJSON(message.request)
+        : undefined);
+    message.response !== undefined &&
+      (obj.response = message.response
+        ? GetFluffFiles_Response.toJSON(message.response)
+        : undefined);
+    message.error !== undefined && (obj.error = message.error);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GetFluffFiles>, I>>(
+    object: I,
+  ): GetFluffFiles {
+    const message = createBaseGetFluffFiles();
+    message.request =
+      object.request !== undefined && object.request !== null
+        ? GetFluffFiles_Request.fromPartial(object.request)
+        : undefined;
+    message.response =
+      object.response !== undefined && object.response !== null
+        ? GetFluffFiles_Response.fromPartial(object.response)
+        : undefined;
+    message.error = object.error ?? undefined;
+    return message;
+  },
+};
+
+function createBaseGetFluffFiles_Response(): GetFluffFiles_Response {
+  return { files: [] };
+}
+
+export const GetFluffFiles_Response = {
+  encode(
+    message: GetFluffFiles_Response,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
+    for (const v of message.files) {
+      writer.uint32(10).string(v!);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number,
+  ): GetFluffFiles_Response {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetFluffFiles_Response();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.files.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GetFluffFiles_Response {
+    return {
+      files: Array.isArray(object?.files)
+        ? object.files.map((e: any) => String(e))
+        : [],
+    };
+  },
+
+  toJSON(message: GetFluffFiles_Response): unknown {
+    const obj: any = {};
+    if (message.files) {
+      obj.files = message.files.map((e) => e);
+    } else {
+      obj.files = [];
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GetFluffFiles_Response>, I>>(
+    object: I,
+  ): GetFluffFiles_Response {
+    const message = createBaseGetFluffFiles_Response();
+    message.files = object.files?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseGetFluffFiles_Request(): GetFluffFiles_Request {
+  return {};
+}
+
+export const GetFluffFiles_Request = {
+  encode(
+    _: GetFluffFiles_Request,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number,
+  ): GetFluffFiles_Request {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetFluffFiles_Request();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): GetFluffFiles_Request {
+    return {};
+  },
+
+  toJSON(_: GetFluffFiles_Request): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GetFluffFiles_Request>, I>>(
+    _: I,
+  ): GetFluffFiles_Request {
+    const message = createBaseGetFluffFiles_Request();
     return message;
   },
 };

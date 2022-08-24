@@ -1,6 +1,31 @@
+/* width */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    // box-shadow: inset 0 0 5px grey; 
+    // border-radius: 10px;
+    display: none;
+
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    display: none;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    display: none;
+}
+
 :host {
-    display: block;
+    display: flex;
+    flex-direction: column;
     margin: 4px;
+    overflow: hidden;
 }
 
 :host ::ng-deep {
@@ -39,6 +64,7 @@
 
 div.table {
     display: flex;
+    overflow-y: auto;
 
     table {
         flex-grow: 1;
