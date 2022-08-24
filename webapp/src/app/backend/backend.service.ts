@@ -10,6 +10,7 @@ import { Subject } from "rxjs";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
 import { GetPowerGridState, GetPowerPlantState, LsxMessage, PowerGridState, PowerPlantState, Request, Response } from "proto/lsx";
+import { BaseState } from "proto/lsx.lockdown";
 
 const LSX_SERVER_HOSTNAME = window?.__env?.lsxServerHostname != null ? `${window.__env.lsxServerHostname}` : 'localhost';
 const LSX_SERVER_PORT = window?.__env?.lsxServerPort != null ? window.__env.lsxServerPort : 3000;
@@ -52,38 +53,13 @@ export class BackendService {
         return res.getAnnouncementFiles!.files!;
     }
 
-    public async getPowerGridState(): Promise<PowerGridState> {
+    public async getBaseState(): Promise<BaseState> {
         const req: Request = {
-            getPowerGridState: {}
+            getBaseState: {}
         }
 
         const res: Response = await this.request(req);
-        return res.getPowerGridState!.state!;
-    }
-
-    public async setPowerGridState(state: PowerGridState) {
-        const req: Request = {
-            setPowerGridState: {state: state}
-        }
-
-        const res: Response = await this.request(req);
-    }
-
-    public async getPowerPlantState(): Promise<PowerPlantState> {
-        const req: Request = {
-            getPowerPlantState: {}
-        }
-
-        const res: Response = await this.request(req);
-        return res.getPowerPlantState!.state!;
-    }
-
-    public async setPowerPlantState(state: PowerPlantState) {
-        const req: Request = {
-            setPowerPlantState: {state: state}
-        }
-
-        const res: Response = await this.request(req);
+        return res.getBaseState!.state!;
     }
 
     public request(req: Request): Promise<Response> {

@@ -7,8 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { SpeakerAnnouncementsComponent } from './speaker-announcements/speaker-announcements.component';
-import { SpeakerAnnouncementsModule } from './speaker-announcements/speaker-announcements.module';
 
 declare global {
   interface Window {

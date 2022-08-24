@@ -1,21 +1,7 @@
 syntax = "proto3";
 
-enum PowerPlantState {
-    STATE_EMPTY = 0;
-    STATE_NORMAL = 1;
-    STATE_POWER_SAVING = 2;
-    STATE_CRITICAL = 3;
-    STATE_OFFLINE = 4;
-}
-
-enum PowerLineState {
-    STATE_POWERED = 0;
-    STATE_UNPOWERED = 1;
-}
-
-message Error {
-    string message = 1;
-}
+import "lsx.lockdown.proto";
+import "lsx.power.proto";
 
 message Request {
     oneof request {
@@ -24,6 +10,12 @@ message Request {
         GetPowerGridState.Request get_power_grid_state = 4;
         SetPowerGridState.Request set_power_grid_state = 5;
         GetAnnouncementFiles.Request get_announcement_files = 6;
+        GetBaseState.Request get_base_state = 7;
+        SetBaseState.Request set_base_state = 8;
+        GetAutoLockdown.Request get_auto_lockdown = 9;
+        SetAutoLockdown.Request set_auto_lockdown = 10;
+        GetLockdownAnnouncements.Request get_lockdown_announcements = 11;
+        SetLockdownAnnouncements.Request set_lockdown_announcements = 12;
     }
 }
 
@@ -34,9 +26,14 @@ message Response {
         GetPowerGridState.Response get_power_grid_state = 3;
         SetPowerGridState.Response set_power_grid_state = 5;
         GetAnnouncementFiles.Response get_announcement_files = 6;
+        GetBaseState.Response get_base_state = 7;
+        SetBaseState.Response set_base_state = 8;
+        GetAutoLockdown.Response get_auto_lockdown = 9;
+        SetAutoLockdown.Response set_auto_lockdown = 10;
+        GetLockdownAnnouncements.Response get_lockdown_announcements = 11;
+        SetLockdownAnnouncements.Response set_lockdown_announcements = 12;
     }
 }
-
 
 message LsxMessage {
     string id = 1;
@@ -59,74 +56,7 @@ message GetAnnouncementFiles {
     oneof message {
         Request request = 1;
         Response response = 2;
-        Error error = 3;
+        string error = 3;
     }
 }
 
-message PowerGridState {
-    PowerLineState og_base_med = 1;
-    PowerLineState og_parcel_left = 2;
-    PowerLineState og_parcel_right = 3;
-    PowerLineState ug_parcel_left = 4;
-    PowerLineState ug_parcel_right = 5;
-}
-
-message GetPowerGridState {
-    message Response {
-        PowerGridState state = 1;
-    }
-
-    message Request {
-
-    }
-
-    oneof message {
-        Request request = 1;
-        Response response = 2;
-        Error error = 3;
-    }
-}
-
-message SetPowerGridState {
-    message Request {
-        PowerGridState state = 1;
-    }
-
-    message Response {
-
-    }
-
-    oneof message {
-        Request request = 1;
-        Response response = 2;
-        Error error = 3;
-    }
-}
-
-message GetPowerPlantState {
-    message Request {
-
-    }
-    message Response {
-        PowerPlantState state = 1;
-    }
-    oneof message {
-        Request request = 1;
-        Response response = 2;
-        Error error = 3;
-    }
-}
-
-message SetPowerPlantState {
-    message Request {
-        PowerPlantState state = 1;
-    }
-    message Response {
-
-    }
-    oneof message {
-        Request request = 1;
-        Response response = 2;
-        Error error = 3;
-    }
-}

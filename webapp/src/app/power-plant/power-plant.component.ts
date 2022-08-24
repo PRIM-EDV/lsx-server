@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PowerPlantState, Request, Response } from 'proto/lsx';
+import { Request, Response } from 'proto/lsx';
+import { PowerPlantState } from 'proto/lsx.power';
 import { BackendService } from '../backend/backend.service';
+import { PowerPlantService } from './power-plant.service';
 
 @Component({
   selector: 'app-power-plant',
@@ -11,13 +13,13 @@ export class PowerPlantComponent implements OnInit {
 
   public powerPlantState: string | number = 'normal';
 
-  constructor(private readonly backend: BackendService) { 
+  constructor(private readonly backend: BackendService, private readonly powerPlantService: PowerPlantService) {
 
   }
 
   ngOnInit(): void {
     this.backend.onOpen.subscribe(async () => {
-      const powerPlantState = await this.backend.getPowerPlantState();
+      const powerPlantState = await this.powerPlantService.getPowerPlantState();
       this.updateLocalPowerPlantState(powerPlantState);
     });
     this.backend.onRequest.subscribe(this.handleRequest.bind(this));
@@ -35,10 +37,10 @@ export class PowerPlantComponent implements OnInit {
 
   public async updateServerPowerGridState() {
     switch(this.powerPlantState) {
-      case 'normal': await this.backend.setPowerPlantState(PowerPlantState.STATE_NORMAL); break;
-      case 'critical': await this.backend.setPowerPlantState(PowerPlantState.STATE_CRITICAL); break;
-      case 'low': await this.backend.setPowerPlantState(PowerPlantState.STATE_POWER_SAVING); break;
-      case 'offline': await this.backend.setPowerPlantState(PowerPlantState.STATE_OFFLINE); break;
+      case 'normal': await this.powerPlantService.setPowerPlantState(PowerPlantState.STATE_NORMAL); break;
+      case 'critical': await this.powerPlantService.setPowerPlantState(PowerPlantState.STATE_CRITICAL); break;
+      case 'low': await this.powerPlantService.setPowerPlantState(PowerPlantState.STATE_POWER_SAVING); break;
+      case 'offline': await this.powerPlantService.setPowerPlantState(PowerPlantState.STATE_OFFLINE); break;
     }
   }
 

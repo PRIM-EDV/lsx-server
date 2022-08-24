@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PowerControlComponent } from './power-control.component';
+import { PowerGridService } from './power-grid.service';
 
 
 @NgModule({
@@ -11,6 +12,9 @@ import { PowerControlComponent } from './power-control.component';
   ],
   exports: [
     PowerControlComponent
+  ],
+  providers: [
+    PowerGridService
   ]
 })
 export class PowerControlModule { }

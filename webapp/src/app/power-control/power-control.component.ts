@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PowerGridState, PowerLineState, Request, Response } from 'proto/lsx';
+import { Request, Response } from 'proto/lsx';
+import { PowerGridState, PowerLineState } from 'proto/lsx.power';
 import { BackendService } from '../backend/backend.service';
+import { PowerGridService } from './power-grid.service';
 
 @Component({
   selector: 'app-power-control',
@@ -16,11 +18,11 @@ export class PowerControlComponent implements OnInit {
   public poweredStateLowerLeft: boolean = false;
 
 
-  constructor(private readonly backend: BackendService) { }
+  constructor(private readonly backend: BackendService, private readonly powerGridService: PowerGridService) { }
 
   ngOnInit(): void {
     this.backend.onOpen.subscribe(async () => {
-      const powerGridState = await this.backend.getPowerGridState();
+      const powerGridState = await this.powerGridService.getPowerGridState();
       this.updateLocalPowerGridState(powerGridState);
     })
 
@@ -44,7 +46,7 @@ export class PowerControlComponent implements OnInit {
       ugParcelRight: this.poweredStateLowerRight ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
     }
 
-    await this.backend.setPowerGridState(powerGridState);
+    await this.powerGridService.setPowerGridState(powerGridState);
   }
 
   private handleRequest(event: {id: string, request: Request}) {
