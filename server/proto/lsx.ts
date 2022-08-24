@@ -11,11 +11,17 @@ import {
 } from './lsx.power';
 import {
   GetBaseState_Request,
+  SetBaseState_Request,
   GetAutoLockdown_Request,
   SetAutoLockdown_Request,
+  GetLockdownAnnouncements_Request,
+  SetLockdownAnnouncements_Request,
   GetBaseState_Response,
+  SetBaseState_Response,
   GetAutoLockdown_Response,
   SetAutoLockdown_Response,
+  GetLockdownAnnouncements_Response,
+  SetLockdownAnnouncements_Response,
 } from './lsx.lockdown';
 import * as _m0 from 'protobufjs/minimal';
 
@@ -28,9 +34,11 @@ export interface Request {
   setPowerGridState?: SetPowerGridState_Request | undefined;
   getAnnouncementFiles?: GetAnnouncementFiles_Request | undefined;
   getBaseState?: GetBaseState_Request | undefined;
-  setBaseState?: GetBaseState_Request | undefined;
+  setBaseState?: SetBaseState_Request | undefined;
   getAutoLockdown?: GetAutoLockdown_Request | undefined;
   setAutoLockdown?: SetAutoLockdown_Request | undefined;
+  getLockdownAnnouncements?: GetLockdownAnnouncements_Request | undefined;
+  setLockdownAnnouncements?: SetLockdownAnnouncements_Request | undefined;
 }
 
 export interface Response {
@@ -40,9 +48,11 @@ export interface Response {
   setPowerGridState?: SetPowerGridState_Response | undefined;
   getAnnouncementFiles?: GetAnnouncementFiles_Response | undefined;
   getBaseState?: GetBaseState_Response | undefined;
-  setBaseState?: GetBaseState_Response | undefined;
+  setBaseState?: SetBaseState_Response | undefined;
   getAutoLockdown?: GetAutoLockdown_Response | undefined;
   setAutoLockdown?: SetAutoLockdown_Response | undefined;
+  getLockdownAnnouncements?: GetLockdownAnnouncements_Response | undefined;
+  setLockdownAnnouncements?: SetLockdownAnnouncements_Response | undefined;
 }
 
 export interface LsxMessage {
@@ -74,6 +84,8 @@ function createBaseRequest(): Request {
     setBaseState: undefined,
     getAutoLockdown: undefined,
     setAutoLockdown: undefined,
+    getLockdownAnnouncements: undefined,
+    setLockdownAnnouncements: undefined,
   };
 }
 
@@ -119,7 +131,7 @@ export const Request = {
       ).ldelim();
     }
     if (message.setBaseState !== undefined) {
-      GetBaseState_Request.encode(
+      SetBaseState_Request.encode(
         message.setBaseState,
         writer.uint32(66).fork(),
       ).ldelim();
@@ -134,6 +146,18 @@ export const Request = {
       SetAutoLockdown_Request.encode(
         message.setAutoLockdown,
         writer.uint32(82).fork(),
+      ).ldelim();
+    }
+    if (message.getLockdownAnnouncements !== undefined) {
+      GetLockdownAnnouncements_Request.encode(
+        message.getLockdownAnnouncements,
+        writer.uint32(90).fork(),
+      ).ldelim();
+    }
+    if (message.setLockdownAnnouncements !== undefined) {
+      SetLockdownAnnouncements_Request.encode(
+        message.setLockdownAnnouncements,
+        writer.uint32(98).fork(),
       ).ldelim();
     }
     return writer;
@@ -183,7 +207,7 @@ export const Request = {
           );
           break;
         case 8:
-          message.setBaseState = GetBaseState_Request.decode(
+          message.setBaseState = SetBaseState_Request.decode(
             reader,
             reader.uint32(),
           );
@@ -199,6 +223,14 @@ export const Request = {
             reader,
             reader.uint32(),
           );
+          break;
+        case 11:
+          message.getLockdownAnnouncements =
+            GetLockdownAnnouncements_Request.decode(reader, reader.uint32());
+          break;
+        case 12:
+          message.setLockdownAnnouncements =
+            SetLockdownAnnouncements_Request.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -229,13 +261,23 @@ export const Request = {
         ? GetBaseState_Request.fromJSON(object.getBaseState)
         : undefined,
       setBaseState: isSet(object.setBaseState)
-        ? GetBaseState_Request.fromJSON(object.setBaseState)
+        ? SetBaseState_Request.fromJSON(object.setBaseState)
         : undefined,
       getAutoLockdown: isSet(object.getAutoLockdown)
         ? GetAutoLockdown_Request.fromJSON(object.getAutoLockdown)
         : undefined,
       setAutoLockdown: isSet(object.setAutoLockdown)
         ? SetAutoLockdown_Request.fromJSON(object.setAutoLockdown)
+        : undefined,
+      getLockdownAnnouncements: isSet(object.getLockdownAnnouncements)
+        ? GetLockdownAnnouncements_Request.fromJSON(
+            object.getLockdownAnnouncements,
+          )
+        : undefined,
+      setLockdownAnnouncements: isSet(object.setLockdownAnnouncements)
+        ? SetLockdownAnnouncements_Request.fromJSON(
+            object.setLockdownAnnouncements,
+          )
         : undefined,
     };
   },
@@ -268,7 +310,7 @@ export const Request = {
         : undefined);
     message.setBaseState !== undefined &&
       (obj.setBaseState = message.setBaseState
-        ? GetBaseState_Request.toJSON(message.setBaseState)
+        ? SetBaseState_Request.toJSON(message.setBaseState)
         : undefined);
     message.getAutoLockdown !== undefined &&
       (obj.getAutoLockdown = message.getAutoLockdown
@@ -277,6 +319,18 @@ export const Request = {
     message.setAutoLockdown !== undefined &&
       (obj.setAutoLockdown = message.setAutoLockdown
         ? SetAutoLockdown_Request.toJSON(message.setAutoLockdown)
+        : undefined);
+    message.getLockdownAnnouncements !== undefined &&
+      (obj.getLockdownAnnouncements = message.getLockdownAnnouncements
+        ? GetLockdownAnnouncements_Request.toJSON(
+            message.getLockdownAnnouncements,
+          )
+        : undefined);
+    message.setLockdownAnnouncements !== undefined &&
+      (obj.setLockdownAnnouncements = message.setLockdownAnnouncements
+        ? SetLockdownAnnouncements_Request.toJSON(
+            message.setLockdownAnnouncements,
+          )
         : undefined);
     return obj;
   },
@@ -314,7 +368,7 @@ export const Request = {
         : undefined;
     message.setBaseState =
       object.setBaseState !== undefined && object.setBaseState !== null
-        ? GetBaseState_Request.fromPartial(object.setBaseState)
+        ? SetBaseState_Request.fromPartial(object.setBaseState)
         : undefined;
     message.getAutoLockdown =
       object.getAutoLockdown !== undefined && object.getAutoLockdown !== null
@@ -323,6 +377,20 @@ export const Request = {
     message.setAutoLockdown =
       object.setAutoLockdown !== undefined && object.setAutoLockdown !== null
         ? SetAutoLockdown_Request.fromPartial(object.setAutoLockdown)
+        : undefined;
+    message.getLockdownAnnouncements =
+      object.getLockdownAnnouncements !== undefined &&
+      object.getLockdownAnnouncements !== null
+        ? GetLockdownAnnouncements_Request.fromPartial(
+            object.getLockdownAnnouncements,
+          )
+        : undefined;
+    message.setLockdownAnnouncements =
+      object.setLockdownAnnouncements !== undefined &&
+      object.setLockdownAnnouncements !== null
+        ? SetLockdownAnnouncements_Request.fromPartial(
+            object.setLockdownAnnouncements,
+          )
         : undefined;
     return message;
   },
@@ -339,6 +407,8 @@ function createBaseResponse(): Response {
     setBaseState: undefined,
     getAutoLockdown: undefined,
     setAutoLockdown: undefined,
+    getLockdownAnnouncements: undefined,
+    setLockdownAnnouncements: undefined,
   };
 }
 
@@ -384,7 +454,7 @@ export const Response = {
       ).ldelim();
     }
     if (message.setBaseState !== undefined) {
-      GetBaseState_Response.encode(
+      SetBaseState_Response.encode(
         message.setBaseState,
         writer.uint32(66).fork(),
       ).ldelim();
@@ -399,6 +469,18 @@ export const Response = {
       SetAutoLockdown_Response.encode(
         message.setAutoLockdown,
         writer.uint32(82).fork(),
+      ).ldelim();
+    }
+    if (message.getLockdownAnnouncements !== undefined) {
+      GetLockdownAnnouncements_Response.encode(
+        message.getLockdownAnnouncements,
+        writer.uint32(90).fork(),
+      ).ldelim();
+    }
+    if (message.setLockdownAnnouncements !== undefined) {
+      SetLockdownAnnouncements_Response.encode(
+        message.setLockdownAnnouncements,
+        writer.uint32(98).fork(),
       ).ldelim();
     }
     return writer;
@@ -448,7 +530,7 @@ export const Response = {
           );
           break;
         case 8:
-          message.setBaseState = GetBaseState_Response.decode(
+          message.setBaseState = SetBaseState_Response.decode(
             reader,
             reader.uint32(),
           );
@@ -464,6 +546,14 @@ export const Response = {
             reader,
             reader.uint32(),
           );
+          break;
+        case 11:
+          message.getLockdownAnnouncements =
+            GetLockdownAnnouncements_Response.decode(reader, reader.uint32());
+          break;
+        case 12:
+          message.setLockdownAnnouncements =
+            SetLockdownAnnouncements_Response.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -494,13 +584,23 @@ export const Response = {
         ? GetBaseState_Response.fromJSON(object.getBaseState)
         : undefined,
       setBaseState: isSet(object.setBaseState)
-        ? GetBaseState_Response.fromJSON(object.setBaseState)
+        ? SetBaseState_Response.fromJSON(object.setBaseState)
         : undefined,
       getAutoLockdown: isSet(object.getAutoLockdown)
         ? GetAutoLockdown_Response.fromJSON(object.getAutoLockdown)
         : undefined,
       setAutoLockdown: isSet(object.setAutoLockdown)
         ? SetAutoLockdown_Response.fromJSON(object.setAutoLockdown)
+        : undefined,
+      getLockdownAnnouncements: isSet(object.getLockdownAnnouncements)
+        ? GetLockdownAnnouncements_Response.fromJSON(
+            object.getLockdownAnnouncements,
+          )
+        : undefined,
+      setLockdownAnnouncements: isSet(object.setLockdownAnnouncements)
+        ? SetLockdownAnnouncements_Response.fromJSON(
+            object.setLockdownAnnouncements,
+          )
         : undefined,
     };
   },
@@ -533,7 +633,7 @@ export const Response = {
         : undefined);
     message.setBaseState !== undefined &&
       (obj.setBaseState = message.setBaseState
-        ? GetBaseState_Response.toJSON(message.setBaseState)
+        ? SetBaseState_Response.toJSON(message.setBaseState)
         : undefined);
     message.getAutoLockdown !== undefined &&
       (obj.getAutoLockdown = message.getAutoLockdown
@@ -542,6 +642,18 @@ export const Response = {
     message.setAutoLockdown !== undefined &&
       (obj.setAutoLockdown = message.setAutoLockdown
         ? SetAutoLockdown_Response.toJSON(message.setAutoLockdown)
+        : undefined);
+    message.getLockdownAnnouncements !== undefined &&
+      (obj.getLockdownAnnouncements = message.getLockdownAnnouncements
+        ? GetLockdownAnnouncements_Response.toJSON(
+            message.getLockdownAnnouncements,
+          )
+        : undefined);
+    message.setLockdownAnnouncements !== undefined &&
+      (obj.setLockdownAnnouncements = message.setLockdownAnnouncements
+        ? SetLockdownAnnouncements_Response.toJSON(
+            message.setLockdownAnnouncements,
+          )
         : undefined);
     return obj;
   },
@@ -579,7 +691,7 @@ export const Response = {
         : undefined;
     message.setBaseState =
       object.setBaseState !== undefined && object.setBaseState !== null
-        ? GetBaseState_Response.fromPartial(object.setBaseState)
+        ? SetBaseState_Response.fromPartial(object.setBaseState)
         : undefined;
     message.getAutoLockdown =
       object.getAutoLockdown !== undefined && object.getAutoLockdown !== null
@@ -588,6 +700,20 @@ export const Response = {
     message.setAutoLockdown =
       object.setAutoLockdown !== undefined && object.setAutoLockdown !== null
         ? SetAutoLockdown_Response.fromPartial(object.setAutoLockdown)
+        : undefined;
+    message.getLockdownAnnouncements =
+      object.getLockdownAnnouncements !== undefined &&
+      object.getLockdownAnnouncements !== null
+        ? GetLockdownAnnouncements_Response.fromPartial(
+            object.getLockdownAnnouncements,
+          )
+        : undefined;
+    message.setLockdownAnnouncements =
+      object.setLockdownAnnouncements !== undefined &&
+      object.setLockdownAnnouncements !== null
+        ? SetLockdownAnnouncements_Response.fromPartial(
+            object.setLockdownAnnouncements,
+          )
         : undefined;
     return message;
   },

@@ -11,6 +11,7 @@ import { AnnouncementsModule } from './announcements/announcements.module';
 import { AppGateway } from './gateway/app.gateway';
 import { LoggingModule } from './logging/logging.module';
 import { GatewayModule } from './gateway/gateway.module';
+import { LockdownModule } from './lockdown/lockdown.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { GatewayModule } from './gateway/gateway.module';
     }),
     AnnouncementsModule,
     GatewayModule,
-    LoggingModule
+    LoggingModule,
+    LockdownModule
   ],
   controllers: [AppController],
   providers: [AppService, QlcService],

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { LsxMessage, Request } from 'proto/lsx';
+import { Request } from 'proto/lsx';
 import { PowerGridState, PowerPlantState, PowerLineState } from 'proto/lsx.power';
 import { Subject } from 'rxjs';
 import { AppGateway } from 'src/gateway/app.gateway';

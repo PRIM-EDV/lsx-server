@@ -11,9 +11,11 @@ message Request {
         SetPowerGridState.Request set_power_grid_state = 5;
         GetAnnouncementFiles.Request get_announcement_files = 6;
         GetBaseState.Request get_base_state = 7;
-        GetBaseState.Request set_base_state = 8;
+        SetBaseState.Request set_base_state = 8;
         GetAutoLockdown.Request get_auto_lockdown = 9;
         SetAutoLockdown.Request set_auto_lockdown = 10;
+        GetLockdownAnnouncements.Request get_lockdown_announcements = 11;
+        SetLockdownAnnouncements.Request set_lockdown_announcements = 12;
     }
 }
 
@@ -25,9 +27,11 @@ message Response {
         SetPowerGridState.Response set_power_grid_state = 5;
         GetAnnouncementFiles.Response get_announcement_files = 6;
         GetBaseState.Response get_base_state = 7;
-        GetBaseState.Response set_base_state = 8;
+        SetBaseState.Response set_base_state = 8;
         GetAutoLockdown.Response get_auto_lockdown = 9;
         SetAutoLockdown.Response set_auto_lockdown = 10;
+        GetLockdownAnnouncements.Response get_lockdown_announcements = 11;
+        SetLockdownAnnouncements.Response set_lockdown_announcements = 12;
     }
 }
 

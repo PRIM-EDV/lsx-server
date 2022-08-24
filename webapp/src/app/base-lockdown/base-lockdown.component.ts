@@ -11,9 +11,9 @@ import { BaseLockdownService } from './base-lockdown.service';
 })
 export class BaseLockdownComponent implements OnInit {
 
-  public baseState: string = "normal";
-  public autoLockdown: string = "on";
-  public lockdownAnnouncements: string = "on";
+  public baseState: string | number = "normal";
+  public autoLockdown: string | number = "on";
+  public lockdownAnnouncements: string | number = "on";
 
   constructor(private readonly backend: BackendService, private readonly baseLockdownService: BaseLockdownService) { }
 
@@ -52,6 +52,20 @@ export class BaseLockdownComponent implements OnInit {
     }
   }
 
+  public async updateAutoLockdown() {
+    switch(this.autoLockdown) {
+      case 'on': await this.baseLockdownService.setAutoLockdown(true); break;
+      case 'off': await this.baseLockdownService.setAutoLockdown(false); break;
+    }
+  }
+
+  public async updateLockdownAnnouncements() {
+    switch(this.lockdownAnnouncements) {
+      case 'on': await this.baseLockdownService.setLockdownAnnouncements(true); break;
+      case 'off': await this.baseLockdownService.setLockdownAnnouncements(false); break;
+    }
+  }
+
   private handleRequest(event: {id: string, request: Request}) {
     if(event.request.setBaseState) {
       this.updateLocalBaseState(event.request.setBaseState.state!);
@@ -62,7 +76,7 @@ export class BaseLockdownComponent implements OnInit {
       this.backend.respond(event.id, {setAutoLockdown: {}})
     }
     if(event.request.setLockdownAnnouncements) {
-      this.updateLocalAutoLockdown(event.request.setLockdownAnnouncements.state!);
+      this.updateLocalLockdownAnnouncements(event.request.setLockdownAnnouncements.state!);
       this.backend.respond(event.id, {setLockdownAnnouncements: {}})
     }
   }
