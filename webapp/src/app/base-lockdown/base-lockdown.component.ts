@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BaseState } from 'proto/lsx.lockdown';
 import { BackendService } from '../backend/backend.service';
 import { Request } from 'proto/lsx';
+import { BaseLockdownService } from './base-lockdown.service';
 
 @Component({
   selector: 'base-lockdown',
@@ -14,12 +15,17 @@ export class BaseLockdownComponent implements OnInit {
   public autoLockdown: string = "on";
   public lockdownAnnouncements: string = "on";
 
-  constructor(private readonly backend: BackendService) { }
+  constructor(private readonly backend: BackendService, private readonly baseLockdownService: BaseLockdownService) { }
 
   ngOnInit(): void {
     this.backend.onOpen.subscribe(async () => {
-      // const powerPlantState = await this.backend.getPowerPlantState();
-      // this.updateLocalPowerPlantState(powerPlantState);
+      const baseState = await this.baseLockdownService.getBaseState();
+      const autoLockdown = await this.baseLockdownService.getAutoLockdown();
+      const lockdownAnnouncements = await this.baseLockdownService.getLockdownAnnouncements();
+
+      this.updateLocalBaseState(baseState);
+      this.updateLocalAutoLockdown(autoLockdown);
+      this.updateLocalLockdownAnnouncements(lockdownAnnouncements);
     });
     this.backend.onRequest.subscribe(this.handleRequest.bind(this));
   }
@@ -41,8 +47,8 @@ export class BaseLockdownComponent implements OnInit {
 
   public async updateServerBaseState() {
     switch(this.baseState) {
-      case 'normal': await this.backend.setPowerPlantState(PowerPlantState.STATE_NORMAL); break;
-      case 'lockdown': await this.backend.setPowerPlantState(PowerPlantState.STATE_CRITICAL); break;
+      case 'normal': await this.baseLockdownService.setBaseState(BaseState.BASE_STATE_NORMAL); break;
+      case 'lockdown': await this.baseLockdownService.setBaseState(BaseState.BASE_STATE_LOCKDOWN); break;
     }
   }
 

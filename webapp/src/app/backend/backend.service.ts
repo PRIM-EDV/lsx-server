@@ -9,16 +9,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { Subject } from "rxjs";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
-import { GetPowerGridState, GetPowerPlantState, LsxMessage, PowerGridState, PowerPlantState, Request, Response } from "proto/lsx";
-import { BaseState } from "proto/lsx.lockdown";
+import { LsxMessage, Request, Response } from "proto/lsx";
 
 const LSX_SERVER_HOSTNAME = window?.__env?.lsxServerHostname != null ? `${window.__env.lsxServerHostname}` : 'localhost';
 const LSX_SERVER_PORT = window?.__env?.lsxServerPort != null ? window.__env.lsxServerPort : 3000;
 
 const REST_API_URL = `http://${window.location.host}`;
 const WS_URL = `ws://${LSX_SERVER_HOSTNAME}:${LSX_SERVER_PORT}`;
-
-export type LsxRequest = GetPowerGridState | GetPowerPlantState;
 
 @Injectable({providedIn: 'root'})
 export class BackendService {
@@ -30,9 +27,7 @@ export class BackendService {
     private requests: Map<string, (value: Response) => void> = new Map<string, (value: Response) => void>();
     private ws!: WebSocketSubject<any>;
 
-    constructor(private http: HttpClient) {
-
-    }
+    constructor(private http: HttpClient) {}
 
     public async connect() {
         this.ws = webSocket({url: WS_URL, openObserver: { next: () => {this.onOpen.next()} }});
@@ -51,15 +46,6 @@ export class BackendService {
 
         const res: Response = await this.request(req);
         return res.getAnnouncementFiles!.files!;
-    }
-
-    public async getBaseState(): Promise<BaseState> {
-        const req: Request = {
-            getBaseState: {}
-        }
-
-        const res: Response = await this.request(req);
-        return res.getBaseState!.state!;
     }
 
     public request(req: Request): Promise<Response> {
