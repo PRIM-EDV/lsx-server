@@ -21,7 +21,7 @@ export class QlcService {
 
     private onConnectionError() {
         // this.log.info(`Could not connect to ${URL} trying to reconnect...`)
-        // setTimeout(this.reconnectWebsocket.bind(this), 5000);
+        setTimeout(this.reconnectWebsocket.bind(this), 5000);
     }
 
     private onConnectionClosed() {

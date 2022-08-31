@@ -13,6 +13,7 @@ import { LoggingModule } from './logging/logging.module';
 import { GatewayModule } from './gateway/gateway.module';
 import { LockdownModule } from './lockdown/lockdown.module';
 import { FluffModule } from './fluff/fluff.module';
+import { SoundModule } from './sound/sound.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { FluffModule } from './fluff/fluff.module';
     GatewayModule,
     LoggingModule,
     LockdownModule,
-    FluffModule
+    FluffModule,
+    SoundModule
   ],
   controllers: [AppController],
   providers: [AppService, QlcService],
