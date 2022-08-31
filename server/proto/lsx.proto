@@ -1,22 +1,25 @@
 syntax = "proto3";
 
 import "lsx.lockdown.proto";
+import "lsx.fluff.proto";
 import "lsx.power.proto";
 
 message Request {
     oneof request {
-        GetPowerPlantState.Request get_power_plant_state = 2;
-        SetPowerPlantState.Request set_power_plant_state = 3;
-        GetPowerGridState.Request get_power_grid_state = 4;
-        SetPowerGridState.Request set_power_grid_state = 5;
-        GetAnnouncementFiles.Request get_announcement_files = 6;
-        GetBaseState.Request get_base_state = 7;
-        SetBaseState.Request set_base_state = 8;
-        GetAutoLockdown.Request get_auto_lockdown = 9;
-        SetAutoLockdown.Request set_auto_lockdown = 10;
-        GetLockdownAnnouncements.Request get_lockdown_announcements = 11;
-        SetLockdownAnnouncements.Request set_lockdown_announcements = 12;
-        GetFluffFiles.Request get_fluff_files = 13;
+        GetPowerPlantState.Request get_power_plant_state = 1;
+        SetPowerPlantState.Request set_power_plant_state = 2;
+        GetPowerGridState.Request get_power_grid_state = 3;
+        SetPowerGridState.Request set_power_grid_state = 4;
+        GetAnnouncementFiles.Request get_announcement_files = 5;
+        GetBaseState.Request get_base_state = 6;
+        SetBaseState.Request set_base_state = 7;
+        GetAutoLockdown.Request get_auto_lockdown = 8;
+        SetAutoLockdown.Request set_auto_lockdown = 9;
+        GetLockdownAnnouncements.Request get_lockdown_announcements = 10;
+        SetLockdownAnnouncements.Request set_lockdown_announcements = 11;
+        GetFluffFiles.Request get_fluff_files = 12;
+        GetFluffState.Request get_fluff_state = 13;
+        SetFluffState.Request set_fluff_state = 14;
     }
 }
 
@@ -25,15 +28,17 @@ message Response {
         GetPowerPlantState.Response get_power_plant_state = 1;
         SetPowerPlantState.Response set_power_plant_state = 2;
         GetPowerGridState.Response get_power_grid_state = 3;
-        SetPowerGridState.Response set_power_grid_state = 5;
-        GetAnnouncementFiles.Response get_announcement_files = 6;
-        GetBaseState.Response get_base_state = 7;
-        SetBaseState.Response set_base_state = 8;
-        GetAutoLockdown.Response get_auto_lockdown = 9;
-        SetAutoLockdown.Response set_auto_lockdown = 10;
-        GetLockdownAnnouncements.Response get_lockdown_announcements = 11;
-        SetLockdownAnnouncements.Response set_lockdown_announcements = 12;
-        GetFluffFiles.Response get_fluff_files = 13;
+        SetPowerGridState.Response set_power_grid_state = 4;
+        GetAnnouncementFiles.Response get_announcement_files = 5;
+        GetBaseState.Response get_base_state = 6;
+        SetBaseState.Response set_base_state = 7;
+        GetAutoLockdown.Response get_auto_lockdown = 8;
+        SetAutoLockdown.Response set_auto_lockdown = 9;
+        GetLockdownAnnouncements.Response get_lockdown_announcements = 10;
+        SetLockdownAnnouncements.Response set_lockdown_announcements = 11;
+        GetFluffFiles.Response get_fluff_files = 12;
+        GetFluffState.Response get_fluff_state = 13;
+        SetFluffState.Response set_fluff_state = 14;
     }
 }
 
@@ -62,19 +67,5 @@ message GetAnnouncementFiles {
     }
 }
 
-message GetFluffFiles {
-    message Response {
-        repeated string files = 1;
-    }
 
-    message Request {
-
-    }
-
-    oneof message {
-        Request request = 1;
-        Response response = 2;
-        string error = 3;
-    }
-}
 

@@ -6,6 +6,9 @@ import { LockdownService } from './lockdown.service';
   imports: [
     SoundModule
   ],
+  exports: [
+    LockdownService
+  ],
   providers: [LockdownService]
 })
 export class LockdownModule {}

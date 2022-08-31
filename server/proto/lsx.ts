@@ -23,6 +23,14 @@ import {
   GetLockdownAnnouncements_Response,
   SetLockdownAnnouncements_Response,
 } from './lsx.lockdown';
+import {
+  GetFluffFiles_Request,
+  GetFluffState_Request,
+  SetFluffState_Request,
+  GetFluffFiles_Response,
+  GetFluffState_Response,
+  SetFluffState_Response,
+} from './lsx.fluff';
 import * as _m0 from 'protobufjs/minimal';
 
 export const protobufPackage = '';
@@ -40,6 +48,8 @@ export interface Request {
   getLockdownAnnouncements?: GetLockdownAnnouncements_Request | undefined;
   setLockdownAnnouncements?: SetLockdownAnnouncements_Request | undefined;
   getFluffFiles?: GetFluffFiles_Request | undefined;
+  getFluffState?: GetFluffState_Request | undefined;
+  setFluffState?: SetFluffState_Request | undefined;
 }
 
 export interface Response {
@@ -55,6 +65,8 @@ export interface Response {
   getLockdownAnnouncements?: GetLockdownAnnouncements_Response | undefined;
   setLockdownAnnouncements?: SetLockdownAnnouncements_Response | undefined;
   getFluffFiles?: GetFluffFiles_Response | undefined;
+  getFluffState?: GetFluffState_Response | undefined;
+  setFluffState?: SetFluffState_Response | undefined;
 }
 
 export interface LsxMessage {
@@ -75,18 +87,6 @@ export interface GetAnnouncementFiles_Response {
 
 export interface GetAnnouncementFiles_Request {}
 
-export interface GetFluffFiles {
-  request?: GetFluffFiles_Request | undefined;
-  response?: GetFluffFiles_Response | undefined;
-  error: string | undefined;
-}
-
-export interface GetFluffFiles_Response {
-  files: string[];
-}
-
-export interface GetFluffFiles_Request {}
-
 function createBaseRequest(): Request {
   return {
     getPowerPlantState: undefined,
@@ -101,6 +101,8 @@ function createBaseRequest(): Request {
     getLockdownAnnouncements: undefined,
     setLockdownAnnouncements: undefined,
     getFluffFiles: undefined,
+    getFluffState: undefined,
+    setFluffState: undefined,
   };
 }
 
@@ -112,73 +114,85 @@ export const Request = {
     if (message.getPowerPlantState !== undefined) {
       GetPowerPlantState_Request.encode(
         message.getPowerPlantState,
-        writer.uint32(18).fork(),
+        writer.uint32(10).fork(),
       ).ldelim();
     }
     if (message.setPowerPlantState !== undefined) {
       SetPowerPlantState_Request.encode(
         message.setPowerPlantState,
-        writer.uint32(26).fork(),
+        writer.uint32(18).fork(),
       ).ldelim();
     }
     if (message.getPowerGridState !== undefined) {
       GetPowerGridState_Request.encode(
         message.getPowerGridState,
-        writer.uint32(34).fork(),
+        writer.uint32(26).fork(),
       ).ldelim();
     }
     if (message.setPowerGridState !== undefined) {
       SetPowerGridState_Request.encode(
         message.setPowerGridState,
-        writer.uint32(42).fork(),
+        writer.uint32(34).fork(),
       ).ldelim();
     }
     if (message.getAnnouncementFiles !== undefined) {
       GetAnnouncementFiles_Request.encode(
         message.getAnnouncementFiles,
-        writer.uint32(50).fork(),
+        writer.uint32(42).fork(),
       ).ldelim();
     }
     if (message.getBaseState !== undefined) {
       GetBaseState_Request.encode(
         message.getBaseState,
-        writer.uint32(58).fork(),
+        writer.uint32(50).fork(),
       ).ldelim();
     }
     if (message.setBaseState !== undefined) {
       SetBaseState_Request.encode(
         message.setBaseState,
-        writer.uint32(66).fork(),
+        writer.uint32(58).fork(),
       ).ldelim();
     }
     if (message.getAutoLockdown !== undefined) {
       GetAutoLockdown_Request.encode(
         message.getAutoLockdown,
-        writer.uint32(74).fork(),
+        writer.uint32(66).fork(),
       ).ldelim();
     }
     if (message.setAutoLockdown !== undefined) {
       SetAutoLockdown_Request.encode(
         message.setAutoLockdown,
-        writer.uint32(82).fork(),
+        writer.uint32(74).fork(),
       ).ldelim();
     }
     if (message.getLockdownAnnouncements !== undefined) {
       GetLockdownAnnouncements_Request.encode(
         message.getLockdownAnnouncements,
-        writer.uint32(90).fork(),
+        writer.uint32(82).fork(),
       ).ldelim();
     }
     if (message.setLockdownAnnouncements !== undefined) {
       SetLockdownAnnouncements_Request.encode(
         message.setLockdownAnnouncements,
-        writer.uint32(98).fork(),
+        writer.uint32(90).fork(),
       ).ldelim();
     }
     if (message.getFluffFiles !== undefined) {
       GetFluffFiles_Request.encode(
         message.getFluffFiles,
+        writer.uint32(98).fork(),
+      ).ldelim();
+    }
+    if (message.getFluffState !== undefined) {
+      GetFluffState_Request.encode(
+        message.getFluffState,
         writer.uint32(106).fork(),
+      ).ldelim();
+    }
+    if (message.setFluffState !== undefined) {
+      SetFluffState_Request.encode(
+        message.setFluffState,
+        writer.uint32(114).fork(),
       ).ldelim();
     }
     return writer;
@@ -191,70 +205,82 @@ export const Request = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 2:
+        case 1:
           message.getPowerPlantState = GetPowerPlantState_Request.decode(
             reader,
             reader.uint32(),
           );
           break;
-        case 3:
+        case 2:
           message.setPowerPlantState = SetPowerPlantState_Request.decode(
             reader,
             reader.uint32(),
           );
           break;
-        case 4:
+        case 3:
           message.getPowerGridState = GetPowerGridState_Request.decode(
             reader,
             reader.uint32(),
           );
           break;
-        case 5:
+        case 4:
           message.setPowerGridState = SetPowerGridState_Request.decode(
             reader,
             reader.uint32(),
           );
           break;
-        case 6:
+        case 5:
           message.getAnnouncementFiles = GetAnnouncementFiles_Request.decode(
             reader,
             reader.uint32(),
           );
           break;
-        case 7:
+        case 6:
           message.getBaseState = GetBaseState_Request.decode(
             reader,
             reader.uint32(),
           );
           break;
-        case 8:
+        case 7:
           message.setBaseState = SetBaseState_Request.decode(
             reader,
             reader.uint32(),
           );
           break;
-        case 9:
+        case 8:
           message.getAutoLockdown = GetAutoLockdown_Request.decode(
             reader,
             reader.uint32(),
           );
           break;
-        case 10:
+        case 9:
           message.setAutoLockdown = SetAutoLockdown_Request.decode(
             reader,
             reader.uint32(),
           );
           break;
-        case 11:
+        case 10:
           message.getLockdownAnnouncements =
             GetLockdownAnnouncements_Request.decode(reader, reader.uint32());
           break;
-        case 12:
+        case 11:
           message.setLockdownAnnouncements =
             SetLockdownAnnouncements_Request.decode(reader, reader.uint32());
           break;
-        case 13:
+        case 12:
           message.getFluffFiles = GetFluffFiles_Request.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
+        case 13:
+          message.getFluffState = GetFluffState_Request.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
+        case 14:
+          message.setFluffState = SetFluffState_Request.decode(
             reader,
             reader.uint32(),
           );
@@ -308,6 +334,12 @@ export const Request = {
         : undefined,
       getFluffFiles: isSet(object.getFluffFiles)
         ? GetFluffFiles_Request.fromJSON(object.getFluffFiles)
+        : undefined,
+      getFluffState: isSet(object.getFluffState)
+        ? GetFluffState_Request.fromJSON(object.getFluffState)
+        : undefined,
+      setFluffState: isSet(object.setFluffState)
+        ? SetFluffState_Request.fromJSON(object.setFluffState)
         : undefined,
     };
   },
@@ -365,6 +397,14 @@ export const Request = {
     message.getFluffFiles !== undefined &&
       (obj.getFluffFiles = message.getFluffFiles
         ? GetFluffFiles_Request.toJSON(message.getFluffFiles)
+        : undefined);
+    message.getFluffState !== undefined &&
+      (obj.getFluffState = message.getFluffState
+        ? GetFluffState_Request.toJSON(message.getFluffState)
+        : undefined);
+    message.setFluffState !== undefined &&
+      (obj.setFluffState = message.setFluffState
+        ? SetFluffState_Request.toJSON(message.setFluffState)
         : undefined);
     return obj;
   },
@@ -430,6 +470,14 @@ export const Request = {
       object.getFluffFiles !== undefined && object.getFluffFiles !== null
         ? GetFluffFiles_Request.fromPartial(object.getFluffFiles)
         : undefined;
+    message.getFluffState =
+      object.getFluffState !== undefined && object.getFluffState !== null
+        ? GetFluffState_Request.fromPartial(object.getFluffState)
+        : undefined;
+    message.setFluffState =
+      object.setFluffState !== undefined && object.setFluffState !== null
+        ? SetFluffState_Request.fromPartial(object.setFluffState)
+        : undefined;
     return message;
   },
 };
@@ -448,6 +496,8 @@ function createBaseResponse(): Response {
     getLockdownAnnouncements: undefined,
     setLockdownAnnouncements: undefined,
     getFluffFiles: undefined,
+    getFluffState: undefined,
+    setFluffState: undefined,
   };
 }
 
@@ -477,55 +527,67 @@ export const Response = {
     if (message.setPowerGridState !== undefined) {
       SetPowerGridState_Response.encode(
         message.setPowerGridState,
-        writer.uint32(42).fork(),
+        writer.uint32(34).fork(),
       ).ldelim();
     }
     if (message.getAnnouncementFiles !== undefined) {
       GetAnnouncementFiles_Response.encode(
         message.getAnnouncementFiles,
-        writer.uint32(50).fork(),
+        writer.uint32(42).fork(),
       ).ldelim();
     }
     if (message.getBaseState !== undefined) {
       GetBaseState_Response.encode(
         message.getBaseState,
-        writer.uint32(58).fork(),
+        writer.uint32(50).fork(),
       ).ldelim();
     }
     if (message.setBaseState !== undefined) {
       SetBaseState_Response.encode(
         message.setBaseState,
-        writer.uint32(66).fork(),
+        writer.uint32(58).fork(),
       ).ldelim();
     }
     if (message.getAutoLockdown !== undefined) {
       GetAutoLockdown_Response.encode(
         message.getAutoLockdown,
-        writer.uint32(74).fork(),
+        writer.uint32(66).fork(),
       ).ldelim();
     }
     if (message.setAutoLockdown !== undefined) {
       SetAutoLockdown_Response.encode(
         message.setAutoLockdown,
-        writer.uint32(82).fork(),
+        writer.uint32(74).fork(),
       ).ldelim();
     }
     if (message.getLockdownAnnouncements !== undefined) {
       GetLockdownAnnouncements_Response.encode(
         message.getLockdownAnnouncements,
-        writer.uint32(90).fork(),
+        writer.uint32(82).fork(),
       ).ldelim();
     }
     if (message.setLockdownAnnouncements !== undefined) {
       SetLockdownAnnouncements_Response.encode(
         message.setLockdownAnnouncements,
-        writer.uint32(98).fork(),
+        writer.uint32(90).fork(),
       ).ldelim();
     }
     if (message.getFluffFiles !== undefined) {
       GetFluffFiles_Response.encode(
         message.getFluffFiles,
+        writer.uint32(98).fork(),
+      ).ldelim();
+    }
+    if (message.getFluffState !== undefined) {
+      GetFluffState_Response.encode(
+        message.getFluffState,
         writer.uint32(106).fork(),
+      ).ldelim();
+    }
+    if (message.setFluffState !== undefined) {
+      SetFluffState_Response.encode(
+        message.setFluffState,
+        writer.uint32(114).fork(),
       ).ldelim();
     }
     return writer;
@@ -556,52 +618,64 @@ export const Response = {
             reader.uint32(),
           );
           break;
-        case 5:
+        case 4:
           message.setPowerGridState = SetPowerGridState_Response.decode(
             reader,
             reader.uint32(),
           );
           break;
-        case 6:
+        case 5:
           message.getAnnouncementFiles = GetAnnouncementFiles_Response.decode(
             reader,
             reader.uint32(),
           );
           break;
-        case 7:
+        case 6:
           message.getBaseState = GetBaseState_Response.decode(
             reader,
             reader.uint32(),
           );
           break;
-        case 8:
+        case 7:
           message.setBaseState = SetBaseState_Response.decode(
             reader,
             reader.uint32(),
           );
           break;
-        case 9:
+        case 8:
           message.getAutoLockdown = GetAutoLockdown_Response.decode(
             reader,
             reader.uint32(),
           );
           break;
-        case 10:
+        case 9:
           message.setAutoLockdown = SetAutoLockdown_Response.decode(
             reader,
             reader.uint32(),
           );
           break;
-        case 11:
+        case 10:
           message.getLockdownAnnouncements =
             GetLockdownAnnouncements_Response.decode(reader, reader.uint32());
           break;
-        case 12:
+        case 11:
           message.setLockdownAnnouncements =
             SetLockdownAnnouncements_Response.decode(reader, reader.uint32());
           break;
-        case 13:
+        case 12:
           message.getFluffFiles = GetFluffFiles_Response.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
+        case 13:
+          message.getFluffState = GetFluffState_Response.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
+        case 14:
+          message.setFluffState = SetFluffState_Response.decode(
             reader,
             reader.uint32(),
           );
@@ -655,6 +729,12 @@ export const Response = {
         : undefined,
       getFluffFiles: isSet(object.getFluffFiles)
         ? GetFluffFiles_Response.fromJSON(object.getFluffFiles)
+        : undefined,
+      getFluffState: isSet(object.getFluffState)
+        ? GetFluffState_Response.fromJSON(object.getFluffState)
+        : undefined,
+      setFluffState: isSet(object.setFluffState)
+        ? SetFluffState_Response.fromJSON(object.setFluffState)
         : undefined,
     };
   },
@@ -712,6 +792,14 @@ export const Response = {
     message.getFluffFiles !== undefined &&
       (obj.getFluffFiles = message.getFluffFiles
         ? GetFluffFiles_Response.toJSON(message.getFluffFiles)
+        : undefined);
+    message.getFluffState !== undefined &&
+      (obj.getFluffState = message.getFluffState
+        ? GetFluffState_Response.toJSON(message.getFluffState)
+        : undefined);
+    message.setFluffState !== undefined &&
+      (obj.setFluffState = message.setFluffState
+        ? SetFluffState_Response.toJSON(message.setFluffState)
         : undefined);
     return obj;
   },
@@ -776,6 +864,14 @@ export const Response = {
     message.getFluffFiles =
       object.getFluffFiles !== undefined && object.getFluffFiles !== null
         ? GetFluffFiles_Response.fromPartial(object.getFluffFiles)
+        : undefined;
+    message.getFluffState =
+      object.getFluffState !== undefined && object.getFluffState !== null
+        ? GetFluffState_Response.fromPartial(object.getFluffState)
+        : undefined;
+    message.setFluffState =
+      object.setFluffState !== undefined && object.setFluffState !== null
+        ? SetFluffState_Response.fromPartial(object.setFluffState)
         : undefined;
     return message;
   },
@@ -1078,216 +1174,6 @@ export const GetAnnouncementFiles_Request = {
     _: I,
   ): GetAnnouncementFiles_Request {
     const message = createBaseGetAnnouncementFiles_Request();
-    return message;
-  },
-};
-
-function createBaseGetFluffFiles(): GetFluffFiles {
-  return { request: undefined, response: undefined, error: undefined };
-}
-
-export const GetFluffFiles = {
-  encode(
-    message: GetFluffFiles,
-    writer: _m0.Writer = _m0.Writer.create(),
-  ): _m0.Writer {
-    if (message.request !== undefined) {
-      GetFluffFiles_Request.encode(
-        message.request,
-        writer.uint32(10).fork(),
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      GetFluffFiles_Response.encode(
-        message.response,
-        writer.uint32(18).fork(),
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): GetFluffFiles {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGetFluffFiles();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.request = GetFluffFiles_Request.decode(
-            reader,
-            reader.uint32(),
-          );
-          break;
-        case 2:
-          message.response = GetFluffFiles_Response.decode(
-            reader,
-            reader.uint32(),
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): GetFluffFiles {
-    return {
-      request: isSet(object.request)
-        ? GetFluffFiles_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? GetFluffFiles_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
-  },
-
-  toJSON(message: GetFluffFiles): unknown {
-    const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? GetFluffFiles_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? GetFluffFiles_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<GetFluffFiles>, I>>(
-    object: I,
-  ): GetFluffFiles {
-    const message = createBaseGetFluffFiles();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? GetFluffFiles_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? GetFluffFiles_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
-    return message;
-  },
-};
-
-function createBaseGetFluffFiles_Response(): GetFluffFiles_Response {
-  return { files: [] };
-}
-
-export const GetFluffFiles_Response = {
-  encode(
-    message: GetFluffFiles_Response,
-    writer: _m0.Writer = _m0.Writer.create(),
-  ): _m0.Writer {
-    for (const v of message.files) {
-      writer.uint32(10).string(v!);
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number,
-  ): GetFluffFiles_Response {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGetFluffFiles_Response();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.files.push(reader.string());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): GetFluffFiles_Response {
-    return {
-      files: Array.isArray(object?.files)
-        ? object.files.map((e: any) => String(e))
-        : [],
-    };
-  },
-
-  toJSON(message: GetFluffFiles_Response): unknown {
-    const obj: any = {};
-    if (message.files) {
-      obj.files = message.files.map((e) => e);
-    } else {
-      obj.files = [];
-    }
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<GetFluffFiles_Response>, I>>(
-    object: I,
-  ): GetFluffFiles_Response {
-    const message = createBaseGetFluffFiles_Response();
-    message.files = object.files?.map((e) => e) || [];
-    return message;
-  },
-};
-
-function createBaseGetFluffFiles_Request(): GetFluffFiles_Request {
-  return {};
-}
-
-export const GetFluffFiles_Request = {
-  encode(
-    _: GetFluffFiles_Request,
-    writer: _m0.Writer = _m0.Writer.create(),
-  ): _m0.Writer {
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number,
-  ): GetFluffFiles_Request {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGetFluffFiles_Request();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(_: any): GetFluffFiles_Request {
-    return {};
-  },
-
-  toJSON(_: GetFluffFiles_Request): unknown {
-    const obj: any = {};
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<GetFluffFiles_Request>, I>>(
-    _: I,
-  ): GetFluffFiles_Request {
-    const message = createBaseGetFluffFiles_Request();
     return message;
   },
 };

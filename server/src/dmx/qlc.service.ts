@@ -1,61 +1,51 @@
 import { Injectable } from "@nestjs/common";
-import { LoggingService } from "src/logging/logging.service";
-import  * as WebSocket  from "ws"
-
-const URL = 'ws://127.0.0.1:9999/qlcplusWS'
+import { QlcWebsocketService } from "./qlc-websocket.service";
 
 @Injectable()
 export class QlcService {
-    private ws: WebSocket;
 
-    constructor(private readonly log: LoggingService) {
-       this.connectWebsocket();
+
+    constructor(private readonly qlc: QlcWebsocketService) {
+        this.qlc.onOpen.subscribe(() => {
+            // this.qlc
+        })
     }
 
-    public setWidgetValue(widgetId: number, value: number) {
-        if(this.ws.readyState == WebSocket.OPEN) {
-        } else {
-            this.log.error(`Could not set widget value: WebSocket not connected`)
-        }
-    }
+    // public setWidgetValue(widgetId: number, value: number) {
+    //     if(this.ws.readyState == WebSocket.OPEN) {
+    //     } else {
+    //         this.log.error(`Could not set widget value: WebSocket not connected`)
+    //     }
+    // }
 
-    private onConnectionError() {
-        // this.log.info(`Could not connect to ${URL} trying to reconnect...`)
-        setTimeout(this.reconnectWebsocket.bind(this), 5000);
-    }
+    public async getCues() {
+        const cues: {id: number, name: string}[] = [];
+        const widgets = await this.getWidgetsList();
+        
+        for(const widget of widgets) {
+            const type = await this.getWidgetType(widget.id);
 
-    private onConnectionClosed() {
-        this.log.info(`Could not connect to ${URL} retrying...`)
-        setTimeout(this.reconnectWebsocket.bind(this), 5000);
-    }
-
-    private onConnectionSuccess() {
-        this.log.info(`Connected to ${URL}`)
-        this.ws.send("QLC+API|getWidgetsList");
-
-    }
-
-    private onMessage(message: Uint8Array) {
-        const payload = String.fromCharCode.apply(null, new Uint16Array(message)).split('|') as string[];
-
-        if(payload[0] == "QLC+API"){
-            switch(payload[1]) {
-                case "getWidgetsList":  console.log(payload.slice(2))
+            if(type == "Cue-Liste") {
+                cues.push(widget);
             }
         }
+
+        return cues;
     }
 
-    private reconnectWebsocket() {
-        if (!this.ws || this.ws.readyState == WebSocket.CLOSED) {
-            this.connectWebsocket();
+    public async getWidgetsList() {
+        const data = await this.qlc.getQlcValue("getWidgetsList");
+        const widgets: {id: number, name: string}[] = [];
+
+        for(let i=0; i<data.length; i+= 2) {
+            widgets.push({id: Number(data[i]), name: data[i+1]})    
         }
+
+        return widgets;
     }
 
-    private connectWebsocket() {
-        this.ws = new WebSocket(URL);
-        this.ws.on('error', this.onConnectionError.bind(this));
-        this.ws.on('close', this.onConnectionClosed.bind(this));
-        this.ws.on('open', this.onConnectionSuccess.bind(this));
-        this.ws.on('message', this.onMessage.bind(this));
+    public async getWidgetType(id: number) {
+        const data = await this.qlc.getQlcValue("getWidgetType", `|${id}`);
+        return data[0];
     }
 }

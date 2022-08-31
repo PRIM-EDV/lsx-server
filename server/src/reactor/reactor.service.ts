@@ -3,6 +3,8 @@ import { Request } from 'proto/lsx';
 import { PowerGridState, PowerPlantState, PowerLineState } from 'proto/lsx.power';
 import { Subject } from 'rxjs';
 import { AppGateway } from 'src/gateway/app.gateway';
+import { LockdownService } from 'src/lockdown/lockdown.service';
+import { SoundService } from 'src/sound/sound.service';
 
 export interface ReactorStates {
     powerGridState?: PowerGridState,
@@ -24,7 +26,7 @@ export class ReactorService {
 
     private powerPlantState: PowerPlantState = PowerPlantState.STATE_NORMAL;
 
-    constructor(private readonly gateway: AppGateway) {
+    constructor(private readonly gateway: AppGateway, private readonly base: LockdownService, private readonly sound: SoundService) {
         this.gateway.onRequest.subscribe(this.handleRequest.bind(this));
     }
 

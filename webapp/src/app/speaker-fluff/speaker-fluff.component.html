@@ -1,5 +1,5 @@
 <ph-form>
-    <ph-button-select [label]="'State'">
+    <ph-button-select [label]="'State'" [(value)]="fluffState" (valueChange)="updateServerFluffState()">
         <ph-button [value]="'off'">OFF</ph-button>
         <ph-button [value]="'on'">ON</ph-button>
     </ph-button-select>

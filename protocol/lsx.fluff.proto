@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+message GetFluffFiles {
+    message Response {
+        repeated string files = 1;
+    }
+
+    message Request {
+
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message GetFluffState {
+    message Response {
+        bool state = 1;
+    }
+
+    message Request {
+
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message SetFluffState {
+    message Request {
+        bool state = 1;
+    }
+
+    message Response {
+
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}

@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
+import { SoundModule } from 'src/sound/sound.module';
 import { FluffService } from './fluff.service';
 
 @Module({
-  providers: [FluffService]
+    imports: [SoundModule],
+    providers: [FluffService]
 })
 export class FluffModule {}

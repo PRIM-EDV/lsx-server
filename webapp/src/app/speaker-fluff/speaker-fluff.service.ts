@@ -16,5 +16,23 @@ export class SpeakerFluffService {
 
     const res: Response = await this.backend.request(req);
     return res.getAnnouncementFiles!.files!;
-}
+  }
+
+  public async getFluffState(): Promise<boolean> {
+    const req: Request = {
+        getFluffState: {}
+    }
+
+    const res: Response = await this.backend.request(req);
+    return res.getFluffState!.state!;
+  }
+
+  public async setFluffState(state: boolean): Promise<void> {
+    const req: Request = {
+        setFluffState: {state: state}
+    }
+
+    const res: Response = await this.backend.request(req);
+  }
+
 }
