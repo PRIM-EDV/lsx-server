@@ -3,11 +3,12 @@ import * as fs from 'fs';
 import { Injectable } from '@nestjs/common';
 import { AppGateway } from 'src/gateway/app.gateway';
 import { Request } from 'proto/lsx';
+import { SoundService } from 'src/sound/sound.service';
 
 @Injectable()
 export class AnnouncementsService {
 
-    constructor(private readonly gateway: AppGateway) {
+    constructor(private readonly gateway: AppGateway, private readonly sound: SoundService) {
         this.gateway.onRequest.subscribe(this.handleRequest.bind(this));
     }
 
@@ -16,6 +17,11 @@ export class AnnouncementsService {
             this.getAnnoucementFiles().then((files) => {
               this.gateway.respond(event.clientId, event.msgId, {getAnnouncementFiles: {files: files}})
             })
+        }
+
+        if(event.request.playAnnouncement) {
+            this.sound.playWav(event.request.playAnnouncement.filepath);
+            this.gateway.respond(event.clientId, event.msgId, { playAnnouncement: {} })
         }
     }
 

@@ -13,6 +13,6 @@
     <tr *ngFor="let file of flufftFiles; index as idx">
         <td>{{idx}}</td>
         <td>{{file}}</td>
-        <td><ph-button [value]="file">PLAY</ph-button></td>
+        <td><ph-button [value]="file" (click)="playAnnoucement(file)">PLAY</ph-button></td>
     </tr>
 </ph-table>

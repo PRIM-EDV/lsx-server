@@ -17,6 +17,9 @@ export class PowerControlComponent implements OnInit {
   public poweredStateLowerRight: boolean = false;
   public poweredStateLowerLeft: boolean = false;
 
+  public poweredStateSci: boolean = false;
+  public poweredStateTec: boolean = false;
+
 
   constructor(private readonly backend: BackendService, private readonly powerGridService: PowerGridService) { }
 
@@ -27,6 +30,10 @@ export class PowerControlComponent implements OnInit {
     })
 
     this.backend.onRequest.subscribe(this.handleRequest.bind(this));
+  }
+
+  public blub() {
+    console.log(this.poweredStateSci)
   }
 
   public async updateLocalPowerGridState(powerGridState: PowerGridState){

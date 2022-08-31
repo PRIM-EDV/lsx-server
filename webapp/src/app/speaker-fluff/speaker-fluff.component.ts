@@ -27,6 +27,14 @@ export class SpeakerFluffComponent implements OnInit {
         this.backend.onRequest.subscribe(this.handleRequest.bind(this));
     }
 
+    public playAnnoucement(file: string) {
+        const req: Request = {
+            playAnnouncement: {filepath: `assets/wav/fluff/${file}`}
+        }
+    
+        this.backend.request(req);
+    }
+
     public async updateServerFluffState() {
         switch(this.fluffState) {
           case 'on': await this.speakerFluffService.setFluffState(true); break;
@@ -39,7 +47,6 @@ export class SpeakerFluffComponent implements OnInit {
     }
 
     
-
     private handleRequest(event: {id: string, request: Request}) {
         if(event.request.setFluffState) {
           this.updateLocalFluffState(event.request.setFluffState.state!);

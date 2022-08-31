@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../backend/backend.service';
+import { Request } from 'proto/lsx';
 
 @Component({
   selector: 'speaker-announcements',
@@ -19,6 +20,14 @@ export class SpeakerAnnouncementsComponent implements OnInit {
    }
 
   ngOnInit(): void {
+  }
+
+  public playAnnoucement(file: string) {
+    const req: Request = {
+        playAnnouncement: {filepath: `assets/wav/triggered/${file}`}
+    }
+
+    this.backend.request(req);
   }
 
 }

@@ -79,20 +79,87 @@
 //     opacity: 1;
 // }
 
-// #Ebene_8 {
-//     circle {
-//         animation: move3 4s  linear infinite;
-//     }
-//     circle:nth-child(2) {
-//         animation-delay: -1.2s;
-//     }
-//     circle:nth-child(3) {
-//         animation-delay: -2.4s;
-//     }
-//     // circle:nth-child(4) {
-//     //     animation-delay: -2.7s;
-//     // }
-// }
+.st2 {
+    cursor: pointer;
+}
+
+#sci {
+    circle.st3:nth-child(1n + 4) {
+        display: none;
+    }
+}
+
+#sci.animate {
+    @keyframes sci-move {
+        0% {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+        100% {
+            transform: translate3d(-7.9%, 0, 0);
+        }
+    }
+    circle.st3:nth-child(1n + 4) {
+        display: block;
+    }
+
+    circle:nth-child(4) {
+        animation: sci-move 4s  linear infinite;
+    }
+    circle:nth-child(5) {
+        animation: sci-move 4s  linear infinite;
+        animation-delay: -1.33s;
+    }
+    circle:nth-child(6) {
+        animation: sci-move 4s  linear infinite;
+        animation-delay: -2.66s;
+    }
+}
+
+#tec {
+    // circle.st3:nth-child(1n + 4) {
+    //     display: none;
+    // }
+}
+
+#tec.animate {
+    @keyframes tec-move {
+        0% {
+            transform: translate3d(0, 0, 0);
+        }
+        55% {
+            transform: translate3d(0, -11.71%, 0);
+        }
+        100% {
+            transform: translate3d(-7.55%, -11.71%, 0);
+        }
+    }
+    // circle.st3:nth-child(1n + 4) {
+    //     display: block;
+    // }
+
+    circle:nth-child(5) {
+        animation: tec-move 8s  linear infinite;
+    }
+    circle:nth-child(6) {
+        animation: tec-move 8s  linear infinite;
+        animation-delay: -1.6s;
+    }
+    circle:nth-child(7) {
+        animation: tec-move 8s  linear infinite;
+        animation-delay: -3.2s;
+    }
+    circle:nth-child(8) {
+        animation: tec-move 8s  linear infinite;
+        animation-delay: -4.8s;
+    }
+    circle:nth-child(9) {
+        animation: tec-move 8s  linear infinite;
+        animation-delay: -6.4s;
+    }
+}
+
+
 
 // #UG1_P2 {
 //     circle {

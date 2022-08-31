@@ -50,6 +50,7 @@ export interface Request {
   getFluffFiles?: GetFluffFiles_Request | undefined;
   getFluffState?: GetFluffState_Request | undefined;
   setFluffState?: SetFluffState_Request | undefined;
+  playAnnouncement?: PlayAnnouncement_Request | undefined;
 }
 
 export interface Response {
@@ -67,6 +68,7 @@ export interface Response {
   getFluffFiles?: GetFluffFiles_Response | undefined;
   getFluffState?: GetFluffState_Response | undefined;
   setFluffState?: SetFluffState_Response | undefined;
+  playAnnouncement?: PlayAnnouncement_Response | undefined;
 }
 
 export interface LsxMessage {
@@ -87,6 +89,18 @@ export interface GetAnnouncementFiles_Response {
 
 export interface GetAnnouncementFiles_Request {}
 
+export interface PlayAnnouncement {
+  request?: PlayAnnouncement_Request | undefined;
+  response?: PlayAnnouncement_Response | undefined;
+  error: string | undefined;
+}
+
+export interface PlayAnnouncement_Request {
+  filepath: string;
+}
+
+export interface PlayAnnouncement_Response {}
+
 function createBaseRequest(): Request {
   return {
     getPowerPlantState: undefined,
@@ -103,6 +117,7 @@ function createBaseRequest(): Request {
     getFluffFiles: undefined,
     getFluffState: undefined,
     setFluffState: undefined,
+    playAnnouncement: undefined,
   };
 }
 
@@ -195,6 +210,12 @@ export const Request = {
         writer.uint32(114).fork()
       ).ldelim();
     }
+    if (message.playAnnouncement !== undefined) {
+      PlayAnnouncement_Request.encode(
+        message.playAnnouncement,
+        writer.uint32(122).fork()
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -285,6 +306,12 @@ export const Request = {
             reader.uint32()
           );
           break;
+        case 15:
+          message.playAnnouncement = PlayAnnouncement_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -340,6 +367,9 @@ export const Request = {
         : undefined,
       setFluffState: isSet(object.setFluffState)
         ? SetFluffState_Request.fromJSON(object.setFluffState)
+        : undefined,
+      playAnnouncement: isSet(object.playAnnouncement)
+        ? PlayAnnouncement_Request.fromJSON(object.playAnnouncement)
         : undefined,
     };
   },
@@ -405,6 +435,10 @@ export const Request = {
     message.setFluffState !== undefined &&
       (obj.setFluffState = message.setFluffState
         ? SetFluffState_Request.toJSON(message.setFluffState)
+        : undefined);
+    message.playAnnouncement !== undefined &&
+      (obj.playAnnouncement = message.playAnnouncement
+        ? PlayAnnouncement_Request.toJSON(message.playAnnouncement)
         : undefined);
     return obj;
   },
@@ -478,6 +512,10 @@ export const Request = {
       object.setFluffState !== undefined && object.setFluffState !== null
         ? SetFluffState_Request.fromPartial(object.setFluffState)
         : undefined;
+    message.playAnnouncement =
+      object.playAnnouncement !== undefined && object.playAnnouncement !== null
+        ? PlayAnnouncement_Request.fromPartial(object.playAnnouncement)
+        : undefined;
     return message;
   },
 };
@@ -498,6 +536,7 @@ function createBaseResponse(): Response {
     getFluffFiles: undefined,
     getFluffState: undefined,
     setFluffState: undefined,
+    playAnnouncement: undefined,
   };
 }
 
@@ -590,6 +629,12 @@ export const Response = {
         writer.uint32(114).fork()
       ).ldelim();
     }
+    if (message.playAnnouncement !== undefined) {
+      PlayAnnouncement_Response.encode(
+        message.playAnnouncement,
+        writer.uint32(122).fork()
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -680,6 +725,12 @@ export const Response = {
             reader.uint32()
           );
           break;
+        case 15:
+          message.playAnnouncement = PlayAnnouncement_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -735,6 +786,9 @@ export const Response = {
         : undefined,
       setFluffState: isSet(object.setFluffState)
         ? SetFluffState_Response.fromJSON(object.setFluffState)
+        : undefined,
+      playAnnouncement: isSet(object.playAnnouncement)
+        ? PlayAnnouncement_Response.fromJSON(object.playAnnouncement)
         : undefined,
     };
   },
@@ -800,6 +854,10 @@ export const Response = {
     message.setFluffState !== undefined &&
       (obj.setFluffState = message.setFluffState
         ? SetFluffState_Response.toJSON(message.setFluffState)
+        : undefined);
+    message.playAnnouncement !== undefined &&
+      (obj.playAnnouncement = message.playAnnouncement
+        ? PlayAnnouncement_Response.toJSON(message.playAnnouncement)
         : undefined);
     return obj;
   },
@@ -872,6 +930,10 @@ export const Response = {
     message.setFluffState =
       object.setFluffState !== undefined && object.setFluffState !== null
         ? SetFluffState_Response.fromPartial(object.setFluffState)
+        : undefined;
+    message.playAnnouncement =
+      object.playAnnouncement !== undefined && object.playAnnouncement !== null
+        ? PlayAnnouncement_Response.fromPartial(object.playAnnouncement)
         : undefined;
     return message;
   },
@@ -1174,6 +1236,210 @@ export const GetAnnouncementFiles_Request = {
     _: I
   ): GetAnnouncementFiles_Request {
     const message = createBaseGetAnnouncementFiles_Request();
+    return message;
+  },
+};
+
+function createBasePlayAnnouncement(): PlayAnnouncement {
+  return { request: undefined, response: undefined, error: undefined };
+}
+
+export const PlayAnnouncement = {
+  encode(
+    message: PlayAnnouncement,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.request !== undefined) {
+      PlayAnnouncement_Request.encode(
+        message.request,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    if (message.response !== undefined) {
+      PlayAnnouncement_Response.encode(
+        message.response,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    if (message.error !== undefined) {
+      writer.uint32(26).string(message.error);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): PlayAnnouncement {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBasePlayAnnouncement();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.request = PlayAnnouncement_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 2:
+          message.response = PlayAnnouncement_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 3:
+          message.error = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): PlayAnnouncement {
+    return {
+      request: isSet(object.request)
+        ? PlayAnnouncement_Request.fromJSON(object.request)
+        : undefined,
+      response: isSet(object.response)
+        ? PlayAnnouncement_Response.fromJSON(object.response)
+        : undefined,
+      error: isSet(object.error) ? String(object.error) : undefined,
+    };
+  },
+
+  toJSON(message: PlayAnnouncement): unknown {
+    const obj: any = {};
+    message.request !== undefined &&
+      (obj.request = message.request
+        ? PlayAnnouncement_Request.toJSON(message.request)
+        : undefined);
+    message.response !== undefined &&
+      (obj.response = message.response
+        ? PlayAnnouncement_Response.toJSON(message.response)
+        : undefined);
+    message.error !== undefined && (obj.error = message.error);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<PlayAnnouncement>, I>>(
+    object: I
+  ): PlayAnnouncement {
+    const message = createBasePlayAnnouncement();
+    message.request =
+      object.request !== undefined && object.request !== null
+        ? PlayAnnouncement_Request.fromPartial(object.request)
+        : undefined;
+    message.response =
+      object.response !== undefined && object.response !== null
+        ? PlayAnnouncement_Response.fromPartial(object.response)
+        : undefined;
+    message.error = object.error ?? undefined;
+    return message;
+  },
+};
+
+function createBasePlayAnnouncement_Request(): PlayAnnouncement_Request {
+  return { filepath: "" };
+}
+
+export const PlayAnnouncement_Request = {
+  encode(
+    message: PlayAnnouncement_Request,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.filepath !== "") {
+      writer.uint32(10).string(message.filepath);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): PlayAnnouncement_Request {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBasePlayAnnouncement_Request();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.filepath = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): PlayAnnouncement_Request {
+    return {
+      filepath: isSet(object.filepath) ? String(object.filepath) : "",
+    };
+  },
+
+  toJSON(message: PlayAnnouncement_Request): unknown {
+    const obj: any = {};
+    message.filepath !== undefined && (obj.filepath = message.filepath);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<PlayAnnouncement_Request>, I>>(
+    object: I
+  ): PlayAnnouncement_Request {
+    const message = createBasePlayAnnouncement_Request();
+    message.filepath = object.filepath ?? "";
+    return message;
+  },
+};
+
+function createBasePlayAnnouncement_Response(): PlayAnnouncement_Response {
+  return {};
+}
+
+export const PlayAnnouncement_Response = {
+  encode(
+    _: PlayAnnouncement_Response,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): PlayAnnouncement_Response {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBasePlayAnnouncement_Response();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): PlayAnnouncement_Response {
+    return {};
+  },
+
+  toJSON(_: PlayAnnouncement_Response): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<PlayAnnouncement_Response>, I>>(
+    _: I
+  ): PlayAnnouncement_Response {
+    const message = createBasePlayAnnouncement_Response();
     return message;
   },
 };

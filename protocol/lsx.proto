@@ -20,6 +20,7 @@ message Request {
         GetFluffFiles.Request get_fluff_files = 12;
         GetFluffState.Request get_fluff_state = 13;
         SetFluffState.Request set_fluff_state = 14;
+        PlayAnnouncement.Request play_announcement = 15;
     }
 }
 
@@ -39,6 +40,7 @@ message Response {
         GetFluffFiles.Response get_fluff_files = 12;
         GetFluffState.Response get_fluff_state = 13;
         SetFluffState.Response set_fluff_state = 14;
+        PlayAnnouncement.Response play_announcement = 15;
     }
 }
 
@@ -57,6 +59,22 @@ message GetAnnouncementFiles {
     }
 
     message Request {
+
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message PlayAnnouncement {
+    message Request {
+        string filepath = 1;
+    }
+
+    message Response {
 
     }
 
