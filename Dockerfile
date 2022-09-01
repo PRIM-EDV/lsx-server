@@ -25,6 +25,7 @@ COPY ./server/*.json ./
 RUN npm install
 
 # Build server
+COPY ./server/assets ./assets
 COPY ./server/src ./src
 COPY ./protocol ../protocol
 
