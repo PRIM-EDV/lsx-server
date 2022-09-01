@@ -30,7 +30,6 @@ COPY ./server/src ./src
 COPY ./protocol ../protocol
 
 RUN npm run proto:generate
-RUN npm run build
 
 # Get webapp artifact
 COPY --from=webapp /opt/lsx/webapp/dist/webapp/ ./dist/public
