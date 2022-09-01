@@ -8,19 +8,24 @@ export class SoundService {
     
     private player = require('play-sound')({});
 
-    constructor() {
-        this.playWav('assets/wav/triggered/blackout.wav');
-    }
-
-
+    
     public async playWav(file: string): Promise<void> {
         return new Promise((resolve, reject) => {
-            const p = this.player.play(file, console.log);
-            console.log(p)
-            p.on('exit', () => {
-                console.log("???")
+            if(!this.isPlaying && !this.isMuted) {
+                const p = this.player.play(file, console.log);
+                this.isPlaying = true;
+
+                p.on('exit', () => {
+                    this.isPlaying = false;
+                    resolve();
+                })
+                p.on('error', () => {
+                    this.isPlaying = false;
+                    resolve();
+                })
+            } else {
                 resolve();
-            })
+            }
         })
     }
 }
