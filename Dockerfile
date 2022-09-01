@@ -15,7 +15,9 @@ RUN npm run proto:generate
 RUN npm run build
 
 FROM node:18.1.0 AS server
-RUN apt update && apt install protobuf-compiler libasound2-dev -y 
+ENV TZ="Europe/Berlin"
+
+RUN apt update && apt install protobuf-compiler alsa-utils libasound2-dev -y 
 
 EXPOSE 3100
 WORKDIR /opt/lsx/server
@@ -30,6 +32,9 @@ COPY ./server/src ./src
 COPY ./protocol ../protocol
 
 RUN npm run proto:generate
+
+# Get alsa config
+COPY ./asound.conf /etc/asound.conf
 
 # Get webapp artifact
 COPY --from=webapp /opt/lsx/webapp/dist/webapp/ ./dist/public
