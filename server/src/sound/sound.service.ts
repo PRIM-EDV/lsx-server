@@ -5,11 +5,20 @@ import  * as Speaker from 'speaker-arm64';
 import { Injectable } from '@nestjs/common';
 
 
+// import * as player from 'play-sound'
+
 @Injectable()
 export class SoundService {
 
     public isPlaying = false;
     public isMuted = false;
+    
+    private player = require('play-sound')({});
+
+
+    // constructor() {
+    
+    // }
 
     private speakerConfig = {
         device: "hw1,0",
@@ -18,25 +27,30 @@ export class SoundService {
         sampleRate: 44100     // 44,100 Hz sample rate
     }
 
+
+
     public async playWav(file: string): Promise<void> {
         return new Promise((resolve, reject) => {
-            if (!this.isPlaying && !this.isMuted) {
-                const stream = fs.createReadStream(file);
-                const speaker = new Speaker(this.speakerConfig);
+            this.player.play(file);
+            resolve();
+            // if (!this.isPlaying && !this.isMuted) {
+            //     const stream = fs.createReadStream(file);
+            //     const speaker = new Speaker(this.speakerConfig);
 
-                this.isPlaying = true;
-                speaker.on('finish', () => {
-                    this.isPlaying = false;
-                    resolve(); 
-                })
-                speaker.on('error', (err) => {
-                    console.log(err);
-                })
-                stream.pipe(speaker)
-            }
-            else {
-                // reject();
-            }
+            //     this.isPlaying = true;
+            //     speaker.on('finish', () => {
+            //         this.isPlaying = false;
+            //         resolve(); 
+            //     })
+            //     speaker.on('error', (err) => {
+            //         console.log(err);
+            //     })
+            //     stream.pipe(speaker)
+            // }
+            // else {
+            //     // reject();
+            // }
+            this
         })
     }
 }
