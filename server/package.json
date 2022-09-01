@@ -14,7 +14,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "proto:generate": "cpx ../protocol/* ./proto && protoc -I=./proto --ts_proto_opt=useOptionals=true --ts_proto_out=./proto ./proto/lsx.proto"
+    "proto:generate": "cpx '../protocol/*' ./proto && protoc -I=./proto --ts_proto_opt=useOptionals=true --ts_proto_out=./proto ./proto/lsx.proto"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
@@ -31,7 +31,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "speaker": "^0.5.4",
+    "speaker-arm64": "^0.5.2",
     "websocket": "^1.0.34",
     "winston": "^3.8.1",
     "ws": "^8.8.0"

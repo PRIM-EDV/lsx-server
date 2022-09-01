@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 
 const USERS : {name: string, password: string}[] = [
   {name: "admin", password: "admin"},
-  {name: "", password: ""}
+  {name: "tec", password: "tec"}
 ]
 
 @Injectable()

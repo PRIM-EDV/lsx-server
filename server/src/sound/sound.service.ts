@@ -1,6 +1,6 @@
 
 import * as fs from 'fs';
-import  * as Speaker from 'speaker';
+import  * as Speaker from 'speaker-arm64';
 
 import { Injectable } from '@nestjs/common';
 
