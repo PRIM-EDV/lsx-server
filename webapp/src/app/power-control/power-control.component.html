@@ -81,21 +81,26 @@
 		<circle class="st3" cx="509" cy="197" r="2"/>
 		<circle class="st3" cx="509" cy="197" r="2"/>
 		<circle class="st3" cx="509" cy="197" r="2"/>
-		<circle class="st2" cx="509" cy="197" r="3.1" (click)="this.poweredStateSci = !this.poweredStateSci; blub()"/>
+		<circle class="st2" cx="509" cy="197" r="3.1" (click)="this.poweredStateSci = !this.poweredStateSci;"/>
 	</g>
-	<g id="med">
+	<g id="med" [ngClass]="{'animate': this.poweredStateMed}">
 		<circle class="st3" cx="338.1" cy="77.4" r="2"/>
 		<line class="st4" x1="414.9" y1="77.4" x2="338.1" y2="77.3"/>
 		<circle class="st3" cx="418.9" cy="77.4" r="2"/>
 		<circle class="st2" cx="418.9" cy="77.3" r="3.1"/>
 	</g>
-	<g id="cic">
+	<g id="cic" [ngClass]="{'animate': this.poweredStateCic}">
 		<circle class="st3" cx="357.5" cy="156.4" r="2"/>
 		<line class="st4" x1="418.9" y1="124.1" x2="358.5" y2="124.1"/>
 		<circle class="st3" cx="420" cy="156.4" r="2"/>
-		<circle class="st2" cx="420" cy="156.4" r="3.1"/>
 		<line class="st4" x1="357.5" y1="124.1" x2="357.4" y2="154.1"/>
 		<line class="st4" x1="420" y1="124.1" x2="420" y2="152.5"/>
+		<circle class="st3" cx="420" cy="156.4" r="2"/>
+		<circle class="st3" cx="420" cy="156.4" r="2"/>
+		<circle class="st3" cx="420" cy="156.4" r="2"/>
+		<circle class="st3" cx="420" cy="156.4" r="2"/>
+		<circle class="st3" cx="420" cy="156.4" r="2"/>
+		<circle class="st2" cx="420" cy="156.4" r="3.1" (click)="this.poweredStateCic = !this.poweredStateCic;"/>
 	</g>
 	<g id="adm">
 		<circle class="st3" cx="186.3" cy="198" r="2"/>

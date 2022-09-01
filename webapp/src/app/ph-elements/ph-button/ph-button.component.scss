@@ -16,9 +16,18 @@
         user-select: none;
     }
 
+    div.label:hover {
+        color: #ffffff;
+    }
+
     div.label.active {
         background-color: #f8a403;
         color: #000000;
+    }
+
+    div.label.active:hover {
+        background-color: #f8a403;
+        color: #ffffff;
     }
 
 }

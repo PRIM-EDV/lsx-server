@@ -17,6 +17,11 @@ export class PowerControlComponent implements OnInit {
   public poweredStateLowerRight: boolean = false;
   public poweredStateLowerLeft: boolean = false;
 
+  public poweredStateAdm: boolean = false;
+  public poweredStateCic: boolean = false;
+  public poweredStateGal: boolean = false;
+  public poweredStateMed: boolean = false;
+  public poweredStateRmw: boolean = false;
   public poweredStateSci: boolean = false;
   public poweredStateTec: boolean = false;
 

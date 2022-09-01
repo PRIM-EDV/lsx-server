@@ -9,7 +9,6 @@ services:
     container_name: "lsx_server"
     ports:
       - "3100:3100"
-    #   - "${WEBSTAT_INTERNAL_PORT}:3001"
-    # environment:
-    #   MYSQL_HOST: database
+    devices:
+      - "/dev/snd:/dev/snd"
 

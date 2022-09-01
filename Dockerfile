@@ -15,7 +15,7 @@ RUN npm run proto:generate
 RUN npm run build
 
 FROM node:18.1.0 AS server
-RUN apt update && apt install protobuf-compiler -y 
+RUN apt update && apt install protobuf-compiler libasound2-dev -y 
 
 EXPOSE 3100
 WORKDIR /opt/lsx/server

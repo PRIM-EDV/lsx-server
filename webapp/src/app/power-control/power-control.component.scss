@@ -83,6 +83,51 @@
     cursor: pointer;
 }
 
+#cic {
+    circle.st3:nth-child(1n + 6) {
+        display: none;
+    }
+}
+
+#cic.animate {
+    @keyframes cic-move {
+        0% {
+            transform: translate3d(0, 0, 0);
+        }
+        25% {
+            transform: translate3d(0, -6.4%, 0);
+        }
+        75% {
+            transform: translate3d(-9.83%, -6.4%, 0);
+        }
+        100% {
+            transform: translate3d(-9.83%, 0, 0);
+        }
+    }
+    circle.st3:nth-child(1n + 6) {
+        display: block;
+    }
+    circle:nth-child(6) {
+        animation: cic-move 8s  linear infinite;
+    }
+    circle:nth-child(7) {
+        animation: cic-move 8s  linear infinite;
+        animation-delay: -1.6s;
+    }
+    circle:nth-child(8) {
+        animation: cic-move 8s  linear infinite;
+        animation-delay: -3.2s;
+    }
+    circle:nth-child(9) {
+        animation: cic-move 8s  linear infinite;
+        animation-delay: -4.8s;
+    }
+    circle:nth-child(10) {
+        animation: cic-move 8s  linear infinite;
+        animation-delay: -6.4s;
+    }
+}
+
 #sci {
     circle.st3:nth-child(1n + 4) {
         display: none;
@@ -117,9 +162,9 @@
 }
 
 #tec {
-    // circle.st3:nth-child(1n + 4) {
-    //     display: none;
-    // }
+    circle.st3:nth-child(1n + 5) {
+        display: none;
+    }
 }
 
 #tec.animate {
@@ -134,10 +179,9 @@
             transform: translate3d(-7.55%, -11.71%, 0);
         }
     }
-    // circle.st3:nth-child(1n + 4) {
-    //     display: block;
-    // }
-
+    circle.st3:nth-child(1n + 5) {
+        display: block;
+    }
     circle:nth-child(5) {
         animation: tec-move 8s  linear infinite;
     }
