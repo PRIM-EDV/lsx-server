@@ -12,6 +12,7 @@ export class SoundService {
     public isMuted = false;
 
     private speakerConfig = {
+        device: "hw1,0",
         channels: 2,          // 2 channels
         bitDepth: 16,         // 16-bit samples
         sampleRate: 44100     // 44,100 Hz sample rate
@@ -27,6 +28,9 @@ export class SoundService {
                 speaker.on('finish', () => {
                     this.isPlaying = false;
                     resolve(); 
+                })
+                speaker.on('error', (err) => {
+                    console.log(err);
                 })
                 stream.pipe(speaker)
             }
