@@ -12,7 +12,7 @@ export class SoundService {
     public async playWav(file: string): Promise<void> {
         return new Promise((resolve, reject) => {
             if(!this.isPlaying && !this.isMuted) {
-                const p = this.player.play(file, console.log);
+                const p = this.player.play(file);
                 this.isPlaying = true;
 
                 p.on('exit', () => {
