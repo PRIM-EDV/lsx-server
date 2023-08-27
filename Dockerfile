@@ -34,6 +34,9 @@ COPY ./protocol ../protocol
 
 RUN npm run proto:generate
 
+# Get alsa config
+COPY ./asound.conf /etc/asound.conf
+
 # Get webapp artifact
 COPY --from=webapp /opt/lsx/webapp/dist/webapp/ ./dist/public
 
