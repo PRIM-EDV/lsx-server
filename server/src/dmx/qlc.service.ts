@@ -7,7 +7,7 @@ export class QlcService {
 
     constructor(private readonly qlc: QlcWebsocketService) {
         this.qlc.onOpen.subscribe(() => {
-            // this.qlc
+            this.getCues().then(console.log);
         })
     }
 
@@ -18,10 +18,18 @@ export class QlcService {
     //     }
     // }
 
+    public async setCue(cueId: number, cmd: string, step?: number) {
+    	if(cmd == "STEP") {
+	        this.qlc.setQlcValue(`${cueId}|STEP|${step}`)
+	    } else {
+            this.qlc.setQlcValue(`${cueId}|${cmd}`);
+        }
+    }
+
     public async getCues() {
         const cues: {id: number, name: string}[] = [];
         const widgets = await this.getWidgetsList();
-        
+
         for(const widget of widgets) {
             const type = await this.getWidgetType(widget.id);
 
@@ -38,7 +46,7 @@ export class QlcService {
         const widgets: {id: number, name: string}[] = [];
 
         for(let i=0; i<data.length; i+= 2) {
-            widgets.push({id: Number(data[i]), name: data[i+1]})    
+            widgets.push({id: Number(data[i]), name: data[i+1]})
         }
 
         return widgets;

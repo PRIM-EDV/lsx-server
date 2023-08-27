@@ -1,4 +1,5 @@
 FROM node:18.1.0 AS webapp
+
 RUN apt update && apt install protobuf-compiler -y 
 
 WORKDIR /opt/lsx/webapp
@@ -15,7 +16,9 @@ RUN npm run proto:generate
 RUN npm run build
 
 FROM node:18.1.0 AS server
-RUN apt update && apt install protobuf-compiler libasound2-dev -y 
+ENV TZ="Europe/Berlin"
+
+RUN apt update && apt install protobuf-compiler alsa-utils libasound2-dev -y 
 
 EXPOSE 3100
 WORKDIR /opt/lsx/server
@@ -33,6 +36,9 @@ RUN npm run proto:generate
 
 # Get webapp artifact
 COPY --from=webapp /opt/lsx/webapp/dist/webapp/ ./dist/public
+
+# Get alsa config
+COPY ./asound.conf /etc/asound.conf
 
 # Run startscript
 COPY ./run.sh ./

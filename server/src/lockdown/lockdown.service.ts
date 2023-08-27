@@ -3,6 +3,7 @@ import { Request } from 'proto/lsx';
 import { BaseState } from 'proto/lsx.lockdown';
 import { AppGateway } from 'src/gateway/app.gateway';
 import { SoundService } from 'src/sound/sound.service';
+import { QlcService } from 'src/dmx/qlc.service';
 
 @Injectable()
 export class LockdownService {
@@ -11,7 +12,7 @@ export class LockdownService {
     private autoLockdown = true;
     private lockdownAnnouncements = true;
 
-    constructor(private readonly gateway: AppGateway, private readonly sound: SoundService) {
+    constructor(private readonly gateway: AppGateway, private readonly sound: SoundService, private dmx: QlcService) {
         setInterval(this.lockdownAnnoucementsInterval.bind(this), 1000);
         setInterval(this.autoLockdownInterval.bind(this), 1000);
 
@@ -67,17 +68,56 @@ export class LockdownService {
     private handleBaseStateChange(state: BaseState) {
         switch(state) {
             case BaseState.BASE_STATE_NORMAL:
-                this.sound.playWav('assets/wav/lockdown-timer/lockdown-vorbei.wav').then(
+                if(this.lockdownAnnouncements) {
+                    this.sound.playWav('assets/wav/lockdown-timer/lockdown-vorbei.wav').then( () => {
+                        for(const i of [12, 6, 8, 11, 13, 18, 16, 20, 21, 32, 25, 33, 37, 39]) {
+                            this.dmx.setCue(i, 'STOP');
+                        }
+                        for(const i of [5, 14, 15, 4, 7, 9, 10, 17, 19, 22, 23, 38, 34, 35, 40]) {
+                            this.dmx.setCue(i, "STEP", 2);
+                        }
+                        this.dmx.setCue(36, "STEP", 1);
 
-                ).catch(
+                    }
+                    ).catch(
 
-                );break;
+                    );
+                } else {
+                    for(const i of [12, 6, 8, 11, 13, 18, 16, 20, 21, 32, 25, 33, 37, 39]) {
+                        this.dmx.setCue(i, 'STOP');
+                    }
+                    for(const i of [5, 14, 15, 4, 7, 9, 10, 17, 19, 22, 23, 38, 34, 35, 40]) {
+                        this.dmx.setCue(i, "STEP", 2);
+                    }
+                    this.dmx.setCue(36, "STEP", 1);
+                }; break;
+
             case BaseState.BASE_STATE_LOCKDOWN:
-                this.sound.playWav('assets/wav/lockdown-timer/lockdown-now.wav').then(
+                if (this.lockdownAnnouncements) {
 
-                ).catch(
+                    this.sound.playWav('assets/wav/lockdown-timer/lockdown-now.wav').then( () => {
+                        for(const i of [12, 6, 8, 11, 13, 18, 16, 20, 21, 32, 25, 33, 37, 39]) {
+                            this.dmx.setCue(i, 'STOP');
+                        }
+                        for(const i of [5, 14, 15, 4, 7, 9, 10, 17, 19, 22, 23, 38, 34, 35, 40]) {
+                            this.dmx.setCue(i, "STEP", 1);
+                        }
+                        this.dmx.setCue(36, "STEP", 0);
+                    }
+                    ).catch(
 
-                );break;
+                    );
+                } else {
+                    for(const i of [12, 6, 8, 11, 13, 18, 16, 20, 21, 32, 25, 33, 37, 39]) {
+                        this.dmx.setCue(i, 'STOP');
+                    }
+
+                    for(const i of [5, 14, 15, 4, 7, 9, 10, 17, 19, 22, 23, 38, 34, 35, 40]) {
+                        this.dmx.setCue(i, "STEP", 1);
+                    }
+                    this.dmx.setCue(36, "STEP", 0);
+                } break;
+
         }
     }
 

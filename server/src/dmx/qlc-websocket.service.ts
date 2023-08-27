@@ -3,7 +3,7 @@ import { Subject } from "rxjs";
 import { LoggingService } from "src/logging/logging.service";
 import  * as WebSocket  from "ws"
 
-const URL = 'ws://127.0.0.1:9999/qlcplusWS';
+const URL = 'ws://192.168.2.170:9999/qlcplusWS';
 
 @Injectable()
 export class QlcWebsocketService {
@@ -27,6 +27,11 @@ export class QlcWebsocketService {
         });
     }
 
+    public async setQlcValue(msg: string) {
+        console.log(msg);
+    	this.ws.send(msg);
+    }
+
     private onConnectionError() {
         setTimeout(this.reconnectWebsocket.bind(this), 5000);
     }
@@ -39,7 +44,7 @@ export class QlcWebsocketService {
 
     private onConnectionSuccess() {
         this.log.info(`Connected to ${URL}`);
-        // this.ws.send("2|STEP|2");
+        this.ws.send("17|STEP|0");
         this.onOpen.next();
     }
 

@@ -72,7 +72,7 @@
 		<circle class="st3" cx="595" cy="255" r="2"/>
 		<circle class="st3" cx="595" cy="255" r="2"/>
 		<circle class="st3" cx="595" cy="255" r="2"/>
-		<circle class="st2" cx="595" cy="255" r="3.1" (click)="this.poweredStateTec = !this.poweredStateTec;"/>
+		<circle class="st2" cx="595" cy="255" r="3.1" (click)="this.poweredStateTec = !this.poweredStateTec; this.updateServerPowerGridState()"/>
 	</g>
 	<g id="sci" [ngClass]="{'animate': this.poweredStateSci}">
 		<circle class="st3" cx="459" cy="197" r="2"/>
@@ -81,7 +81,7 @@
 		<circle class="st3" cx="509" cy="197" r="2"/>
 		<circle class="st3" cx="509" cy="197" r="2"/>
 		<circle class="st3" cx="509" cy="197" r="2"/>
-		<circle class="st2" cx="509" cy="197" r="3.1" (click)="this.poweredStateSci = !this.poweredStateSci;"/>
+		<circle class="st2" cx="509" cy="197" r="3.1" (click)="this.poweredStateSci = !this.poweredStateSci; this.updateServerPowerGridState()"/>
 	</g>
 	<g id="med" [ngClass]="{'animate': this.poweredStateMed}">
 		<circle class="st3" cx="338.1" cy="77.4" r="2"/>
@@ -100,7 +100,7 @@
 		<circle class="st3" cx="420" cy="156.4" r="2"/>
 		<circle class="st3" cx="420" cy="156.4" r="2"/>
 		<circle class="st3" cx="420" cy="156.4" r="2"/>
-		<circle class="st2" cx="420" cy="156.4" r="3.1" (click)="this.poweredStateCic = !this.poweredStateCic;"/>
+		<circle class="st2" cx="420" cy="156.4" r="3.1" (click)="this.poweredStateCic = !this.poweredStateCic; this.updateServerPowerGridState()"/>
 	</g>
 	<g id="adm">
 		<circle class="st3" cx="186.3" cy="198" r="2"/>

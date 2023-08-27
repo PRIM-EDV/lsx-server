@@ -5,8 +5,11 @@ import { ReactorService } from './reactor.service';
 
 // import { StateService } from 'src/state/state.service';
 
+
 @Controller('reactor')
 export class ReactorController {
+  private tmpPowerPlantState: PowerPlantState = PowerPlantState.STATE_NORMAL;
+
   constructor(
     private readonly logger: LoggingService,
     private readonly reactorService: ReactorService
@@ -29,7 +32,10 @@ export class ReactorController {
 
   @Get('power_low')
   public async powerLow(): Promise<any> {
-    this.reactorService.setPowerPlantState(PowerPlantState.STATE_CRITICAL);
+    if (this.tmpPowerPlantState != PowerPlantState.STATE_CRITICAL) {
+      this.tmpPowerPlantState = PowerPlantState.STATE_CRITICAL;
+      this.reactorService.setPowerPlantState(PowerPlantState.STATE_CRITICAL);
+    }
       // if (this.stateService.state == 'normal' || this.stateService.state == 'shutdown') {
       //     this.stateService.state = 'powersave';
       //     // Trigger Warning
@@ -38,7 +44,10 @@ export class ReactorController {
 
   @Get('power_high')
   public async powerHigh(): Promise<any> {
-    this.reactorService.setPowerPlantState(PowerPlantState.STATE_NORMAL);
+    if (this.tmpPowerPlantState != PowerPlantState.STATE_NORMAL) {
+      this.tmpPowerPlantState = PowerPlantState.STATE_NORMAL;
+      this.reactorService.setPowerPlantState(PowerPlantState.STATE_NORMAL);
+    }
       // if (this.stateService.state == 'powersave' || this.stateService.state == 'shutdown') {
       //     this.stateService.state = 'normal';
       // }
@@ -46,7 +55,10 @@ export class ReactorController {
 
   @Get('shutdown')
   public async shutdown(): Promise<any> {
-    this.reactorService.setPowerPlantState(PowerPlantState.STATE_OFFLINE);
+    if (this.tmpPowerPlantState != PowerPlantState.STATE_OFFLINE) {
+      this.tmpPowerPlantState = PowerPlantState.STATE_OFFLINE;
+      this.reactorService.setPowerPlantState(PowerPlantState.STATE_OFFLINE);
+    }
       // if (this.stateService.state == 'normal' || this.stateService.state == 'powersave') {
       //     this.stateService.state = 'shutdown';
       // }

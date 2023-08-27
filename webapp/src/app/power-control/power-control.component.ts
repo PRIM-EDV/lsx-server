@@ -41,12 +41,17 @@ export class PowerControlComponent implements OnInit {
     console.log(this.poweredStateSci)
   }
 
+
   public async updateLocalPowerGridState(powerGridState: PowerGridState){
     this.poweredStateBaseMedicine = powerGridState.ogBaseMed == PowerLineState.STATE_POWERED;
     this.poweredStateUpperLeft = powerGridState.ogParcelLeft == PowerLineState.STATE_POWERED;
     this.poweredStateUpperRight = powerGridState.ogParcelRight == PowerLineState.STATE_POWERED;
     this.poweredStateLowerLeft = powerGridState.ugParcelLeft == PowerLineState.STATE_POWERED;
     this.poweredStateLowerRight = powerGridState.ugParcelRight == PowerLineState.STATE_POWERED;
+    this.poweredStateAdm = powerGridState.ogBaseAdm == PowerLineState.STATE_POWERED;
+    this.poweredStateCic = powerGridState.ogBaseCic == PowerLineState.STATE_POWERED;
+    this.poweredStateSci = powerGridState.ogBaseSci == PowerLineState.STATE_POWERED;
+
   }
 
   public async updateServerPowerGridState() {
@@ -56,6 +61,10 @@ export class PowerControlComponent implements OnInit {
       ogParcelRight: this.poweredStateUpperRight ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
       ugParcelLeft: this.poweredStateLowerLeft ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
       ugParcelRight: this.poweredStateLowerRight ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
+      ogBaseAdm: this.poweredStateAdm ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
+      ogBaseCic: this.poweredStateCic ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
+      ogBaseSci: this.poweredStateSci ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
+      ogBaseTec: this.poweredStateTec ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
     }
 
     await this.powerGridService.setPowerGridState(powerGridState);

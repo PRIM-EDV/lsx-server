@@ -11,7 +11,7 @@ export class FluffService {
 
     private fluffState = true;
     private fluffFiles: string[] = [];
-    
+
     constructor(private readonly gateway: AppGateway, private readonly sound: SoundService) {
         this.gateway.onRequest.subscribe(this.handleRequest.bind(this));
 
@@ -30,6 +30,10 @@ export class FluffService {
         if(event.request.setFluffState){
             this.setFluffState(event.request.setFluffState.state)
             this.gateway.respond(event.clientId, event.msgId, {setBaseState: {}})
+        }
+
+        if(event.request.getFluffState){
+            this.gateway.respond(event.clientId, event.msgId, {getFluffState: {state: this.fluffState}});
         }
     }
 
@@ -65,7 +69,7 @@ export class FluffService {
                     case 35: this.sound.playWav(`assets/wav/fluff/${this.fluffFiles[Math.floor(Math.random() * this.fluffFiles.length)]}`); break;
                     case 55: this.sound.playWav(`assets/wav/fluff/${this.fluffFiles[Math.floor(Math.random() * this.fluffFiles.length)]}`); break;
                 }
-            } 
+            }
         }
     }
 }
