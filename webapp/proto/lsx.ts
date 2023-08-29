@@ -10,14 +10,14 @@ import {
   SetPowerGridState_Response,
 } from "./lsx.power";
 import {
-  GetBaseState_Request,
-  SetBaseState_Request,
+  GetLockdownState_Request,
+  SetLockdownState_Request,
   GetAutoLockdown_Request,
   SetAutoLockdown_Request,
   GetLockdownAnnouncements_Request,
   SetLockdownAnnouncements_Request,
-  GetBaseState_Response,
-  SetBaseState_Response,
+  GetLockdownState_Response,
+  SetLockdownState_Response,
   GetAutoLockdown_Response,
   SetAutoLockdown_Response,
   GetLockdownAnnouncements_Response,
@@ -31,6 +31,12 @@ import {
   GetFluffState_Response,
   SetFluffState_Response,
 } from "./lsx.fluff";
+import {
+  GetModeSilentState_Request,
+  SetModeSilentState_Request,
+  GetModeSilentState_Response,
+  SetModeSilentState_Response,
+} from "./lsx.drone";
 import * as _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "";
@@ -41,8 +47,8 @@ export interface Request {
   getPowerGridState?: GetPowerGridState_Request | undefined;
   setPowerGridState?: SetPowerGridState_Request | undefined;
   getAnnouncementFiles?: GetAnnouncementFiles_Request | undefined;
-  getBaseState?: GetBaseState_Request | undefined;
-  setBaseState?: SetBaseState_Request | undefined;
+  getLockdownState?: GetLockdownState_Request | undefined;
+  setLockdownState?: SetLockdownState_Request | undefined;
   getAutoLockdown?: GetAutoLockdown_Request | undefined;
   setAutoLockdown?: SetAutoLockdown_Request | undefined;
   getLockdownAnnouncements?: GetLockdownAnnouncements_Request | undefined;
@@ -51,6 +57,8 @@ export interface Request {
   getFluffState?: GetFluffState_Request | undefined;
   setFluffState?: SetFluffState_Request | undefined;
   playAnnouncement?: PlayAnnouncement_Request | undefined;
+  getModeSilentState?: GetModeSilentState_Request | undefined;
+  setModeSilentState?: SetModeSilentState_Request | undefined;
 }
 
 export interface Response {
@@ -59,8 +67,8 @@ export interface Response {
   getPowerGridState?: GetPowerGridState_Response | undefined;
   setPowerGridState?: SetPowerGridState_Response | undefined;
   getAnnouncementFiles?: GetAnnouncementFiles_Response | undefined;
-  getBaseState?: GetBaseState_Response | undefined;
-  setBaseState?: SetBaseState_Response | undefined;
+  getLockdownState?: GetLockdownState_Response | undefined;
+  setLockdownState?: SetLockdownState_Response | undefined;
   getAutoLockdown?: GetAutoLockdown_Response | undefined;
   setAutoLockdown?: SetAutoLockdown_Response | undefined;
   getLockdownAnnouncements?: GetLockdownAnnouncements_Response | undefined;
@@ -69,6 +77,8 @@ export interface Response {
   getFluffState?: GetFluffState_Response | undefined;
   setFluffState?: SetFluffState_Response | undefined;
   playAnnouncement?: PlayAnnouncement_Response | undefined;
+  getModeSilentState?: GetModeSilentState_Response | undefined;
+  setModeSilentState?: SetModeSilentState_Response | undefined;
 }
 
 export interface LsxMessage {
@@ -108,8 +118,8 @@ function createBaseRequest(): Request {
     getPowerGridState: undefined,
     setPowerGridState: undefined,
     getAnnouncementFiles: undefined,
-    getBaseState: undefined,
-    setBaseState: undefined,
+    getLockdownState: undefined,
+    setLockdownState: undefined,
     getAutoLockdown: undefined,
     setAutoLockdown: undefined,
     getLockdownAnnouncements: undefined,
@@ -118,6 +128,8 @@ function createBaseRequest(): Request {
     getFluffState: undefined,
     setFluffState: undefined,
     playAnnouncement: undefined,
+    getModeSilentState: undefined,
+    setModeSilentState: undefined,
   };
 }
 
@@ -156,15 +168,15 @@ export const Request = {
         writer.uint32(42).fork()
       ).ldelim();
     }
-    if (message.getBaseState !== undefined) {
-      GetBaseState_Request.encode(
-        message.getBaseState,
+    if (message.getLockdownState !== undefined) {
+      GetLockdownState_Request.encode(
+        message.getLockdownState,
         writer.uint32(50).fork()
       ).ldelim();
     }
-    if (message.setBaseState !== undefined) {
-      SetBaseState_Request.encode(
-        message.setBaseState,
+    if (message.setLockdownState !== undefined) {
+      SetLockdownState_Request.encode(
+        message.setLockdownState,
         writer.uint32(58).fork()
       ).ldelim();
     }
@@ -216,6 +228,18 @@ export const Request = {
         writer.uint32(122).fork()
       ).ldelim();
     }
+    if (message.getModeSilentState !== undefined) {
+      GetModeSilentState_Request.encode(
+        message.getModeSilentState,
+        writer.uint32(130).fork()
+      ).ldelim();
+    }
+    if (message.setModeSilentState !== undefined) {
+      SetModeSilentState_Request.encode(
+        message.setModeSilentState,
+        writer.uint32(138).fork()
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -257,13 +281,13 @@ export const Request = {
           );
           break;
         case 6:
-          message.getBaseState = GetBaseState_Request.decode(
+          message.getLockdownState = GetLockdownState_Request.decode(
             reader,
             reader.uint32()
           );
           break;
         case 7:
-          message.setBaseState = SetBaseState_Request.decode(
+          message.setLockdownState = SetLockdownState_Request.decode(
             reader,
             reader.uint32()
           );
@@ -312,6 +336,18 @@ export const Request = {
             reader.uint32()
           );
           break;
+        case 16:
+          message.getModeSilentState = GetModeSilentState_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 17:
+          message.setModeSilentState = SetModeSilentState_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -337,11 +373,11 @@ export const Request = {
       getAnnouncementFiles: isSet(object.getAnnouncementFiles)
         ? GetAnnouncementFiles_Request.fromJSON(object.getAnnouncementFiles)
         : undefined,
-      getBaseState: isSet(object.getBaseState)
-        ? GetBaseState_Request.fromJSON(object.getBaseState)
+      getLockdownState: isSet(object.getLockdownState)
+        ? GetLockdownState_Request.fromJSON(object.getLockdownState)
         : undefined,
-      setBaseState: isSet(object.setBaseState)
-        ? SetBaseState_Request.fromJSON(object.setBaseState)
+      setLockdownState: isSet(object.setLockdownState)
+        ? SetLockdownState_Request.fromJSON(object.setLockdownState)
         : undefined,
       getAutoLockdown: isSet(object.getAutoLockdown)
         ? GetAutoLockdown_Request.fromJSON(object.getAutoLockdown)
@@ -371,6 +407,12 @@ export const Request = {
       playAnnouncement: isSet(object.playAnnouncement)
         ? PlayAnnouncement_Request.fromJSON(object.playAnnouncement)
         : undefined,
+      getModeSilentState: isSet(object.getModeSilentState)
+        ? GetModeSilentState_Request.fromJSON(object.getModeSilentState)
+        : undefined,
+      setModeSilentState: isSet(object.setModeSilentState)
+        ? SetModeSilentState_Request.fromJSON(object.setModeSilentState)
+        : undefined,
     };
   },
 
@@ -396,13 +438,13 @@ export const Request = {
       (obj.getAnnouncementFiles = message.getAnnouncementFiles
         ? GetAnnouncementFiles_Request.toJSON(message.getAnnouncementFiles)
         : undefined);
-    message.getBaseState !== undefined &&
-      (obj.getBaseState = message.getBaseState
-        ? GetBaseState_Request.toJSON(message.getBaseState)
+    message.getLockdownState !== undefined &&
+      (obj.getLockdownState = message.getLockdownState
+        ? GetLockdownState_Request.toJSON(message.getLockdownState)
         : undefined);
-    message.setBaseState !== undefined &&
-      (obj.setBaseState = message.setBaseState
-        ? SetBaseState_Request.toJSON(message.setBaseState)
+    message.setLockdownState !== undefined &&
+      (obj.setLockdownState = message.setLockdownState
+        ? SetLockdownState_Request.toJSON(message.setLockdownState)
         : undefined);
     message.getAutoLockdown !== undefined &&
       (obj.getAutoLockdown = message.getAutoLockdown
@@ -440,6 +482,14 @@ export const Request = {
       (obj.playAnnouncement = message.playAnnouncement
         ? PlayAnnouncement_Request.toJSON(message.playAnnouncement)
         : undefined);
+    message.getModeSilentState !== undefined &&
+      (obj.getModeSilentState = message.getModeSilentState
+        ? GetModeSilentState_Request.toJSON(message.getModeSilentState)
+        : undefined);
+    message.setModeSilentState !== undefined &&
+      (obj.setModeSilentState = message.setModeSilentState
+        ? SetModeSilentState_Request.toJSON(message.setModeSilentState)
+        : undefined);
     return obj;
   },
 
@@ -470,13 +520,13 @@ export const Request = {
       object.getAnnouncementFiles !== null
         ? GetAnnouncementFiles_Request.fromPartial(object.getAnnouncementFiles)
         : undefined;
-    message.getBaseState =
-      object.getBaseState !== undefined && object.getBaseState !== null
-        ? GetBaseState_Request.fromPartial(object.getBaseState)
+    message.getLockdownState =
+      object.getLockdownState !== undefined && object.getLockdownState !== null
+        ? GetLockdownState_Request.fromPartial(object.getLockdownState)
         : undefined;
-    message.setBaseState =
-      object.setBaseState !== undefined && object.setBaseState !== null
-        ? SetBaseState_Request.fromPartial(object.setBaseState)
+    message.setLockdownState =
+      object.setLockdownState !== undefined && object.setLockdownState !== null
+        ? SetLockdownState_Request.fromPartial(object.setLockdownState)
         : undefined;
     message.getAutoLockdown =
       object.getAutoLockdown !== undefined && object.getAutoLockdown !== null
@@ -516,6 +566,16 @@ export const Request = {
       object.playAnnouncement !== undefined && object.playAnnouncement !== null
         ? PlayAnnouncement_Request.fromPartial(object.playAnnouncement)
         : undefined;
+    message.getModeSilentState =
+      object.getModeSilentState !== undefined &&
+      object.getModeSilentState !== null
+        ? GetModeSilentState_Request.fromPartial(object.getModeSilentState)
+        : undefined;
+    message.setModeSilentState =
+      object.setModeSilentState !== undefined &&
+      object.setModeSilentState !== null
+        ? SetModeSilentState_Request.fromPartial(object.setModeSilentState)
+        : undefined;
     return message;
   },
 };
@@ -527,8 +587,8 @@ function createBaseResponse(): Response {
     getPowerGridState: undefined,
     setPowerGridState: undefined,
     getAnnouncementFiles: undefined,
-    getBaseState: undefined,
-    setBaseState: undefined,
+    getLockdownState: undefined,
+    setLockdownState: undefined,
     getAutoLockdown: undefined,
     setAutoLockdown: undefined,
     getLockdownAnnouncements: undefined,
@@ -537,6 +597,8 @@ function createBaseResponse(): Response {
     getFluffState: undefined,
     setFluffState: undefined,
     playAnnouncement: undefined,
+    getModeSilentState: undefined,
+    setModeSilentState: undefined,
   };
 }
 
@@ -575,15 +637,15 @@ export const Response = {
         writer.uint32(42).fork()
       ).ldelim();
     }
-    if (message.getBaseState !== undefined) {
-      GetBaseState_Response.encode(
-        message.getBaseState,
+    if (message.getLockdownState !== undefined) {
+      GetLockdownState_Response.encode(
+        message.getLockdownState,
         writer.uint32(50).fork()
       ).ldelim();
     }
-    if (message.setBaseState !== undefined) {
-      SetBaseState_Response.encode(
-        message.setBaseState,
+    if (message.setLockdownState !== undefined) {
+      SetLockdownState_Response.encode(
+        message.setLockdownState,
         writer.uint32(58).fork()
       ).ldelim();
     }
@@ -635,6 +697,18 @@ export const Response = {
         writer.uint32(122).fork()
       ).ldelim();
     }
+    if (message.getModeSilentState !== undefined) {
+      GetModeSilentState_Response.encode(
+        message.getModeSilentState,
+        writer.uint32(130).fork()
+      ).ldelim();
+    }
+    if (message.setModeSilentState !== undefined) {
+      SetModeSilentState_Response.encode(
+        message.setModeSilentState,
+        writer.uint32(138).fork()
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -676,13 +750,13 @@ export const Response = {
           );
           break;
         case 6:
-          message.getBaseState = GetBaseState_Response.decode(
+          message.getLockdownState = GetLockdownState_Response.decode(
             reader,
             reader.uint32()
           );
           break;
         case 7:
-          message.setBaseState = SetBaseState_Response.decode(
+          message.setLockdownState = SetLockdownState_Response.decode(
             reader,
             reader.uint32()
           );
@@ -731,6 +805,18 @@ export const Response = {
             reader.uint32()
           );
           break;
+        case 16:
+          message.getModeSilentState = GetModeSilentState_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 17:
+          message.setModeSilentState = SetModeSilentState_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -756,11 +842,11 @@ export const Response = {
       getAnnouncementFiles: isSet(object.getAnnouncementFiles)
         ? GetAnnouncementFiles_Response.fromJSON(object.getAnnouncementFiles)
         : undefined,
-      getBaseState: isSet(object.getBaseState)
-        ? GetBaseState_Response.fromJSON(object.getBaseState)
+      getLockdownState: isSet(object.getLockdownState)
+        ? GetLockdownState_Response.fromJSON(object.getLockdownState)
         : undefined,
-      setBaseState: isSet(object.setBaseState)
-        ? SetBaseState_Response.fromJSON(object.setBaseState)
+      setLockdownState: isSet(object.setLockdownState)
+        ? SetLockdownState_Response.fromJSON(object.setLockdownState)
         : undefined,
       getAutoLockdown: isSet(object.getAutoLockdown)
         ? GetAutoLockdown_Response.fromJSON(object.getAutoLockdown)
@@ -790,6 +876,12 @@ export const Response = {
       playAnnouncement: isSet(object.playAnnouncement)
         ? PlayAnnouncement_Response.fromJSON(object.playAnnouncement)
         : undefined,
+      getModeSilentState: isSet(object.getModeSilentState)
+        ? GetModeSilentState_Response.fromJSON(object.getModeSilentState)
+        : undefined,
+      setModeSilentState: isSet(object.setModeSilentState)
+        ? SetModeSilentState_Response.fromJSON(object.setModeSilentState)
+        : undefined,
     };
   },
 
@@ -815,13 +907,13 @@ export const Response = {
       (obj.getAnnouncementFiles = message.getAnnouncementFiles
         ? GetAnnouncementFiles_Response.toJSON(message.getAnnouncementFiles)
         : undefined);
-    message.getBaseState !== undefined &&
-      (obj.getBaseState = message.getBaseState
-        ? GetBaseState_Response.toJSON(message.getBaseState)
+    message.getLockdownState !== undefined &&
+      (obj.getLockdownState = message.getLockdownState
+        ? GetLockdownState_Response.toJSON(message.getLockdownState)
         : undefined);
-    message.setBaseState !== undefined &&
-      (obj.setBaseState = message.setBaseState
-        ? SetBaseState_Response.toJSON(message.setBaseState)
+    message.setLockdownState !== undefined &&
+      (obj.setLockdownState = message.setLockdownState
+        ? SetLockdownState_Response.toJSON(message.setLockdownState)
         : undefined);
     message.getAutoLockdown !== undefined &&
       (obj.getAutoLockdown = message.getAutoLockdown
@@ -859,6 +951,14 @@ export const Response = {
       (obj.playAnnouncement = message.playAnnouncement
         ? PlayAnnouncement_Response.toJSON(message.playAnnouncement)
         : undefined);
+    message.getModeSilentState !== undefined &&
+      (obj.getModeSilentState = message.getModeSilentState
+        ? GetModeSilentState_Response.toJSON(message.getModeSilentState)
+        : undefined);
+    message.setModeSilentState !== undefined &&
+      (obj.setModeSilentState = message.setModeSilentState
+        ? SetModeSilentState_Response.toJSON(message.setModeSilentState)
+        : undefined);
     return obj;
   },
 
@@ -889,13 +989,13 @@ export const Response = {
       object.getAnnouncementFiles !== null
         ? GetAnnouncementFiles_Response.fromPartial(object.getAnnouncementFiles)
         : undefined;
-    message.getBaseState =
-      object.getBaseState !== undefined && object.getBaseState !== null
-        ? GetBaseState_Response.fromPartial(object.getBaseState)
+    message.getLockdownState =
+      object.getLockdownState !== undefined && object.getLockdownState !== null
+        ? GetLockdownState_Response.fromPartial(object.getLockdownState)
         : undefined;
-    message.setBaseState =
-      object.setBaseState !== undefined && object.setBaseState !== null
-        ? SetBaseState_Response.fromPartial(object.setBaseState)
+    message.setLockdownState =
+      object.setLockdownState !== undefined && object.setLockdownState !== null
+        ? SetLockdownState_Response.fromPartial(object.setLockdownState)
         : undefined;
     message.getAutoLockdown =
       object.getAutoLockdown !== undefined && object.getAutoLockdown !== null
@@ -934,6 +1034,16 @@ export const Response = {
     message.playAnnouncement =
       object.playAnnouncement !== undefined && object.playAnnouncement !== null
         ? PlayAnnouncement_Response.fromPartial(object.playAnnouncement)
+        : undefined;
+    message.getModeSilentState =
+      object.getModeSilentState !== undefined &&
+      object.getModeSilentState !== null
+        ? GetModeSilentState_Response.fromPartial(object.getModeSilentState)
+        : undefined;
+    message.setModeSilentState =
+      object.setModeSilentState !== undefined &&
+      object.setModeSilentState !== null
+        ? SetModeSilentState_Response.fromPartial(object.setModeSilentState)
         : undefined;
     return message;
   },

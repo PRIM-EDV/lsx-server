@@ -3,40 +3,40 @@ import * as _m0 from 'protobufjs/minimal';
 
 export const protobufPackage = '';
 
-export enum BaseState {
-  BASE_STATE_EMPTY = 0,
-  BASE_STATE_NORMAL = 1,
-  BASE_STATE_LOCKDOWN = 2,
+export enum LockdownState {
+  LOCKDOWN_STATE_EMPTY = 0,
+  LOCKDOWN_STATE_NORMAL = 1,
+  LOCKDOWN_STATE_LOCKDOWN = 2,
   UNRECOGNIZED = -1,
 }
 
-export function baseStateFromJSON(object: any): BaseState {
+export function lockdownStateFromJSON(object: any): LockdownState {
   switch (object) {
     case 0:
-    case 'BASE_STATE_EMPTY':
-      return BaseState.BASE_STATE_EMPTY;
+    case 'LOCKDOWN_STATE_EMPTY':
+      return LockdownState.LOCKDOWN_STATE_EMPTY;
     case 1:
-    case 'BASE_STATE_NORMAL':
-      return BaseState.BASE_STATE_NORMAL;
+    case 'LOCKDOWN_STATE_NORMAL':
+      return LockdownState.LOCKDOWN_STATE_NORMAL;
     case 2:
-    case 'BASE_STATE_LOCKDOWN':
-      return BaseState.BASE_STATE_LOCKDOWN;
+    case 'LOCKDOWN_STATE_LOCKDOWN':
+      return LockdownState.LOCKDOWN_STATE_LOCKDOWN;
     case -1:
     case 'UNRECOGNIZED':
     default:
-      return BaseState.UNRECOGNIZED;
+      return LockdownState.UNRECOGNIZED;
   }
 }
 
-export function baseStateToJSON(object: BaseState): string {
+export function lockdownStateToJSON(object: LockdownState): string {
   switch (object) {
-    case BaseState.BASE_STATE_EMPTY:
-      return 'BASE_STATE_EMPTY';
-    case BaseState.BASE_STATE_NORMAL:
-      return 'BASE_STATE_NORMAL';
-    case BaseState.BASE_STATE_LOCKDOWN:
-      return 'BASE_STATE_LOCKDOWN';
-    case BaseState.UNRECOGNIZED:
+    case LockdownState.LOCKDOWN_STATE_EMPTY:
+      return 'LOCKDOWN_STATE_EMPTY';
+    case LockdownState.LOCKDOWN_STATE_NORMAL:
+      return 'LOCKDOWN_STATE_NORMAL';
+    case LockdownState.LOCKDOWN_STATE_LOCKDOWN:
+      return 'LOCKDOWN_STATE_LOCKDOWN';
+    case LockdownState.UNRECOGNIZED:
     default:
       return 'UNRECOGNIZED';
   }
@@ -66,29 +66,29 @@ export interface SetAutoLockdown_Request {
 
 export interface SetAutoLockdown_Response {}
 
-export interface GetBaseState {
-  request?: GetBaseState_Request | undefined;
-  response?: GetBaseState_Response | undefined;
+export interface GetLockdownState {
+  request?: GetLockdownState_Request | undefined;
+  response?: GetLockdownState_Response | undefined;
   error: string | undefined;
 }
 
-export interface GetBaseState_Response {
-  state: BaseState;
+export interface GetLockdownState_Response {
+  state: LockdownState;
 }
 
-export interface GetBaseState_Request {}
+export interface GetLockdownState_Request {}
 
-export interface SetBaseState {
-  request?: SetBaseState_Request | undefined;
-  response?: SetBaseState_Response | undefined;
+export interface SetLockdownState {
+  request?: SetLockdownState_Request | undefined;
+  response?: SetLockdownState_Response | undefined;
   error: string | undefined;
 }
 
-export interface SetBaseState_Request {
-  state: BaseState;
+export interface SetLockdownState_Request {
+  state: LockdownState;
 }
 
-export interface SetBaseState_Response {}
+export interface SetLockdownState_Response {}
 
 export interface GetLockdownAnnouncements {
   request?: GetLockdownAnnouncements_Request | undefined;
@@ -522,23 +522,23 @@ export const SetAutoLockdown_Response = {
   },
 };
 
-function createBaseGetBaseState(): GetBaseState {
+function createBaseGetLockdownState(): GetLockdownState {
   return { request: undefined, response: undefined, error: undefined };
 }
 
-export const GetBaseState = {
+export const GetLockdownState = {
   encode(
-    message: GetBaseState,
+    message: GetLockdownState,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     if (message.request !== undefined) {
-      GetBaseState_Request.encode(
+      GetLockdownState_Request.encode(
         message.request,
         writer.uint32(10).fork(),
       ).ldelim();
     }
     if (message.response !== undefined) {
-      GetBaseState_Response.encode(
+      GetLockdownState_Response.encode(
         message.response,
         writer.uint32(18).fork(),
       ).ldelim();
@@ -549,21 +549,21 @@ export const GetBaseState = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): GetBaseState {
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetLockdownState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGetBaseState();
+    const message = createBaseGetLockdownState();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.request = GetBaseState_Request.decode(
+          message.request = GetLockdownState_Request.decode(
             reader,
             reader.uint32(),
           );
           break;
         case 2:
-          message.response = GetBaseState_Response.decode(
+          message.response = GetLockdownState_Response.decode(
             reader,
             reader.uint32(),
           );
@@ -579,56 +579,56 @@ export const GetBaseState = {
     return message;
   },
 
-  fromJSON(object: any): GetBaseState {
+  fromJSON(object: any): GetLockdownState {
     return {
       request: isSet(object.request)
-        ? GetBaseState_Request.fromJSON(object.request)
+        ? GetLockdownState_Request.fromJSON(object.request)
         : undefined,
       response: isSet(object.response)
-        ? GetBaseState_Response.fromJSON(object.response)
+        ? GetLockdownState_Response.fromJSON(object.response)
         : undefined,
       error: isSet(object.error) ? String(object.error) : undefined,
     };
   },
 
-  toJSON(message: GetBaseState): unknown {
+  toJSON(message: GetLockdownState): unknown {
     const obj: any = {};
     message.request !== undefined &&
       (obj.request = message.request
-        ? GetBaseState_Request.toJSON(message.request)
+        ? GetLockdownState_Request.toJSON(message.request)
         : undefined);
     message.response !== undefined &&
       (obj.response = message.response
-        ? GetBaseState_Response.toJSON(message.response)
+        ? GetLockdownState_Response.toJSON(message.response)
         : undefined);
     message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<GetBaseState>, I>>(
+  fromPartial<I extends Exact<DeepPartial<GetLockdownState>, I>>(
     object: I,
-  ): GetBaseState {
-    const message = createBaseGetBaseState();
+  ): GetLockdownState {
+    const message = createBaseGetLockdownState();
     message.request =
       object.request !== undefined && object.request !== null
-        ? GetBaseState_Request.fromPartial(object.request)
+        ? GetLockdownState_Request.fromPartial(object.request)
         : undefined;
     message.response =
       object.response !== undefined && object.response !== null
-        ? GetBaseState_Response.fromPartial(object.response)
+        ? GetLockdownState_Response.fromPartial(object.response)
         : undefined;
     message.error = object.error ?? undefined;
     return message;
   },
 };
 
-function createBaseGetBaseState_Response(): GetBaseState_Response {
+function createBaseGetLockdownState_Response(): GetLockdownState_Response {
   return { state: 0 };
 }
 
-export const GetBaseState_Response = {
+export const GetLockdownState_Response = {
   encode(
-    message: GetBaseState_Response,
+    message: GetLockdownState_Response,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     if (message.state !== 0) {
@@ -640,10 +640,10 @@ export const GetBaseState_Response = {
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number,
-  ): GetBaseState_Response {
+  ): GetLockdownState_Response {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGetBaseState_Response();
+    const message = createBaseGetLockdownState_Response();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -658,34 +658,35 @@ export const GetBaseState_Response = {
     return message;
   },
 
-  fromJSON(object: any): GetBaseState_Response {
+  fromJSON(object: any): GetLockdownState_Response {
     return {
-      state: isSet(object.state) ? baseStateFromJSON(object.state) : 0,
+      state: isSet(object.state) ? lockdownStateFromJSON(object.state) : 0,
     };
   },
 
-  toJSON(message: GetBaseState_Response): unknown {
+  toJSON(message: GetLockdownState_Response): unknown {
     const obj: any = {};
-    message.state !== undefined && (obj.state = baseStateToJSON(message.state));
+    message.state !== undefined &&
+      (obj.state = lockdownStateToJSON(message.state));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<GetBaseState_Response>, I>>(
+  fromPartial<I extends Exact<DeepPartial<GetLockdownState_Response>, I>>(
     object: I,
-  ): GetBaseState_Response {
-    const message = createBaseGetBaseState_Response();
+  ): GetLockdownState_Response {
+    const message = createBaseGetLockdownState_Response();
     message.state = object.state ?? 0;
     return message;
   },
 };
 
-function createBaseGetBaseState_Request(): GetBaseState_Request {
+function createBaseGetLockdownState_Request(): GetLockdownState_Request {
   return {};
 }
 
-export const GetBaseState_Request = {
+export const GetLockdownState_Request = {
   encode(
-    _: GetBaseState_Request,
+    _: GetLockdownState_Request,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     return writer;
@@ -694,10 +695,10 @@ export const GetBaseState_Request = {
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number,
-  ): GetBaseState_Request {
+  ): GetLockdownState_Request {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGetBaseState_Request();
+    const message = createBaseGetLockdownState_Request();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -709,40 +710,40 @@ export const GetBaseState_Request = {
     return message;
   },
 
-  fromJSON(_: any): GetBaseState_Request {
+  fromJSON(_: any): GetLockdownState_Request {
     return {};
   },
 
-  toJSON(_: GetBaseState_Request): unknown {
+  toJSON(_: GetLockdownState_Request): unknown {
     const obj: any = {};
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<GetBaseState_Request>, I>>(
+  fromPartial<I extends Exact<DeepPartial<GetLockdownState_Request>, I>>(
     _: I,
-  ): GetBaseState_Request {
-    const message = createBaseGetBaseState_Request();
+  ): GetLockdownState_Request {
+    const message = createBaseGetLockdownState_Request();
     return message;
   },
 };
 
-function createBaseSetBaseState(): SetBaseState {
+function createBaseSetLockdownState(): SetLockdownState {
   return { request: undefined, response: undefined, error: undefined };
 }
 
-export const SetBaseState = {
+export const SetLockdownState = {
   encode(
-    message: SetBaseState,
+    message: SetLockdownState,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     if (message.request !== undefined) {
-      SetBaseState_Request.encode(
+      SetLockdownState_Request.encode(
         message.request,
         writer.uint32(10).fork(),
       ).ldelim();
     }
     if (message.response !== undefined) {
-      SetBaseState_Response.encode(
+      SetLockdownState_Response.encode(
         message.response,
         writer.uint32(18).fork(),
       ).ldelim();
@@ -753,21 +754,21 @@ export const SetBaseState = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): SetBaseState {
+  decode(input: _m0.Reader | Uint8Array, length?: number): SetLockdownState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseSetBaseState();
+    const message = createBaseSetLockdownState();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.request = SetBaseState_Request.decode(
+          message.request = SetLockdownState_Request.decode(
             reader,
             reader.uint32(),
           );
           break;
         case 2:
-          message.response = SetBaseState_Response.decode(
+          message.response = SetLockdownState_Response.decode(
             reader,
             reader.uint32(),
           );
@@ -783,56 +784,56 @@ export const SetBaseState = {
     return message;
   },
 
-  fromJSON(object: any): SetBaseState {
+  fromJSON(object: any): SetLockdownState {
     return {
       request: isSet(object.request)
-        ? SetBaseState_Request.fromJSON(object.request)
+        ? SetLockdownState_Request.fromJSON(object.request)
         : undefined,
       response: isSet(object.response)
-        ? SetBaseState_Response.fromJSON(object.response)
+        ? SetLockdownState_Response.fromJSON(object.response)
         : undefined,
       error: isSet(object.error) ? String(object.error) : undefined,
     };
   },
 
-  toJSON(message: SetBaseState): unknown {
+  toJSON(message: SetLockdownState): unknown {
     const obj: any = {};
     message.request !== undefined &&
       (obj.request = message.request
-        ? SetBaseState_Request.toJSON(message.request)
+        ? SetLockdownState_Request.toJSON(message.request)
         : undefined);
     message.response !== undefined &&
       (obj.response = message.response
-        ? SetBaseState_Response.toJSON(message.response)
+        ? SetLockdownState_Response.toJSON(message.response)
         : undefined);
     message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SetBaseState>, I>>(
+  fromPartial<I extends Exact<DeepPartial<SetLockdownState>, I>>(
     object: I,
-  ): SetBaseState {
-    const message = createBaseSetBaseState();
+  ): SetLockdownState {
+    const message = createBaseSetLockdownState();
     message.request =
       object.request !== undefined && object.request !== null
-        ? SetBaseState_Request.fromPartial(object.request)
+        ? SetLockdownState_Request.fromPartial(object.request)
         : undefined;
     message.response =
       object.response !== undefined && object.response !== null
-        ? SetBaseState_Response.fromPartial(object.response)
+        ? SetLockdownState_Response.fromPartial(object.response)
         : undefined;
     message.error = object.error ?? undefined;
     return message;
   },
 };
 
-function createBaseSetBaseState_Request(): SetBaseState_Request {
+function createBaseSetLockdownState_Request(): SetLockdownState_Request {
   return { state: 0 };
 }
 
-export const SetBaseState_Request = {
+export const SetLockdownState_Request = {
   encode(
-    message: SetBaseState_Request,
+    message: SetLockdownState_Request,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     if (message.state !== 0) {
@@ -844,10 +845,10 @@ export const SetBaseState_Request = {
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number,
-  ): SetBaseState_Request {
+  ): SetLockdownState_Request {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseSetBaseState_Request();
+    const message = createBaseSetLockdownState_Request();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -862,34 +863,35 @@ export const SetBaseState_Request = {
     return message;
   },
 
-  fromJSON(object: any): SetBaseState_Request {
+  fromJSON(object: any): SetLockdownState_Request {
     return {
-      state: isSet(object.state) ? baseStateFromJSON(object.state) : 0,
+      state: isSet(object.state) ? lockdownStateFromJSON(object.state) : 0,
     };
   },
 
-  toJSON(message: SetBaseState_Request): unknown {
+  toJSON(message: SetLockdownState_Request): unknown {
     const obj: any = {};
-    message.state !== undefined && (obj.state = baseStateToJSON(message.state));
+    message.state !== undefined &&
+      (obj.state = lockdownStateToJSON(message.state));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SetBaseState_Request>, I>>(
+  fromPartial<I extends Exact<DeepPartial<SetLockdownState_Request>, I>>(
     object: I,
-  ): SetBaseState_Request {
-    const message = createBaseSetBaseState_Request();
+  ): SetLockdownState_Request {
+    const message = createBaseSetLockdownState_Request();
     message.state = object.state ?? 0;
     return message;
   },
 };
 
-function createBaseSetBaseState_Response(): SetBaseState_Response {
+function createBaseSetLockdownState_Response(): SetLockdownState_Response {
   return {};
 }
 
-export const SetBaseState_Response = {
+export const SetLockdownState_Response = {
   encode(
-    _: SetBaseState_Response,
+    _: SetLockdownState_Response,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     return writer;
@@ -898,10 +900,10 @@ export const SetBaseState_Response = {
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number,
-  ): SetBaseState_Response {
+  ): SetLockdownState_Response {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseSetBaseState_Response();
+    const message = createBaseSetLockdownState_Response();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -913,19 +915,19 @@ export const SetBaseState_Response = {
     return message;
   },
 
-  fromJSON(_: any): SetBaseState_Response {
+  fromJSON(_: any): SetLockdownState_Response {
     return {};
   },
 
-  toJSON(_: SetBaseState_Response): unknown {
+  toJSON(_: SetLockdownState_Response): unknown {
     const obj: any = {};
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SetBaseState_Response>, I>>(
+  fromPartial<I extends Exact<DeepPartial<SetLockdownState_Response>, I>>(
     _: I,
-  ): SetBaseState_Response {
-    const message = createBaseSetBaseState_Response();
+  ): SetLockdownState_Response {
+    const message = createBaseSetLockdownState_Response();
     return message;
   },
 };

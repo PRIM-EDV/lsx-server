@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+enum ModeSilentState {
+    MODE_SILENT_STATE_EMPTY = 0;
+    MODE_SILENT_STATE_NORMAL = 1;
+    MODE_SILENT_STATE_SILENT = 2;
+}
+
+message GetModeSilentState {
+    message Response {
+        ModeSilentState state = 1;
+    }
+
+    message Request {
+
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message SetModeSilentState {
+    message Request {
+        ModeSilentState state = 1;
+    }
+
+    message Response {
+
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}

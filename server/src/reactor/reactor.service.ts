@@ -23,10 +23,10 @@ export class ReactorService {
         'ogParcelRight': PowerLineState.STATE_POWERED,
         'ugParcelLeft': PowerLineState.STATE_POWERED,
         'ugParcelRight': PowerLineState.STATE_POWERED,
-        'ogBaseAdm': PowerLineState.STATE_POWERED,
-        'ogBaseCic': PowerLineState.STATE_POWERED,
-        'ogBaseSci': PowerLineState.STATE_POWERED,
-        'ogBaseTec': PowerLineState.STATE_POWERED,
+        // 'ogBaseAdm': PowerLineState.STATE_POWERED,
+        // 'ogBaseCic': PowerLineState.STATE_POWERED,
+        // 'ogBaseSci': PowerLineState.STATE_POWERED,
+        // 'ogBaseTec': PowerLineState.STATE_POWERED,
     }
 
     private powerPlantState: PowerPlantState = PowerPlantState.STATE_NORMAL;

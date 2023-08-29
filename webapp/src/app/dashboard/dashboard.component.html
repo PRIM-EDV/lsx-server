@@ -19,6 +19,9 @@
             <ph-window *ngIf="auth.role == 'admin'" [title]="'FLUFF'" [subtitle]="'TR2805'" style="grid-row:19/36; grid-column: 38/58">
                 <speaker-fluff></speaker-fluff>
             </ph-window>
+            <ph-window *ngIf="auth.role == 'admin'" [title]="'DRONE'" [subtitle]="'TR2805'" style="grid-row:1/6; grid-column: 58/78">
+                <drone-control></drone-control>
+            </ph-window>
         </div>
     </div>
 </div>

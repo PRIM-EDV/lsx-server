@@ -3,6 +3,7 @@ syntax = "proto3";
 import "lsx.lockdown.proto";
 import "lsx.fluff.proto";
 import "lsx.power.proto";
+import "lsx.drone.proto";
 
 message Request {
     oneof request {
@@ -11,8 +12,8 @@ message Request {
         GetPowerGridState.Request get_power_grid_state = 3;
         SetPowerGridState.Request set_power_grid_state = 4;
         GetAnnouncementFiles.Request get_announcement_files = 5;
-        GetBaseState.Request get_base_state = 6;
-        SetBaseState.Request set_base_state = 7;
+        GetLockdownState.Request get_lockdown_state = 6;
+        SetLockdownState.Request set_lockdown_state = 7;
         GetAutoLockdown.Request get_auto_lockdown = 8;
         SetAutoLockdown.Request set_auto_lockdown = 9;
         GetLockdownAnnouncements.Request get_lockdown_announcements = 10;
@@ -21,6 +22,8 @@ message Request {
         GetFluffState.Request get_fluff_state = 13;
         SetFluffState.Request set_fluff_state = 14;
         PlayAnnouncement.Request play_announcement = 15;
+        GetModeSilentState.Request get_mode_silent_state = 16;
+        SetModeSilentState.Request set_mode_silent_state = 17;
     }
 }
 
@@ -31,8 +34,8 @@ message Response {
         GetPowerGridState.Response get_power_grid_state = 3;
         SetPowerGridState.Response set_power_grid_state = 4;
         GetAnnouncementFiles.Response get_announcement_files = 5;
-        GetBaseState.Response get_base_state = 6;
-        SetBaseState.Response set_base_state = 7;
+        GetLockdownState.Response get_lockdown_state = 6;
+        SetLockdownState.Response set_lockdown_state = 7;
         GetAutoLockdown.Response get_auto_lockdown = 8;
         SetAutoLockdown.Response set_auto_lockdown = 9;
         GetLockdownAnnouncements.Response get_lockdown_announcements = 10;
@@ -41,6 +44,8 @@ message Response {
         GetFluffState.Response get_fluff_state = 13;
         SetFluffState.Response set_fluff_state = 14;
         PlayAnnouncement.Response play_announcement = 15;
+        GetModeSilentState.Response get_mode_silent_state = 16;
+        SetModeSilentState.Response set_mode_silent_state = 17;
     }
 }
 

@@ -92,6 +92,12 @@ export interface PowerGridState {
   ogParcelLeft: PowerLineState;
   ogParcelRight: PowerLineState;
   ugParcelLeft: PowerLineState;
+  /**
+   * PowerLineState og_base_adm = 6;
+   * PowerLineState og_base_cic = 7;
+   * PowerLineState og_base_sci = 8;
+   * PowerLineState og_base_tec = 9;
+   */
   ugParcelRight: PowerLineState;
 }
 

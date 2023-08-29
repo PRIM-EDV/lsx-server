@@ -19,10 +19,10 @@ message PowerGridState {
     PowerLineState og_parcel_right = 3;
     PowerLineState ug_parcel_left = 4;
     PowerLineState ug_parcel_right = 5;
-    PowerLineState og_base_adm = 6;
-    PowerLineState og_base_cic = 7;
-    PowerLineState og_base_sci = 8;
-    PowerLineState og_base_tec = 9;
+    // PowerLineState og_base_adm = 6;
+    // PowerLineState og_base_cic = 7;
+    // PowerLineState og_base_sci = 8;
+    // PowerLineState og_base_tec = 9;
 }
 
 message GetPowerGridState {

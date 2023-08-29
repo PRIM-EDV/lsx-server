@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseState } from 'proto/lsx.lockdown';
+import { LockdownState } from 'proto/lsx.lockdown';
 import { BackendService } from '../backend/backend.service';
 import { Request } from 'proto/lsx';
 import { BaseLockdownService } from './base-lockdown.service';
@@ -11,7 +11,7 @@ import { BaseLockdownService } from './base-lockdown.service';
 })
 export class BaseLockdownComponent implements OnInit {
 
-  public baseState: string | number = "normal";
+  public lockdownState: string | number = "normal";
   public autoLockdown: string | number = "on";
   public lockdownAnnouncements: string | number = "on";
 
@@ -19,7 +19,7 @@ export class BaseLockdownComponent implements OnInit {
 
   ngOnInit(): void {
     this.backend.onOpen.subscribe(async () => {
-      const baseState = await this.baseLockdownService.getBaseState();
+      const baseState = await this.baseLockdownService.getLockdownState();
       const autoLockdown = await this.baseLockdownService.getAutoLockdown();
       const lockdownAnnouncements = await this.baseLockdownService.getLockdownAnnouncements();
 
@@ -30,10 +30,10 @@ export class BaseLockdownComponent implements OnInit {
     this.backend.onRequest.subscribe(this.handleRequest.bind(this));
   }
 
-  public async updateLocalBaseState(baseState: BaseState) {
+  public async updateLocalBaseState(baseState: LockdownState) {
     switch(baseState) {
-      case BaseState.BASE_STATE_LOCKDOWN: this.baseState = 'lockdown'; break;
-      case BaseState.BASE_STATE_NORMAL: this.baseState = 'normal'; break;
+      case LockdownState.LOCKDOWN_STATE_LOCKDOWN: this.lockdownState = 'lockdown'; break;
+      case LockdownState.LOCKDOWN_STATE_NORMAL: this.lockdownState = 'normal'; break;
     }
   }
 
@@ -46,9 +46,9 @@ export class BaseLockdownComponent implements OnInit {
   }
 
   public async updateServerBaseState() {
-    switch(this.baseState) {
-      case 'normal': await this.baseLockdownService.setBaseState(BaseState.BASE_STATE_NORMAL); break;
-      case 'lockdown': await this.baseLockdownService.setBaseState(BaseState.BASE_STATE_LOCKDOWN); break;
+    switch(this.lockdownState) {
+      case 'normal': await this.baseLockdownService.setLockdownState(LockdownState.LOCKDOWN_STATE_NORMAL); break;
+      case 'lockdown': await this.baseLockdownService.setLockdownState(LockdownState.LOCKDOWN_STATE_LOCKDOWN); break;
     }
   }
 
@@ -67,9 +67,9 @@ export class BaseLockdownComponent implements OnInit {
   }
 
   private handleRequest(event: {id: string, request: Request}) {
-    if(event.request.setBaseState) {
-      this.updateLocalBaseState(event.request.setBaseState.state!);
-      this.backend.respond(event.id, {setBaseState: {}})
+    if(event.request.setLockdownState) {
+      this.updateLocalBaseState(event.request.setLockdownState.state!);
+      this.backend.respond(event.id, {setLockdownState: {}})
     }
     if(event.request.setAutoLockdown) {
       this.updateLocalAutoLockdown(event.request.setAutoLockdown.state!);

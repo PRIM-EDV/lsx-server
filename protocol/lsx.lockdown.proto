@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-enum BaseState {
-    BASE_STATE_EMPTY = 0;
-    BASE_STATE_NORMAL = 1;
-    BASE_STATE_LOCKDOWN = 2;
+enum LockdownState {
+    LOCKDOWN_STATE_EMPTY = 0;
+    LOCKDOWN_STATE_NORMAL = 1;
+    LOCKDOWN_STATE_LOCKDOWN = 2;
 }
 
 message GetAutoLockdown {
@@ -38,9 +38,9 @@ message SetAutoLockdown {
     }
 }
 
-message GetBaseState {
+message GetLockdownState {
     message Response {
-        BaseState state = 1;
+        LockdownState state = 1;
     }
 
     message Request {
@@ -54,9 +54,9 @@ message GetBaseState {
     }
 }
 
-message SetBaseState {
+message SetLockdownState {
     message Request {
-        BaseState state = 1;
+        LockdownState state = 1;
     }
 
     message Response {

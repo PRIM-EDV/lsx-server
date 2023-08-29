@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Request } from 'proto/lsx';
-import { BaseState } from 'proto/lsx.lockdown';
+import { LockdownState } from 'proto/lsx.lockdown';
 import { AppGateway } from 'src/gateway/app.gateway';
 import { SoundService } from 'src/sound/sound.service';
 import { QlcService } from 'src/dmx/qlc.service';
@@ -8,7 +8,7 @@ import { QlcService } from 'src/dmx/qlc.service';
 @Injectable()
 export class LockdownService {
 
-    private baseState: BaseState = BaseState.BASE_STATE_NORMAL;
+    private lockdownState: LockdownState = LockdownState.LOCKDOWN_STATE_NORMAL;
     private autoLockdown = true;
     private lockdownAnnouncements = true;
 
@@ -20,12 +20,12 @@ export class LockdownService {
     }
 
     handleRequest(event: {clientId: string, msgId: string, request: Request}): void {
-        if(event.request.getBaseState){
-            this.gateway.respond(event.clientId, event.msgId, {getBaseState: {state: this.baseState}})
+        if(event.request.getLockdownState){
+            this.gateway.respond(event.clientId, event.msgId, {getLockdownState: {state: this.lockdownState}})
         }
-        if(event.request.setBaseState){
-            this.setBaseState(event.request.setBaseState.state)
-            this.gateway.respond(event.clientId, event.msgId, {setBaseState: {}})
+        if(event.request.setLockdownState){
+            this.setBaseState(event.request.setLockdownState.state)
+            this.gateway.respond(event.clientId, event.msgId, {setLockdownState: {}})
         }
         if(event.request.getAutoLockdown){
             this.gateway.respond(event.clientId, event.msgId, {getAutoLockdown: {state: this.autoLockdown}})
@@ -43,11 +43,11 @@ export class LockdownService {
         }
     }
 
-    public setBaseState(state: BaseState) {
-        const req: Request = {setBaseState: {state: state}};
+    public setBaseState(state: LockdownState) {
+        const req: Request = {setLockdownState: {state: state}};
 
         this.handleBaseStateChange(state);
-        this.baseState = state;
+        this.lockdownState = state;
         this.gateway.requestAll(req).then();
     }
 
@@ -65,9 +65,9 @@ export class LockdownService {
         this.gateway.requestAll(req).then();
     }
 
-    private handleBaseStateChange(state: BaseState) {
+    private async handleBaseStateChange(state: LockdownState) {
         switch(state) {
-            case BaseState.BASE_STATE_NORMAL:
+            case LockdownState.LOCKDOWN_STATE_NORMAL:
                 if(this.lockdownAnnouncements) {
                     this.sound.playWav('assets/wav/lockdown-timer/lockdown-vorbei.wav').then( () => {
                         for(const i of [12, 6, 8, 11, 13, 18, 16, 20, 21, 32, 25, 33, 37, 39]) {
@@ -90,9 +90,9 @@ export class LockdownService {
                         this.dmx.setCue(i, "STEP", 2);
                     }
                     this.dmx.setCue(36, "STEP", 1);
-                }; break;
+                } break;
 
-            case BaseState.BASE_STATE_LOCKDOWN:
+            case LockdownState.LOCKDOWN_STATE_LOCKDOWN:
                 if (this.lockdownAnnouncements) {
 
                     this.sound.playWav('assets/wav/lockdown-timer/lockdown-now.wav').then( () => {
@@ -166,8 +166,8 @@ export class LockdownService {
         if (this.autoLockdown) {
             if (minutes == 0 && seconds == 0) {
                 switch(hours) {
-                    case 3: this.setBaseState(BaseState.BASE_STATE_LOCKDOWN); break;
-                    case 9: this.setBaseState(BaseState.BASE_STATE_NORMAL); break;
+                    case 3: this.setBaseState(LockdownState.LOCKDOWN_STATE_LOCKDOWN); break;
+                    case 9: this.setBaseState(LockdownState.LOCKDOWN_STATE_NORMAL); break;
                 }
             }
         }

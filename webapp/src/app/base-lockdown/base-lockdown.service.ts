@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Request, Response } from 'proto/lsx';
-import { BaseState } from 'proto/lsx.lockdown';
+import { LockdownState } from 'proto/lsx.lockdown';
 import { BackendService } from '../backend/backend.service';
 
 @Injectable({
@@ -10,18 +10,18 @@ export class BaseLockdownService {
 
   constructor(private readonly backend: BackendService) { }
 
-  public async getBaseState(): Promise<BaseState> {
+  public async getLockdownState(): Promise<LockdownState> {
     const req: Request = {
-        getBaseState: {}
+        getLockdownState: {}
     }
 
     const res: Response = await this.backend.request(req);
-    return res.getBaseState!.state!;
+    return res.getLockdownState!.state!;
   }
 
-  public async setBaseState(state: BaseState): Promise<void> {
+  public async setLockdownState(state: LockdownState): Promise<void> {
     const req: Request = {
-        setBaseState: {state: state}
+        setLockdownState: {state: state}
     }
 
     const res: Response = await this.backend.request(req);

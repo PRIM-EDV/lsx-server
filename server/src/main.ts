@@ -6,7 +6,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const d = new Date();
-  console.log(d.getHours());
 
   app.enableCors();
   app.useWebSocketAdapter(new WsAdapter(app));

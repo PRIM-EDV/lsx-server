@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "proto:generate": "cpx '../protocol/*' ./proto && protoc -I=./proto --ts_proto_opt=useOptionals=true --ts_proto_out=./proto ./proto/lsx.proto"
+    "proto:generate": "cpx \"../protocol/*\" ./proto && protoc -I=./proto --ts_proto_opt=useOptionals=true --ts_proto_out=./proto ./proto/lsx.proto"
   },
   "private": true,
   "dependencies": {
@@ -29,7 +29,7 @@
     "@angular/cli": "^14.0.0",
     "@angular/compiler-cli": "^14.0.0",
     "@types/node": "^12.11.1",
-    "cpx": "^1.5.0",
+    "cpx2": "^5.0.0",
     "ts-proto": "^1.117.0",
     "ts-protoc-gen": "^0.15.0",
     "typescript": "~4.7.3"

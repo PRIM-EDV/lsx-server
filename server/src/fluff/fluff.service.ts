@@ -29,7 +29,7 @@ export class FluffService {
 
         if(event.request.setFluffState){
             this.setFluffState(event.request.setFluffState.state)
-            this.gateway.respond(event.clientId, event.msgId, {setBaseState: {}})
+            this.gateway.respond(event.clientId, event.msgId, {setFluffState: {}})
         }
 
         if(event.request.getFluffState){

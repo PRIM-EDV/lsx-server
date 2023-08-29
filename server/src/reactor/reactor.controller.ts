@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete } from '@nestjs/common';
+import { Controller, Get} from '@nestjs/common';
 import { PowerPlantState } from 'proto/lsx.power';
 import { LoggingService } from 'src/logging/logging.service';
 import { ReactorService } from './reactor.service';

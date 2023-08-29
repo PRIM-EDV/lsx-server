@@ -13,16 +13,16 @@ export class AnnouncementsService {
     }
 
     handleRequest(event: {clientId: string, msgId: string, request: Request}): void {
-        if(event.request.getAnnouncementFiles){
-            this.getAnnoucementFiles().then((files) => {
-              this.gateway.respond(event.clientId, event.msgId, {getAnnouncementFiles: {files: files}})
-            })
-        }
-
-        if(event.request.playAnnouncement) {
-            this.sound.playWav(event.request.playAnnouncement.filepath);
-            this.gateway.respond(event.clientId, event.msgId, { playAnnouncement: {} })
-        }
+            if(event.request.getAnnouncementFiles){
+                this.getAnnoucementFiles().then((files) => {
+                  this.gateway.respond(event.clientId, event.msgId, {getAnnouncementFiles: {files: files}})
+                })
+            }
+    
+            if(event.request.playAnnouncement) {
+                this.sound.playWav(event.request.playAnnouncement.filepath);
+                this.gateway.respond(event.clientId, event.msgId, { playAnnouncement: {} })
+            }
     }
 
     public async getAnnoucementFiles(): Promise<string[]> {
