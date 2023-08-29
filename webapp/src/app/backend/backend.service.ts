@@ -10,6 +10,7 @@ import { Subject } from "rxjs";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
 import { LsxMessage, Request, Response } from "proto/lsx";
+import { Router } from "@angular/router";
 
 const LSX_SERVER_HOSTNAME = window?.__env?.lsxServerHostname != null ? `${window.__env.lsxServerHostname}` : window.location.hostname;
 const LSX_SERVER_PORT = window?.__env?.lsxServerPort != null ? window.__env.lsxServerPort : window.location.port;
@@ -27,14 +28,14 @@ export class BackendService {
     private requests: Map<string, (value: Response) => void> = new Map<string, (value: Response) => void>();
     private ws!: WebSocketSubject<any>;
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private readonly router: Router) {}
 
     public async connect() {
         this.ws = webSocket({url: WS_URL, openObserver: { next: () => {this.onOpen.next()} }});
 
         this.ws.subscribe({
             next: this.handleMessage.bind(this),
-            error: (err) => {console.log(err)},
+            error: (err) => {console.log(err), this.router.navigateByUrl('/auth');},
             complete: this.handleClose.bind(this)
         });
     }
@@ -83,7 +84,6 @@ export class BackendService {
                 this.requests.delete(msg.id);
             }
         }
-        console.log(msg)
 
         this.onMessage.next(msg);
     }

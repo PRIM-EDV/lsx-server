@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { DroneControlComponent } from './drone-control/drone-control.component';
+import { DroneControlModule } from './drone-control/drone-control.module';
 
 declare global {
   interface Window {
@@ -28,6 +30,7 @@ declare global {
     BrowserModule,
     DashboardModule,
     HttpClientModule,
+    DroneControlModule
   ],
   providers: [],
   bootstrap: [AppComponent]
