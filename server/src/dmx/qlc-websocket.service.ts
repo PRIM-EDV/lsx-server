@@ -28,8 +28,7 @@ export class QlcWebsocketService {
     }
 
     public async setQlcValue(msg: string) {
-        console.log(msg);
-    	this.ws.send(msg);
+        this.ws.send(msg);
     }
 
     private onConnectionError() {
