@@ -12,6 +12,7 @@ import { LockdownModule } from './lockdown/lockdown.module';
 import { FluffModule } from './fluff/fluff.module';
 import { SoundModule } from './sound/sound.module';
 import { QlcModule } from './dmx/qlc.module';
+import { DroneModule } from './drone/drone.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { QlcModule } from './dmx/qlc.module';
     LockdownModule,
     FluffModule,
     SoundModule,
+    DroneModule,
     QlcModule
   ],
   controllers: [AppController],

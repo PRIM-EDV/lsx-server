@@ -8,6 +8,9 @@ import { AuthService } from '../auth/auth.service';
 })
 export class DashboardComponent implements OnInit {
 
+  public view: string = "DHBRD";
+  public tab: string = "GNRL";
+
   constructor(public readonly auth: AuthService) { }
 
   ngOnInit(): void {

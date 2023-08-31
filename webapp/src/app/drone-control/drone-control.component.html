@@ -1,10 +1,10 @@
 <ph-form>
-    <ph-button-select [label]="'Mode silent'">
-        <ph-button [value]="'off'">NORMAL</ph-button>
-        <ph-button [value]="'on'">SILENT</ph-button>
+    <ph-button-select [label]="'Mode silent'" [(value)]="modeSilentState" (valueChange)="updateRemoteModeSilentSate()">
+        <ph-button [value]="'normal'">NORMAL</ph-button>
+        <ph-button [value]="'silent'">SILENT</ph-button>
     </ph-button-select>
-    <ph-command-list [label]="'Pay explosion'">
-        <ph-button>OG</ph-button>
-        <ph-button>UG</ph-button>
+    <ph-command-list [label]="'Play warning'">
+        <ph-button>INCOMING</ph-button>
+        <ph-button>SAFE</ph-button>
     </ph-command-list>
 </ph-form>

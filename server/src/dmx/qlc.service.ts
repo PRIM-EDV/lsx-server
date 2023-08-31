@@ -20,9 +20,9 @@ export class QlcService {
 
     public async setCue(cueId: number, cmd: string, step?: number) {
     	if(cmd == "STEP") {
-	        this.qlc.setQlcValue(`${cueId}|STEP|${step}`)
+	        await this.qlc.setQlcValue(`${cueId}|STEP|${step}`)
 	    } else {
-            this.qlc.setQlcValue(`${cueId}|${cmd}`);
+            await this.qlc.setQlcValue(`${cueId}|${cmd}`);
         }
     }
 
