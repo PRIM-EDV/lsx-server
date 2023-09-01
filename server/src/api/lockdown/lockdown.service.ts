@@ -4,7 +4,7 @@ import { LockdownState } from 'proto/lsx.lockdown';
 import { AppGateway } from 'src/gateway/app.gateway';
 import { SoundService } from 'src/sound/sound.service';
 import { QlcService } from 'src/dmx/qlc.service';
-import { DroneService } from 'src/drone/Drone.service';
+import { DroneService } from 'src/api/drone/Drone.service';
 import { ModeSilentState } from 'proto/lsx.drone';
 
 @Injectable()

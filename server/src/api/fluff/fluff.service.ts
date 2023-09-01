@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { AppGateway } from 'src/gateway/app.gateway';
 import { Request } from 'proto/lsx';
 import { SoundService } from 'src/sound/sound.service';
-import { DroneService } from 'src/drone/Drone.service';
+import { DroneService } from 'src/api/drone/Drone.service';
 import { ModeSilentState } from 'proto/lsx.drone';
 
 

@@ -1,9 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { QlcWebsocketService } from "./qlc-websocket.service";
+import { PathwayUnit } from "./units/pathway.unit";
 
 @Injectable()
 export class QlcService {
 
+    public pathwayScience = new PathwayUnit(0, 0, this);
 
     constructor(private readonly qlc: QlcWebsocketService) {
         this.qlc.onOpen.subscribe(() => {
@@ -18,7 +20,7 @@ export class QlcService {
     //     }
     // }
 
-    public async setCue(cueId: number, cmd: string, step?: number) {
+    public async setCue(cueId: number, cmd: 'STOP' | 'STEP' | 'PLAY', step?: number) {
     	if(cmd == "STEP") {
 	        await this.qlc.setQlcValue(`${cueId}|STEP|${step}`)
 	    } else {

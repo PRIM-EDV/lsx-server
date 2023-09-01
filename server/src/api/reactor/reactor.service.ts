@@ -4,7 +4,7 @@ import { PowerGridState, PowerPlantState, PowerLineState } from 'proto/lsx.power
 import { Subject } from 'rxjs';
 import { QlcService } from 'src/dmx/qlc.service';
 import { AppGateway } from 'src/gateway/app.gateway';
-import { LockdownService } from 'src/lockdown/lockdown.service';
+import { LockdownService } from 'src/api/lockdown/lockdown.service';
 import { SoundService } from 'src/sound/sound.service';
 
 export interface ReactorStates {
