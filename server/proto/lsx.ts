@@ -2,12 +2,12 @@
 import {
   GetPowerPlantState_Request,
   SetPowerPlantState_Request,
-  GetPowerGridState_Request,
-  SetPowerGridState_Request,
+  GetPowerLineState_Request,
+  SetPowerLineState_Request,
   GetPowerPlantState_Response,
   SetPowerPlantState_Response,
-  GetPowerGridState_Response,
-  SetPowerGridState_Response,
+  GetPowerLineState_Response,
+  SetPowerLineState_Response,
 } from './lsx.power';
 import {
   GetLockdownState_Request,
@@ -44,8 +44,8 @@ export const protobufPackage = '';
 export interface Request {
   getPowerPlantState?: GetPowerPlantState_Request | undefined;
   setPowerPlantState?: SetPowerPlantState_Request | undefined;
-  getPowerGridState?: GetPowerGridState_Request | undefined;
-  setPowerGridState?: SetPowerGridState_Request | undefined;
+  getPowerLineState?: GetPowerLineState_Request | undefined;
+  setPowerLineState?: SetPowerLineState_Request | undefined;
   getAnnouncementFiles?: GetAnnouncementFiles_Request | undefined;
   getLockdownState?: GetLockdownState_Request | undefined;
   setLockdownState?: SetLockdownState_Request | undefined;
@@ -64,8 +64,8 @@ export interface Request {
 export interface Response {
   getPowerPlantState?: GetPowerPlantState_Response | undefined;
   setPowerPlantState?: SetPowerPlantState_Response | undefined;
-  getPowerGridState?: GetPowerGridState_Response | undefined;
-  setPowerGridState?: SetPowerGridState_Response | undefined;
+  getPowerLineState?: GetPowerLineState_Response | undefined;
+  setPowerLineState?: SetPowerLineState_Response | undefined;
   getAnnouncementFiles?: GetAnnouncementFiles_Response | undefined;
   getLockdownState?: GetLockdownState_Response | undefined;
   setLockdownState?: SetLockdownState_Response | undefined;
@@ -115,8 +115,8 @@ function createBaseRequest(): Request {
   return {
     getPowerPlantState: undefined,
     setPowerPlantState: undefined,
-    getPowerGridState: undefined,
-    setPowerGridState: undefined,
+    getPowerLineState: undefined,
+    setPowerLineState: undefined,
     getAnnouncementFiles: undefined,
     getLockdownState: undefined,
     setLockdownState: undefined,
@@ -150,15 +150,15 @@ export const Request = {
         writer.uint32(18).fork(),
       ).ldelim();
     }
-    if (message.getPowerGridState !== undefined) {
-      GetPowerGridState_Request.encode(
-        message.getPowerGridState,
+    if (message.getPowerLineState !== undefined) {
+      GetPowerLineState_Request.encode(
+        message.getPowerLineState,
         writer.uint32(26).fork(),
       ).ldelim();
     }
-    if (message.setPowerGridState !== undefined) {
-      SetPowerGridState_Request.encode(
-        message.setPowerGridState,
+    if (message.setPowerLineState !== undefined) {
+      SetPowerLineState_Request.encode(
+        message.setPowerLineState,
         writer.uint32(34).fork(),
       ).ldelim();
     }
@@ -263,13 +263,13 @@ export const Request = {
           );
           break;
         case 3:
-          message.getPowerGridState = GetPowerGridState_Request.decode(
+          message.getPowerLineState = GetPowerLineState_Request.decode(
             reader,
             reader.uint32(),
           );
           break;
         case 4:
-          message.setPowerGridState = SetPowerGridState_Request.decode(
+          message.setPowerLineState = SetPowerLineState_Request.decode(
             reader,
             reader.uint32(),
           );
@@ -364,11 +364,11 @@ export const Request = {
       setPowerPlantState: isSet(object.setPowerPlantState)
         ? SetPowerPlantState_Request.fromJSON(object.setPowerPlantState)
         : undefined,
-      getPowerGridState: isSet(object.getPowerGridState)
-        ? GetPowerGridState_Request.fromJSON(object.getPowerGridState)
+      getPowerLineState: isSet(object.getPowerLineState)
+        ? GetPowerLineState_Request.fromJSON(object.getPowerLineState)
         : undefined,
-      setPowerGridState: isSet(object.setPowerGridState)
-        ? SetPowerGridState_Request.fromJSON(object.setPowerGridState)
+      setPowerLineState: isSet(object.setPowerLineState)
+        ? SetPowerLineState_Request.fromJSON(object.setPowerLineState)
         : undefined,
       getAnnouncementFiles: isSet(object.getAnnouncementFiles)
         ? GetAnnouncementFiles_Request.fromJSON(object.getAnnouncementFiles)
@@ -426,13 +426,13 @@ export const Request = {
       (obj.setPowerPlantState = message.setPowerPlantState
         ? SetPowerPlantState_Request.toJSON(message.setPowerPlantState)
         : undefined);
-    message.getPowerGridState !== undefined &&
-      (obj.getPowerGridState = message.getPowerGridState
-        ? GetPowerGridState_Request.toJSON(message.getPowerGridState)
+    message.getPowerLineState !== undefined &&
+      (obj.getPowerLineState = message.getPowerLineState
+        ? GetPowerLineState_Request.toJSON(message.getPowerLineState)
         : undefined);
-    message.setPowerGridState !== undefined &&
-      (obj.setPowerGridState = message.setPowerGridState
-        ? SetPowerGridState_Request.toJSON(message.setPowerGridState)
+    message.setPowerLineState !== undefined &&
+      (obj.setPowerLineState = message.setPowerLineState
+        ? SetPowerLineState_Request.toJSON(message.setPowerLineState)
         : undefined);
     message.getAnnouncementFiles !== undefined &&
       (obj.getAnnouncementFiles = message.getAnnouncementFiles
@@ -505,15 +505,15 @@ export const Request = {
       object.setPowerPlantState !== null
         ? SetPowerPlantState_Request.fromPartial(object.setPowerPlantState)
         : undefined;
-    message.getPowerGridState =
-      object.getPowerGridState !== undefined &&
-      object.getPowerGridState !== null
-        ? GetPowerGridState_Request.fromPartial(object.getPowerGridState)
+    message.getPowerLineState =
+      object.getPowerLineState !== undefined &&
+      object.getPowerLineState !== null
+        ? GetPowerLineState_Request.fromPartial(object.getPowerLineState)
         : undefined;
-    message.setPowerGridState =
-      object.setPowerGridState !== undefined &&
-      object.setPowerGridState !== null
-        ? SetPowerGridState_Request.fromPartial(object.setPowerGridState)
+    message.setPowerLineState =
+      object.setPowerLineState !== undefined &&
+      object.setPowerLineState !== null
+        ? SetPowerLineState_Request.fromPartial(object.setPowerLineState)
         : undefined;
     message.getAnnouncementFiles =
       object.getAnnouncementFiles !== undefined &&
@@ -584,8 +584,8 @@ function createBaseResponse(): Response {
   return {
     getPowerPlantState: undefined,
     setPowerPlantState: undefined,
-    getPowerGridState: undefined,
-    setPowerGridState: undefined,
+    getPowerLineState: undefined,
+    setPowerLineState: undefined,
     getAnnouncementFiles: undefined,
     getLockdownState: undefined,
     setLockdownState: undefined,
@@ -619,15 +619,15 @@ export const Response = {
         writer.uint32(18).fork(),
       ).ldelim();
     }
-    if (message.getPowerGridState !== undefined) {
-      GetPowerGridState_Response.encode(
-        message.getPowerGridState,
+    if (message.getPowerLineState !== undefined) {
+      GetPowerLineState_Response.encode(
+        message.getPowerLineState,
         writer.uint32(26).fork(),
       ).ldelim();
     }
-    if (message.setPowerGridState !== undefined) {
-      SetPowerGridState_Response.encode(
-        message.setPowerGridState,
+    if (message.setPowerLineState !== undefined) {
+      SetPowerLineState_Response.encode(
+        message.setPowerLineState,
         writer.uint32(34).fork(),
       ).ldelim();
     }
@@ -732,13 +732,13 @@ export const Response = {
           );
           break;
         case 3:
-          message.getPowerGridState = GetPowerGridState_Response.decode(
+          message.getPowerLineState = GetPowerLineState_Response.decode(
             reader,
             reader.uint32(),
           );
           break;
         case 4:
-          message.setPowerGridState = SetPowerGridState_Response.decode(
+          message.setPowerLineState = SetPowerLineState_Response.decode(
             reader,
             reader.uint32(),
           );
@@ -833,11 +833,11 @@ export const Response = {
       setPowerPlantState: isSet(object.setPowerPlantState)
         ? SetPowerPlantState_Response.fromJSON(object.setPowerPlantState)
         : undefined,
-      getPowerGridState: isSet(object.getPowerGridState)
-        ? GetPowerGridState_Response.fromJSON(object.getPowerGridState)
+      getPowerLineState: isSet(object.getPowerLineState)
+        ? GetPowerLineState_Response.fromJSON(object.getPowerLineState)
         : undefined,
-      setPowerGridState: isSet(object.setPowerGridState)
-        ? SetPowerGridState_Response.fromJSON(object.setPowerGridState)
+      setPowerLineState: isSet(object.setPowerLineState)
+        ? SetPowerLineState_Response.fromJSON(object.setPowerLineState)
         : undefined,
       getAnnouncementFiles: isSet(object.getAnnouncementFiles)
         ? GetAnnouncementFiles_Response.fromJSON(object.getAnnouncementFiles)
@@ -895,13 +895,13 @@ export const Response = {
       (obj.setPowerPlantState = message.setPowerPlantState
         ? SetPowerPlantState_Response.toJSON(message.setPowerPlantState)
         : undefined);
-    message.getPowerGridState !== undefined &&
-      (obj.getPowerGridState = message.getPowerGridState
-        ? GetPowerGridState_Response.toJSON(message.getPowerGridState)
+    message.getPowerLineState !== undefined &&
+      (obj.getPowerLineState = message.getPowerLineState
+        ? GetPowerLineState_Response.toJSON(message.getPowerLineState)
         : undefined);
-    message.setPowerGridState !== undefined &&
-      (obj.setPowerGridState = message.setPowerGridState
-        ? SetPowerGridState_Response.toJSON(message.setPowerGridState)
+    message.setPowerLineState !== undefined &&
+      (obj.setPowerLineState = message.setPowerLineState
+        ? SetPowerLineState_Response.toJSON(message.setPowerLineState)
         : undefined);
     message.getAnnouncementFiles !== undefined &&
       (obj.getAnnouncementFiles = message.getAnnouncementFiles
@@ -974,15 +974,15 @@ export const Response = {
       object.setPowerPlantState !== null
         ? SetPowerPlantState_Response.fromPartial(object.setPowerPlantState)
         : undefined;
-    message.getPowerGridState =
-      object.getPowerGridState !== undefined &&
-      object.getPowerGridState !== null
-        ? GetPowerGridState_Response.fromPartial(object.getPowerGridState)
+    message.getPowerLineState =
+      object.getPowerLineState !== undefined &&
+      object.getPowerLineState !== null
+        ? GetPowerLineState_Response.fromPartial(object.getPowerLineState)
         : undefined;
-    message.setPowerGridState =
-      object.setPowerGridState !== undefined &&
-      object.setPowerGridState !== null
-        ? SetPowerGridState_Response.fromPartial(object.setPowerGridState)
+    message.setPowerLineState =
+      object.setPowerLineState !== undefined &&
+      object.setPowerLineState !== null
+        ? SetPowerLineState_Response.fromPartial(object.setPowerLineState)
         : undefined;
     message.getAnnouncementFiles =
       object.getAnnouncementFiles !== undefined &&

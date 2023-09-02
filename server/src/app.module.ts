@@ -13,6 +13,8 @@ import { FluffModule } from './api/fluff/fluff.module';
 import { SoundModule } from './sound/sound.module';
 import { QlcModule } from './dmx/qlc.module';
 import { DroneModule } from './api/drone/drone.module';
+import { LightService } from './light/light.service';
+import { StateModule } from './state/state.module';
 
 @Module({
   imports: [
@@ -22,13 +24,15 @@ import { DroneModule } from './api/drone/drone.module';
       rootPath: join(__dirname, '..', 'public'),
     }),
     AnnouncementsModule,
+    StateModule,
     GatewayModule,
     LoggingModule,
     LockdownModule,
     FluffModule,
     SoundModule,
     DroneModule,
-    QlcModule
+    QlcModule,
+    LightService,
   ],
   controllers: [AppController],
   providers: [AppService],

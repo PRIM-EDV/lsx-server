@@ -1,47 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { Request } from 'proto/lsx';
-import { PowerGridState, PowerPlantState, PowerLineState } from 'proto/lsx.power';
-import { Subject } from 'rxjs';
+import { PowerPlantState, PowerLineState, PowerLineId } from 'proto/lsx.power';
 import { QlcService } from 'src/dmx/qlc.service';
 import { AppGateway } from 'src/gateway/app.gateway';
-import { LockdownService } from 'src/api/lockdown/lockdown.service';
-import { SoundService } from 'src/sound/sound.service';
-
-export interface ReactorStates {
-    powerGridState?: PowerGridState,
-    powerPlantState?: PowerPlantState
-}
+import { LightService } from 'src/light/light.service';
+import { StateService } from 'src/state/state.service';
 
 @Injectable()
 export class ReactorService {
 
-    public onStateChange: Subject<ReactorStates> = new Subject<ReactorStates>();
-
-    private powerGridState: PowerGridState = {
-        'ogBaseMed': PowerLineState.STATE_POWERED,
-        'ogParcelLeft': PowerLineState.STATE_POWERED,
-        'ogParcelRight': PowerLineState.STATE_POWERED,
-        'ugParcelLeft': PowerLineState.STATE_POWERED,
-        'ugParcelRight': PowerLineState.STATE_POWERED,
-        // 'ogBaseAdm': PowerLineState.STATE_POWERED,
-        // 'ogBaseCic': PowerLineState.STATE_POWERED,
-        // 'ogBaseSci': PowerLineState.STATE_POWERED,
-        // 'ogBaseTec': PowerLineState.STATE_POWERED,
-    }
-
-    private powerPlantState: PowerPlantState = PowerPlantState.STATE_NORMAL;
-
-    constructor(private readonly gateway: AppGateway, private readonly base: LockdownService, private readonly sound: SoundService, private readonly dmx: QlcService) {
+    constructor(
+        private readonly state: StateService,
+        private readonly gateway: AppGateway, 
+        private readonly dmx: QlcService, 
+        private light: LightService 
+    ) {
         this.gateway.onRequest.subscribe(this.handleRequest.bind(this));
     }
 
     handleRequest(event: {clientId: string, msgId: string, request: Request}): void {
-        if(event.request.getPowerGridState){
-            this.gateway.respond(event.clientId, event.msgId, {getPowerGridState: {state: this.getPowerGridState()}})
+        if(event.request.getPowerLineState){
+            this.gateway.respond(event.clientId, event.msgId, {getPowerLineState: {state: this.getPowerLineState(event.request.getPowerLineState.id)}})
         }
-        if(event.request.setPowerGridState){
-            this.setPowerGridState(event.request.setPowerGridState.state)
-            this.gateway.respond(event.clientId, event.msgId, {setPowerGridState: {}})
+        if(event.request.setPowerLineState){
+            this.setPowerLineState(event.request.setPowerLineState.id, event.request.setPowerLineState.state)
+            this.gateway.respond(event.clientId, event.msgId, {setPowerLineState: {}})
         }
         if(event.request.getPowerPlantState){
             this.gateway.respond(event.clientId, event.msgId, {getPowerPlantState: {state: this.getPowerPlantState()}})
@@ -53,7 +36,7 @@ export class ReactorService {
     }
 
     public getPowerPlantState(): PowerPlantState {
-        return this.powerPlantState;
+        return this.state.powerPlantState;
     }
 
     public setPowerPlantState(state: PowerPlantState) {
@@ -90,29 +73,23 @@ export class ReactorService {
             this.dmx.setCue(36, "STEP", 1);
         }
 
-
-
-        this.powerPlantState = state;
-        this.onStateChange.next({
-            powerPlantState: this.powerPlantState
-        })
-
+        this.state.powerPlantState = state;
         this.gateway.requestAll(req).then();
     }
 
-    public getPowerGridState(): PowerGridState {
-        return this.powerGridState;
+    public getPowerLineState(id: PowerLineId): PowerLineState {
+        return this.state.powerLineStates.get(id);
     }
 
-    public setPowerGridState(state: PowerGridState) {
-        const req: Request = {setPowerGridState: {state: state}};
+    public setPowerLineState(id: PowerLineId, state: PowerLineState) {
+        const req: Request = {setPowerLineState: {id: id, state: state}};
 
-        console.log(this.powerGridState);
+        this.state.powerLineStates.set(id, state);
 
-        this.powerGridState = state;
-        this.onStateChange.next({
-            powerGridState: this.powerGridState
-        })
+        // this.onStateChange.next({
+        //     powerGridState: this.powerGridState
+        // })
+
         this.gateway.requestAll(req).then();
     }
 

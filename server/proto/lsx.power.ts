@@ -87,43 +87,94 @@ export function powerLineStateToJSON(object: PowerLineState): string {
   }
 }
 
-export interface PowerGridState {
-  ogBaseMed: PowerLineState;
-  ogParcelLeft: PowerLineState;
-  ogParcelRight: PowerLineState;
-  ugParcelLeft: PowerLineState;
+export enum PowerLineId {
+  LINE_EMPTY = 0,
+  LINE_OG_BASE_MED = 1,
+  LINE_OG_BASE_ADM = 2,
+  LINE_OG_BASE_CIC = 3,
+  LINE_OG_BASE_SCI = 4,
   /**
-   * PowerLineState og_base_adm = 6;
-   * PowerLineState og_base_cic = 7;
-   * PowerLineState og_base_sci = 8;
-   * PowerLineState og_base_tec = 9;
+   * LINE_OG_BASE_TEC - LINE_OG_PARCEL_LEFT = 2;
+   * LINE_OG_BASE_MED = 1;
+   * LINE_OG_BASE_MED = 1;
    */
-  ugParcelRight: PowerLineState;
+  LINE_OG_BASE_TEC = 5,
+  UNRECOGNIZED = -1,
 }
 
-export interface GetPowerGridState {
-  request?: GetPowerGridState_Request | undefined;
-  response?: GetPowerGridState_Response | undefined;
+export function powerLineIdFromJSON(object: any): PowerLineId {
+  switch (object) {
+    case 0:
+    case 'LINE_EMPTY':
+      return PowerLineId.LINE_EMPTY;
+    case 1:
+    case 'LINE_OG_BASE_MED':
+      return PowerLineId.LINE_OG_BASE_MED;
+    case 2:
+    case 'LINE_OG_BASE_ADM':
+      return PowerLineId.LINE_OG_BASE_ADM;
+    case 3:
+    case 'LINE_OG_BASE_CIC':
+      return PowerLineId.LINE_OG_BASE_CIC;
+    case 4:
+    case 'LINE_OG_BASE_SCI':
+      return PowerLineId.LINE_OG_BASE_SCI;
+    case 5:
+    case 'LINE_OG_BASE_TEC':
+      return PowerLineId.LINE_OG_BASE_TEC;
+    case -1:
+    case 'UNRECOGNIZED':
+    default:
+      return PowerLineId.UNRECOGNIZED;
+  }
+}
+
+export function powerLineIdToJSON(object: PowerLineId): string {
+  switch (object) {
+    case PowerLineId.LINE_EMPTY:
+      return 'LINE_EMPTY';
+    case PowerLineId.LINE_OG_BASE_MED:
+      return 'LINE_OG_BASE_MED';
+    case PowerLineId.LINE_OG_BASE_ADM:
+      return 'LINE_OG_BASE_ADM';
+    case PowerLineId.LINE_OG_BASE_CIC:
+      return 'LINE_OG_BASE_CIC';
+    case PowerLineId.LINE_OG_BASE_SCI:
+      return 'LINE_OG_BASE_SCI';
+    case PowerLineId.LINE_OG_BASE_TEC:
+      return 'LINE_OG_BASE_TEC';
+    case PowerLineId.UNRECOGNIZED:
+    default:
+      return 'UNRECOGNIZED';
+  }
+}
+
+export interface GetPowerLineState {
+  request?: GetPowerLineState_Request | undefined;
+  response?: GetPowerLineState_Response | undefined;
   error: string | undefined;
 }
 
-export interface GetPowerGridState_Response {
-  state?: PowerGridState;
+export interface GetPowerLineState_Response {
+  state: PowerLineState;
 }
 
-export interface GetPowerGridState_Request {}
+export interface GetPowerLineState_Request {
+  id: PowerLineId;
+}
 
-export interface SetPowerGridState {
-  request?: SetPowerGridState_Request | undefined;
-  response?: SetPowerGridState_Response | undefined;
+export interface SetPowerLineState {
+  request?: SetPowerLineState_Request | undefined;
+  response?: SetPowerLineState_Response | undefined;
   error: string | undefined;
 }
 
-export interface SetPowerGridState_Request {
-  state?: PowerGridState;
+export interface SetPowerLineState_Request {
+  id: PowerLineId;
+  state: PowerLineState;
 }
 
-export interface SetPowerGridState_Response {}
+export interface SetPowerLineState_Response {}
 
 export interface GetPowerPlantState {
   request?: GetPowerPlantState_Request | undefined;
@@ -149,134 +200,23 @@ export interface SetPowerPlantState_Request {
 
 export interface SetPowerPlantState_Response {}
 
-function createBasePowerGridState(): PowerGridState {
-  return {
-    ogBaseMed: 0,
-    ogParcelLeft: 0,
-    ogParcelRight: 0,
-    ugParcelLeft: 0,
-    ugParcelRight: 0,
-  };
-}
-
-export const PowerGridState = {
-  encode(
-    message: PowerGridState,
-    writer: _m0.Writer = _m0.Writer.create(),
-  ): _m0.Writer {
-    if (message.ogBaseMed !== 0) {
-      writer.uint32(8).int32(message.ogBaseMed);
-    }
-    if (message.ogParcelLeft !== 0) {
-      writer.uint32(16).int32(message.ogParcelLeft);
-    }
-    if (message.ogParcelRight !== 0) {
-      writer.uint32(24).int32(message.ogParcelRight);
-    }
-    if (message.ugParcelLeft !== 0) {
-      writer.uint32(32).int32(message.ugParcelLeft);
-    }
-    if (message.ugParcelRight !== 0) {
-      writer.uint32(40).int32(message.ugParcelRight);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): PowerGridState {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBasePowerGridState();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.ogBaseMed = reader.int32() as any;
-          break;
-        case 2:
-          message.ogParcelLeft = reader.int32() as any;
-          break;
-        case 3:
-          message.ogParcelRight = reader.int32() as any;
-          break;
-        case 4:
-          message.ugParcelLeft = reader.int32() as any;
-          break;
-        case 5:
-          message.ugParcelRight = reader.int32() as any;
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): PowerGridState {
-    return {
-      ogBaseMed: isSet(object.ogBaseMed)
-        ? powerLineStateFromJSON(object.ogBaseMed)
-        : 0,
-      ogParcelLeft: isSet(object.ogParcelLeft)
-        ? powerLineStateFromJSON(object.ogParcelLeft)
-        : 0,
-      ogParcelRight: isSet(object.ogParcelRight)
-        ? powerLineStateFromJSON(object.ogParcelRight)
-        : 0,
-      ugParcelLeft: isSet(object.ugParcelLeft)
-        ? powerLineStateFromJSON(object.ugParcelLeft)
-        : 0,
-      ugParcelRight: isSet(object.ugParcelRight)
-        ? powerLineStateFromJSON(object.ugParcelRight)
-        : 0,
-    };
-  },
-
-  toJSON(message: PowerGridState): unknown {
-    const obj: any = {};
-    message.ogBaseMed !== undefined &&
-      (obj.ogBaseMed = powerLineStateToJSON(message.ogBaseMed));
-    message.ogParcelLeft !== undefined &&
-      (obj.ogParcelLeft = powerLineStateToJSON(message.ogParcelLeft));
-    message.ogParcelRight !== undefined &&
-      (obj.ogParcelRight = powerLineStateToJSON(message.ogParcelRight));
-    message.ugParcelLeft !== undefined &&
-      (obj.ugParcelLeft = powerLineStateToJSON(message.ugParcelLeft));
-    message.ugParcelRight !== undefined &&
-      (obj.ugParcelRight = powerLineStateToJSON(message.ugParcelRight));
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<PowerGridState>, I>>(
-    object: I,
-  ): PowerGridState {
-    const message = createBasePowerGridState();
-    message.ogBaseMed = object.ogBaseMed ?? 0;
-    message.ogParcelLeft = object.ogParcelLeft ?? 0;
-    message.ogParcelRight = object.ogParcelRight ?? 0;
-    message.ugParcelLeft = object.ugParcelLeft ?? 0;
-    message.ugParcelRight = object.ugParcelRight ?? 0;
-    return message;
-  },
-};
-
-function createBaseGetPowerGridState(): GetPowerGridState {
+function createBaseGetPowerLineState(): GetPowerLineState {
   return { request: undefined, response: undefined, error: undefined };
 }
 
-export const GetPowerGridState = {
+export const GetPowerLineState = {
   encode(
-    message: GetPowerGridState,
+    message: GetPowerLineState,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     if (message.request !== undefined) {
-      GetPowerGridState_Request.encode(
+      GetPowerLineState_Request.encode(
         message.request,
         writer.uint32(10).fork(),
       ).ldelim();
     }
     if (message.response !== undefined) {
-      GetPowerGridState_Response.encode(
+      GetPowerLineState_Response.encode(
         message.response,
         writer.uint32(18).fork(),
       ).ldelim();
@@ -287,21 +227,21 @@ export const GetPowerGridState = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): GetPowerGridState {
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetPowerLineState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGetPowerGridState();
+    const message = createBaseGetPowerLineState();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.request = GetPowerGridState_Request.decode(
+          message.request = GetPowerLineState_Request.decode(
             reader,
             reader.uint32(),
           );
           break;
         case 2:
-          message.response = GetPowerGridState_Response.decode(
+          message.response = GetPowerLineState_Response.decode(
             reader,
             reader.uint32(),
           );
@@ -317,60 +257,60 @@ export const GetPowerGridState = {
     return message;
   },
 
-  fromJSON(object: any): GetPowerGridState {
+  fromJSON(object: any): GetPowerLineState {
     return {
       request: isSet(object.request)
-        ? GetPowerGridState_Request.fromJSON(object.request)
+        ? GetPowerLineState_Request.fromJSON(object.request)
         : undefined,
       response: isSet(object.response)
-        ? GetPowerGridState_Response.fromJSON(object.response)
+        ? GetPowerLineState_Response.fromJSON(object.response)
         : undefined,
       error: isSet(object.error) ? String(object.error) : undefined,
     };
   },
 
-  toJSON(message: GetPowerGridState): unknown {
+  toJSON(message: GetPowerLineState): unknown {
     const obj: any = {};
     message.request !== undefined &&
       (obj.request = message.request
-        ? GetPowerGridState_Request.toJSON(message.request)
+        ? GetPowerLineState_Request.toJSON(message.request)
         : undefined);
     message.response !== undefined &&
       (obj.response = message.response
-        ? GetPowerGridState_Response.toJSON(message.response)
+        ? GetPowerLineState_Response.toJSON(message.response)
         : undefined);
     message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<GetPowerGridState>, I>>(
+  fromPartial<I extends Exact<DeepPartial<GetPowerLineState>, I>>(
     object: I,
-  ): GetPowerGridState {
-    const message = createBaseGetPowerGridState();
+  ): GetPowerLineState {
+    const message = createBaseGetPowerLineState();
     message.request =
       object.request !== undefined && object.request !== null
-        ? GetPowerGridState_Request.fromPartial(object.request)
+        ? GetPowerLineState_Request.fromPartial(object.request)
         : undefined;
     message.response =
       object.response !== undefined && object.response !== null
-        ? GetPowerGridState_Response.fromPartial(object.response)
+        ? GetPowerLineState_Response.fromPartial(object.response)
         : undefined;
     message.error = object.error ?? undefined;
     return message;
   },
 };
 
-function createBaseGetPowerGridState_Response(): GetPowerGridState_Response {
-  return { state: undefined };
+function createBaseGetPowerLineState_Response(): GetPowerLineState_Response {
+  return { state: 0 };
 }
 
-export const GetPowerGridState_Response = {
+export const GetPowerLineState_Response = {
   encode(
-    message: GetPowerGridState_Response,
+    message: GetPowerLineState_Response,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
-    if (message.state !== undefined) {
-      PowerGridState.encode(message.state, writer.uint32(10).fork()).ldelim();
+    if (message.state !== 0) {
+      writer.uint32(8).int32(message.state);
     }
     return writer;
   },
@@ -378,15 +318,15 @@ export const GetPowerGridState_Response = {
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number,
-  ): GetPowerGridState_Response {
+  ): GetPowerLineState_Response {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGetPowerGridState_Response();
+    const message = createBaseGetPowerLineState_Response();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.state = PowerGridState.decode(reader, reader.uint32());
+          message.state = reader.int32() as any;
           break;
         default:
           reader.skipType(tag & 7);
@@ -396,57 +336,56 @@ export const GetPowerGridState_Response = {
     return message;
   },
 
-  fromJSON(object: any): GetPowerGridState_Response {
+  fromJSON(object: any): GetPowerLineState_Response {
     return {
-      state: isSet(object.state)
-        ? PowerGridState.fromJSON(object.state)
-        : undefined,
+      state: isSet(object.state) ? powerLineStateFromJSON(object.state) : 0,
     };
   },
 
-  toJSON(message: GetPowerGridState_Response): unknown {
+  toJSON(message: GetPowerLineState_Response): unknown {
     const obj: any = {};
     message.state !== undefined &&
-      (obj.state = message.state
-        ? PowerGridState.toJSON(message.state)
-        : undefined);
+      (obj.state = powerLineStateToJSON(message.state));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<GetPowerGridState_Response>, I>>(
+  fromPartial<I extends Exact<DeepPartial<GetPowerLineState_Response>, I>>(
     object: I,
-  ): GetPowerGridState_Response {
-    const message = createBaseGetPowerGridState_Response();
-    message.state =
-      object.state !== undefined && object.state !== null
-        ? PowerGridState.fromPartial(object.state)
-        : undefined;
+  ): GetPowerLineState_Response {
+    const message = createBaseGetPowerLineState_Response();
+    message.state = object.state ?? 0;
     return message;
   },
 };
 
-function createBaseGetPowerGridState_Request(): GetPowerGridState_Request {
-  return {};
+function createBaseGetPowerLineState_Request(): GetPowerLineState_Request {
+  return { id: 0 };
 }
 
-export const GetPowerGridState_Request = {
+export const GetPowerLineState_Request = {
   encode(
-    _: GetPowerGridState_Request,
+    message: GetPowerLineState_Request,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).int32(message.id);
+    }
     return writer;
   },
 
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number,
-  ): GetPowerGridState_Request {
+  ): GetPowerLineState_Request {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGetPowerGridState_Request();
+    const message = createBaseGetPowerLineState_Request();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.id = reader.int32() as any;
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -455,40 +394,44 @@ export const GetPowerGridState_Request = {
     return message;
   },
 
-  fromJSON(_: any): GetPowerGridState_Request {
-    return {};
+  fromJSON(object: any): GetPowerLineState_Request {
+    return {
+      id: isSet(object.id) ? powerLineIdFromJSON(object.id) : 0,
+    };
   },
 
-  toJSON(_: GetPowerGridState_Request): unknown {
+  toJSON(message: GetPowerLineState_Request): unknown {
     const obj: any = {};
+    message.id !== undefined && (obj.id = powerLineIdToJSON(message.id));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<GetPowerGridState_Request>, I>>(
-    _: I,
-  ): GetPowerGridState_Request {
-    const message = createBaseGetPowerGridState_Request();
+  fromPartial<I extends Exact<DeepPartial<GetPowerLineState_Request>, I>>(
+    object: I,
+  ): GetPowerLineState_Request {
+    const message = createBaseGetPowerLineState_Request();
+    message.id = object.id ?? 0;
     return message;
   },
 };
 
-function createBaseSetPowerGridState(): SetPowerGridState {
+function createBaseSetPowerLineState(): SetPowerLineState {
   return { request: undefined, response: undefined, error: undefined };
 }
 
-export const SetPowerGridState = {
+export const SetPowerLineState = {
   encode(
-    message: SetPowerGridState,
+    message: SetPowerLineState,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     if (message.request !== undefined) {
-      SetPowerGridState_Request.encode(
+      SetPowerLineState_Request.encode(
         message.request,
         writer.uint32(10).fork(),
       ).ldelim();
     }
     if (message.response !== undefined) {
-      SetPowerGridState_Response.encode(
+      SetPowerLineState_Response.encode(
         message.response,
         writer.uint32(18).fork(),
       ).ldelim();
@@ -499,21 +442,21 @@ export const SetPowerGridState = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): SetPowerGridState {
+  decode(input: _m0.Reader | Uint8Array, length?: number): SetPowerLineState {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseSetPowerGridState();
+    const message = createBaseSetPowerLineState();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.request = SetPowerGridState_Request.decode(
+          message.request = SetPowerLineState_Request.decode(
             reader,
             reader.uint32(),
           );
           break;
         case 2:
-          message.response = SetPowerGridState_Response.decode(
+          message.response = SetPowerLineState_Response.decode(
             reader,
             reader.uint32(),
           );
@@ -529,60 +472,63 @@ export const SetPowerGridState = {
     return message;
   },
 
-  fromJSON(object: any): SetPowerGridState {
+  fromJSON(object: any): SetPowerLineState {
     return {
       request: isSet(object.request)
-        ? SetPowerGridState_Request.fromJSON(object.request)
+        ? SetPowerLineState_Request.fromJSON(object.request)
         : undefined,
       response: isSet(object.response)
-        ? SetPowerGridState_Response.fromJSON(object.response)
+        ? SetPowerLineState_Response.fromJSON(object.response)
         : undefined,
       error: isSet(object.error) ? String(object.error) : undefined,
     };
   },
 
-  toJSON(message: SetPowerGridState): unknown {
+  toJSON(message: SetPowerLineState): unknown {
     const obj: any = {};
     message.request !== undefined &&
       (obj.request = message.request
-        ? SetPowerGridState_Request.toJSON(message.request)
+        ? SetPowerLineState_Request.toJSON(message.request)
         : undefined);
     message.response !== undefined &&
       (obj.response = message.response
-        ? SetPowerGridState_Response.toJSON(message.response)
+        ? SetPowerLineState_Response.toJSON(message.response)
         : undefined);
     message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SetPowerGridState>, I>>(
+  fromPartial<I extends Exact<DeepPartial<SetPowerLineState>, I>>(
     object: I,
-  ): SetPowerGridState {
-    const message = createBaseSetPowerGridState();
+  ): SetPowerLineState {
+    const message = createBaseSetPowerLineState();
     message.request =
       object.request !== undefined && object.request !== null
-        ? SetPowerGridState_Request.fromPartial(object.request)
+        ? SetPowerLineState_Request.fromPartial(object.request)
         : undefined;
     message.response =
       object.response !== undefined && object.response !== null
-        ? SetPowerGridState_Response.fromPartial(object.response)
+        ? SetPowerLineState_Response.fromPartial(object.response)
         : undefined;
     message.error = object.error ?? undefined;
     return message;
   },
 };
 
-function createBaseSetPowerGridState_Request(): SetPowerGridState_Request {
-  return { state: undefined };
+function createBaseSetPowerLineState_Request(): SetPowerLineState_Request {
+  return { id: 0, state: 0 };
 }
 
-export const SetPowerGridState_Request = {
+export const SetPowerLineState_Request = {
   encode(
-    message: SetPowerGridState_Request,
+    message: SetPowerLineState_Request,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
-    if (message.state !== undefined) {
-      PowerGridState.encode(message.state, writer.uint32(10).fork()).ldelim();
+    if (message.id !== 0) {
+      writer.uint32(8).int32(message.id);
+    }
+    if (message.state !== 0) {
+      writer.uint32(16).int32(message.state);
     }
     return writer;
   },
@@ -590,15 +536,18 @@ export const SetPowerGridState_Request = {
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number,
-  ): SetPowerGridState_Request {
+  ): SetPowerLineState_Request {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseSetPowerGridState_Request();
+    const message = createBaseSetPowerLineState_Request();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.state = PowerGridState.decode(reader, reader.uint32());
+          message.id = reader.int32() as any;
+          break;
+        case 2:
+          message.state = reader.int32() as any;
           break;
         default:
           reader.skipType(tag & 7);
@@ -608,42 +557,38 @@ export const SetPowerGridState_Request = {
     return message;
   },
 
-  fromJSON(object: any): SetPowerGridState_Request {
+  fromJSON(object: any): SetPowerLineState_Request {
     return {
-      state: isSet(object.state)
-        ? PowerGridState.fromJSON(object.state)
-        : undefined,
+      id: isSet(object.id) ? powerLineIdFromJSON(object.id) : 0,
+      state: isSet(object.state) ? powerLineStateFromJSON(object.state) : 0,
     };
   },
 
-  toJSON(message: SetPowerGridState_Request): unknown {
+  toJSON(message: SetPowerLineState_Request): unknown {
     const obj: any = {};
+    message.id !== undefined && (obj.id = powerLineIdToJSON(message.id));
     message.state !== undefined &&
-      (obj.state = message.state
-        ? PowerGridState.toJSON(message.state)
-        : undefined);
+      (obj.state = powerLineStateToJSON(message.state));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SetPowerGridState_Request>, I>>(
+  fromPartial<I extends Exact<DeepPartial<SetPowerLineState_Request>, I>>(
     object: I,
-  ): SetPowerGridState_Request {
-    const message = createBaseSetPowerGridState_Request();
-    message.state =
-      object.state !== undefined && object.state !== null
-        ? PowerGridState.fromPartial(object.state)
-        : undefined;
+  ): SetPowerLineState_Request {
+    const message = createBaseSetPowerLineState_Request();
+    message.id = object.id ?? 0;
+    message.state = object.state ?? 0;
     return message;
   },
 };
 
-function createBaseSetPowerGridState_Response(): SetPowerGridState_Response {
+function createBaseSetPowerLineState_Response(): SetPowerLineState_Response {
   return {};
 }
 
-export const SetPowerGridState_Response = {
+export const SetPowerLineState_Response = {
   encode(
-    _: SetPowerGridState_Response,
+    _: SetPowerLineState_Response,
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     return writer;
@@ -652,10 +597,10 @@ export const SetPowerGridState_Response = {
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number,
-  ): SetPowerGridState_Response {
+  ): SetPowerLineState_Response {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseSetPowerGridState_Response();
+    const message = createBaseSetPowerLineState_Response();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -667,19 +612,19 @@ export const SetPowerGridState_Response = {
     return message;
   },
 
-  fromJSON(_: any): SetPowerGridState_Response {
+  fromJSON(_: any): SetPowerLineState_Response {
     return {};
   },
 
-  toJSON(_: SetPowerGridState_Response): unknown {
+  toJSON(_: SetPowerLineState_Response): unknown {
     const obj: any = {};
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SetPowerGridState_Response>, I>>(
+  fromPartial<I extends Exact<DeepPartial<SetPowerLineState_Response>, I>>(
     _: I,
-  ): SetPowerGridState_Response {
-    const message = createBaseSetPowerGridState_Response();
+  ): SetPowerLineState_Response {
+    const message = createBaseSetPowerLineState_Response();
     return message;
   },
 };

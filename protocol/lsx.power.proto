@@ -13,25 +13,43 @@ enum PowerLineState {
     STATE_UNPOWERED = 1;
 }
 
-message PowerGridState {
-    PowerLineState og_base_med = 1;
-    PowerLineState og_parcel_left = 2;
-    PowerLineState og_parcel_right = 3;
-    PowerLineState ug_parcel_left = 4;
-    PowerLineState ug_parcel_right = 5;
-    // PowerLineState og_base_adm = 6;
-    // PowerLineState og_base_cic = 7;
-    // PowerLineState og_base_sci = 8;
-    // PowerLineState og_base_tec = 9;
+enum PowerLineId {
+    LINE_EMPTY = 0;
+    LINE_OG_BASE_MED = 1;
+    LINE_OG_BASE_ADM = 2;
+    LINE_OG_BASE_CIC = 3;
+    LINE_OG_BASE_SCI = 4;
+    LINE_OG_BASE_TEC = 5;
+    LINE_OG_BASE_HC = 7;
+    LINE_OG_HALL = 8;
+    LINE_OG_COURTYARD = 9;
+    LINE_OG_MESSHALL = 10;
+    LINE_OG_GATE = 11;
+    LINE_OG_PARCELs = 12;
+    LINE_UG_PARCELS_LEFT = 13;
+    LINE_UG_PARCELS_RIGHT = 14;
+    LINE_UG_HALL = 15;
 }
 
-message GetPowerGridState {
+// message PowerGridState {
+//     PowerLineState og_base_med = 1;
+//     PowerLineState og_parcel_left = 2;
+//     PowerLineState og_parcel_right = 3;
+//     PowerLineState ug_parcel_left = 4;
+//     PowerLineState ug_parcel_right = 5;
+//     // PowerLineState og_base_adm = 6;
+//     // PowerLineState og_base_cic = 7;
+//     // PowerLineState og_base_sci = 8;
+//     // PowerLineState og_base_tec = 9;
+// }
+
+message GetPowerLineState {
     message Response {
-        PowerGridState state = 1;
+        PowerLineState state = 1;
     }
 
     message Request {
-
+        PowerLineId id = 1;
     }
 
     oneof message {
@@ -41,9 +59,10 @@ message GetPowerGridState {
     }
 }
 
-message SetPowerGridState {
+message SetPowerLineState {
     message Request {
-        PowerGridState state = 1;
+        PowerLineId id = 1;
+        PowerLineState state = 2;
     }
 
     message Response {
