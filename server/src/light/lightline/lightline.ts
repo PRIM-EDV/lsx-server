@@ -23,10 +23,11 @@ export enum LightLineId {
     LINE_OG_COURTYARD = 9,
     LINE_OG_MESSHALL = 10,
     LINE_OG_GATE = 11,
-    LINE_OG_PARCELs = 12,
+    LINE_OG_PARCELS = 12,
     LINE_UG_PARCELS_LEFT = 13,
     LINE_UG_PARCELS_RIGHT = 14,
     LINE_UG_HALL = 15,
+    LINE_OG_LOG = 16
 }
 
 export class Lightline {
@@ -50,13 +51,13 @@ export class Lightline {
         this.mapping = mapping ? mapping : this.mapping;
     }
 
-    public setStatic(mode: LightLineMode) {
-        Lightline.dmx.setCue(this.flickerCue, 'STOP');
-        Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping[mode]);
+    public async setStatic(mode: LightLineMode) {
+        await Lightline.dmx.setCue(this.flickerCue, 'STOP');
+        await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping[mode]);
     }
 
-    public setFlicker() {
-        Lightline.dmx.setCue(this.staticCue, 'STOP');
-        Lightline.dmx.setCue(this.flickerCue, 'PLAY');
+    public async setFlicker() {
+        await Lightline.dmx.setCue(this.staticCue, 'STOP');
+        await Lightline.dmx.setCue(this.flickerCue, 'PLAY');
     }
 }

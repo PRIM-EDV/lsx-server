@@ -9,8 +9,8 @@ message Request {
     oneof request {
         GetPowerPlantState.Request get_power_plant_state = 1;
         SetPowerPlantState.Request set_power_plant_state = 2;
-        GetPowerGridState.Request get_power_grid_state = 3;
-        SetPowerGridState.Request set_power_grid_state = 4;
+        GetPowerLineState.Request get_power_line_state = 3;
+        SetPowerLineState.Request set_power_line_state = 4;
         GetAnnouncementFiles.Request get_announcement_files = 5;
         GetLockdownState.Request get_lockdown_state = 6;
         SetLockdownState.Request set_lockdown_state = 7;
@@ -31,8 +31,8 @@ message Response {
     oneof response {
         GetPowerPlantState.Response get_power_plant_state = 1;
         SetPowerPlantState.Response set_power_plant_state = 2;
-        GetPowerGridState.Response get_power_grid_state = 3;
-        SetPowerGridState.Response set_power_grid_state = 4;
+        GetPowerLineState.Response get_power_line_state = 3;
+        SetPowerLineState.Response set_power_line_state = 4;
         GetAnnouncementFiles.Response get_announcement_files = 5;
         GetLockdownState.Response get_lockdown_state = 6;
         SetLockdownState.Response set_lockdown_state = 7;

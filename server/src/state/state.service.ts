@@ -11,7 +11,7 @@ export class StateService {
         [PowerLineId.LINE_OG_BASE_MED, PowerLineState.STATE_POWERED],
         [PowerLineId.LINE_OG_BASE_SCI, PowerLineState.STATE_POWERED],
         [PowerLineId.LINE_OG_BASE_TEC, PowerLineState.STATE_POWERED]
-    ])
+    ]);
 
     public powerPlantState: PowerPlantState = PowerPlantState.STATE_NORMAL;
 }

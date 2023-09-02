@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Request, Response } from 'proto/lsx';
-import { PowerGridState, PowerLineState } from 'proto/lsx.power';
+import { PowerLineId, PowerLineState } from 'proto/lsx.power';
 import { BackendService } from '../backend/backend.service';
-import { PowerGridService } from './power-grid.service';
+import { PowerControlService } from './power-grid.service';
 
 @Component({
   selector: 'app-power-control',
@@ -25,55 +25,58 @@ export class PowerControlComponent implements OnInit {
   public poweredStateSci: boolean = false;
   public poweredStateTec: boolean = false;
 
+  // HTML mapping
+  public PowerLineId = PowerLineId;
+  public PowerLineState = PowerLineState;
 
-  constructor(private readonly backend: BackendService, private readonly powerGridService: PowerGridService) { }
+  public powerLineStates = new Map<PowerLineId, PowerLineState>([
+    [PowerLineId.LINE_OG_BASE_CIC, PowerLineState.STATE_POWERED],
+    [PowerLineId.LINE_OG_BASE_MED, PowerLineState.STATE_POWERED],
+    [PowerLineId.LINE_OG_BASE_SCI, PowerLineState.STATE_POWERED],
+    [PowerLineId.LINE_OG_BASE_TEC, PowerLineState.STATE_POWERED],
+    [PowerLineId.LINE_OG_BASE_HC, PowerLineState.STATE_POWERED],
+    [PowerLineId.LINE_OG_GATE, PowerLineState.STATE_POWERED],
+    [PowerLineId.LINE_OG_MESSHALL, PowerLineState.STATE_POWERED],
+    [PowerLineId.LINE_OG_COURTYARD, PowerLineState.STATE_POWERED],
+    [PowerLineId.LINE_OG_PARCELS, PowerLineState.STATE_POWERED],
+    [PowerLineId.LINE_OG_BASE_ADM, PowerLineState.STATE_POWERED],
+    [PowerLineId.LINE_OG_LOG, PowerLineState.STATE_POWERED]
+  ]); 
+
+
+  constructor(private readonly backend: BackendService, private readonly powerControlService: PowerControlService) { }
 
   ngOnInit(): void {
     this.backend.onOpen.subscribe(async () => {
-      const powerGridState = await this.powerGridService.getPowerGridState();
-      this.updateLocalPowerGridState(powerGridState);
+        //   const powerGridState = await this.powerGridService.getPowerGridState();
+        //   this.updateLocalPowerGridState(powerGridState);
+        for (const [id, _] of this.powerLineStates) {
+            const state = await this.powerControlService.getPowerGridState(id);
+            console.log(state);
+        }
     })
 
     this.backend.onRequest.subscribe(this.handleRequest.bind(this));
   }
 
-  public blub() {
-    console.log(this.poweredStateSci)
+  public async updateLocalPowerLineState(id: PowerLineId, state: PowerLineState){
+    this.powerLineStates.set(id, state);
   }
 
-
-  public async updateLocalPowerGridState(powerGridState: PowerGridState){
-    this.poweredStateBaseMedicine = powerGridState.ogBaseMed == PowerLineState.STATE_POWERED;
-    this.poweredStateUpperLeft = powerGridState.ogParcelLeft == PowerLineState.STATE_POWERED;
-    this.poweredStateUpperRight = powerGridState.ogParcelRight == PowerLineState.STATE_POWERED;
-    this.poweredStateLowerLeft = powerGridState.ugParcelLeft == PowerLineState.STATE_POWERED;
-    this.poweredStateLowerRight = powerGridState.ugParcelRight == PowerLineState.STATE_POWERED;
-    // this.poweredStateAdm = powerGridState.ogBaseAdm == PowerLineState.STATE_POWERED;
-    // this.poweredStateCic = powerGridState.ogBaseCic == PowerLineState.STATE_POWERED;
-    // this.poweredStateSci = powerGridState.ogBaseSci == PowerLineState.STATE_POWERED;
-
-  }
-
-  public async updateServerPowerGridState() {
-    const powerGridState: PowerGridState = {
-      ogBaseMed: this.poweredStateBaseMedicine ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
-      ogParcelLeft: this.poweredStateUpperLeft ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
-      ogParcelRight: this.poweredStateUpperRight ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
-      ugParcelLeft: this.poweredStateLowerLeft ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
-      ugParcelRight: this.poweredStateLowerRight ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
-    //   ogBaseAdm: this.poweredStateAdm ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
-    //   ogBaseCic: this.poweredStateCic ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
-    //   ogBaseSci: this.poweredStateSci ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
-    //   ogBaseTec: this.poweredStateTec ? PowerLineState.STATE_POWERED : PowerLineState.STATE_UNPOWERED,
+  public async toggleRemotePowerLineState(id: PowerLineId) {
+    const state = this.powerLineStates.get(id);
+    switch(state){
+        case PowerLineState.STATE_POWERED:
+            await this.powerControlService.setPowerLineState(id, PowerLineState.STATE_UNPOWERED); break;
+        case PowerLineState.STATE_UNPOWERED:
+            await this.powerControlService.setPowerLineState(id, PowerLineState.STATE_POWERED); break;
     }
-
-    await this.powerGridService.setPowerGridState(powerGridState);
   }
 
   private handleRequest(event: {id: string, request: Request}) {
-    if(event.request.setPowerGridState) {
-      this.updateLocalPowerGridState(event.request.setPowerGridState.state!);
-      this.backend.respond(event.id, {setPowerGridState: {}})
+    if(event.request.setPowerLineState) {
+      this.updateLocalPowerLineState(event.request.setPowerLineState.id!, event.request.setPowerLineState.state!);
+      this.backend.respond(event.id, {setPowerLineState: {}})
     }
   }
 

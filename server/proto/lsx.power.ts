@@ -93,12 +93,17 @@ export enum PowerLineId {
   LINE_OG_BASE_ADM = 2,
   LINE_OG_BASE_CIC = 3,
   LINE_OG_BASE_SCI = 4,
-  /**
-   * LINE_OG_BASE_TEC - LINE_OG_PARCEL_LEFT = 2;
-   * LINE_OG_BASE_MED = 1;
-   * LINE_OG_BASE_MED = 1;
-   */
   LINE_OG_BASE_TEC = 5,
+  LINE_OG_BASE_HC = 7,
+  LINE_OG_HALL = 8,
+  LINE_OG_COURTYARD = 9,
+  LINE_OG_MESSHALL = 10,
+  LINE_OG_GATE = 11,
+  LINE_OG_PARCELS = 12,
+  LINE_UG_PARCELS_LEFT = 13,
+  LINE_UG_PARCELS_RIGHT = 14,
+  LINE_UG_HALL = 15,
+  LINE_OG_LOG = 16,
   UNRECOGNIZED = -1,
 }
 
@@ -122,6 +127,36 @@ export function powerLineIdFromJSON(object: any): PowerLineId {
     case 5:
     case 'LINE_OG_BASE_TEC':
       return PowerLineId.LINE_OG_BASE_TEC;
+    case 7:
+    case 'LINE_OG_BASE_HC':
+      return PowerLineId.LINE_OG_BASE_HC;
+    case 8:
+    case 'LINE_OG_HALL':
+      return PowerLineId.LINE_OG_HALL;
+    case 9:
+    case 'LINE_OG_COURTYARD':
+      return PowerLineId.LINE_OG_COURTYARD;
+    case 10:
+    case 'LINE_OG_MESSHALL':
+      return PowerLineId.LINE_OG_MESSHALL;
+    case 11:
+    case 'LINE_OG_GATE':
+      return PowerLineId.LINE_OG_GATE;
+    case 12:
+    case 'LINE_OG_PARCELS':
+      return PowerLineId.LINE_OG_PARCELS;
+    case 13:
+    case 'LINE_UG_PARCELS_LEFT':
+      return PowerLineId.LINE_UG_PARCELS_LEFT;
+    case 14:
+    case 'LINE_UG_PARCELS_RIGHT':
+      return PowerLineId.LINE_UG_PARCELS_RIGHT;
+    case 15:
+    case 'LINE_UG_HALL':
+      return PowerLineId.LINE_UG_HALL;
+    case 16:
+    case 'LINE_OG_LOG':
+      return PowerLineId.LINE_OG_LOG;
     case -1:
     case 'UNRECOGNIZED':
     default:
@@ -143,6 +178,26 @@ export function powerLineIdToJSON(object: PowerLineId): string {
       return 'LINE_OG_BASE_SCI';
     case PowerLineId.LINE_OG_BASE_TEC:
       return 'LINE_OG_BASE_TEC';
+    case PowerLineId.LINE_OG_BASE_HC:
+      return 'LINE_OG_BASE_HC';
+    case PowerLineId.LINE_OG_HALL:
+      return 'LINE_OG_HALL';
+    case PowerLineId.LINE_OG_COURTYARD:
+      return 'LINE_OG_COURTYARD';
+    case PowerLineId.LINE_OG_MESSHALL:
+      return 'LINE_OG_MESSHALL';
+    case PowerLineId.LINE_OG_GATE:
+      return 'LINE_OG_GATE';
+    case PowerLineId.LINE_OG_PARCELS:
+      return 'LINE_OG_PARCELS';
+    case PowerLineId.LINE_UG_PARCELS_LEFT:
+      return 'LINE_UG_PARCELS_LEFT';
+    case PowerLineId.LINE_UG_PARCELS_RIGHT:
+      return 'LINE_UG_PARCELS_RIGHT';
+    case PowerLineId.LINE_UG_HALL:
+      return 'LINE_UG_HALL';
+    case PowerLineId.LINE_OG_LOG:
+      return 'LINE_OG_LOG';
     case PowerLineId.UNRECOGNIZED:
     default:
       return 'UNRECOGNIZED';

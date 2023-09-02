@@ -1,30 +1,34 @@
 import { Injectable } from '@angular/core';
 import { Response, Request } from 'proto/lsx';
-import { PowerGridState } from 'proto/lsx.power';
+import { PowerLineId, PowerLineState } from 'proto/lsx.power';
 import { BackendService } from '../backend/backend.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PowerGridService {
+export class PowerControlService {
 
   constructor(private readonly backend: BackendService) { }
 
-  public async getPowerGridState(): Promise<PowerGridState> {
+  public async getPowerGridState(id: PowerLineId): Promise<PowerLineState> {
     const req: Request = {
-      getPowerGridState: {}
+        getPowerLineState: {
+            id: id
+        }
     }
 
     const res: Response = await this.backend.request(req);
-    return res.getPowerGridState!.state!;
+    return res.getPowerLineState!.state!;
   }
 
-  public async setPowerGridState(state: PowerGridState) {
+  public async setPowerLineState(id: PowerLineId, state: PowerLineState) {
     const req: Request = {
-      setPowerGridState: { state: state }
+        setPowerLineState: {
+            id: id, 
+            state: state 
+        }
     }
 
     const res: Response = await this.backend.request(req);
   }
-
 }
