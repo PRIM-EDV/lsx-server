@@ -4,8 +4,8 @@
         <ph-button [value]="'silent'">SILENT</ph-button>
     </ph-button-select>
     <ph-command-list [label]="'Play warning'">
-        <ph-button>INCOMING</ph-button>
-        <ph-button>SAFE</ph-button>
+        <ph-button (click)="playSound('DROHNE-vorwarnung.wav')">INCOMING</ph-button>
+        <ph-button (click)="playSound('DROHNE-warnung-aufgehoben.wav')">SAFE</ph-button>
     </ph-command-list>
 </ph-form>
 
