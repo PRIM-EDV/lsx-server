@@ -87,8 +87,8 @@
 		<line class="st1" x1="107.3" y1="108.8" x2="107.3" y2="102.3"/>
 	</g>
 	<g id="parcel_og" [class.animate]="powerLineStates.get(PowerLineId.LINE_OG_PARCELS) == PowerLineState.STATE_POWERED">
-		<circle class="st2" cx="566.3" cy="355.7" r="3.1"/>
-		<circle class="st3" cx="566.3" cy="355.7" r="1.9"/>
+		<circle class="st2" cx="566.3" cy="355.7" r="3.6" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_PARCELS)"/>
+		<circle class="st3" cx="566.3" cy="355.7" r="2.2" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_PARCELS)"/>
 		<line class="st4" x1="562.5" y1="355.7" x2="186.2" y2="355.7"/>
 		<circle class="st3" cx="186.2" cy="355.7" r="1.9"/>
         <circle class="st3" cx="566.3" cy="355.7" r="1.9"/>
@@ -107,9 +107,9 @@
         <circle class="st3" cx="566.3" cy="355.7" r="1.9"/>
 	</g>
 	<g id="tec" [class.animate]="powerLineStates.get(PowerLineId.LINE_OG_BASE_TEC) == PowerLineState.STATE_POWERED">
-		<circle class="st2" cx="595" cy="321" r="3.1"/>
+		<circle class="st2" cx="595" cy="321" r="3.6" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_BASE_TEC)"/>
+		<circle class="st3" cx="595" cy="321" r="2.2" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_BASE_TEC)"/>
 		<line class="st4" x1="595" y1="317" x2="595" y2="264"/>
-		<circle class="st3" cx="595" cy="321" r="2"/>
 		<circle class="st3" cx="547" cy="262" r="2"/>
 		<line class="st4" x1="595" y1="262" x2="547" y2="262"/>
 		<circle class="st3" cx="595" cy="321" r="2"/>
@@ -120,27 +120,28 @@
         <circle class="st3" cx="595" cy="321" r="2"/>
 	</g>
 	<g id="sci" [class.animate]="powerLineStates.get(PowerLineId.LINE_OG_BASE_SCI) == PowerLineState.STATE_POWERED">
-		<ellipse transform="matrix(0.1602 -0.9871 0.9871 0.1602 167.818 723.3378)" class="st2" cx="509" cy="263" rx="3.1" ry="3.1"/>
-		<circle class="st3" cx="459" cy="263" r="2"/>
+		<circle class="st2" cx="509" cy="263" r="3.6" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_BASE_SCI)"/>
+        <circle class="st3" cx="509" cy="263" r="2.2" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_BASE_SCI)"/>
 		<line class="st4" x1="505" y1="263" x2="459" y2="263"/>
+		<circle class="st3" cx="459" cy="263" r="2.0"/>
 		<circle class="st3" cx="509" cy="263" r="2"/>
 		<circle class="st3" cx="509" cy="263" r="2"/>
 		<circle class="st3" cx="509" cy="263" r="2"/>
 		<circle class="st3" cx="509" cy="263" r="2"/>
 	</g>
 	<g id="med" [class.animate]="powerLineStates.get(PowerLineId.LINE_OG_BASE_MED) == PowerLineState.STATE_POWERED">
-		<circle class="st2" cx="418.9" cy="143.3" r="3.1"/>
-		<circle class="st3" cx="338.1" cy="143.4" r="2"/>
+		<circle class="st2" cx="418.9" cy="143.3" r="3.6" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_BASE_MED)"/>
+		<circle class="st3" cx="418.9" cy="143.4" r="2.2" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_BASE_MED)"/>
 		<line class="st4" x1="414.9" y1="143.4" x2="338.1" y2="143.3"/>
-		<circle class="st3" cx="418.9" cy="143.4" r="2"/>
+		<circle class="st3" cx="338.1" cy="143.4" r="2.0"/>
         <circle class="st3" cx="418.9" cy="143.4" r="2"/>
         <circle class="st3" cx="418.9" cy="143.4" r="2"/>
         <circle class="st3" cx="418.9" cy="143.4" r="2"/>
         <circle class="st3" cx="418.9" cy="143.4" r="2"/>
 	</g>
 	<g id="cic" [class.animate]="powerLineStates.get(PowerLineId.LINE_OG_BASE_CIC) == PowerLineState.STATE_POWERED">
-		<circle class="st2" cx="420" cy="222.4" r="3.1"/>
-		<circle class="st3" cx="357.5" cy="222.4" r="2"/>
+		<circle class="st2" cx="420" cy="222.4" r="3.6" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_BASE_CIC)"/>
+		<circle class="st3" cx="357.5" cy="222.4" r="2.2" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_BASE_CIC)"/>
 		<line class="st4" x1="418.9" y1="190.1" x2="358.5" y2="190.1"/>
 		<circle class="st3" cx="420" cy="222.4" r="2"/>
 		<line class="st4" x1="357.5" y1="190.1" x2="357.4" y2="220.1"/>
@@ -153,10 +154,10 @@
         <circle class="st3" cx="420" cy="222.4" r="2"/>
 	</g>
 	<g id="fc" [class.animate]="powerLineStates.get(PowerLineId.LINE_OG_BASE_HC) == PowerLineState.STATE_POWERED">
-		<circle class="st2" cx="291.4" cy="264" r="3.1"/>
-		<circle class="st3" cx="159.7" cy="264" r="2"/>
+		<circle class="st2" cx="291.4" cy="264" r="3.6" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_BASE_HC)"/>
+		<circle class="st3" cx="291.4" cy="264" r="2.2" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_BASE_HC)"/>
 		<line class="st4" x1="287.2" y1="264" x2="159.7" y2="263.9"/>
-		<circle class="st3" cx="291.4" cy="264" r="2"/>
+		<circle class="st3" cx="159.7" cy="264" r="2" />
         <circle class="st3" cx="291.4" cy="264" r="2"/>
         <circle class="st3" cx="291.4" cy="264" r="2"/>
         <circle class="st3" cx="291.4" cy="264" r="2"/>
@@ -165,8 +166,8 @@
         <circle class="st3" cx="291.4" cy="264" r="2"/>
 	</g>
 	<g id="adm" [class.animate]="powerLineStates.get(PowerLineId.LINE_OG_BASE_ADM) == PowerLineState.STATE_POWERED">
-		<circle class="st2" cx="208.1" cy="308" r="3.1"/>
-		<circle class="st3" cx="159.8" cy="308" r="2"/>
+		<circle class="st2" cx="208.1" cy="308" r="3.6" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_BASE_ADM)"/>
+		<circle class="st3" cx="159.8" cy="308" r="2.2" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_BASE_ADM)"/>
 		<line class="st4" x1="203.9" y1="308" x2="159.8" y2="307.9"/>
 		<circle class="st3" cx="208.1" cy="308" r="2"/>
         <circle class="st3" cx="208.1" cy="308" r="2"/>
@@ -174,8 +175,8 @@
         <circle class="st3" cx="208.1" cy="308" r="2"/>
 	</g>
 	<g id="gate" [class.animate]="powerLineStates.get(PowerLineId.LINE_OG_GATE) == PowerLineState.STATE_POWERED">
-		<circle class="st2" cx="116.2" cy="18.3" r="3.6"/>
-		<circle class="st3" cx="116.2" cy="18.3" r="2.2"/>
+		<circle class="st2" cx="116.2" cy="18.3" r="3.6" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_GATE)"/>
+		<circle class="st3" cx="116.2" cy="18.3" r="2.2" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_GATE)"/>
 		<line class="st4" x1="116.2" y1="22.5" x2="116.2" y2="132.8"/>
 		<circle class="st3" cx="116.2" cy="132.8" r="2.2"/>
         <circle class="st3" cx="116.2" cy="18.3" r="2.2"/>
@@ -185,8 +186,8 @@
         <circle class="st3" cx="116.2" cy="18.3" r="2.2"/>
 	</g>
 	<g id="messhall" [class.animate]="powerLineStates.get(PowerLineId.LINE_OG_MESSHALL) == PowerLineState.STATE_POWERED">
-		<circle class="st2" cx="237.8" cy="34" r="3.6"/>
-		<circle class="st3" cx="237.8" cy="34" r="2.2"/>
+        <circle class="st2" cx="237.8" cy="34" r="3.6" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_MESSHALL)"/>
+		<circle class="st3" cx="237.8" cy="34" r="2.2" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_MESSHALL)"/>
 		<line class="st4" x1="237.8" y1="38.2" x2="237.8" y2="123.5"/>
 		<circle class="st3" cx="237.8" cy="125.8" r="2.2"/>
         <circle class="st3" cx="237.8" cy="34" r="2.2"/>
@@ -196,18 +197,42 @@
         <circle class="st3" cx="237.8" cy="34" r="2.2"/>
 	</g>
 	<g id="log" [class.animate]="powerLineStates.get(PowerLineId.LINE_OG_LOG) == PowerLineState.STATE_POWERED">
-		<circle class="st2" cx="168" cy="182.9" r="3.6"/>
-		<circle class="st3" cx="168" cy="182.9" r="2.2"/>
+		<circle class="st2" cx="168" cy="182.9" r="3.6" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_LOG)"/>
+		<circle class="st3" cx="168" cy="182.9" r="2.2" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_LOG)"/>
 		<line class="st4" x1="168" y1="187.1" x2="168" y2="205.1"/>
 		<circle class="st3" cx="168" cy="206.3" r="2.2"/>
         <circle class="st3" cx="168" cy="182.9" r="2.2"/>
 	</g>
-    <g id="courtyard" id="messhall" [class.animate]="powerLineStates.get(PowerLineId.LINE_OG_COURTYARD) == PowerLineState.STATE_POWERED">
-		<circle class="st2" cx="168" cy="182.9" r="3.6"/>
-		<circle class="st3" cx="168" cy="182.9" r="2.2"/>
+    <g id="courtyard" id="courtyard" [class.animate]="powerLineStates.get(PowerLineId.LINE_OG_COURTYARD) == PowerLineState.STATE_POWERED">
+        <circle class="st2" cx="168.9" cy="235.5" r="3.6" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_COURTYARD)"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2.2" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_COURTYARD)"/>
+        <line class="st4" x1="308.8" y1="235.5" x2="308.8" y2="11.7"/>
+        <line class="st4" x1="308.7" y1="11.7" x2="274.5" y2="11.6"/>
+        <line class="st4" x1="308.8" y1="235.5" x2="172.8" y2="235.5"/>
+        <circle class="st3" cx="274.4" cy="11.7" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+        <circle class="st3" cx="168.9" cy="235.5" r="2"/>
+    </g>
+    <!-- <g id="courtyard" [class.animate]="powerLineStates.get(PowerLineId.LINE_OG_COURTYARD) == PowerLineState.STATE_POWERED">
+		<circle class="st2" cx="168" cy="182.9" r="3.6" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_COURTYARD)"/>
+		<circle class="st3" cx="168" cy="182.9" r="2.2" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_COURTYARD)"/>
 		<line class="st4" x1="168" y1="187.1" x2="168" y2="205.1"/>
 		<circle class="st3" cx="168" cy="206.3" r="2.2"/>
-	</g>
+	</g> -->
 </g>
 <g id="UG">
 	<circle class="st5" cx="597.6" cy="436.2" r="2.2"/>

@@ -48,11 +48,9 @@ export class PowerControlComponent implements OnInit {
 
   ngOnInit(): void {
     this.backend.onOpen.subscribe(async () => {
-        //   const powerGridState = await this.powerGridService.getPowerGridState();
-        //   this.updateLocalPowerGridState(powerGridState);
         for (const [id, _] of this.powerLineStates) {
             const state = await this.powerControlService.getPowerGridState(id);
-            console.log(state);
+            this.powerLineStates.set(id, state);
         }
     })
 
@@ -61,10 +59,12 @@ export class PowerControlComponent implements OnInit {
 
   public async updateLocalPowerLineState(id: PowerLineId, state: PowerLineState){
     this.powerLineStates.set(id, state);
+    console.log(this.powerLineStates.set(id, state))
   }
 
   public async toggleRemotePowerLineState(id: PowerLineId) {
     const state = this.powerLineStates.get(id);
+    console.log("toggle")
     switch(state){
         case PowerLineState.STATE_POWERED:
             await this.powerControlService.setPowerLineState(id, PowerLineState.STATE_UNPOWERED); break;
