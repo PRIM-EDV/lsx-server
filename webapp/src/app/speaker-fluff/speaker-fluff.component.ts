@@ -10,21 +10,25 @@ import { Request } from 'proto/lsx';
 })
 export class SpeakerFluffComponent implements OnInit {
 
-    public flufftFiles: string[] = [];
+    public fluffFiles: string[] = [];
     public fluffState: string | number = 'on';
 
-    constructor(private readonly backend: BackendService, private readonly speakerFluffService: SpeakerFluffService) {};
+    constructor(private readonly backend: BackendService, private readonly speakerFluffService: SpeakerFluffService) {
+      this.backend.onOpen.subscribe(async () => {
+          this.fluffFiles = await this.speakerFluffService.getFluffFiles();
+          const fluffSate = await this.speakerFluffService.getFluffState();
+
+          this.updateLocalFluffState(fluffSate);
+      });
+
+      this.backend.onRequest.subscribe(this.handleRequest.bind(this));
+    };
 
     ngOnInit(): void {
-        this.backend.onOpen.subscribe(async () => {
-            this.flufftFiles = await this.speakerFluffService.getFluffFiles();
-
-            const fluffSate = await this.speakerFluffService.getFluffState();
-    
-            this.updateLocalFluffState(fluffSate);
-        });
-
-        this.backend.onRequest.subscribe(this.handleRequest.bind(this));
+      if (this.backend.isConnected) {
+        this.speakerFluffService.getFluffFiles().then((files) => {this.fluffFiles = files});
+        this.speakerFluffService.getFluffState().then((state) => {this.updateLocalFluffState(state);});
+      }
     }
 
     public playAnnoucement(file: string) {
@@ -52,6 +56,10 @@ export class SpeakerFluffComponent implements OnInit {
           this.updateLocalFluffState(event.request.setFluffState.state!);
           this.backend.respond(event.id, {setFluffState: {}})
         }
+    }
+
+    ngOnDestroy() {
+      console.log("?")
     }
 }
 

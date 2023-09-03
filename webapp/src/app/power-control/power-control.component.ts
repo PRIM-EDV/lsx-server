@@ -44,17 +44,23 @@ export class PowerControlComponent implements OnInit {
   ]); 
 
 
-  constructor(private readonly backend: BackendService, private readonly powerControlService: PowerControlService) { }
-
-  ngOnInit(): void {
+  constructor(private readonly backend: BackendService, private readonly powerControlService: PowerControlService) { 
     this.backend.onOpen.subscribe(async () => {
-        for (const [id, _] of this.powerLineStates) {
-            const state = await this.powerControlService.getPowerGridState(id);
-            this.powerLineStates.set(id, state);
-        }
+      for (const [id, _] of this.powerLineStates) {
+          const state = await this.powerControlService.getPowerGridState(id);
+          this.powerLineStates.set(id, state);
+      }
     })
 
     this.backend.onRequest.subscribe(this.handleRequest.bind(this));
+  }
+
+  ngOnInit(): void {
+    if (this.backend.isConnected) {
+      for (const [id, _] of this.powerLineStates) {
+        this.powerControlService.getPowerGridState(id).then((state) => this.powerLineStates.set(id, state));
+      }
+    }
   }
 
   public async updateLocalPowerLineState(id: PowerLineId, state: PowerLineState){
@@ -64,7 +70,6 @@ export class PowerControlComponent implements OnInit {
 
   public async toggleRemotePowerLineState(id: PowerLineId) {
     const state = this.powerLineStates.get(id);
-    console.log("toggle")
     switch(state){
         case PowerLineState.STATE_POWERED:
             await this.powerControlService.setPowerLineState(id, PowerLineState.STATE_UNPOWERED); break;

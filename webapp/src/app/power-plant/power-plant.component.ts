@@ -14,15 +14,17 @@ export class PowerPlantComponent implements OnInit {
   public powerPlantState: string | number = 'normal';
 
   constructor(private readonly backend: BackendService, private readonly powerPlantService: PowerPlantService) {
-
-  }
-
-  ngOnInit(): void {
     this.backend.onOpen.subscribe(async () => {
       const powerPlantState = await this.powerPlantService.getPowerPlantState();
       this.updateLocalPowerPlantState(powerPlantState);
     });
     this.backend.onRequest.subscribe(this.handleRequest.bind(this));
+  }
+
+  ngOnInit(): void {
+    if (this.backend.isConnected) {
+      this.powerPlantService.getPowerPlantState().then((state) => {this.updateLocalPowerPlantState(state)});
+    }
   }
 
   public async updateLocalPowerPlantState(powerPlantState: PowerPlantState){
@@ -32,7 +34,6 @@ export class PowerPlantComponent implements OnInit {
       case PowerPlantState.STATE_CRITICAL: this.powerPlantState = 'critical'; break;
       case PowerPlantState.STATE_POWER_SAVING: this.powerPlantState = 'low'; break;
     }
-    console.log(this.powerPlantState)
   }
 
   public async updateServerPowerGridState() {

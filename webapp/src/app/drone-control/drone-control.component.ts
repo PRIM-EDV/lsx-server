@@ -18,14 +18,18 @@ export class DroneControlComponent implements OnInit {
     {label: "Sonar III", file: "Botsonar_03.wav"},
   ]
 
-  constructor(private readonly backend: BackendService, private readonly droneControlService: DroneCotrolService) { }
-
-  ngOnInit(): void {
+  constructor(private readonly backend: BackendService, private readonly droneControlService: DroneCotrolService) {
     this.backend.onOpen.subscribe(async () => {
       const modeSilentState = await this.droneControlService.getModeSilentState();
       this.updateLocalModeSilentState(modeSilentState);
     });
     this.backend.onRequest.subscribe(this.handleRequest.bind(this));
+   }
+
+  ngOnInit(): void {
+    if (this.backend.isConnected) {
+      this.droneControlService.getModeSilentState().then((state) => {this.updateLocalModeSilentState(state)});
+    }
   }
 
   public async updateLocalModeSilentState(state: ModeSilentState){

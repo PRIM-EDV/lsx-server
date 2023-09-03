@@ -20,6 +20,11 @@ export class SpeakerAnnouncementsComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    if (this.backend.isConnected) {
+      this.backend.getAnnouncementFiles().then((files) => {
+        this.announcementFiles = files;
+      });
+    }
   }
 
   public playAnnoucement(file: string) {

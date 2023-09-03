@@ -15,9 +15,7 @@ export class BaseLockdownComponent implements OnInit {
   public autoLockdown: string | number = "on";
   public lockdownAnnouncements: string | number = "on";
 
-  constructor(private readonly backend: BackendService, private readonly baseLockdownService: BaseLockdownService) { }
-
-  ngOnInit(): void {
+  constructor(private readonly backend: BackendService, private readonly baseLockdownService: BaseLockdownService) {
     this.backend.onOpen.subscribe(async () => {
       const baseState = await this.baseLockdownService.getLockdownState();
       const autoLockdown = await this.baseLockdownService.getAutoLockdown();
@@ -28,6 +26,14 @@ export class BaseLockdownComponent implements OnInit {
       this.updateLocalLockdownAnnouncements(lockdownAnnouncements);
     });
     this.backend.onRequest.subscribe(this.handleRequest.bind(this));
+   }
+
+  ngOnInit(): void {
+    if (this.backend.isConnected) {
+      this.baseLockdownService.getLockdownState().then((state) => {this.updateLocalBaseState(state)});
+      this.baseLockdownService.getAutoLockdown().then((state) => {this.updateLocalAutoLockdown(state)});
+      this.baseLockdownService.getLockdownAnnouncements().then((state) => {this.updateLocalLockdownAnnouncements(state)});
+    }
   }
 
   public async updateLocalBaseState(baseState: LockdownState) {

@@ -20,6 +20,8 @@ const WS_URL = `ws://${LSX_SERVER_HOSTNAME}:${LSX_SERVER_PORT}`;
 
 @Injectable({providedIn: 'root'})
 export class BackendService {
+    public isConnected: boolean = false;
+
     public onRequest: Subject<{id: string, request: Request}> = new Subject<{id: string, request: Request}>();
     public onMessage: Subject<LsxMessage> = new Subject<LsxMessage>();
     public onOpen: Subject<void> = new Subject<void>();
@@ -31,11 +33,11 @@ export class BackendService {
     constructor(private http: HttpClient, private readonly router: Router) {}
 
     public async connect() {
-        this.ws = webSocket({url: WS_URL, openObserver: { next: () => {this.onOpen.next()} }});
+        this.ws = webSocket({url: WS_URL, openObserver: { next: () => {this.isConnected= true; this.onOpen.next()} }});
 
         this.ws.subscribe({
             next: this.handleMessage.bind(this),
-            error: (err) => {console.log(err), this.router.navigateByUrl('/auth');},
+            error: (err) => {console.log(err), this.router.navigateByUrl('/auth'); this.isConnected = false;},
             complete: this.handleClose.bind(this)
         });
     }
