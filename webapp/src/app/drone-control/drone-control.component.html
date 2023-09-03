@@ -8,3 +8,16 @@
         <ph-button>SAFE</ph-button>
     </ph-command-list>
 </ph-form>
+
+<ph-table [label]="'Recordings'">
+    <tr>
+        <th style="width: 32px;">ID</th>
+        <th>File</th>
+        <th style="width: 64px;">Command</th>
+    </tr>
+    <tr *ngFor="let item of droneSounds; index as idx">
+        <td>{{idx}}</td>
+        <td>{{item.label}}</td>
+        <td><ph-button [value]="item.file" (click)="playSound(item.file)">PLAY</ph-button></td>
+    </tr>
+</ph-table>

@@ -12,6 +12,11 @@ import { ModeSilentState } from 'proto/lsx.drone';
 export class DroneControlComponent implements OnInit {
 
   public modeSilentState: string | number = 'normal';
+  public droneSounds = [
+    {label: "Sonar I", file: "Botsonar_01.wav"},
+    {label: "Sonar II", file: "Botsonar_02.wav"},
+    {label: "Sonar III", file: "Botsonar_03.wav"},
+  ]
 
   constructor(private readonly backend: BackendService, private readonly droneControlService: DroneCotrolService) { }
 
@@ -37,11 +42,20 @@ export class DroneControlComponent implements OnInit {
     }
   }
 
+  public playSound(file: string) {
+    const req: Request = {
+        playAnnouncement: {filepath: `assets/wav/drone/${file}`}
+    }
+
+    this.backend.request(req);
+}
+
   private handleRequest(event: {id: string, request: Request}) {
     if(event.request.setModeSilentState) {
       this.updateLocalModeSilentState(event.request.setModeSilentState.state!);
       this.backend.respond(event.id, {setModeSilentState: {}})
     }
   }
+
 
 }
