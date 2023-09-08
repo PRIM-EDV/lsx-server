@@ -36,6 +36,7 @@ export class DroneControlComponent implements OnInit {
     switch(state) {
       case ModeSilentState.MODE_SILENT_STATE_NORMAL: this.modeSilentState = 'normal'; break;
       case ModeSilentState.MODE_SILENT_STATE_SILENT: this.modeSilentState = 'silent'; break;
+      case ModeSilentState.MODE_SILENT_STATE_SILENT_DRONE: this.modeSilentState = 'silent drone'; break;
     }
   }
 
@@ -43,6 +44,7 @@ export class DroneControlComponent implements OnInit {
     switch(this.modeSilentState) {
       case 'normal': await this.droneControlService.setModeSilentState(ModeSilentState.MODE_SILENT_STATE_NORMAL); break;
       case 'silent': await this.droneControlService.setModeSilentState(ModeSilentState.MODE_SILENT_STATE_SILENT); break;
+      case 'silent drone': await this.droneControlService.setModeSilentState(ModeSilentState.MODE_SILENT_STATE_SILENT_DRONE); break;
     }
   }
 

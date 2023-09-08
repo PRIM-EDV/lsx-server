@@ -7,6 +7,7 @@ export enum ModeSilentState {
   MODE_SILENT_STATE_EMPTY = 0,
   MODE_SILENT_STATE_NORMAL = 1,
   MODE_SILENT_STATE_SILENT = 2,
+  MODE_SILENT_STATE_SILENT_DRONE = 3,
   UNRECOGNIZED = -1,
 }
 
@@ -21,6 +22,9 @@ export function modeSilentStateFromJSON(object: any): ModeSilentState {
     case 2:
     case "MODE_SILENT_STATE_SILENT":
       return ModeSilentState.MODE_SILENT_STATE_SILENT;
+    case 3:
+    case "MODE_SILENT_STATE_SILENT_DRONE":
+      return ModeSilentState.MODE_SILENT_STATE_SILENT_DRONE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -36,6 +40,8 @@ export function modeSilentStateToJSON(object: ModeSilentState): string {
       return "MODE_SILENT_STATE_NORMAL";
     case ModeSilentState.MODE_SILENT_STATE_SILENT:
       return "MODE_SILENT_STATE_SILENT";
+    case ModeSilentState.MODE_SILENT_STATE_SILENT_DRONE:
+      return "MODE_SILENT_STATE_SILENT_DRONE";
     case ModeSilentState.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

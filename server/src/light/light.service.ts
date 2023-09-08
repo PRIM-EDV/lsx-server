@@ -35,21 +35,7 @@ export class LightService {
     public async setLightLine(id: LightLineId, mode: LightLineMode) {
         const line = this.lightlines.get(id)
 
-        switch(mode) {
-            case LightLineMode.MODE_BLACKOUT:
-                await line.setStatic(mode); break;
-            case LightLineMode.MODE_RED:
-            case LightLineMode.MODE_WHITE:
-                if (this.state.powerLineStates.get(line.powerLineId) == PowerLineState.STATE_POWERED) {
-                    await line.setStatic(mode); 
-                }
-                break;
-            case LightLineMode.MODE_FLICKER:
-                if (this.state.powerLineStates.get(line.powerLineId) == PowerLineState.STATE_POWERED) {
-                    await line.setFlicker();
-                } 
-                break;
-        }
+        line.setMode(mode);
     }
 
     public async getLightLineByPowerLineId(powerLineId: PowerLineId): Promise<Lightline> {

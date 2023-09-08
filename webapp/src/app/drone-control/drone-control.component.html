@@ -2,6 +2,7 @@
     <ph-button-select [label]="'Mode silent'" [(value)]="modeSilentState" (valueChange)="updateRemoteModeSilentSate()">
         <ph-button [value]="'normal'">NORMAL</ph-button>
         <ph-button [value]="'silent'">SILENT</ph-button>
+        <ph-button [value]="'silent drone'">SILENT DRONE</ph-button>
     </ph-button-select>
     <ph-command-list [label]="'Play warning'">
         <ph-button (click)="playSound('DROHNE-vorwarnung.wav')">INCOMING</ph-button>

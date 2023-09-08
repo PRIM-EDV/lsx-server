@@ -4,6 +4,7 @@ enum ModeSilentState {
     MODE_SILENT_STATE_EMPTY = 0;
     MODE_SILENT_STATE_NORMAL = 1;
     MODE_SILENT_STATE_SILENT = 2;
+    MODE_SILENT_STATE_SILENT_DRONE = 3;
 }
 
 message GetModeSilentState {
