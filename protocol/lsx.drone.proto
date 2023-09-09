@@ -12,7 +12,7 @@ enum BombAreaId {
     AREA_TUNNEL = 7;
 }
 
-enum BomAreaState {
+enum BombAreaState {
     STATE_ARMED  = 0;
     STATE_FUSED = 1;
 }
@@ -52,7 +52,7 @@ message BombArea {
 
 message GetBombAreaState {
     message Response {
-        BomAreaState state = 1;
+        BombAreaState state = 1;
     }
 
     message Request {

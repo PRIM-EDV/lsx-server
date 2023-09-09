@@ -36,10 +36,12 @@ import {
   SetModeSilentState_Request,
   BombBase_Request,
   BombArea_Request,
+  GetBombAreaState_Request,
   GetModeSilentState_Response,
   SetModeSilentState_Response,
   BombBase_Response,
   BombArea_Response,
+  GetBombAreaState_Response,
 } from "./lsx.drone";
 import * as _m0 from "protobufjs/minimal";
 
@@ -65,6 +67,7 @@ export interface Request {
   setModeSilentState?: SetModeSilentState_Request | undefined;
   bombBase?: BombBase_Request | undefined;
   bombArea?: BombArea_Request | undefined;
+  getBombAreaState?: GetBombAreaState_Request | undefined;
 }
 
 export interface Response {
@@ -87,6 +90,7 @@ export interface Response {
   setModeSilentState?: SetModeSilentState_Response | undefined;
   bombBase?: BombBase_Response | undefined;
   bombArea?: BombArea_Response | undefined;
+  getBombAreaState?: GetBombAreaState_Response | undefined;
 }
 
 export interface LsxMessage {
@@ -140,6 +144,7 @@ function createBaseRequest(): Request {
     setModeSilentState: undefined,
     bombBase: undefined,
     bombArea: undefined,
+    getBombAreaState: undefined,
   };
 }
 
@@ -262,6 +267,12 @@ export const Request = {
         writer.uint32(154).fork()
       ).ldelim();
     }
+    if (message.getBombAreaState !== undefined) {
+      GetBombAreaState_Request.encode(
+        message.getBombAreaState,
+        writer.uint32(162).fork()
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -376,6 +387,12 @@ export const Request = {
         case 19:
           message.bombArea = BombArea_Request.decode(reader, reader.uint32());
           break;
+        case 20:
+          message.getBombAreaState = GetBombAreaState_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -446,6 +463,9 @@ export const Request = {
         : undefined,
       bombArea: isSet(object.bombArea)
         ? BombArea_Request.fromJSON(object.bombArea)
+        : undefined,
+      getBombAreaState: isSet(object.getBombAreaState)
+        ? GetBombAreaState_Request.fromJSON(object.getBombAreaState)
         : undefined,
     };
   },
@@ -531,6 +551,10 @@ export const Request = {
     message.bombArea !== undefined &&
       (obj.bombArea = message.bombArea
         ? BombArea_Request.toJSON(message.bombArea)
+        : undefined);
+    message.getBombAreaState !== undefined &&
+      (obj.getBombAreaState = message.getBombAreaState
+        ? GetBombAreaState_Request.toJSON(message.getBombAreaState)
         : undefined);
     return obj;
   },
@@ -626,6 +650,10 @@ export const Request = {
       object.bombArea !== undefined && object.bombArea !== null
         ? BombArea_Request.fromPartial(object.bombArea)
         : undefined;
+    message.getBombAreaState =
+      object.getBombAreaState !== undefined && object.getBombAreaState !== null
+        ? GetBombAreaState_Request.fromPartial(object.getBombAreaState)
+        : undefined;
     return message;
   },
 };
@@ -651,6 +679,7 @@ function createBaseResponse(): Response {
     setModeSilentState: undefined,
     bombBase: undefined,
     bombArea: undefined,
+    getBombAreaState: undefined,
   };
 }
 
@@ -773,6 +802,12 @@ export const Response = {
         writer.uint32(154).fork()
       ).ldelim();
     }
+    if (message.getBombAreaState !== undefined) {
+      GetBombAreaState_Response.encode(
+        message.getBombAreaState,
+        writer.uint32(162).fork()
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -887,6 +922,12 @@ export const Response = {
         case 19:
           message.bombArea = BombArea_Response.decode(reader, reader.uint32());
           break;
+        case 20:
+          message.getBombAreaState = GetBombAreaState_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -957,6 +998,9 @@ export const Response = {
         : undefined,
       bombArea: isSet(object.bombArea)
         ? BombArea_Response.fromJSON(object.bombArea)
+        : undefined,
+      getBombAreaState: isSet(object.getBombAreaState)
+        ? GetBombAreaState_Response.fromJSON(object.getBombAreaState)
         : undefined,
     };
   },
@@ -1042,6 +1086,10 @@ export const Response = {
     message.bombArea !== undefined &&
       (obj.bombArea = message.bombArea
         ? BombArea_Response.toJSON(message.bombArea)
+        : undefined);
+    message.getBombAreaState !== undefined &&
+      (obj.getBombAreaState = message.getBombAreaState
+        ? GetBombAreaState_Response.toJSON(message.getBombAreaState)
         : undefined);
     return obj;
   },
@@ -1136,6 +1184,10 @@ export const Response = {
     message.bombArea =
       object.bombArea !== undefined && object.bombArea !== null
         ? BombArea_Response.fromPartial(object.bombArea)
+        : undefined;
+    message.getBombAreaState =
+      object.getBombAreaState !== undefined && object.getBombAreaState !== null
+        ? GetBombAreaState_Response.fromPartial(object.getBombAreaState)
         : undefined;
     return message;
   },

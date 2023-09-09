@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Request, Response } from 'proto/lsx';
+import { BombAreaState, BombAreaId } from 'proto/lsx.drone';
+import { BackendService } from '../backend/backend.service';
+import { DroneBombardmentService } from './drone-bombardment.service';
 
 @Component({
   selector: 'drone-bombardment',
@@ -7,9 +11,52 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DroneBombardmentComponent implements OnInit {
 
-  constructor() { }
+    public areaStateCorridor = BombAreaState.STATE_ARMED;
+    public areaStateMed = BombAreaState.STATE_ARMED;
+    public areaStateCic = BombAreaState.STATE_ARMED;
+    public areaStateHall = BombAreaState.STATE_ARMED;
+    public areaStateSci = BombAreaState.STATE_ARMED;
+    public areaStateTec = BombAreaState.STATE_ARMED;
+    public areaStateParcels = BombAreaState.STATE_ARMED;
+    public areaStateTunnel = BombAreaState.STATE_ARMED;
+
+    public areaStates = new Map<BombAreaId, BombAreaState>([
+        [BombAreaId.AREA_CORRIDOR, BombAreaState.STATE_ARMED],
+        [BombAreaId.AREA_MED, BombAreaState.STATE_ARMED],
+        [BombAreaId.AREA_CIC, BombAreaState.STATE_ARMED],
+        [BombAreaId.AREA_HALL, BombAreaState.STATE_ARMED],
+        [BombAreaId.AREA_SCI, BombAreaState.STATE_ARMED],
+        [BombAreaId.AREA_TEC, BombAreaState.STATE_ARMED],
+        [BombAreaId.AREA_PARCEL, BombAreaState.STATE_ARMED],
+        [BombAreaId.AREA_TUNNEL, BombAreaState.STATE_ARMED]
+      ]); 
+
+  constructor(private backend: BackendService, private readonly service: DroneBombardmentService) {
+    this.backend.onOpen.subscribe(async () => {
+        for (const [id, _] of this.areaStates) {
+            const state = await this.service.getBombAreaState(id);
+            this.areaStates.set(id, state);
+        }
+      })
+  
+      this.backend.onRequest.subscribe(this.handleRequest.bind(this));
+   }
 
   ngOnInit(): void {
+    if (this.backend.isConnected) {
+        for (const [id, _] of this.areaStates) {
+            this.service.getBombAreaState(id).then((state) => {
+                this.areaStates.set(id, state);
+            });
+        }
+      }
+  }
+
+  private handleRequest(event: {id: string, request: Request}) {
+    // if(event.request.setPowerLineState) {
+    //   this.updateLocalPowerLineState(event.request.setPowerLineState.id!, event.request.setPowerLineState.state!);
+    //   this.backend.respond(event.id, {setPowerLineState: {}})
+    // }
   }
 
 }

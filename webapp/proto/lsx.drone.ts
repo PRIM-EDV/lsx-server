@@ -72,34 +72,34 @@ export function bombAreaIdToJSON(object: BombAreaId): string {
   }
 }
 
-export enum BomAreaState {
+export enum BombAreaState {
   STATE_ARMED = 0,
   STATE_FUSED = 1,
   UNRECOGNIZED = -1,
 }
 
-export function bomAreaStateFromJSON(object: any): BomAreaState {
+export function bombAreaStateFromJSON(object: any): BombAreaState {
   switch (object) {
     case 0:
     case "STATE_ARMED":
-      return BomAreaState.STATE_ARMED;
+      return BombAreaState.STATE_ARMED;
     case 1:
     case "STATE_FUSED":
-      return BomAreaState.STATE_FUSED;
+      return BombAreaState.STATE_FUSED;
     case -1:
     case "UNRECOGNIZED":
     default:
-      return BomAreaState.UNRECOGNIZED;
+      return BombAreaState.UNRECOGNIZED;
   }
 }
 
-export function bomAreaStateToJSON(object: BomAreaState): string {
+export function bombAreaStateToJSON(object: BombAreaState): string {
   switch (object) {
-    case BomAreaState.STATE_ARMED:
+    case BombAreaState.STATE_ARMED:
       return "STATE_ARMED";
-    case BomAreaState.STATE_FUSED:
+    case BombAreaState.STATE_FUSED:
       return "STATE_FUSED";
-    case BomAreaState.UNRECOGNIZED:
+    case BombAreaState.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
   }
@@ -179,7 +179,7 @@ export interface GetBombAreaState {
 }
 
 export interface GetBombAreaState_Response {
-  state: BomAreaState;
+  state: BombAreaState;
 }
 
 export interface GetBombAreaState_Request {
@@ -718,14 +718,14 @@ export const GetBombAreaState_Response = {
 
   fromJSON(object: any): GetBombAreaState_Response {
     return {
-      state: isSet(object.state) ? bomAreaStateFromJSON(object.state) : 0,
+      state: isSet(object.state) ? bombAreaStateFromJSON(object.state) : 0,
     };
   },
 
   toJSON(message: GetBombAreaState_Response): unknown {
     const obj: any = {};
     message.state !== undefined &&
-      (obj.state = bomAreaStateToJSON(message.state));
+      (obj.state = bombAreaStateToJSON(message.state));
     return obj;
   },
 
