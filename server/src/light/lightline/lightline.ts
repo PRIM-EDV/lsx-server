@@ -65,12 +65,12 @@ export class Lightline {
         this.powered = power;
     }
 
-    public setMode(mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
+    public async setMode(mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
         switch (mode) {
             case LightLineMode.MODE_BLACKOUT:
             case LightLineMode.MODE_RED:
             case LightLineMode.MODE_WHITE:
-                this.setStatic(this.mode);
+                await this.setStatic(this.mode);
         }
     }
 

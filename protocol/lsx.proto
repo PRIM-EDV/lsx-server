@@ -24,6 +24,10 @@ message Request {
         PlayAnnouncement.Request play_announcement = 15;
         GetModeSilentState.Request get_mode_silent_state = 16;
         SetModeSilentState.Request set_mode_silent_state = 17;
+        BombBase.Request bomb_base = 18;
+        BombArea.Request bomb_area = 19;
+        GetBombAreaState.Request get_bomb_area_state = 20;
+        
     }
 }
 
@@ -46,6 +50,9 @@ message Response {
         PlayAnnouncement.Response play_announcement = 15;
         GetModeSilentState.Response get_mode_silent_state = 16;
         SetModeSilentState.Response set_mode_silent_state = 17;
+        BombBase.Response bomb_base = 18;
+        BombArea.Response bomb_area = 19;
+        GetBombAreaState.Response get_bomb_area_state = 20;
     }
 }
 

@@ -35,7 +35,7 @@ export class LightService {
     public async setLightLine(id: LightLineId, mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
         const line = this.lightlines.get(id)
 
-        line.setMode(mode);
+        await line.setMode(mode);
     }
 
     public async getLightLineByPowerLineId(powerLineId: PowerLineId): Promise<Lightline> {

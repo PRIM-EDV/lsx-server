@@ -203,7 +203,7 @@
 		<circle class="st3" cx="168" cy="206.3" r="2.2"/>
         <circle class="st3" cx="168" cy="182.9" r="2.2"/>
 	</g>
-    <g id="courtyard" id="courtyard" [class.animate]="powerLineStates.get(PowerLineId.LINE_OG_COURTYARD) == PowerLineState.STATE_POWERED">
+    <g id="courtyard" [class.animate]="powerLineStates.get(PowerLineId.LINE_OG_COURTYARD) == PowerLineState.STATE_POWERED">
         <circle class="st2" cx="168.9" cy="235.5" r="3.6" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_COURTYARD)"/>
         <circle class="st3" cx="168.9" cy="235.5" r="2.2" (click)="toggleRemotePowerLineState(PowerLineId.LINE_OG_COURTYARD)"/>
         <line class="st4" x1="308.8" y1="235.5" x2="308.8" y2="11.7"/>

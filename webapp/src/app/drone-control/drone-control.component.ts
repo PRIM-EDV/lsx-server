@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Request, Response } from 'proto/lsx';
 import { BackendService } from '../backend/backend.service';
 import { DroneCotrolService } from './drone-control.service';
-import { ModeSilentState } from 'proto/lsx.drone';
+import { BombArea, BombAreaId, ModeSilentState } from 'proto/lsx.drone';
 
 @Component({
   selector: 'drone-control',
@@ -16,6 +16,12 @@ export class DroneControlComponent implements OnInit {
     {label: "Sonar I", file: "Botsonar_01.wav"},
     {label: "Sonar II", file: "Botsonar_02.wav"},
     {label: "Sonar III", file: "Botsonar_03.wav"},
+  ]
+
+  public bombSounds = [
+    {label: "Bomb I", file: "Droneshot_01.wav"},
+    {label: "Bomb II", file: "Droneshot_02.wav"},
+    {label: "Bomb III", file: "Droneshot_03.wav"},
   ]
 
   constructor(private readonly backend: BackendService, private readonly droneControlService: DroneCotrolService) {
@@ -46,6 +52,22 @@ export class DroneControlComponent implements OnInit {
       case 'silent': await this.droneControlService.setModeSilentState(ModeSilentState.MODE_SILENT_STATE_SILENT); break;
       case 'silent drone': await this.droneControlService.setModeSilentState(ModeSilentState.MODE_SILENT_STATE_SILENT_DRONE); break;
     }
+  }
+
+  public bombArea(area: BombAreaId) {
+    const req: Request = {
+        bombArea: {id: area}
+    }
+
+    this.backend.request(req);
+  }
+
+  public bombBase() {
+    const req: Request = {
+        bombBase: {}
+    }
+
+    this.backend.request(req);
   }
 
   public playSound(file: string) {
