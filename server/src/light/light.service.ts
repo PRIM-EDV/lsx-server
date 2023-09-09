@@ -26,7 +26,7 @@ export class LightService {
         Lightline.dmx = this.dmx;
     }
 
-    public async setLightLines(mode: LightLineMode) {
+    public async setLightLines(mode: LightLineMode): Promise<void> {
         for (const [lineId, line] of this.lightlines) {
             await this.setLightLine(lineId, mode);
         }
@@ -35,7 +35,7 @@ export class LightService {
     public async setLightLine(id: LightLineId, mode: LightLineMode) {
         const line = this.lightlines.get(id)
 
-        line.setMode(mode);
+        await line.setMode(mode);
     }
 
     public async getLightLineByPowerLineId(powerLineId: PowerLineId): Promise<Lightline> {

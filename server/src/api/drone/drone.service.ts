@@ -43,20 +43,20 @@ export class DroneService {
             case ModeSilentState.MODE_SILENT_STATE_NORMAL:
                 if (this.modeSilentState == ModeSilentState.MODE_SILENT_STATE_SILENT_DRONE) {
                     this.sound.playWav('assets/wav/drone/DROHNE-basismodus-silent-beendet.wav').then( () => {
-                        this.light.setLightLines(LightLineMode.MODE_WHITE).then().catch();
+                        this.light.setLightLines(LightLineMode.MODE_WHITE).then().catch((err) => console.log(err));
                     }
                     ).catch((err) =>{console.log(err)});
                 } else {
                     this.light.setLightLines(LightLineMode.MODE_WHITE).then().catch((err) => console.log(err));
                 }
                 break;
-            case ModeSilentState.MODE_SILENT_STATE_SILENT:
+            case ModeSilentState.MODE_SILENT_STATE_SILENT_DRONE:
                 this.sound.playWav('assets/wav/drone/DROHNE-alarm.wav').then( () => {
-                    this.light.setLightLines(LightLineMode.MODE_RED);
+                    this.light.setLightLines(LightLineMode.MODE_RED).then().catch((err) => console.log(err));
                 }
                 ).catch((err) =>{console.log(err)}); break;
-            case ModeSilentState.MODE_SILENT_STATE_SILENT_DRONE:
-                this.light.setLightLines(LightLineMode.MODE_RED).then().catch();
+            case ModeSilentState.MODE_SILENT_STATE_SILENT:
+                this.light.setLightLines(LightLineMode.MODE_RED).then().catch((err) => console.log(err));
                 break;
         }
     }
