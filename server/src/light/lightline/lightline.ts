@@ -36,7 +36,9 @@ export class Lightline {
     public staticCue: number;
     public flickerCue: number;
     public powerLineId : PowerLineId = 0;
-    public mode: LightLineMode = LightLineMode.MODE_WHITE;
+    public mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE = LightLineMode.MODE_WHITE;
+    public powered: boolean = true;
+    public flicker: boolean = true;
 
     private mapping: LightLineMapping = new Map([
         [LightLineMode.MODE_BLACKOUT, 1],
@@ -59,31 +61,37 @@ export class Lightline {
           await Lightline.dmx.setCue(this.flickerCue, 'STOP');
           await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping[LightLineMode.MODE_BLACKOUT]);
         }
+
+        this.powered = power;
     }
 
-    public setMode(mode: LightLineMode) {
+    public setMode(mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
         switch (mode) {
             case LightLineMode.MODE_BLACKOUT:
             case LightLineMode.MODE_RED:
             case LightLineMode.MODE_WHITE:
                 this.setStatic(this.mode);
-            case LightLineMode.MODE_FLICKER:
-                this.setFlicker(true);
         }
     }
 
-    public async setStatic(mode: LightLineMode) {
-        await Lightline.dmx.setCue(this.flickerCue, 'STOP');
-        await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping[mode]);
+    public async setStatic(mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
+        if (this.powered) {
+            await Lightline.dmx.setCue(this.flickerCue, 'STOP');
+            await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping[mode]);
+        }
         this.mode = mode;
     }
 
     public async setFlicker(flicker: boolean) {
-        if (flicker) {
-            await Lightline.dmx.setCue(this.staticCue, 'STOP');
-            await Lightline.dmx.setCue(this.flickerCue, 'PLAY');
-        } else {
-            this.setStatic(this.mode);
+        if (this.powered) {
+            if (flicker) {
+                await Lightline.dmx.setCue(this.staticCue, 'STOP');
+                await Lightline.dmx.setCue(this.flickerCue, 'PLAY');
+            } else {
+                this.setStatic(this.mode);
+            }
         }
+
+        this.flicker = flicker;
     }
 }

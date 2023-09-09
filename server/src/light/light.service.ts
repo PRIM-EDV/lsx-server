@@ -26,13 +26,13 @@ export class LightService {
         Lightline.dmx = this.dmx;
     }
 
-    public async setLightLines(mode: LightLineMode) {
+    public async setLightLines(mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
         for (const [lineId, line] of this.lightlines) {
             await this.setLightLine(lineId, mode);
         }
     }
 
-    public async setLightLine(id: LightLineId, mode: LightLineMode) {
+    public async setLightLine(id: LightLineId, mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
         const line = this.lightlines.get(id)
 
         line.setMode(mode);
