@@ -11,25 +11,16 @@ import { DroneBombardmentService } from './drone-bombardment.service';
 })
 export class DroneBombardmentComponent implements OnInit {
 
-    public areaStateCorridor = BombAreaState.STATE_ARMED;
-    public areaStateMed = BombAreaState.STATE_ARMED;
-    public areaStateCic = BombAreaState.STATE_ARMED;
-    public areaStateHall = BombAreaState.STATE_ARMED;
-    public areaStateSci = BombAreaState.STATE_ARMED;
-    public areaStateTec = BombAreaState.STATE_ARMED;
-    public areaStateParcels = BombAreaState.STATE_ARMED;
-    public areaStateTunnel = BombAreaState.STATE_ARMED;
-
-    public areaStates = new Map<BombAreaId, BombAreaState>([
-        [BombAreaId.AREA_CORRIDOR, BombAreaState.STATE_ARMED],
-        [BombAreaId.AREA_MED, BombAreaState.STATE_ARMED],
-        [BombAreaId.AREA_CIC, BombAreaState.STATE_ARMED],
-        [BombAreaId.AREA_HALL, BombAreaState.STATE_ARMED],
-        [BombAreaId.AREA_SCI, BombAreaState.STATE_ARMED],
-        [BombAreaId.AREA_TEC, BombAreaState.STATE_ARMED],
-        [BombAreaId.AREA_PARCEL, BombAreaState.STATE_ARMED],
-        [BombAreaId.AREA_TUNNEL, BombAreaState.STATE_ARMED]
-      ]); 
+  public areaStates = new Map<BombAreaId, BombAreaState>([
+      [BombAreaId.AREA_CORRIDOR, BombAreaState.STATE_ARMED],
+      [BombAreaId.AREA_MED, BombAreaState.STATE_ARMED],
+      [BombAreaId.AREA_CIC, BombAreaState.STATE_ARMED],
+      [BombAreaId.AREA_HALL, BombAreaState.STATE_ARMED],
+      [BombAreaId.AREA_SCI, BombAreaState.STATE_ARMED],
+      [BombAreaId.AREA_TEC, BombAreaState.STATE_ARMED],
+      [BombAreaId.AREA_PARCEL, BombAreaState.STATE_ARMED],
+      [BombAreaId.AREA_TUNNEL, BombAreaState.STATE_ARMED]
+    ]); 
 
   constructor(private backend: BackendService, private readonly service: DroneBombardmentService) {
     this.backend.onOpen.subscribe(async () => {
