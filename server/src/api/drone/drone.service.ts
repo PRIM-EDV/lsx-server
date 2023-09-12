@@ -4,13 +4,13 @@ import { AppGateway } from 'src/gateway/app.gateway';
 import { SoundService } from 'src/sound/sound.service';
 import { BombAreaId, BombAreaState, ModeSilentState } from 'proto/lsx.drone';
 import { LightService } from 'src/light/light.service';
-import { LightLineMode } from 'src/light/lightline/lightline';
+import { LightLineId, LightLineMode } from 'src/light/lightline/lightline';
 import { StateService } from 'src/state/state.service';
+import { PowerLineId } from 'proto/lsx.power';
 
 @Injectable()
 export class DroneService {
 
-    public modeSilentState: ModeSilentState = ModeSilentState.MODE_SILENT_STATE_NORMAL;
 
     private bombFiles = [
         'assets/wav/drone/Drone_explosion_01.wav',
@@ -29,7 +29,7 @@ export class DroneService {
 
     handleRequest(event: {clientId: string, msgId: string, request: Request}): void {
         if(event.request.getModeSilentState){
-            this.gateway.respond(event.clientId, event.msgId, {getModeSilentState: {state: this.modeSilentState}})
+            this.gateway.respond(event.clientId, event.msgId, {getModeSilentState: {state: this.state.modeSilentState}})
         }
 
         if(event.request.setModeSilentState){
@@ -59,28 +59,45 @@ export class DroneService {
     private async setModeSilentState(state: ModeSilentState) {
         const req: Request = {setModeSilentState: {state: state}};
 
-        if (state != this.modeSilentState) {
+        if (state != this.state.modeSilentState) {
             this.handleModeSilentStateChange(state);
-            this.modeSilentState = state;
+            this.state.modeSilentState = state;
         }
    
         this.gateway.requestAll(req).then();
     }
 
+    private getLightLineByBombAreaId(id: BombAreaId): LightLineId {
+        switch(id) {
+            case BombAreaId.AREA_CIC:
+                return LightLineId.LINE_OG_BASE_CIC;
+            case BombAreaId.AREA_HALL:
+                return LightLineId.LINE_OG_HALL;
+            case BombAreaId.AREA_MED:
+                return LightLineId.LINE_OG_BASE_MED;
+            case BombAreaId.AREA_SCI:
+                return LightLineId.LINE_OG_BASE_SCI;
+            case BombAreaId.AREA_TEC:
+                return LightLineId.LINE_OG_BASE_TEC;
+            case BombAreaId.AREA_TUNNEL:
+                return LightLineId.LINE_OG_TUNNEL;
+        }
+    }
+
     private async handleBombArea(id: BombAreaId) {
+        const lightLineId = this.getLightLineByBombAreaId(id);
+        const lightLine = await this.light.lightlines.get(lightLineId);
+
         this.state.bombAreaStates.set(id, BombAreaState.STATE_FUSED);
 
         this.sound.playWav(this.bombFiles[Math.floor(Math.random() * this.bombFiles.length)]).then();
-        // for (const lightline of this.light.getLightLines()) {
-        //     await lightline.setFlicker(true);
-        //     setTimeout(() => {lightline.setFlicker(false)}, 1000);
-        // }
+        await lightLine.setSpecial(true);  
     }
 
     private handleModeSilentStateChange(state: ModeSilentState) {
         switch(state) {
             case ModeSilentState.MODE_SILENT_STATE_NORMAL:
-                if (this.modeSilentState == ModeSilentState.MODE_SILENT_STATE_SILENT_DRONE) {
+                if (this.state.modeSilentState == ModeSilentState.MODE_SILENT_STATE_SILENT_DRONE) {
                     this.sound.playWav('assets/wav/drone/DROHNE-basismodus-silent-beendet.wav').then( () => {
                         this.light.setLightLines(LightLineMode.MODE_WHITE).then().catch((err) => console.log(err));
                     }

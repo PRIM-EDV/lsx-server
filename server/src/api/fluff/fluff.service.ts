@@ -4,8 +4,8 @@ import { Injectable } from '@nestjs/common';
 import { AppGateway } from 'src/gateway/app.gateway';
 import { Request } from 'proto/lsx';
 import { SoundService } from 'src/sound/sound.service';
-import { DroneService } from 'src/api/drone/Drone.service';
 import { ModeSilentState } from 'proto/lsx.drone';
+import { StateService } from 'src/state/state.service';
 
 
 @Injectable()
@@ -14,7 +14,7 @@ export class FluffService {
     private fluffState = true;
     private fluffFiles: string[] = [];
 
-    constructor(private readonly gateway: AppGateway, private readonly sound: SoundService, private readonly droneService: DroneService) {
+    constructor(private readonly gateway: AppGateway, private readonly sound: SoundService, private readonly state: StateService) {
         this.gateway.onRequest.subscribe(this.handleRequest.bind(this));
 
         this.getFluffFiles().then((files) => {
@@ -64,7 +64,7 @@ export class FluffService {
         const seconds = d.getSeconds();
 
 
-        if (this.fluffState && this.droneService.modeSilentState == ModeSilentState.MODE_SILENT_STATE_NORMAL) {
+        if (this.fluffState && this.state.modeSilentState == ModeSilentState.MODE_SILENT_STATE_NORMAL) {
             if (seconds == 0 && (hours > 9 || hours < 3) ) {
                 switch(minutes) {
                     case 15: this.sound.playWav(`assets/wav/fluff/${this.fluffFiles[Math.floor(Math.random() * this.fluffFiles.length)]}`); break;

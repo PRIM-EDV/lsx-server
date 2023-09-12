@@ -62,13 +62,13 @@
 	</g>
 </g>
 <g id="icons">
-    <g id="corridor" (click)="bombArea(BombAreaId.AREA_CORRIDOR)" [class.fused]="this.areaStates.get(BombAreaId.AREA_CORRIDOR) == BombAreaState.STATE_FUSED">
+    <!-- <g id="corridor" (click)="bombArea(BombAreaId.AREA_CORRIDOR)" [class.fused]="this.areaStates.get(BombAreaId.AREA_CORRIDOR) == BombAreaState.STATE_FUSED">
         <circle class="st3" cx="210.8" cy="131.9" r="6.3"/>
         <path class="st4" d="M208.2,135.5c-0.2,0-0.4-0.1-0.5-0.2s-0.2-0.3-0.2-0.5v-1.5c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2
             h5.3c0.2,0,0.4,0.1,0.5,0.2c0.1,0.1,0.2,0.3,0.2,0.5v1.5c0,0.2-0.1,0.4-0.2,0.5c-0.1,0.1-0.3,0.2-0.5,0.2H208.2z M208.2,134.7h5.3
             v-1.5h-5.3V134.7z M208.8,131.9l-1.9-1.1l2.3-0.4l-0.6-2.2l1.9,1.3l1.1-2l0.4,2.3l2.2-0.6l-1.3,1.9l1.4,0.8h-1.5l-1-0.6l0.6-0.8
             l-1,0.3l-0.2-1l-0.5,0.9l-0.8-0.6l0.3,1l-1,0.2l1.1,0.7H208.8z"/>
-    </g>
+    </g> -->
     <g id="med" (click)="bombArea(BombAreaId.AREA_MED)" [class.fused]="this.areaStates.get(BombAreaId.AREA_MED) == BombAreaState.STATE_FUSED">
         <circle class="st3" cx="258.7" cy="62.8" r="6.3"/>
         <path class="st4" d="M256,66.4c-0.2,0-0.4-0.1-0.5-0.2c-0.1-0.1-0.2-0.3-0.2-0.5v-1.5c0-0.2,0.1-0.4,0.2-0.5
@@ -114,8 +114,7 @@
             c0.1,0.4,0.5,0.7,1,0.6l1.4-0.4l-0.9,1.2c-0.3,0.4-0.1,0.9,0.2,1.1l0.7,0.4h-1.3c-0.1,0-0.3,0-0.4-0.1l-0.8-0.5l0.6-0.8l-1,0.3
             l-0.2-1l-0.5,0.9l-0.8-0.6l0.3,1l-1,0.2l1.1,0.7H473.3z"/>
     </g>
-
-    <g id="parcels">
+    <!-- <g id="parcels">
         <circle class="st3" cx="385.4" cy="274.1" r="6.3"/>
         <path class="st4" d="M382.7,277.7c-0.2,0-0.4-0.1-0.5-0.2s-0.2-0.3-0.2-0.5v-1.5c0-0.2,0.1-0.4,0.2-0.5s0.3-0.2,0.5-0.2h5.3
             c0.2,0,0.4,0.1,0.5,0.2s0.2,0.3,0.2,0.5v1.5c0,0.2-0.1,0.4-0.2,0.5s-0.3,0.2-0.5,0.2H382.7z M383.5,277h3.8c0.4,0,0.8-0.3,0.8-0.8
@@ -123,8 +122,8 @@
             l-1.7-1l1.4-0.2c0.4-0.1,0.7-0.5,0.6-1l-0.4-1.4l1.2,0.9c0.4,0.3,0.9,0.1,1.1-0.2l0.7-1.3l0.2,1.4c0.1,0.4,0.5,0.7,1,0.6l1.4-0.4
             l-0.9,1.2c-0.3,0.4-0.1,0.9,0.2,1.1l0.7,0.4h-1.3c-0.1,0-0.3,0-0.4-0.1l-0.8-0.5l0.6-0.8l-1,0.3l-0.2-1l-0.5,0.9l-0.8-0.6l0.3,1
             l-1,0.2l1.1,0.7H383.5z"/>
-    </g>
-    <g id="tunnel">
+    </g> -->
+    <g id="tunnel" (click)="bombArea(BombAreaId.AREA_TUNNEL)" [class.fused]="this.areaStates.get(BombAreaId.AREA_TUNNEL) == BombAreaState.STATE_FUSED">
         <circle class="st3" cx="475.8" cy="274.7" r="6.3"/>
         <path class="st4" d="M473.2,278.3c-0.2,0-0.4-0.1-0.5-0.2s-0.2-0.3-0.2-0.5V276c0-0.2,0.1-0.4,0.2-0.5s0.3-0.2,0.5-0.2h5.3
             c0.2,0,0.4,0.1,0.5,0.2s0.2,0.3,0.2,0.5v1.5c0,0.2-0.1,0.4-0.2,0.5s-0.3,0.2-0.5,0.2H473.2z M473.9,277.5h3.8

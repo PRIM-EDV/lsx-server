@@ -27,7 +27,8 @@ export enum LightLineId {
     LINE_UG_PARCELS_LEFT = 13,
     LINE_UG_PARCELS_RIGHT = 14,
     LINE_UG_HALL = 15,
-    LINE_OG_LOG = 16
+    LINE_OG_LOG = 16,
+    LINE_OG_TUNNEL= 17
 }
 
 export class Lightline {
@@ -35,6 +36,7 @@ export class Lightline {
 
     public staticCue: number;
     public flickerCue: number;
+    public specialCue?: number;
     public powerLineId : PowerLineId = 0;
     public mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE = LightLineMode.MODE_WHITE;
     public powered: boolean = true;
@@ -54,6 +56,18 @@ export class Lightline {
         this.mapping = mapping ? mapping : this.mapping;
     }
 
+    public async setBlackout(blackout) {
+        if (blackout) {
+          if (this.specialCue) {
+            await Lightline.dmx.setCue(this.specialCue, 'STOP');
+          }
+          await Lightline.dmx.setCue(this.flickerCue, 'STOP');
+          await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping.get(LightLineMode.MODE_BLACKOUT));
+        } else {
+          await this.setMode(this.mode);   
+        }
+    }
+
     public async setPower(power: boolean) {
         this.powered = power;
 
@@ -61,6 +75,9 @@ export class Lightline {
             console.log(this.mode);
             await this.setMode(this.mode);   
         } else {
+            if (this.specialCue) {
+                await Lightline.dmx.setCue(this.specialCue, 'STOP');
+              }
           await Lightline.dmx.setCue(this.flickerCue, 'STOP');
           await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping.get(LightLineMode.MODE_BLACKOUT));
         }
@@ -78,16 +95,38 @@ export class Lightline {
 
     public async setStatic(mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
         if (this.powered) {
-            console.log(this.mapping.get(mode));
+            if (this.specialCue) {
+                await Lightline.dmx.setCue(this.specialCue, 'STOP');
+              }
             await Lightline.dmx.setCue(this.flickerCue, 'STOP');
             await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping.get(mode));
+        } else {
+            if (this.specialCue) {
+                await Lightline.dmx.setCue(this.specialCue, 'STOP');
+              }
+            await Lightline.dmx.setCue(this.flickerCue, 'STOP');
+            await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping.get(LightLineMode.MODE_BLACKOUT));
         }
+
         this.mode = mode;
+    }
+
+    public async setSpecial(special: boolean) {
+        if (special && this.specialCue) {
+            await Lightline.dmx.setCue(this.flickerCue, 'STOP');
+            await Lightline.dmx.setCue(this.staticCue, 'STOP');
+            await Lightline.dmx.setCue(this.specialCue, 'PLAY');
+        } else {
+            this.setStatic(this.mode);
+        }
     }
 
     public async setFlicker(flicker: boolean) {
         if (this.powered) {
             if (flicker) {
+                if (this.specialCue) {
+                    await Lightline.dmx.setCue(this.specialCue, 'STOP');
+                }
                 await Lightline.dmx.setCue(this.staticCue, 'STOP');
                 await Lightline.dmx.setCue(this.flickerCue, 'PLAY');
             } else {

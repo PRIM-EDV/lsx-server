@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { BombAreaId, BombAreaState } from 'proto/lsx.drone';
+import { BombAreaId, BombAreaState, ModeSilentState } from 'proto/lsx.drone';
 import { PowerLineId, PowerLineState, PowerPlantState } from 'proto/lsx.power';
 
 
 @Injectable()
 export class StateService {
+
+    public modeSilentState: ModeSilentState = ModeSilentState.MODE_SILENT_STATE_NORMAL;
 
     public powerLineStates = new Map<PowerLineId, PowerLineState>([
         [PowerLineId.LINE_OG_BASE_CIC, PowerLineState.STATE_POWERED],

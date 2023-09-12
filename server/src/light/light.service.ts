@@ -26,13 +26,22 @@ export class LightService {
         [LightLineId.LINE_OG_HALL, new Lightline(15, 16, PowerLineId.LINE_OG_HALL)],
         [LightLineId.LINE_OG_PARCELS, new Lightline(27, 28, PowerLineId.LINE_OG_PARCELS, new Map([
             [LightLineMode.MODE_BLACKOUT, 0],
-            [LightLineMode.MODE_RED, 0],
             [LightLineMode.MODE_WHITE, 1],
-        ]))]
+        ]))],
+        [LightLineId.LINE_OG_TUNNEL, new Lightline(32, 33)],
     ])
 
     constructor(private dmx: QlcService, private state: StateService) {
         Lightline.dmx = this.dmx;
+
+        // Special
+        this.lightlines.get(LightLineId.LINE_OG_BASE_CIC).specialCue = 9;
+        this.lightlines.get(LightLineId.LINE_OG_BASE_SCI).specialCue = 14;
+        this.lightlines.get(LightLineId.LINE_OG_HALL).specialCue = 17;
+        this.lightlines.get(LightLineId.LINE_OG_BASE_MED).specialCue = 26;
+        this.lightlines.get(LightLineId.LINE_OG_BASE_TEC).specialCue = 31;
+        this.lightlines.get(LightLineId.LINE_OG_TUNNEL).specialCue = 34;
+        
     }
 
     public getLightLines(): Array<Lightline> {

@@ -3,11 +3,10 @@ import { Request } from 'proto/lsx';
 import { LockdownState } from 'proto/lsx.lockdown';
 import { AppGateway } from 'src/gateway/app.gateway';
 import { SoundService } from 'src/sound/sound.service';
-import { QlcService } from 'src/dmx/qlc.service';
-import { DroneService } from 'src/api/drone/Drone.service';
 import { ModeSilentState } from 'proto/lsx.drone';
 import { LightService } from 'src/light/light.service';
 import { LightLineMode } from 'src/light/lightline/lightline';
+import { StateService } from 'src/state/state.service';
 
 @Injectable()
 export class LockdownService {
@@ -16,7 +15,7 @@ export class LockdownService {
     private autoLockdown = true;
     private lockdownAnnouncements = true;
 
-    constructor(private readonly gateway: AppGateway, private readonly sound: SoundService, private dmx: QlcService, private readonly drone: DroneService, private light: LightService) {
+    constructor(private readonly gateway: AppGateway, private readonly sound: SoundService, private state: StateService, private light: LightService) {
         setInterval(this.lockdownAnnoucementsInterval.bind(this), 1000);
         setInterval(this.autoLockdownInterval.bind(this), 1000);
 
@@ -100,7 +99,7 @@ export class LockdownService {
         const minutes = d.getMinutes();
         const seconds = d.getSeconds();
 
-        if (this.lockdownAnnouncements && this.drone.modeSilentState == ModeSilentState.MODE_SILENT_STATE_NORMAL) {
+        if (this.lockdownAnnouncements && this.state.modeSilentState == ModeSilentState.MODE_SILENT_STATE_NORMAL) {
             if (minutes == 0 && seconds == 0) {
                 switch(hours) {
                     case 0: this.sound.playWav('assets/wav/lockdown-timer/lockdown-3h.wav'); break;
