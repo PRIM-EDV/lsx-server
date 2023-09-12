@@ -23,7 +23,9 @@ export class ReactorService {
             this.gateway.respond(event.clientId, event.msgId, {getPowerLineState: {state: this.getPowerLineState(event.request.getPowerLineState.id)}})
         }
         if(event.request.setPowerLineState){
-            this.setPowerLineState(event.request.setPowerLineState.id, event.request.setPowerLineState.state)
+            this.setPowerLineState(event.request.setPowerLineState.id, event.request.setPowerLineState.state).then().catch((err) => {
+                console.log(err)
+            })
             this.gateway.respond(event.clientId, event.msgId, {setPowerLineState: {}})
         }
         if(event.request.getPowerPlantState){
@@ -43,34 +45,9 @@ export class ReactorService {
         const req: Request = {setPowerPlantState: {state: state}};
 
         if(state == PowerPlantState.STATE_CRITICAL) {
-            for(const i of [5, 34, 14, 4, 22, 38, 36, 40]) {
-                this.dmx.setCue(i, "STOP");
-            }
-            for(const i of [18, 33, 6, 12, 20, 32, 25, 39]) {
-                this.dmx.setCue(i, "PLAY");
-            }
-            // for(const i of [5, 14, 15, 4, 7, 9, 10, 17, 19, 22, 23, 38, 34, 35, 40]) {
-            //     this.dmx.setCue(i, "STOP");
-            // }
-            // for(const i of [12, 6, 8, 11, 13, 18, 16, 20, 21, 32, 25, 33, 37, 39]) {
-            //     this.dmx.setCue(i, 'PLAY');
-            // }
         }
 
         if(state == PowerPlantState.STATE_NORMAL) {
-            for(const i of [18, 33, 6, 12, 20, 32, 25, 39]) {
-                this.dmx.setCue(i, "STOP");
-            }
-            for(const i of [5, 34, 14, 4, 22, 38, 40]) {
-                this.dmx.setCue(i, "STEP", 2);
-            }
-            // for(const i of [12, 6, 8, 11, 13, 18, 16, 20, 21, 32, 25, 33, 37, 39]) {
-            //     this.dmx.setCue(i, 'STOP');
-            // }
-            // for(const i of [5, 14, 15, 4, 7, 9, 10, 17, 19, 22, 23, 38, 34, 35, 40]) {
-            //     this.dmx.setCue(i, "STEP", 2);
-            // }
-            this.dmx.setCue(36, "STEP", 1);
         }
 
         this.state.powerPlantState = state;
@@ -81,14 +58,16 @@ export class ReactorService {
         return this.state.powerLineStates.get(id);
     }
 
-    public setPowerLineState(id: PowerLineId, state: PowerLineState) {
+    public async setPowerLineState(id: PowerLineId, state: PowerLineState) {
         const req: Request = {setPowerLineState: {id: id, state: state}};
+        const lightline = await this.light.getLightLineByPowerLineId(id);
 
         this.state.powerLineStates.set(id, state);
-
-        // this.onStateChange.next({
-        //     powerGridState: this.powerGridState
-        // })
+        if (state == PowerLineState.STATE_POWERED) {
+            await lightline.setPower(true);
+        } else {
+            await lightline.setPower(false);
+        }
 
         this.gateway.requestAll(req).then();
     }

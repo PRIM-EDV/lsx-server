@@ -6,6 +6,8 @@ import { SoundService } from 'src/sound/sound.service';
 import { QlcService } from 'src/dmx/qlc.service';
 import { DroneService } from 'src/api/drone/Drone.service';
 import { ModeSilentState } from 'proto/lsx.drone';
+import { LightService } from 'src/light/light.service';
+import { LightLineMode } from 'src/light/lightline/lightline';
 
 @Injectable()
 export class LockdownService {
@@ -14,7 +16,7 @@ export class LockdownService {
     private autoLockdown = true;
     private lockdownAnnouncements = true;
 
-    constructor(private readonly gateway: AppGateway, private readonly sound: SoundService, private dmx: QlcService, private readonly drone: DroneService) {
+    constructor(private readonly gateway: AppGateway, private readonly sound: SoundService, private dmx: QlcService, private readonly drone: DroneService, private light: LightService) {
         setInterval(this.lockdownAnnoucementsInterval.bind(this), 1000);
         setInterval(this.autoLockdownInterval.bind(this), 1000);
 
@@ -72,48 +74,21 @@ export class LockdownService {
             case LockdownState.LOCKDOWN_STATE_NORMAL:
                 if(this.lockdownAnnouncements) {
                     this.sound.playWav('assets/wav/lockdown-timer/lockdown-vorbei.wav').then( () => {
-                        for(const i of [12, 6, 8, 11, 13, 18, 16, 20, 21, 32, 25, 33, 37, 39]) {
-                            this.dmx.setCue(i, 'STOP').catch((err) =>{console.log(err)});
-                        }
-                        for(const i of [5, 14, 15, 4, 7, 9, 10, 17, 19, 22, 23, 38, 34, 35, 40]) {
-                            this.dmx.setCue(i, "STEP", 2).catch((err) =>{console.log(err)});
-                        }
-                        this.dmx.setCue(36, "STEP", 1).catch((err) =>{console.log(err)});
-
+                       this.light.setLightLines(LightLineMode.MODE_WHITE).then().catch((err) => {console.log(err)});
                     }
                     ).catch((err) =>{console.log(err)});
                 } else {
-                    for(const i of [12, 6, 8, 11, 13, 18, 16, 20, 21, 32, 25, 33, 37, 39]) {
-                        this.dmx.setCue(i, 'STOP').catch((err) =>{console.log(err)});
-                    }
-                    for(const i of [5, 14, 15, 4, 7, 9, 10, 17, 19, 22, 23, 38, 34, 35, 40]) {
-                        this.dmx.setCue(i, "STEP", 2).catch((err) =>{console.log(err)});
-                    }
-                    this.dmx.setCue(36, "STEP", 1).catch((err) =>{console.log(err)});
+                    this.light.setLightLines(LightLineMode.MODE_WHITE).then().catch((err) => {console.log(err)});
                 } break;
 
             case LockdownState.LOCKDOWN_STATE_LOCKDOWN:
                 if (this.lockdownAnnouncements) {
-
                     this.sound.playWav('assets/wav/lockdown-timer/lockdown-now.wav').then( () => {
-                        for(const i of [12, 6, 8, 11, 13, 18, 16, 20, 21, 32, 25, 33, 37, 39]) {
-                            this.dmx.setCue(i, 'STOP').catch((err) => console.log(err));
-                        }
-                        for(const i of [5, 14, 15, 4, 7, 9, 10, 17, 19, 22, 23, 38, 34, 35, 40]) {
-                            this.dmx.setCue(i, "STEP", 1).catch((err) => console.log(err));
-                        }
-                        this.dmx.setCue(36, "STEP", 0).catch((err) => console.log(err));
+                       this.light.setLightLines(LightLineMode.MODE_RED).then().catch((err) => {console.log(err)});
                     }
                     ).catch((err) =>{console.log(err)});
                 } else {
-                    for(const i of [12, 6, 8, 11, 13, 18, 16, 20, 21, 32, 25, 33, 37, 39]) {
-                        this.dmx.setCue(i, 'STOP').catch((err) =>{console.log(err)});
-                    }
-
-                    for(const i of [5, 14, 15, 4, 7, 9, 10, 17, 19, 22, 23, 38, 34, 35, 40]) {
-                        this.dmx.setCue(i, "STEP", 1).catch((err) =>{console.log(err)});
-                    }
-                    this.dmx.setCue(36, "STEP", 0).catch((err) =>{console.log(err)});
+                    this.light.setLightLines(LightLineMode.MODE_RED).then().catch((err) => {console.log(err)});
                 } break;
 
         }

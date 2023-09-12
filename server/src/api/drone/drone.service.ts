@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Request } from 'proto/lsx';
 import { AppGateway } from 'src/gateway/app.gateway';
 import { SoundService } from 'src/sound/sound.service';
-import { ModeSilentState } from 'proto/lsx.drone';
+import { BombAreaId, BombAreaState, ModeSilentState } from 'proto/lsx.drone';
 import { LightService } from 'src/light/light.service';
 import { LightLineMode } from 'src/light/lightline/lightline';
 import { StateService } from 'src/state/state.service';
@@ -11,6 +11,12 @@ import { StateService } from 'src/state/state.service';
 export class DroneService {
 
     public modeSilentState: ModeSilentState = ModeSilentState.MODE_SILENT_STATE_NORMAL;
+
+    private bombFiles = [
+        'assets/wav/drone/Drone_explosion_01.wav',
+        'assets/wav/drone/Drone_explosion_02.wav',
+        'assets/wav/drone/Drone_explosion_03.wav'
+    ]
 
     constructor(
         private readonly gateway: AppGateway, 
@@ -37,6 +43,17 @@ export class DroneService {
                 getBombAreaState: { state: this.state.bombAreaStates.get(id) }
             });
         }
+
+        if(event.request.bombArea) {
+            const id = event.request.bombArea.id;
+
+            this.handleBombArea(id).then().catch((err) => {console.log(err)})
+            this.gateway.respond(event.clientId, event.msgId, { 
+                bombArea: { id: id }
+            });
+
+            this.gateway.requestAll(event.request);
+        }
     }
 
     private async setModeSilentState(state: ModeSilentState) {
@@ -48,6 +65,16 @@ export class DroneService {
         }
    
         this.gateway.requestAll(req).then();
+    }
+
+    private async handleBombArea(id: BombAreaId) {
+        this.state.bombAreaStates.set(id, BombAreaState.STATE_FUSED);
+
+        this.sound.playWav(this.bombFiles[Math.floor(Math.random() * this.bombFiles.length)]).then();
+        // for (const lightline of this.light.getLightLines()) {
+        //     await lightline.setFlicker(true);
+        //     setTimeout(() => {lightline.setFlicker(false)}, 1000);
+        // }
     }
 
     private handleModeSilentStateChange(state: ModeSilentState) {

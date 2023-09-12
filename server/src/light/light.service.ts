@@ -9,21 +9,40 @@ import { StateService } from 'src/state/state.service';
 export class LightService {
 
     public lightlines =  new Map<LightLineId, Lightline>([
-        [LightLineId.LINE_OG_BASE_ADM, new Lightline(0, 0, PowerLineId.LINE_OG_BASE_ADM)],
-        [LightLineId.LINE_OG_BASE_CIC, new Lightline(0, 0, PowerLineId.LINE_OG_BASE_CIC)],
-        [LightLineId.LINE_OG_BASE_HC, new Lightline(0, 0, PowerLineId.LINE_OG_BASE_HC)],
-        [LightLineId.LINE_OG_BASE_MED, new Lightline(0, 0, PowerLineId.LINE_OG_BASE_MED)],
-        [LightLineId.LINE_OG_BASE_SCI, new Lightline(0, 0, PowerLineId.LINE_OG_BASE_SCI)],
-        [LightLineId.LINE_OG_BASE_TEC, new Lightline(0, 0, PowerLineId.LINE_OG_BASE_TEC)],
-        [LightLineId.LINE_OG_COURTYARD, new Lightline(0, 0, PowerLineId.LINE_OG_COURTYARD)],
-        [LightLineId.LINE_OG_GATE, new Lightline(0, 0, PowerLineId.LINE_OG_GATE)],
-        [LightLineId.LINE_OG_MESSHALL, new Lightline(0, 0, PowerLineId.LINE_OG_MESSHALL)],
-        [LightLineId.LINE_OG_LOG, new Lightline(0, 0, PowerLineId.LINE_OG_LOG)],
-        [LightLineId.LINE_OG_HALL, new Lightline(0, 0)]
+        [LightLineId.LINE_OG_BASE_ADM, new Lightline(7, 0, PowerLineId.LINE_OG_BASE_ADM)],
+        [LightLineId.LINE_OG_BASE_CIC, new Lightline(5, 8, PowerLineId.LINE_OG_BASE_CIC)],
+        [LightLineId.LINE_OG_BASE_HC, new Lightline(18, 19, PowerLineId.LINE_OG_BASE_HC)],
+        [LightLineId.LINE_OG_BASE_MED, new Lightline(24, 25, PowerLineId.LINE_OG_BASE_MED)],
+        [LightLineId.LINE_OG_BASE_SCI, new Lightline(12, 13, PowerLineId.LINE_OG_BASE_SCI, new Map([
+            [LightLineMode.MODE_BLACKOUT, 0],
+            [LightLineMode.MODE_RED, 2],
+            [LightLineMode.MODE_WHITE, 1],
+        ]))],
+        [LightLineId.LINE_OG_BASE_TEC, new Lightline(29, 30, PowerLineId.LINE_OG_BASE_TEC)],
+        [LightLineId.LINE_OG_COURTYARD, new Lightline(20, 21, PowerLineId.LINE_OG_COURTYARD)],
+        [LightLineId.LINE_OG_GATE, new Lightline(3, 4, PowerLineId.LINE_OG_GATE)],
+        [LightLineId.LINE_OG_MESSHALL, new Lightline(1, 2, PowerLineId.LINE_OG_MESSHALL)],
+        [LightLineId.LINE_OG_LOG, new Lightline(22, 23, PowerLineId.LINE_OG_LOG)],
+        [LightLineId.LINE_OG_HALL, new Lightline(15, 16, PowerLineId.LINE_OG_HALL)],
+        [LightLineId.LINE_OG_PARCELS, new Lightline(27, 28, PowerLineId.LINE_OG_PARCELS, new Map([
+            [LightLineMode.MODE_BLACKOUT, 0],
+            [LightLineMode.MODE_RED, 0],
+            [LightLineMode.MODE_WHITE, 1],
+        ]))]
     ])
 
     constructor(private dmx: QlcService, private state: StateService) {
         Lightline.dmx = this.dmx;
+    }
+
+    public getLightLines(): Array<Lightline> {
+        const lightlines = [];
+
+        for (const [lineId, line] of this.lightlines) {
+            lightlines.push(line);
+        }
+
+        return lightlines;
     }
 
     public async setLightLines(mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {

@@ -18,4 +18,13 @@ export class DroneBombardmentService {
     const res: Response = await this.backend.request(req);
     return res.getBombAreaState!.state!;
   }
+
+  public async bombArea(id: BombAreaId) {
+    const req: Request = {
+      bombArea: {id: id}
+    }
+
+    const res: Response = await this.backend.request(req);
+    return res.bombArea;
+  }
 }

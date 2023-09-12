@@ -41,9 +41,9 @@ export class Lightline {
     public flicker: boolean = true;
 
     private mapping: LightLineMapping = new Map([
-        [LightLineMode.MODE_BLACKOUT, 1],
-        [LightLineMode.MODE_RED, 2],
-        [LightLineMode.MODE_WHITE, 3],
+        [LightLineMode.MODE_BLACKOUT, 0],
+        [LightLineMode.MODE_RED, 1],
+        [LightLineMode.MODE_WHITE, 2],
     ])
 
     constructor(staticCue: number, flickerCue: number, powerLineId?: PowerLineId, mapping?: LightLineMapping) {
@@ -55,14 +55,16 @@ export class Lightline {
     }
 
     public async setPower(power: boolean) {
+        this.powered = power;
+
         if (power) {
-         this.setMode(this.mode);   
+            console.log(this.mode);
+            await this.setMode(this.mode);   
         } else {
           await Lightline.dmx.setCue(this.flickerCue, 'STOP');
-          await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping[LightLineMode.MODE_BLACKOUT]);
+          await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping.get(LightLineMode.MODE_BLACKOUT));
         }
 
-        this.powered = power;
     }
 
     public async setMode(mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
@@ -70,14 +72,15 @@ export class Lightline {
             case LightLineMode.MODE_BLACKOUT:
             case LightLineMode.MODE_RED:
             case LightLineMode.MODE_WHITE:
-                await this.setStatic(this.mode);
+                await this.setStatic(mode);
         }
     }
 
     public async setStatic(mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
         if (this.powered) {
+            console.log(this.mapping.get(mode));
             await Lightline.dmx.setCue(this.flickerCue, 'STOP');
-            await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping[mode]);
+            await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping.get(mode));
         }
         this.mode = mode;
     }

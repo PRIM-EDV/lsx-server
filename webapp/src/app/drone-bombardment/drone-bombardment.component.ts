@@ -11,6 +11,9 @@ import { DroneBombardmentService } from './drone-bombardment.service';
 })
 export class DroneBombardmentComponent implements OnInit {
 
+  public BombAreaId = BombAreaId;
+  public BombAreaState = BombAreaState;
+
   public areaStates = new Map<BombAreaId, BombAreaState>([
       [BombAreaId.AREA_CORRIDOR, BombAreaState.STATE_ARMED],
       [BombAreaId.AREA_MED, BombAreaState.STATE_ARMED],
@@ -43,7 +46,16 @@ export class DroneBombardmentComponent implements OnInit {
       }
   }
 
+  public async bombArea(id: BombAreaId) {
+    await this.service.bombArea(id);
+  }
+
   private handleRequest(event: {id: string, request: Request}) {
+    if (event.request.bombArea) {
+      const id = event.request.bombArea.id;
+      this.areaStates.set(id, BombAreaState.STATE_FUSED);
+      console.log("???")
+    }
     // if(event.request.setPowerLineState) {
     //   this.updateLocalPowerLineState(event.request.setPowerLineState.id!, event.request.setPowerLineState.state!);
     //   this.backend.respond(event.id, {setPowerLineState: {}})
