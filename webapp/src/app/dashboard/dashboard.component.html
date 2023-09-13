@@ -24,6 +24,9 @@
             <ph-window *ngIf="auth.role == 'admin' && this.tab == 'GNRL'" [title]="'ANNOUNCEMENT'" [subtitle]="'TR2805'" style="grid-row:6/19; grid-column: 38/58">
                 <speaker-announcements></speaker-announcements>
             </ph-window>
+            <ph-window *ngIf="auth.role == 'tec' && this.tab == 'GNRL'" [title]="'ANNOUNCEMENT'" [subtitle]="'TR2805'" style="grid-row:1/11; grid-column: 38/58">
+                <speaker-announcements></speaker-announcements>
+            </ph-window>
             <ph-window *ngIf="auth.role == 'admin' && this.tab == 'GNRL'" [title]="'FLUFF'" [subtitle]="'TR2805'" style="grid-row:19/36; grid-column: 38/58">
                 <speaker-fluff></speaker-fluff>
             </ph-window>
