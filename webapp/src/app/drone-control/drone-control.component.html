@@ -32,6 +32,6 @@
     <tr *ngFor="let item of bombSounds; index as idx">
         <td>{{idx}}</td>
         <td>{{item.label}}</td>
-        <td><ph-button [value]="item.file" (click)="playSound(item.file)">FIRE!</ph-button></td>
+        <td><ph-button [value]="item.file" (click)="playSound(item.file); bombBase()">FIRE!</ph-button></td>
     </tr>
 </ph-table>

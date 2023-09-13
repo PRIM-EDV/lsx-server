@@ -63,6 +63,7 @@ export class DroneControlComponent implements OnInit {
   }
 
   public bombBase() {
+    console.log("Bomb")
     const req: Request = {
         bombBase: {}
     }

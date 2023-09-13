@@ -54,12 +54,7 @@ export class DroneBombardmentComponent implements OnInit {
     if (event.request.bombArea) {
       const id = event.request.bombArea.id;
       this.areaStates.set(id, BombAreaState.STATE_FUSED);
-      console.log("???")
     }
-    // if(event.request.setPowerLineState) {
-    //   this.updateLocalPowerLineState(event.request.setPowerLineState.id!, event.request.setPowerLineState.state!);
-    //   this.backend.respond(event.id, {setPowerLineState: {}})
-    // }
   }
 
 }

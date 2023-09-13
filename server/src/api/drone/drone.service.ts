@@ -52,7 +52,19 @@ export class DroneService {
                 bombArea: { id: id }
             });
 
+            this.gateway.respond(event.clientId, event.msgId, {
+                bombArea: {}
+            })
             this.gateway.requestAll(event.request);
+
+        }
+
+        if (event.request.bombBase) {
+            this.handleBombBase().then().catch((err) => {console.log(err)});
+
+            this.gateway.respond(event.clientId, event.msgId, {
+                bombBase: {}
+            })
         }
     }
 
@@ -86,12 +98,20 @@ export class DroneService {
 
     private async handleBombArea(id: BombAreaId) {
         const lightLineId = this.getLightLineByBombAreaId(id);
-        const lightLine = await this.light.lightlines.get(lightLineId);
+        const lightLine = this.light.lightlines.get(lightLineId);
 
         this.state.bombAreaStates.set(id, BombAreaState.STATE_FUSED);
 
         this.sound.playWav(this.bombFiles[Math.floor(Math.random() * this.bombFiles.length)]).then();
-        await lightLine.setSpecial(true);  
+
+        setTimeout(async () => { await lightLine.setSpecial(true)}, 2650);
+    }
+
+    private async handleBombBase() {
+        for (const lightline of this.light.getLightLines()) {
+            setTimeout(async () => { await lightline.setFlicker(true); console.log("start")}, 2650);
+            setTimeout(async () => { await lightline.setFlicker(false); console.log("stop")}, 3850);
+        }
     }
 
     private handleModeSilentStateChange(state: ModeSilentState) {
