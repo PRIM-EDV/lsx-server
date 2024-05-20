@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { QlcModule } from 'src/dmx/qlc.module';
-import { SoundModule } from 'src/sound/sound.module';
 import { ReactorController } from './reactor.controller';
 import { ReactorService } from './reactor.service';
-import { LightModule } from 'src/light/light.module';
-import { StateModule } from 'src/state/state.module';
+import { LightModule } from 'src/core/light/light.module';
+import { StateModule } from 'src/core/state/state.module';
+import { QlcModule } from 'src/platform/qlc/qlc.module';
+import { SoundModule } from 'src/platform/sound/sound.module';
 
 @Module({
   imports: [

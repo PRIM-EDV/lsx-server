@@ -1,7 +1,7 @@
 import { Controller, Get} from '@nestjs/common';
 import { PowerPlantState } from 'proto/lsx.power';
-import { LoggingService } from 'src/logging/logging.service';
 import { ReactorService } from './reactor.service';
+import { LoggingService } from 'src/core/logging/logging.service';
 
 // import { StateService } from 'src/state/state.service';
 

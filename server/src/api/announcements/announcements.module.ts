@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { SoundModule } from 'src/sound/sound.module';
 import { AnnouncementsService } from './announcements.service';
+import { SoundModule } from 'src/platform/sound/sound.module';
 
 @Module({
   imports: [SoundModule],

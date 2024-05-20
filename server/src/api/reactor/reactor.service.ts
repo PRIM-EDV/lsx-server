@@ -2,18 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { Request } from 'proto/lsx';
 import { ModeSilentState } from 'proto/lsx.drone';
 import { PowerPlantState, PowerLineState, PowerLineId } from 'proto/lsx.power';
-import { QlcService } from 'src/dmx/qlc.service';
-import { WebsocketGateway } from 'src/gateway/websocket.gateway';
-import { LightService } from 'src/light/light.service';
-import { LightLineMode } from 'src/light/lightline/lightline';
-import { StateService } from 'src/state/state.service';
+import { AppGateway } from 'src/app.gateway';
+import { LightService } from 'src/core/light/light.service';
+import { StateService } from 'src/core/state/state.service';
+import { QlcService } from 'src/platform/qlc/qlc.service';
 
 @Injectable()
 export class ReactorService {
 
     constructor(
         private readonly state: StateService,
-        private readonly gateway: WebsocketGateway, 
+        private readonly gateway: AppGateway, 
         private readonly dmx: QlcService, 
         private light: LightService 
     ) {

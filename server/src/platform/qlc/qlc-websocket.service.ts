@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Subject } from "rxjs";
-import { LoggingService } from "src/logging/logging.service";
+import { LoggingService } from "src/core/logging/logging.service";
 import  * as WebSocket  from "ws"
 
 const URL = 'ws://192.168.178.25:9999/qlcplusWS';

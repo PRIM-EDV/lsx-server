@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Request } from 'proto/lsx';
-import { WebsocketGateway } from 'src/gateway/websocket.gateway';
-import { SoundService } from 'src/sound/sound.service';
 import { BombAreaId, BombAreaState, ModeSilentState } from 'proto/lsx.drone';
-import { LightService } from 'src/light/light.service';
-import { LightLineId, LightLineMode } from 'src/light/lightline/lightline';
-import { StateService } from 'src/state/state.service';
-import { PowerLineId } from 'proto/lsx.power';
+import { AppGateway } from 'src/app.gateway';
+import { LightService } from 'src/core/light/light.service';
+import { LightLineId, LightLineMode } from 'src/core/light/lightline/lightline';
+import { StateService } from 'src/core/state/state.service';
+import { SoundService } from 'src/platform/sound/sound.service';
 
 @Injectable()
 export class DroneService {
@@ -19,7 +18,7 @@ export class DroneService {
     ]
 
     constructor(
-        private readonly gateway: WebsocketGateway, 
+        private readonly gateway: AppGateway, 
         private readonly sound: SoundService, 
         private readonly light: LightService, 
         private readonly state: StateService

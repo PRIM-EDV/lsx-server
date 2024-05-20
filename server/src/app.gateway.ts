@@ -7,7 +7,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 
 import { LsxMessage, Request, Response } from 'proto/lsx';
-import { LoggingService } from 'src/logging/logging.service';
+import { LoggingService } from 'src/core/logging/logging.service';
 import { Subject } from 'rxjs';
 import { AuthGuard } from 'src/api/auth/auth.guard';
 import { UseGuards } from '@nestjs/common';
@@ -20,7 +20,7 @@ interface Ws extends WebSocket {
 }
 
 @WebSocketGateway()
-export class WebsocketGateway {
+export class AppGateway {
   protected activeClients: Map<string, Ws> = new Map<string, Ws>();
   protected requests: Map<string, (value: Response) => void> = new Map<string, (value: Response) => void>();
 
@@ -39,7 +39,7 @@ export class WebsocketGateway {
     const user = this.jwtService.decode(client.token) as User;
 
     if(msg.request) {
-        this.onRequest.next({clientId: client.id, msgId: msg.id, request: msg.request, user: });
+        this.onRequest.next({clientId: client.id, msgId: msg.id, request: msg.request, user: user});
     }
 
     if(msg.response) {

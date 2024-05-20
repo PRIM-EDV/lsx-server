@@ -1,11 +1,11 @@
 import * as fs from 'fs';
 
 import { Injectable } from '@nestjs/common';
-import { WebsocketGateway } from 'src/gateway/websocket.gateway';
 import { Request } from 'proto/lsx';
-import { SoundService } from 'src/sound/sound.service';
 import { ModeSilentState } from 'proto/lsx.drone';
-import { StateService } from 'src/state/state.service';
+import { AppGateway } from 'src/app.gateway';
+import { StateService } from 'src/core/state/state.service';
+import { SoundService } from 'src/platform/sound/sound.service';
 
 
 @Injectable()
@@ -14,7 +14,7 @@ export class FluffService {
     private fluffState = true;
     private fluffFiles: string[] = [];
 
-    constructor(private readonly gateway: WebsocketGateway, private readonly sound: SoundService, private readonly state: StateService) {
+    constructor(private readonly gateway: AppGateway, private readonly sound: SoundService, private readonly state: StateService) {
         this.gateway.onRequest.subscribe(this.handleRequest.bind(this));
 
         this.getFluffFiles().then((files) => {

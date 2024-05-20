@@ -1,5 +1,5 @@
 import { PowerLineId } from "proto/lsx.power";
-import { QlcService } from "src/dmx/qlc.service";
+import { QlcService } from "src/platform/qlc/qlc.service";
 
 
 export enum LightLineMode {

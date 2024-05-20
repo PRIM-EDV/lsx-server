@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Request } from 'proto/lsx';
 import { LockdownState } from 'proto/lsx.lockdown';
-import { WebsocketGateway } from 'src/gateway/websocket.gateway';
-import { SoundService } from 'src/sound/sound.service';
 import { ModeSilentState } from 'proto/lsx.drone';
-import { LightService } from 'src/light/light.service';
-import { LightLineMode } from 'src/light/lightline/lightline';
-import { StateService } from 'src/state/state.service';
+import { AppGateway } from 'src/app.gateway';
+import { LightService } from 'src/core/light/light.service';
+import { LightLineMode } from 'src/core/light/lightline/lightline';
+import { StateService } from 'src/core/state/state.service';
+import { SoundService } from 'src/platform/sound/sound.service';
 
 @Injectable()
 export class LockdownService {
@@ -15,7 +15,7 @@ export class LockdownService {
     private autoLockdown = true;
     private lockdownAnnouncements = true;
 
-    constructor(private readonly gateway: WebsocketGateway, private readonly sound: SoundService, private state: StateService, private light: LightService) {
+    constructor(private readonly gateway: AppGateway, private readonly sound: SoundService, private state: StateService, private light: LightService) {
         setInterval(this.lockdownAnnoucementsInterval.bind(this), 1000);
         setInterval(this.autoLockdownInterval.bind(this), 1000);
 

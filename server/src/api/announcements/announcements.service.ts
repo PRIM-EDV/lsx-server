@@ -1,14 +1,14 @@
 import * as fs from 'fs';
 
 import { Injectable } from '@nestjs/common';
-import { WebsocketGateway } from 'src/gateway/websocket.gateway';
 import { Request } from 'proto/lsx';
-import { SoundService } from 'src/sound/sound.service';
+import { AppGateway } from 'src/app.gateway';
+import { SoundService } from 'src/platform/sound/sound.service';
 
 @Injectable()
 export class AnnouncementsService {
 
-    constructor(private readonly gateway: WebsocketGateway, private readonly sound: SoundService) {
+    constructor(private readonly gateway: AppGateway, private readonly sound: SoundService) {
         this.gateway.onRequest.subscribe(this.handleRequest.bind(this));
     }
 

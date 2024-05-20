@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AppController } from './app.controller';
@@ -6,17 +6,17 @@ import { AppService } from './app.service';
 import { ReactorModule } from './api/reactor/reactor.module';
 import { AuthModule } from './api/auth/auth.module';
 import { AnnouncementsModule } from './api/announcements/announcements.module';
-import { LoggingModule } from './logging/logging.module';
-import { GatewayModule } from './gateway/gateway.module';
 import { LockdownModule } from './api/lockdown/lockdown.module';
 import { FluffModule } from './api/fluff/fluff.module';
-import { SoundModule } from './sound/sound.module';
-import { QlcModule } from './dmx/qlc.module';
 import { DroneModule } from './api/drone/drone.module';
-import { LightService } from './light/light.service';
-import { StateModule } from './state/state.module';
-import { LightModule } from './light/light.module';
+import { AppGateway } from './app.gateway';
+import { LightModule } from './core/light/light.module';
+import { LoggingModule } from './core/logging/logging.module';
+import { StateModule } from './core/state/state.module';
+import { QlcModule } from './platform/qlc/qlc.module';
+import { SoundModule } from './platform/sound/sound.module';
 
+@Global()
 @Module({
   imports: [
     AuthModule,
@@ -26,7 +26,6 @@ import { LightModule } from './light/light.module';
     }),
     AnnouncementsModule,
     StateModule,
-    GatewayModule,
     LoggingModule,
     LockdownModule,
     FluffModule,
@@ -36,6 +35,7 @@ import { LightModule } from './light/light.module';
     LightModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AppGateway],
+  exports: [AppGateway]
 })
 export class AppModule {}

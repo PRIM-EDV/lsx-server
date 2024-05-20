@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { QlcService } from 'src/dmx/qlc.service';
 import { LightLineId, LightLineMode, Lightline } from './lightline/lightline';
 import { PowerLineId, PowerLineState } from 'proto/lsx.power';
-import { StateService } from 'src/state/state.service';
+import { QlcService } from 'src/platform/qlc/qlc.service';
+import { StateService } from '../state/state.service';
 
 
 @Injectable()

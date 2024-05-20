@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { QlcModule } from 'src/dmx/qlc.module';
-import { SoundModule } from 'src/sound/sound.module';
 import { DroneService } from './drone.service';
+import { QlcModule } from 'src/platform/qlc/qlc.module';
+import { SoundModule } from 'src/platform/sound/sound.module';
 
 @Module({
   imports: [
