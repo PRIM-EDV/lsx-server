@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { LsxMessage, Request, Response } from 'proto/lsx';
 import { LoggingService } from 'src/core/logging/logging.service';
 import { Subject } from 'rxjs';
-import { AuthGuard } from 'src/api/auth/auth.guard';
+import { AuthGuard } from 'src/common/guards/auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/api/auth/auth.service';
