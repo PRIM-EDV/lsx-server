@@ -19,7 +19,8 @@ export class StateService {
         [PowerLineId.LINE_OG_COURTYARD, PowerLineState.STATE_POWERED],
         [PowerLineId.LINE_OG_PARCELS, PowerLineState.STATE_POWERED],
         [PowerLineId.LINE_OG_BASE_ADM, PowerLineState.STATE_POWERED],
-        [PowerLineId.LINE_OG_LOG, PowerLineState.STATE_POWERED]
+        [PowerLineId.LINE_OG_LOG, PowerLineState.STATE_POWERED],
+        [PowerLineId.LINE_UG_HALL, PowerLineState.STATE_POWERED]
     ]);
 
     public powerPlantState: PowerPlantState = PowerPlantState.STATE_NORMAL;

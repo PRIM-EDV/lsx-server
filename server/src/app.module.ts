@@ -15,6 +15,7 @@ import { QlcModule } from './dmx/qlc.module';
 import { DroneModule } from './api/drone/drone.module';
 import { LightService } from './light/light.service';
 import { StateModule } from './state/state.module';
+import { LightModule } from './light/light.module';
 
 @Module({
   imports: [
@@ -32,7 +33,7 @@ import { StateModule } from './state/state.module';
     SoundModule,
     DroneModule,
     QlcModule,
-    LightService,
+    LightModule
   ],
   controllers: [AppController],
   providers: [AppService],

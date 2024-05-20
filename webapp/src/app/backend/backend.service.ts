@@ -32,8 +32,8 @@ export class BackendService {
 
     constructor(private http: HttpClient, private readonly router: Router) {}
 
-    public async connect() {
-        this.ws = webSocket({url: WS_URL, openObserver: { next: () => {this.isConnected= true; this.onOpen.next()} }});
+    public async connect(jwt: string) {
+        this.ws = webSocket({url: `${WS_URL}?token=${jwt}`, openObserver: { next: () => {this.isConnected= true; this.onOpen.next()} }});
 
         this.ws.subscribe({
             next: this.handleMessage.bind(this),

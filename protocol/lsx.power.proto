@@ -13,6 +13,11 @@ enum PowerLineState {
     STATE_UNPOWERED = 1;
 }
 
+enum PowerLineLockedState {
+    STATE_UNLOCKED = 0;
+    STATE_LOCKED = 1;
+}
+
 enum PowerLineId {
     LINE_EMPTY = 0;
     LINE_OG_BASE_MED = 1;
@@ -31,18 +36,6 @@ enum PowerLineId {
     LINE_UG_HALL = 15;
     LINE_OG_LOG = 16;
 }
-
-// message PowerGridState {
-//     PowerLineState og_base_med = 1;
-//     PowerLineState og_parcel_left = 2;
-//     PowerLineState og_parcel_right = 3;
-//     PowerLineState ug_parcel_left = 4;
-//     PowerLineState ug_parcel_right = 5;
-//     // PowerLineState og_base_adm = 6;
-//     // PowerLineState og_base_cic = 7;
-//     // PowerLineState og_base_sci = 8;
-//     // PowerLineState og_base_tec = 9;
-// }
 
 message GetPowerLineState {
     message Response {
@@ -64,6 +57,39 @@ message SetPowerLineState {
     message Request {
         PowerLineId id = 1;
         PowerLineState state = 2;
+    }
+
+    message Response {
+
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message GetPowerLineLockedState {
+    message Response {
+        PowerLineLockedState state = 1;
+    }
+
+    message Request {
+        PowerLineId id = 1;
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message SetPowerLineLockedState {
+    message Request {
+        PowerLineId id = 1;
+        PowerLineLockedState state = 2;
     }
 
     message Response {

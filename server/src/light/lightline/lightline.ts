@@ -28,7 +28,8 @@ export enum LightLineId {
     LINE_UG_PARCELS_RIGHT = 14,
     LINE_UG_HALL = 15,
     LINE_OG_LOG = 16,
-    LINE_OG_TUNNEL= 17
+    LINE_OG_TUNNEL= 17,
+    LINE_UG_RWALL = 18
 }
 
 export class Lightline {

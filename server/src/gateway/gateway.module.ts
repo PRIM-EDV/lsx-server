@@ -1,17 +1,19 @@
 import { Global, Module } from '@nestjs/common';
 import { LoggingModule } from 'src/logging/logging.module';
-import { AppGateway } from './app.gateway';
+import { WebsocketGateway } from './websocket.gateway';
+import { AuthModule } from 'src/api/auth/auth.module';
 
 @Global()
 @Module({
     imports: [
+        AuthModule,
         LoggingModule
     ],
     exports: [
-        AppGateway
+        WebsocketGateway
     ],
     providers: [
-        AppGateway
+        WebsocketGateway
     ]
 })
 export class GatewayModule {}

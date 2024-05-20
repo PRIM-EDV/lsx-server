@@ -9,30 +9,37 @@ import { v4 as uuidv4 } from 'uuid';
 import { LsxMessage, Request, Response } from 'proto/lsx';
 import { LoggingService } from 'src/logging/logging.service';
 import { Subject } from 'rxjs';
+import { AuthGuard } from 'src/api/auth/auth.guard';
+import { UseGuards } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/api/auth/auth.service';
 
 interface Ws extends WebSocket {
   id: string;
+  token: string;
 }
 
 @WebSocketGateway()
-export class AppGateway {
+export class WebsocketGateway {
   protected activeClients: Map<string, Ws> = new Map<string, Ws>();
   protected requests: Map<string, (value: Response) => void> = new Map<string, (value: Response) => void>();
 
   public onMessage: Subject<LsxMessage> = new Subject<LsxMessage>();
-  public onRequest: Subject<{clientId: string, msgId: string, request: Request}> = new Subject<{clientId: string, msgId: string, request: Request}>();
+  public onRequest: Subject<{clientId: string, msgId: string, request: Request, user: User}> = new Subject<{clientId: string, msgId: string, request: Request, user: User}>();
 
-  constructor(private readonly log: LoggingService) {
+  constructor(private readonly log: LoggingService, private readonly jwtService: JwtService) {
   }
 
   @WebSocketServer() server: WebSocket.Server;
 
+  @UseGuards(AuthGuard)
   @SubscribeMessage('msg')
   handleMessage(client: Ws, payload: string): void {
     const msg = LsxMessage.fromJSON(JSON.parse(payload));
+    const user = this.jwtService.decode(client.token) as User;
 
     if(msg.request) {
-        this.onRequest.next({clientId: client.id, msgId: msg.id, request: msg.request});
+        this.onRequest.next({clientId: client.id, msgId: msg.id, request: msg.request, user: });
     }
 
     if(msg.response) {
@@ -51,12 +58,13 @@ export class AppGateway {
   }
 
   handleConnection(client: Ws, ...args: any[]) {
+    const urlParams = new URLSearchParams(args[0].url.split('?')[1]);
+
+    client.token = urlParams.get('token');
     client.id = uuidv4();
+    
     this.activeClients.set(client.id, client);
     this.log.info(`Client connected: ${client.id}`);
-
-    console.log(this.activeClients.get(client.id).id)
-
   }
 
   public async request(clientId: string, req: Request): Promise<Response> {

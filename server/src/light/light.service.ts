@@ -29,6 +29,8 @@ export class LightService {
             [LightLineMode.MODE_WHITE, 1],
         ]))],
         [LightLineId.LINE_OG_TUNNEL, new Lightline(32, 33)],
+        [LightLineId.LINE_UG_HALL, new Lightline(35, 36)],
+        [LightLineId.LINE_UG_RWALL, new Lightline(41, 42)]
     ])
 
     constructor(private dmx: QlcService, private state: StateService) {

@@ -21,7 +21,7 @@ export class AuthComponent implements OnInit {
   public async login() {
     try {
       const jwt = await this.authService.requestJwt(this.username, this.password);
-      await this.backend.connect();
+      await this.backend.connect(jwt);
       this.router.navigateByUrl('/dashboard');
     }
     catch(e){

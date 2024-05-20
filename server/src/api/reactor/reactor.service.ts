@@ -3,7 +3,7 @@ import { Request } from 'proto/lsx';
 import { ModeSilentState } from 'proto/lsx.drone';
 import { PowerPlantState, PowerLineState, PowerLineId } from 'proto/lsx.power';
 import { QlcService } from 'src/dmx/qlc.service';
-import { AppGateway } from 'src/gateway/app.gateway';
+import { WebsocketGateway } from 'src/gateway/websocket.gateway';
 import { LightService } from 'src/light/light.service';
 import { LightLineMode } from 'src/light/lightline/lightline';
 import { StateService } from 'src/state/state.service';
@@ -13,7 +13,7 @@ export class ReactorService {
 
     constructor(
         private readonly state: StateService,
-        private readonly gateway: AppGateway, 
+        private readonly gateway: WebsocketGateway, 
         private readonly dmx: QlcService, 
         private light: LightService 
     ) {
