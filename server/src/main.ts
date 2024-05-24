@@ -7,17 +7,17 @@ declare global {
   namespace NodeJS {
     interface Global {
       // onWebsocketRequest: Subject<{clientId: string, msgId: string, request: Request, user: User}>;
-      onLsxRequest: Subject<{clientId: string, msgId: string, request: Request}>;
+      onWebsocketRequest: Subject<{clientId: string, msgId: string, request: Request}>;
+      onWebsocketResponse: Subject<{clientId: string, msgId: string, response: Response}>;
     }
   }
 }
 
 global.onWebsocketRequest = new Subject<{clientId: string, msgId: string, request: Request}>();
+global.onWebsocketResponse = new Subject<{clientId: string, msgId: string, response: Response}>();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  const d = new Date();
 
   app.enableCors();
   app.useWebSocketAdapter(new WsAdapter(app));

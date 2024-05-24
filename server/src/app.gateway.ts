@@ -6,10 +6,10 @@ import {
 } from '@nestjs/websockets';
 import { v4 as uuidv4 } from 'uuid';
 
-import { LsxMessage, Request, Response } from 'proto/lsx';
+import { GetAnnouncementFiles, LsxMessage, Request, Response } from 'proto/lsx';
 import { LoggingService } from 'src/core/logging/logging.service';
 import { Subject } from 'rxjs';
-import { AuthGuard } from 'src/common/guards/auth.guard';
+// import { AuthGuard } from 'src/api/auth/auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/api/auth/auth.service';
@@ -28,11 +28,14 @@ export class AppGateway {
   public onRequest: Subject<{clientId: string, msgId: string, request: Request, user: User}> = new Subject<{clientId: string, msgId: string, request: Request, user: User}>();
 
   constructor(private readonly log: LoggingService, private readonly jwtService: JwtService) {
+    global.onWebsocketResponse.subscribe((event: {clientId: string, msgId: string, response: Response}) => {
+      this.respond(event.clientId, event.msgId, event.response);
+    });
   }
 
   @WebSocketServer() server: WebSocket.Server;
 
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @SubscribeMessage('msg')
   handleMessage(client: Ws, payload: string): void {
     const msg = LsxMessage.fromJSON(JSON.parse(payload));
@@ -40,6 +43,7 @@ export class AppGateway {
 
     if(msg.request) {
         this.onRequest.next({clientId: client.id, msgId: msg.id, request: msg.request, user: user});
+        global.onWebsocketRequest.next({clientId: client.id, msgId: msg.id, request: msg.request});
     }
 
     if(msg.response) {
@@ -50,7 +54,6 @@ export class AppGateway {
     }
     this.onMessage.next(msg);
   }
-
 
   handleDisconnect(client: Ws) {
     this.activeClients.delete(client.id);
@@ -101,6 +104,7 @@ export class AppGateway {
   }
 
   public respond(clientId: string, msgId: string, res: Response) {
+    console.log(res)
     const msg: LsxMessage = {
         id: msgId,
         response: res

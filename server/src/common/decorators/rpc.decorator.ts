@@ -1,9 +1,9 @@
+import { extendArrayMetadata } from "@nestjs/common/utils/extend-metadata.util";
+import { RPC_METADATA } from "../constants";
+
 export function Rpc(): MethodDecorator {
-    return function (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
-        // Add your decorator logic here
-        // For example, you can modify the method behavior or add metadata
-        console.log(global.blub);
-        // Return the modified descriptor
+    return function (target: any, key: string | symbol, descriptor: PropertyDescriptor) {
+        extendArrayMetadata(RPC_METADATA, [descriptor.value], target);
         return descriptor;
     };
 }
