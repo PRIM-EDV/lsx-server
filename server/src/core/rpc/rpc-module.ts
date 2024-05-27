@@ -5,20 +5,22 @@ import { InjectionToken } from "@nestjs/common";
 import { Injectable } from "@nestjs/common/interfaces";
 import { iterate } from 'iterare';
 import { InstanceWrapper } from "@nestjs/core/injector/instance-wrapper";
-import { RPC_HANDLER_METADATA, RPC_METADATA } from "src/common/constants";
+import { RPC_HANDLER_GATEWAY_METADATA, RPC_HANDLER_METADATA, RPC_METADATA } from "./constants";
 
 export class RpcModule {
+    private container: NestContainer;
     private readonly metadataScanner = new MetadataScanner();
     private contextCreator: RpcContextCreator;
 
     register(
         container: NestContainer,
     ) {
+        this.container = container;
         this.contextCreator = new RpcContextCreator(
             new GuardsContextCreator(container),
             new GuardsConsumer(),
         );
-
+        
         const modules = container.getModules();
         modules.forEach(({ providers }, moduleName: string) =>
             this.connectAllHandlers(providers, moduleName),
@@ -37,8 +39,9 @@ export class RpcModule {
     public connectHandler(wrapper: InstanceWrapper<Injectable>, moduleName: string) {
         const { instance, metatype } = wrapper;
         const metadataKeys = Reflect.getMetadataKeys(metatype);
+        const gateway = this.getInstanceByMetatype(Reflect.getMetadata(RPC_HANDLER_GATEWAY_METADATA, metatype)) as any;
 
-        if (!metadataKeys.includes(RPC_HANDLER_METADATA)) {
+        if (!metadataKeys.includes(RPC_HANDLER_METADATA) || !this.isRpcGateway(gateway) ) {
             return;
         }
 
@@ -50,15 +53,15 @@ export class RpcModule {
                 return this.contextCreator.create(instance as object, instance[methodName], moduleName, methodName);
             });
 
-        global.onWebsocketRequest.subscribe((event: { clientId: string, msgId: string, request: Request }) => {
+        gateway.onRequest.subscribe((event: { clientId: string, msgId: string, request: Request }) => {
             for (const rpcMethod of rpcMethods) {
                 if (event.request[rpcMethod.name] !== undefined) {
-                    rpcMethod.call(this, event.request[rpcMethod.name]).then((value) => {
+                    rpcMethod.call(instance, event.request[rpcMethod.name]).then((value) => {
                         const response = { [rpcMethod.name]: value }
-                        console.log(response);
-                        global.onWebsocketResponse.next({ clientId: event.clientId, msgId: event.msgId, response: response })
+                        gateway.respond(event.clientId, event.msgId, response);
                     }
                     ).catch((err) => {
+                        console.log(err)
                         // const response = { [rpcMethod.name]: {error: err.message}}
                         // global.onWebsocketResponse.next({clientId: event.clientId, msgId: event.msgId, response: response})
                         // console.log(err);
@@ -66,6 +69,28 @@ export class RpcModule {
                 }
             }
         });
+    }
+
+    private isRpcGateway(instance: any): boolean {
+        if (!instance) { 
+            return false;
+        }
+
+        return instance.hasOwnProperty('onRequest');
+    }
+
+    private getInstanceByMetatype(metatype) {
+        const modules = this.container.getModules();
+
+        for (const { providers } of modules.values()) {
+            const instances = Array.from(providers.values())
+                .filter(wrapper => wrapper && !wrapper.isNotMetatype && wrapper.metatype === metatype);
+
+            if (instances.length > 0) {
+                return instances[0].instance;
+            }
+        }
+    }
 
         // this.webSocketsController.connectGatewayToServer(
         //     instance as NestGateway,
@@ -86,5 +111,4 @@ export class RpcModule {
         //       methodName,
         //     ),
         //   }),
-    }
 }

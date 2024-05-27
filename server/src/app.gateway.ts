@@ -6,13 +6,14 @@ import {
 } from '@nestjs/websockets';
 import { v4 as uuidv4 } from 'uuid';
 
-import { GetAnnouncementFiles, LsxMessage, Request, Response } from 'proto/lsx';
+import { LsxMessage, Request, Response } from 'proto/lsx';
 import { LoggingService } from 'src/core/logging/logging.service';
 import { Subject } from 'rxjs';
 // import { AuthGuard } from 'src/api/auth/auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/api/auth/auth.service';
+import { AuthGuard } from './common/guards/auth.guard';
 
 interface Ws extends WebSocket {
   id: string;
@@ -28,14 +29,12 @@ export class AppGateway {
   public onRequest: Subject<{clientId: string, msgId: string, request: Request, user: User}> = new Subject<{clientId: string, msgId: string, request: Request, user: User}>();
 
   constructor(private readonly log: LoggingService, private readonly jwtService: JwtService) {
-    global.onWebsocketResponse.subscribe((event: {clientId: string, msgId: string, response: Response}) => {
-      this.respond(event.clientId, event.msgId, event.response);
-    });
+
   }
 
   @WebSocketServer() server: WebSocket.Server;
 
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @SubscribeMessage('msg')
   handleMessage(client: Ws, payload: string): void {
     const msg = LsxMessage.fromJSON(JSON.parse(payload));
@@ -104,7 +103,7 @@ export class AppGateway {
   }
 
   public respond(clientId: string, msgId: string, res: Response) {
-    console.log(res)
+    console.log('responding');
     const msg: LsxMessage = {
         id: msgId,
         response: res
