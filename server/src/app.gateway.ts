@@ -31,9 +31,8 @@ export class AppGateway {
 
   @UseGuards(AuthGuard)
   @SubscribeMessage('msg')
-  handleMessage(client: Ws, payload: string): void {
+  public handleMessage(client: Ws, payload: string): void {
     const msg = LsxMessage.fromJSON(JSON.parse(payload));
-    const user = this.jwtService.decode(client.token) as User;
 
     if(msg.request) {
         this.onRequest.next({client: client, msgId: msg.id, request: msg.request});
@@ -46,6 +45,12 @@ export class AppGateway {
         }
     }
     this.onMessage.next(msg);
+  }
+
+  @UseGuards(AuthGuard)
+  @SubscribeMessage('token')
+  public handleToken(client: Ws, payload: string): void {
+    client.token = payload;
   }
 
   handleDisconnect(client: Ws) {

@@ -29,4 +29,8 @@ export class AuthService {
           access_token: this.jwtService.sign(payload),
         };
     }
+
+    async refresh(token: string) {
+      return this.jwtService.sign(this.jwtService.decode(token));
+    }
 }
