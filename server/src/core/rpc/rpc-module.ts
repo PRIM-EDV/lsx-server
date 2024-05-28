@@ -6,6 +6,7 @@ import { Injectable } from "@nestjs/common/interfaces";
 import { iterate } from 'iterare';
 import { InstanceWrapper } from "@nestjs/core/injector/instance-wrapper";
 import { RPC_HANDLER_GATEWAY_METADATA, RPC_HANDLER_METADATA, RPC_METADATA } from "./constants";
+import { Ws } from "src/common/interfaces/ws";
 
 export class RpcModule {
     private container: NestContainer;
@@ -16,10 +17,7 @@ export class RpcModule {
         container: NestContainer,
     ) {
         this.container = container;
-        this.contextCreator = new RpcContextCreator(
-            new GuardsContextCreator(container),
-            new GuardsConsumer(),
-        );
+        this.contextCreator = new RpcContextCreator(container);
         
         const modules = container.getModules();
         modules.forEach(({ providers }, moduleName: string) =>
@@ -53,12 +51,12 @@ export class RpcModule {
                 return this.contextCreator.create(instance as object, instance[methodName], moduleName, methodName);
             });
 
-        gateway.onRequest.subscribe((event: { clientId: string, msgId: string, request: Request }) => {
+        gateway.onRequest.subscribe((event: { client: Ws, msgId: string, request: Request }) => {
             for (const rpcMethod of rpcMethods) {
                 if (event.request[rpcMethod.name] !== undefined) {
-                    rpcMethod.call(instance, event.request[rpcMethod.name]).then((value) => {
+                    rpcMethod.call(instance, event.client, event.request[rpcMethod.name]).then((value) => {
                         const response = { [rpcMethod.name]: value }
-                        gateway.respond(event.clientId, event.msgId, response);
+                        gateway.respond(event.client.id, event.msgId, response);
                     }
                     ).catch((err) => {
                         console.log(err)
@@ -91,24 +89,4 @@ export class RpcModule {
             }
         }
     }
-
-        // this.webSocketsController.connectGatewayToServer(
-        //     instance as NestGateway,
-        //     metatype,
-        //     moduleName,
-        //     wrapper.id,
-        // );
-
-        //     const nativeMessageHandlers = this.metadataExplorer.explore(instance);
-        // const messageHandlers = nativeMessageHandlers.map(
-        //   ({ callback, message, methodName }) => ({
-        //     message,
-        //     methodName,
-        //     callback: this.contextCreator.create(
-        //       instance,
-        //       callback,
-        //       moduleKey,
-        //       methodName,
-        //     ),
-        //   }),
 }

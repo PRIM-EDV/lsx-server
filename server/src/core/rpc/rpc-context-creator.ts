@@ -1,63 +1,97 @@
 import { ContextType } from "@nestjs/common";
 import { Controller } from "@nestjs/common/interfaces";
-import { FORBIDDEN_MESSAGE, GuardsConsumer, GuardsContextCreator } from "@nestjs/core/guards";
-import { ContextUtils } from "@nestjs/core/helpers/context-utils";
-import { WsException } from "@nestjs/websockets";export class RpcContextCreator {
+import { GuardsConsumer, GuardsContextCreator } from "@nestjs/core/guards";
+import { WsContextCreator } from "@nestjs/websockets/context/ws-context-creator";
+import { NestContainer } from "@nestjs/core";
+import { WsProxy } from "@nestjs/websockets/context/ws-proxy";
+import { ExceptionFiltersContext } from "@nestjs/websockets/context/exception-filters-context";
+import { PipesConsumer, PipesContextCreator } from "@nestjs/core/pipes";
+import { InterceptorsConsumer, InterceptorsContextCreator } from "@nestjs/core/interceptors";
+import { ParamsMetadata } from "@nestjs/core/helpers/interfaces";
+export class RpcContextCreator extends WsContextCreator {
 
-  private readonly contextUtils = new ContextUtils();
+    constructor(
+        private readonly container: NestContainer
+    ) {
+        super(new WsProxy(),
+            new ExceptionFiltersContext(container),
+            new PipesContextCreator(container),
+            new PipesConsumer(),
+            new GuardsContextCreator(container),
+            new GuardsConsumer(),
+            new InterceptorsContextCreator(container),
+            new InterceptorsConsumer());
+    }
 
-  constructor(
-    private readonly guardsContextCreator: GuardsContextCreator,
-    private readonly guardsConsumer: GuardsConsumer,
-  ) { }
 
-  public create(
-    instance: Controller,
-    callback: (...args: unknown[]) => void,
-    moduleKey: string,
-    methodName: string,
-  ): (...args: any[]) => Promise<void> {
-    const contextType: ContextType = 'rpc';
-    const guards = this.guardsContextCreator.create(
-      instance,
-      callback,
-      moduleKey,
-    );
+    public create<T extends ParamsMetadata = ParamsMetadata>(
+        instance: Controller,
+        callback: (...args: unknown[]) => void,
+        moduleKey: string,
+        methodName: string,
+    ): (...args: any[]) => Promise<void> {
+        const contextType: ContextType = 'ws';
+        const { argsLength, paramtypes, getParamsMetadata } = this.getMetadata<T>(
+            instance,
+            methodName,
+            contextType,
+        );
 
-    const fnCanActivate = this.createGuardsFn(
-      guards,
-      instance,
-      callback,
-      contextType,
-    );
+        const pipes = (<any>this).pipesContextCreator.create(
+            instance,
+            callback,
+            moduleKey,
+        );
 
-    const fn = async (...args: unknown[]) => {
-      fnCanActivate && (await fnCanActivate(args));
-      return callback.apply(instance, args);
-    };
+        const guards = (<any>this).guardsContextCreator.create(
+            instance,
+            callback,
+            moduleKey,
+        );
 
-    Object.defineProperty(fn, 'name', { value: methodName });
-    return fn;
-  }
+        const interceptors = (<any>this).interceptorsContextCreator.create(
+            instance,
+            callback,
+            moduleKey,
+        );
 
-  public createGuardsFn<TContext extends string = ContextType>(
-    guards: any[],
-    instance: Controller,
-    callback: (...args: unknown[]) => any,
-    contextType?: TContext,
-  ): Function | null {
-    const canActivateFn = async (args: any[]) => {
-      const canActivate = await this.guardsConsumer.tryActivate<TContext>(
-        guards,
-        args,
-        instance,
-        callback,
-        contextType,
-      );
-      if (!canActivate) {
-        throw new WsException(FORBIDDEN_MESSAGE);
-      }
-    };
-    return guards.length ? canActivateFn : null;
-  }
+        const fnCanActivate = this.createGuardsFn(
+            guards,
+            instance,
+            callback,
+            contextType,
+        );
+
+        const paramsMetadata = getParamsMetadata(moduleKey);
+        const paramsOptions = paramsMetadata
+          ? (<any>this).contextUtils.mergeParamsMetatypes(paramsMetadata, paramtypes)
+          : [];
+        const fnApplyPipes = this.createPipesFn(pipes, paramsOptions);
+
+        const handler = (initialArgs: unknown[], args: unknown[]) => async () => {
+            if (fnApplyPipes) {
+                await fnApplyPipes(initialArgs, ...args);
+                return callback.apply(instance, initialArgs);
+            }
+            return callback.apply(instance, args);
+        };
+       
+        const fn = async (...args: unknown[]) => {
+            const initialArgs = (<any>this).contextUtils.createNullArray(argsLength);
+            fnCanActivate && (await fnCanActivate(args));
+            
+
+            return (<any>this).interceptorsConsumer.intercept(
+                interceptors,
+                args,
+                instance,
+                callback,
+                handler(initialArgs, args),
+                contextType,
+            );
+        };
+
+        Object.defineProperty(fn, 'name', { value: methodName });
+        return fn;
+    }
 }

@@ -9,16 +9,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { LsxMessage, Request, Response } from 'proto/lsx';
 import { LoggingService } from 'src/core/logging/logging.service';
 import { Subject } from 'rxjs';
-// import { AuthGuard } from 'src/api/auth/auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/api/auth/auth.service';
 import { AuthGuard } from './common/guards/auth.guard';
-
-interface Ws extends WebSocket {
-  id: string;
-  token: string;
-}
+import { Ws } from './common/interfaces/ws';
 
 @WebSocketGateway()
 export class AppGateway {
@@ -26,7 +21,7 @@ export class AppGateway {
   protected requests: Map<string, (value: Response) => void> = new Map<string, (value: Response) => void>();
 
   public onMessage: Subject<LsxMessage> = new Subject<LsxMessage>();
-  public onRequest: Subject<{clientId: string, msgId: string, request: Request, user: User}> = new Subject<{clientId: string, msgId: string, request: Request, user: User}>();
+  public onRequest: Subject<{client: Ws, msgId: string, request: Request}> = new Subject<{client: Ws, msgId: string, request: Request}>();
 
   constructor(private readonly log: LoggingService, private readonly jwtService: JwtService) {
 
@@ -41,8 +36,7 @@ export class AppGateway {
     const user = this.jwtService.decode(client.token) as User;
 
     if(msg.request) {
-        this.onRequest.next({clientId: client.id, msgId: msg.id, request: msg.request, user: user});
-        global.onWebsocketRequest.next({clientId: client.id, msgId: msg.id, request: msg.request});
+        this.onRequest.next({client: client, msgId: msg.id, request: msg.request});
     }
 
     if(msg.response) {
@@ -103,7 +97,6 @@ export class AppGateway {
   }
 
   public respond(clientId: string, msgId: string, res: Response) {
-    console.log('responding');
     const msg: LsxMessage = {
         id: msgId,
         response: res
