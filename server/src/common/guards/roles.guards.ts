@@ -1,16 +1,13 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-
-interface Ws extends WebSocket {
-  id: string;
-  token?: string;
-}
+import { Ws } from '../interfaces/ws';
+import { ROLES_METADATA } from '../constants';
 
 /**
  * Guard that checks if the client is authorized to access the resource based on a JWT.
  */
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class RolesGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}
 
   /**
@@ -20,18 +17,26 @@ export class AuthGuard implements CanActivate {
    * @throws UnauthorizedException if the client is not authorized.
    */
   public async canActivate(context: ExecutionContext): Promise<boolean> {
-    const token = context.switchToWs().getClient<Ws>().token;  
+    const token = context.switchToWs().getClient<Ws>().token; 
+    const roles = Reflect.getMetadata(ROLES_METADATA, context.getHandler()) as string[];
+
+    if (!roles) {
+      return true;
+    }
+
     if (!token) {
-      throw new UnauthorizedException();
+      return false;
     } 
 
     try {
-      const payload = await this.jwtService.verifyAsync(token, {
-        secret: "37GqbZWodvVxnJ4L4NFU"
-      });
+      const payload = await this.jwtService.decode(token);
+
+      if (!roles.includes(payload.role)) {
+        return false;
+      }
 
     } catch {
-      throw new UnauthorizedException();
+      return false;
     }
     return true;
   }

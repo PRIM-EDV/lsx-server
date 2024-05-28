@@ -25,4 +25,6 @@ export const jwtConstants = {
   providers: [AuthService, LocalStrategy, AuthGuard],
   exports: [AuthService, AuthGuard],
 })
-export class AuthModule {}
+export class AuthModule {
+
+}
