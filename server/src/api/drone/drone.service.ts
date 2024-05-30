@@ -1,15 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { Request } from 'proto/lsx';
-import { BombAreaId, BombAreaState, ModeSilentState } from 'proto/lsx.drone';
-import { AppGateway } from 'src/app.gateway';
-import { LightService } from 'src/core/light/light.service';
-import { LightLineId, LightLineMode } from 'src/core/light/lightline/lightline';
-import { StateService } from 'src/core/state/state.service';
-import { SoundService } from 'src/platform/sound/sound.service';
+import { Injectable } from "@nestjs/common";
+import { BombAreaId, BombAreaState, ModeSilentState } from "proto/lsx.drone";
+import { LightService } from "src/core/light/light.service";
+import { LightLineId, LightLineMode } from "src/core/light/lightline/lightline";
+import { StateService } from "src/core/state/state.service";
+import { SoundService } from "src/platform/sound/sound.service";
 
 @Injectable()
 export class DroneService {
-
 
     private bombFiles = [
         'assets/wav/drone/Drone_explosion_01.wav',
@@ -18,67 +15,13 @@ export class DroneService {
     ]
 
     constructor(
-        private readonly gateway: AppGateway, 
         private readonly sound: SoundService, 
         private readonly light: LightService, 
         private readonly state: StateService
     ) {
-        this.gateway.onRequest.subscribe(this.handleRequest.bind(this));
     }
-
-    handleRequest(event: {clientId: string, msgId: string, request: Request}): void {
-        if(event.request.getModeSilentState){
-            this.gateway.respond(event.clientId, event.msgId, {getModeSilentState: {state: this.state.modeSilentState}})
-        }
-
-        if(event.request.setModeSilentState){
-            this.setModeSilentState(event.request.setModeSilentState.state)
-            this.gateway.respond(event.clientId, event.msgId, {setModeSilentState: {}})
-        }
-
-        if(event.request.getBombAreaState) {
-            const id = event.request.getBombAreaState.id;
-            this.gateway.respond(event.clientId, event.msgId, { 
-                getBombAreaState: { state: this.state.bombAreaStates.get(id) }
-            });
-        }
-
-        if(event.request.bombArea) {
-            const id = event.request.bombArea.id;
-
-            this.handleBombArea(id).then().catch((err) => {console.log(err)})
-            this.gateway.respond(event.clientId, event.msgId, { 
-                bombArea: { id: id }
-            });
-
-            this.gateway.respond(event.clientId, event.msgId, {
-                bombArea: {}
-            })
-            this.gateway.requestAll(event.request);
-
-        }
-
-        if (event.request.bombBase) {
-            this.handleBombBase().then().catch((err) => {console.log(err)});
-
-            this.gateway.respond(event.clientId, event.msgId, {
-                bombBase: {}
-            })
-        }
-    }
-
-    private async setModeSilentState(state: ModeSilentState) {
-        const req: Request = {setModeSilentState: {state: state}};
-
-        if (state != this.state.modeSilentState) {
-            this.handleModeSilentStateChange(state);
-            this.state.modeSilentState = state;
-        }
-   
-        this.gateway.requestAll(req).then();
-    }
-
-    private getLightLineByBombAreaId(id: BombAreaId): LightLineId {
+    
+    public getLightLineByBombAreaId(id: BombAreaId): LightLineId {
         switch(id) {
             case BombAreaId.AREA_CIC:
                 return LightLineId.LINE_OG_BASE_CIC;
@@ -95,7 +38,7 @@ export class DroneService {
         }
     }
 
-    private async handleBombArea(id: BombAreaId) {
+    public async handleBombArea(id: BombAreaId) {
         const lightLineId = this.getLightLineByBombAreaId(id);
         const lightLine = this.light.lightlines.get(lightLineId);
 
@@ -106,14 +49,14 @@ export class DroneService {
         setTimeout(async () => { await lightLine.setSpecial(true)}, 2650);
     }
 
-    private async handleBombBase() {
+    public async handleBombBase() {
         for (const lightline of this.light.getLightLines()) {
             setTimeout(async () => { await lightline.setFlicker(true); console.log("start")}, 2650);
             setTimeout(async () => { await lightline.setFlicker(false); console.log("stop")}, 3850);
         }
     }
 
-    private handleModeSilentStateChange(state: ModeSilentState) {
+    public handleModeSilentStateChange(state: ModeSilentState) {
         switch(state) {
             case ModeSilentState.MODE_SILENT_STATE_NORMAL:
                 if (this.state.modeSilentState == ModeSilentState.MODE_SILENT_STATE_SILENT_DRONE) {

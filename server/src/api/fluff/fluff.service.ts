@@ -1,9 +1,7 @@
 import * as fs from 'fs';
 
 import { Injectable } from '@nestjs/common';
-import { Request } from 'proto/lsx';
 import { ModeSilentState } from 'proto/lsx.drone';
-import { AppGateway } from 'src/app.gateway';
 import { StateService } from 'src/core/state/state.service';
 import { SoundService } from 'src/platform/sound/sound.service';
 
@@ -11,65 +9,37 @@ import { SoundService } from 'src/platform/sound/sound.service';
 @Injectable()
 export class FluffService {
 
-    private fluffState = true;
-    private fluffFiles: string[] = [];
+    public fluffState = true;
 
-    constructor(private readonly gateway: AppGateway, private readonly sound: SoundService, private readonly state: StateService) {
-        this.gateway.onRequest.subscribe(this.handleRequest.bind(this));
-
-        this.getFluffFiles().then((files) => {
-            this.fluffFiles = files;
-        })
-
+    constructor(private readonly sound: SoundService, private readonly state: StateService) {
         setInterval(this.fluffAnnouncementsInterval.bind(this), 1000);
-    }
-
-    handleRequest(event: {clientId: string, msgId: string, request: Request}): void {
-        if(event.request.getFluffFiles){
-            this.gateway.respond(event.clientId, event.msgId, {getAnnouncementFiles: {files: this.fluffFiles}})
-        }
-
-        if(event.request.setFluffState){
-            this.setFluffState(event.request.setFluffState.state)
-            this.gateway.respond(event.clientId, event.msgId, {setFluffState: {}})
-        }
-
-        if(event.request.getFluffState){
-            this.gateway.respond(event.clientId, event.msgId, {getFluffState: {state: this.fluffState}});
-        }
     }
 
     public async getFluffFiles(): Promise<string[]> {
         return new Promise<string[]>((resolve, reject) => {
             fs.readdir('assets/wav/fluff', (err, files) => {
                 if (err) {
-                    resolve([]);
+                    reject(err);
                 } else {
-                    resolve(files)
+                    resolve( files )
                 }
             })
         })
     }
 
-    public setFluffState(state: boolean) {
-        const req: Request = {setFluffState: {state: state}};
-        this.fluffState = state;
-        this.gateway.requestAll(req).then();
-    }
-
-    private fluffAnnouncementsInterval() {
+    private async fluffAnnouncementsInterval() {
         const d = new Date();
         const hours = d.getHours();
         const minutes = d.getMinutes();
         const seconds = d.getSeconds();
-
+        const fluffFiles = await this.getFluffFiles();
 
         if (this.fluffState && this.state.modeSilentState == ModeSilentState.MODE_SILENT_STATE_NORMAL) {
-            if (seconds == 0 && (hours > 9 || hours < 3) ) {
-                switch(minutes) {
-                    case 15: this.sound.playWav(`assets/wav/fluff/${this.fluffFiles[Math.floor(Math.random() * this.fluffFiles.length)]}`); break;
-                    case 35: this.sound.playWav(`assets/wav/fluff/${this.fluffFiles[Math.floor(Math.random() * this.fluffFiles.length)]}`); break;
-                    case 55: this.sound.playWav(`assets/wav/fluff/${this.fluffFiles[Math.floor(Math.random() * this.fluffFiles.length)]}`); break;
+            if (seconds == 0 && (hours > 9 || hours < 3)) {
+                switch (minutes) {
+                    case 15: this.sound.playWav(`assets/wav/fluff/${fluffFiles[Math.floor(Math.random() * fluffFiles.length)]}`); break;
+                    case 35: this.sound.playWav(`assets/wav/fluff/${fluffFiles[Math.floor(Math.random() * fluffFiles.length)]}`); break;
+                    case 55: this.sound.playWav(`assets/wav/fluff/${fluffFiles[Math.floor(Math.random() * fluffFiles.length)]}`); break;
                 }
             }
         }

@@ -16,7 +16,7 @@ export class ReactorService {
         private readonly dmx: QlcService, 
         private light: LightService 
     ) {
-        this.gateway.onRequest.subscribe(this.handleRequest.bind(this));
+        // this.gateway.onRequest.subscribe(this.handleRequest.bind(this));
     }
 
     handleRequest(event: {clientId: string, msgId: string, request: Request}): void {

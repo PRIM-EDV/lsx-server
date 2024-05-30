@@ -3,9 +3,6 @@ import { PowerPlantState } from 'proto/lsx.power';
 import { ReactorService } from './reactor.service';
 import { LoggingService } from 'src/core/logging/logging.service';
 
-// import { StateService } from 'src/state/state.service';
-
-
 @Controller('reactor')
 export class ReactorController {
   private tmpPowerPlantState: PowerPlantState = PowerPlantState.STATE_NORMAL;

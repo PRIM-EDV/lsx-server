@@ -13,7 +13,6 @@ export class SoundService {
     constructor() {
         console.log(this.player.players)
     }
-
     
     public async playWav(file: string): Promise<void> {
         console.log(this.player)

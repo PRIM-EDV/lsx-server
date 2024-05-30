@@ -3,6 +3,7 @@ import { LockdownService } from './lockdown.service';
 import { DroneModule } from 'src/api/drone/drone.module';
 import { QlcModule } from 'src/platform/qlc/qlc.module';
 import { SoundModule } from 'src/platform/sound/sound.module';
+import { LockdownController } from './lockdown.controller';
 
 @Module({
   imports: [
@@ -13,6 +14,8 @@ import { SoundModule } from 'src/platform/sound/sound.module';
   exports: [
     LockdownService
   ],
-  providers: [LockdownService]
+  providers: [
+    LockdownController,
+    LockdownService]
 })
 export class LockdownModule {}

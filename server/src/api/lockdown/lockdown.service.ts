@@ -11,61 +11,26 @@ import { SoundService } from 'src/platform/sound/sound.service';
 @Injectable()
 export class LockdownService {
 
-    private lockdownState: LockdownState = LockdownState.LOCKDOWN_STATE_NORMAL;
-    private autoLockdown = true;
-    private lockdownAnnouncements = true;
+    public lockdownState: LockdownState = LockdownState.LOCKDOWN_STATE_NORMAL;
+    public autoLockdown = true;
+    public lockdownAnnouncements = true;
 
-    constructor(private readonly gateway: AppGateway, private readonly sound: SoundService, private state: StateService, private light: LightService) {
+    constructor(private readonly sound: SoundService, private state: StateService, private light: LightService) {
         setInterval(this.lockdownAnnoucementsInterval.bind(this), 1000);
         setInterval(this.autoLockdownInterval.bind(this), 1000);
-
-        this.gateway.onRequest.subscribe(this.handleRequest.bind(this));
     }
 
-    handleRequest(event: {clientId: string, msgId: string, request: Request}): void {
-        if(event.request.getLockdownState){
-            this.gateway.respond(event.clientId, event.msgId, {getLockdownState: {state: this.lockdownState}})
-        }
-        if(event.request.setLockdownState){
-            this.setBaseState(event.request.setLockdownState.state)
-            this.gateway.respond(event.clientId, event.msgId, {setLockdownState: {}})
-        }
-        if(event.request.getAutoLockdown){
-            this.gateway.respond(event.clientId, event.msgId, {getAutoLockdown: {state: this.autoLockdown}})
-        }
-        if(event.request.setAutoLockdown){
-            this.setAutoLockdown(event.request.setAutoLockdown.state)
-            this.gateway.respond(event.clientId, event.msgId, {setAutoLockdown: {}})
-        }
-        if(event.request.getLockdownAnnouncements){
-            this.gateway.respond(event.clientId, event.msgId, {getLockdownAnnouncements: {state: this.lockdownAnnouncements}})
-        }
-        if(event.request.setLockdownAnnouncements){
-            this.setLockdownAnnouncements(event.request.setLockdownAnnouncements.state)
-            this.gateway.respond(event.clientId, event.msgId, {setLockdownAnnouncements: {}})
-        }
-    }
-
-    public setBaseState(state: LockdownState) {
-        const req: Request = {setLockdownState: {state: state}};
-
+    public setLockdownState(state: LockdownState) {
         this.handleBaseStateChange(state);
         this.lockdownState = state;
-        this.gateway.requestAll(req).then();
     }
 
     public setAutoLockdown(state: boolean) {
-        const req: Request = {setAutoLockdown: {state: state}};
-
         this.autoLockdown = state;
-        this.gateway.requestAll(req).then();
     }
 
     public setLockdownAnnouncements(state: boolean) {
-        const req: Request = {setLockdownAnnouncements: {state: state}};
-
         this.lockdownAnnouncements = state;
-        this.gateway.requestAll(req).then();
     }
 
     private async handleBaseStateChange(state: LockdownState) {
@@ -138,8 +103,8 @@ export class LockdownService {
         if (this.autoLockdown) {
             if (minutes == 0 && seconds == 0) {
                 switch(hours) {
-                    case 3: this.setBaseState(LockdownState.LOCKDOWN_STATE_LOCKDOWN); break;
-                    case 9: this.setBaseState(LockdownState.LOCKDOWN_STATE_NORMAL); break;
+                    case 3: this.setLockdownState(LockdownState.LOCKDOWN_STATE_LOCKDOWN); break;
+                    case 9: this.setLockdownState(LockdownState.LOCKDOWN_STATE_NORMAL); break;
                 }
             }
         }

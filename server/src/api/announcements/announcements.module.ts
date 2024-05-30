@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AnnouncementsService } from './announcements.service';
 import { SoundModule } from 'src/platform/sound/sound.module';
+import { AnnouncementsController } from './annoucements.controller';
 
 @Module({
   imports: [SoundModule],
-  providers: [AnnouncementsService]
+  providers: [
+    AnnouncementsController,
+    AnnouncementsService]
 })
 export class AnnouncementsModule {}
