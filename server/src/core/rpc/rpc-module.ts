@@ -38,7 +38,6 @@ export class RpcModule {
         const { instance, metatype } = wrapper;
         const metadataKeys = Reflect.getMetadataKeys(metatype);
         const gateway = this.getInstanceByMetatype(Reflect.getMetadata(RPC_HANDLER_GATEWAY_METADATA, metatype)) as any;
-        console.log((<any>instance.constructor));
         if (!metadataKeys.includes(RPC_HANDLER_METADATA) || !this.isRpcGateway(gateway) ) {
             return;
         }

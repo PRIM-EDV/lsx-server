@@ -21,7 +21,7 @@ export class FluffController {
     @Roles(['admin'])
     public async getFluffFiles(): Promise<GetFluffFiles_Response> {
         const files = await this.service.getFluffFiles();
-        return {files: files};
+        return { files: files };
     }
 
     @Rpc()

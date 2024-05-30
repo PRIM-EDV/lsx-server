@@ -26,7 +26,7 @@ export class BackendService {
     private requests: Map<string, (value: Response) => void> = new Map<string, (value: Response) => void>();
     private ws!: WebSocketSubject<any>;
 
-    constructor(private http: HttpClient, private readonly router: Router) {}
+    constructor(private readonly router: Router) {}
 
     public async connect(jwt: string) {
         this.ws = webSocket({url: `${WS_URL}?token=${jwt}`, openObserver: { next: () => {this.isConnected= true; this.onOpen.next()} }});
@@ -36,6 +36,10 @@ export class BackendService {
             error: (err) => {console.log(err), this.router.navigateByUrl('/auth'); this.isConnected = false;},
             complete: this.handleClose.bind(this)
         });
+    }
+
+    public refresh(token: string): void {
+        this.ws.next({event: 'refresh', data: token});
     }
 
     public async getAnnouncementFiles(): Promise<string[]> {

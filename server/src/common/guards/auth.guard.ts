@@ -20,7 +20,8 @@ export class AuthGuard implements CanActivate {
    * @throws UnauthorizedException if the client is not authorized.
    */
   public async canActivate(context: ExecutionContext): Promise<boolean> {
-    const token = context.switchToWs().getClient<Ws>().token;  
+    const token = this.extractToken(context); 
+    
     if (!token) {
       throw new UnauthorizedException();
     } 
@@ -34,5 +35,16 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
     return true;
+  }
+
+  private extractToken(context: ExecutionContext): string { 
+    switch (context.getType()) {
+      case 'ws':
+        return context.switchToWs().getClient<Ws>().token;
+      case 'http':
+        return context.switchToHttp().getRequest().headers.authorization.split(' ')[1];
+      default:
+        throw new Error('Unsupported context type');
+    }
   }
 }

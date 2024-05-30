@@ -13,15 +13,14 @@ export class AuthComponent implements OnInit {
   public username: string = '';
   public password: string = '';
 
-  constructor(private readonly authService: AuthService, private readonly backend: BackendService, private readonly router: Router) { }
+  constructor(private readonly authService: AuthService, private readonly router: Router) { }
 
   ngOnInit(): void {
   }
 
   public async login() {
     try {
-      const jwt = await this.authService.requestJwt(this.username, this.password);
-      await this.backend.connect(jwt);
+      this.authService.login(this.username, this.password);
       this.router.navigateByUrl('/dashboard');
     }
     catch(e){

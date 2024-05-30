@@ -13,9 +13,8 @@ export class SpeakerFluffService {
     const req: Request = {
         getFluffFiles: {}
     }
-
     const res: Response = await this.backend.request(req);
-    return res.getAnnouncementFiles!.files!;
+    return res.getFluffFiles!.files!;
   }
 
   public async getFluffState(): Promise<boolean> {

@@ -21,7 +21,7 @@ export class FluffService {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve( files )
+                    resolve(files)
                 }
             })
         })
