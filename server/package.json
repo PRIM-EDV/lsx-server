@@ -1,6 +1,6 @@
 {
   "name": "server",
-  "version": "0.0.1",
+  "version": "1.2.0",
   "description": "",
   "author": "Lucas Moesch",
   "private": true,
@@ -14,7 +14,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "proto:generate": "cpx \"../protocol/*\" ./proto && protoc -I=./proto --ts_proto_opt=useOptionals=true --ts_proto_out=./proto ./proto/lsx.proto"
+    "proto:generate": "protoc -I=./proto --ts_proto_opt=useOptionals=true --ts_proto_out=./proto ./proto/lsx.proto"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.8",
@@ -25,6 +25,7 @@
     "@nestjs/platform-ws": "^10.3.8",
     "@nestjs/serve-static": "^4.0.2",
     "@nestjs/websockets": "^10.3.8",
+    "iterare": "^1.2.1",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
@@ -39,6 +40,7 @@
   },
   "devDependencies": {
     "@nestjs/cli": "^10.3.2",
+    "@nestjs/devtools-integration": "^0.1.6",
     "@nestjs/schematics": "^10.1.1",
     "@types/express": "^4.17.21",
     "@types/node": "^20.12.12",
