@@ -16,7 +16,7 @@ export class AuthService {
 
     public async login(username: string, password: string): Promise<void> {
         this.token = await this.requestJwt(username, password);
-        this.role = 
+        // this.role = 
     }
 
     public async requestJwt(username: string, password: string): Promise<string> {
