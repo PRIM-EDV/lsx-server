@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { PhElementsModule } from './ph-elements/ph-elements.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { DroneControlComponent } from './drone-control/drone-control.component';
 import { DroneControlModule } from './drone-control/drone-control.module';
@@ -20,19 +20,12 @@ declare global {
 }
 
 
-@NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    AppRoutingModule,
-    AuthModule,
-    BrowserModule,
-    DashboardModule,
-    HttpClientModule,
-    DroneControlModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+    ],
+    bootstrap: [AppComponent], imports: [AppRoutingModule,
+        AuthModule,
+        BrowserModule,
+        DashboardModule,
+        DroneControlModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
