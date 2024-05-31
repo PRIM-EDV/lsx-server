@@ -20,8 +20,8 @@ export class AuthComponent implements OnInit {
 
   public async login() {
     try {
-      this.authService.login(this.username, this.password);
-      this.router.navigateByUrl('/dashboard');
+      await this.authService.login(this.username, this.password);
+      await this.router.navigateByUrl('/dashboard');
     }
     catch(e){
 

@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
    */
   public async canActivate(context: ExecutionContext): Promise<boolean> {
     const token = this.extractToken(context); 
-    
+
     if (!token) {
       throw new UnauthorizedException();
     } 

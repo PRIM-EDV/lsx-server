@@ -25,14 +25,14 @@ export class AuthService {
         this.role = payload.role;
 
         await this.backend.connect(token);
-        setInterval(() => { this.refreshJwt(token);}, 5000);
+        setInterval(() => { this.refreshJwt();}, 5000);
     }
 
-    public async refreshJwt(token: string): Promise<void> {
+    private async refreshJwt(): Promise<void> {
         const route = `${window.location.protocol}//${LSX_SERVER_HOSTNAME}:${LSX_SERVER_PORT}/api/auth/refresh`;
-        const headers = { Authorization: `Bearer ${token}` };
+        const headers = { Authorization: `Bearer ${this.token}` };
         return new Promise<void>((resolve, reject) => {
-            this.http.post<{ access_token: string }>(route, {access_token: token}, {headers: headers}).subscribe({
+            this.http.post<{ access_token: string }>(route, {access_token: this.token}, {headers: headers}).subscribe({
                 next: (res) => {
                     this.token = res.access_token;
                     this.backend.refresh(res.access_token);
