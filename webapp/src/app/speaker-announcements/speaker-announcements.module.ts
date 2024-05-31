@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SpeakerAnnouncementsComponent } from './speaker-announcements.component';
-import { PhElementsModule } from '../ph-elements/ph-elements.module';
+import { PhElementsModule } from 'lib/phobos-elements/ph-elements.module';
 
 
 

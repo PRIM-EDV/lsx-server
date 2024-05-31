@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthComponent } from './auth.component';
-import { PhElementsModule } from '../ph-elements/ph-elements.module';
 import { AuthService } from './auth.service';
 import { AuthGuardService } from './auth-guard.service';
+import { PhElementsModule } from 'lib/phobos-elements/ph-elements.module';
 
 
 
