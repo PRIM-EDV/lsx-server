@@ -8,7 +8,6 @@ div.dashboard {
     grid-column-gap: 0px;
     grid-row-gap: 0px;
 
-    position: absolute;
     inset: 0;
 
     div.content {
@@ -17,7 +16,7 @@ div.dashboard {
         display: flex;
         justify-content: center;
         align-items: center;
-        overflow: hidden;
+        // overflow: hidden;
 
         div.workspace {
             display: grid;

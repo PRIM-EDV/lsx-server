@@ -39,7 +39,7 @@ export class BackendService {
     }
 
     public refresh(token: string): void {
-        this.ws.next({event: 'refresh', data: token});
+        this.ws.next({event: 'token', data: token});
     }
 
     public async getAnnouncementFiles(): Promise<string[]> {

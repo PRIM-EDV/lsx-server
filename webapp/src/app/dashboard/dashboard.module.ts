@@ -9,6 +9,7 @@ import { SpeakerFluffModule } from '../speaker-fluff/speaker-fluff.module';
 import { DroneControlModule } from '../drone-control/drone-control.module';
 import { DroneBombardmentModule } from '../drone-bombardment/drone-bombardment.module';
 import { PhElementsModule } from 'lib/phobos-elements/ph-elements.module';
+import { LightControlComponent } from '../light-control/light-control.component';
 
 
 
@@ -19,6 +20,7 @@ import { PhElementsModule } from 'lib/phobos-elements/ph-elements.module';
   imports: [
     CommonModule,
     BaseLockdownModule,
+    LightControlComponent,
     PhElementsModule,
     PowerControlModule,
     PowerPlantModule,
