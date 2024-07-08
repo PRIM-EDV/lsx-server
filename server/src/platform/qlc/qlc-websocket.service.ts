@@ -11,7 +11,6 @@ export class QlcWebsocketService {
     public onOpen: Subject<void> = new Subject<void>();
     public onClosed: Subject<void> = new Subject<void>();
 
-
     private ws: WebSocket;
     private requests: Map<string, (data: string[]) => void> = new Map<string, (data: string[]) => void>();
 
@@ -28,7 +27,9 @@ export class QlcWebsocketService {
     }
 
     public async setQlcValue(msg: string) {
-        this.ws.send(msg);
+        if(this.ws.readyState == WebSocket.OPEN) {
+            this.ws.send(msg);
+        }
     }
 
     private onConnectionError() {

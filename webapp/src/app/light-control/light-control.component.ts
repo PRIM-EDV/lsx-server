@@ -45,9 +45,10 @@ export class LightControlComponent {
     const req: Request = {
       setLightSwitchState: {
         id: id,
-        state
+        state: state
       }
     }
+    console.log(req);
     await this.backend.request(req);
   }
 
