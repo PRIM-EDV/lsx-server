@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Request } from 'proto/lsx';
 import { ModeSilentState } from 'proto/lsx.drone';
-import { PowerPlantState } from 'proto/lsx.power';
+import { PowerPlantState, PowerState } from 'proto/lsx.power';
 import { AppGateway } from 'src/app.gateway';
 import { LightService } from 'src/core/light/light.service';
 import { StateService } from 'src/core/state/state.service';
@@ -50,21 +50,19 @@ export class ReactorService {
         if (this.state.modeSilentState != ModeSilentState.MODE_SILENT_STATE_SILENT_DRONE) {
             if(state == PowerPlantState.STATE_OFFLINE) {
                 for (const lightline of this.light.getLightLines()) {
-                    await lightline.setFlicker(false);
-                    await lightline.setBlackout(true);
+                    await lightline.setPowerState(PowerState.POWER_STATE_UNPOWERED);
                 }
             }
     
             if(state == PowerPlantState.STATE_CRITICAL) {
                 for (const lightline of this.light.getLightLines()) {
-                    await lightline.setFlicker(true);
+                    await lightline.setPowerState(PowerState.POWER_STATE_CRITICAL);
                 }
             }
     
             if(state == PowerPlantState.STATE_NORMAL) {
                 for (const lightline of this.light.getLightLines()) {
-                    await lightline.setFlicker(false);
-                    await lightline.setBlackout(false);
+                    await lightline.setPowerState(PowerState.POWER_STATE_POWERED);
                 }
             }
         }
@@ -72,27 +70,4 @@ export class ReactorService {
         this.state.powerPlantState = state;
         this.gateway.requestAll(req).then();
     }
-
-    // public getPowerLineState(id: PowerLineId): PowerLineState {
-    //     return this.state.powerLineStates.get(id);
-    // }
-
-    // public async setPowerLineState(id: PowerLineId, state: PowerLineState) {
-    //     const req: Request = {setPowerLineState: {id: id, state: state}};
-    //     const lightline = await this.light.getLightLineByPowerLineId(id);
-
-    //     if (this.state.modeSilentState != ModeSilentState.MODE_SILENT_STATE_SILENT_DRONE) {
-    //         this.state.powerLineStates.set(id, state);
-
-    //         if (state == PowerLineState.STATE_POWERED) {
-    //             await lightline.setPower(true);
-    //         } else {
-    //             await lightline.setPower(false);
-    //         }
-    //     }
-
-    //     this.gateway.requestAll(req).then();
-    // }
-
-    // private powerPlantHandler(state: )
 }

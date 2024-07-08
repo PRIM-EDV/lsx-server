@@ -16,6 +16,7 @@ import { StateModule } from './core/state/state.module';
 import { QlcModule } from './platform/qlc/qlc.module';
 import { SoundModule } from './platform/sound/sound.module';
 import { PowerModule } from './api/power/power.module';
+import { ApiModule } from './api/api.module';
 
 @Global()
 @Module({
@@ -25,6 +26,7 @@ import { PowerModule } from './api/power/power.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
+    ApiModule,
     AnnouncementsModule,
     StateModule,
     LoggingModule,

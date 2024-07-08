@@ -6,6 +6,7 @@ import { LightDMXState, LightId, LightSwitchState } from 'proto/lsx.light';
 import { PowerState } from 'proto/lsx.power';
 import { BackendService } from '../backend/backend.service';
 import { LightControlService } from './light-control.service';
+import { Request } from 'proto/lsx';
 
 export interface Light { 
     id: LightId;
@@ -38,9 +39,26 @@ export class LightControlComponent {
     private readonly backend: BackendService,
     public readonly service: LightControlService) {
    
-   }
+  }
     
-   public blub() {
-    console.log('blub');
-   }
+  public async onLightSwitchStateChange(id: LightId, state: LightSwitchState) {
+    const req: Request = {
+      setLightSwitchState: {
+        id: id,
+        state
+      }
+    }
+    await this.backend.request(req);
+  }
+
+  public async onLightLockStateChange(id: LightId, state: LockState) {
+    // const req: Request = {
+    //   setLight: {
+    //     id: id,
+    //     state
+    //   }
+    // }
+
+    // await this.backend.request(req);
+  }
 }

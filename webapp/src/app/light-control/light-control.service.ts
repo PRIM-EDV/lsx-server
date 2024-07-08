@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { BackendService } from "../backend/backend.service";
 import { Light } from "./light-control.component";
-import { LightDMXState, LightId, LightSwitchState } from "proto/lsx.light";
+import { LightDMXState, LightId, LightSwitchState, SetLightSwitchState_Request } from "proto/lsx.light";
 import { LockState } from "proto/lsx.common";
 import { PowerState } from "proto/lsx.power";
+import { Request } from "proto/lsx";
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +21,26 @@ import { PowerState } from "proto/lsx.power";
       ];
   
     constructor(private readonly backend: BackendService) {
-
+      this.backend.onOpen.subscribe(async () => {
+        // const modeSilentState = await this.droneControlService.getModeSilentState();
+        // this.updateLocalModeSilentState(modeSilentState);
+      });
+      this.backend.onRequest.subscribe(this.handleRequest.bind(this));
      }
+
+     private setLightSwitchState(request: SetLightSwitchState_Request) {
+      const light = this.lights.find(l => l.id === request.id);
+      if(light) {
+        light.switchState = request.state;
+      }
+     }
+
+     private handleRequest(event: {id: string, request: Request}) {
+        const req = event.request;
+        if(req.setLightSwitchState) {
+          console.log(req.setLightSwitchState);
+            this.setLightSwitchState(req.setLightSwitchState);
+        }
+     }
+
   }

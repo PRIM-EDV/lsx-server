@@ -38,6 +38,8 @@ message Request {
         SetLightDmxState.Request set_light_dmx_state = 26;
         GetLightLockState.Request get_light_lock_state = 27;
         SetLightLockState.Request set_light_lock_state = 28;
+        GetLightMode.Request get_light_mode = 29;
+        SetLightMode.Request set_light_mode = 30;
     }
 }
 
@@ -73,6 +75,8 @@ message Response {
         SetLightDmxState.Response set_light_dmx_state = 26;
         GetLightLockState.Response get_light_lock_state = 27;
         SetLightLockState.Response set_light_lock_state = 28;
+        GetLightMode.Response get_light_mode = 29;
+        SetLightMode.Response set_light_mode = 30;
     }
 }
 

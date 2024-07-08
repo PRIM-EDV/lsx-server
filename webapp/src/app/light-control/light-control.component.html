@@ -1,24 +1,12 @@
 <ph-form>
     <ph-group [label]="light.label" *ngFor="let light of this.service.lights">
-        <ph-button-select [label]="'State'" [(value)]="light.switchState" (valueChange)="blub()">
+        <ph-button-select [label]="'State'" [(value)]="light.switchState" (valueChange)="onLightSwitchStateChange(light.id, $event)">
             <ph-button [value]="lightSwitchState.SWITCH_STATE_OFF">OFF</ph-button>
             <ph-button [value]="lightSwitchState.SWITCH_STATE_ON">ON</ph-button>
         </ph-button-select>
-        <ph-button-select [label]="'Lock'" [(value)]="light.lockState">
+        <ph-button-select [label]="'Lock'" [(value)]="light.lockState" (valueChange)="onLightLockStateChange(light.id, $event)">
             <ph-button [value]="lightLockState.LOCK_STATE_UNLOCKED">UNLOCKED</ph-button>
             <ph-button [value]="lightLockState.LOCK_STATE_LOCKED">LOCKED</ph-button>
         </ph-button-select>
     </ph-group>
-    <!-- <ph-button-select [label]="'State'" [(value)]="lockdownState" (valueChange)="updateServerBaseState()">
-        <ph-button [value]="'lockdown'">LOCKDOWN</ph-button>
-        <ph-button [value]="'normal'">NORMAL</ph-button>
-    </ph-button-select>
-    <ph-button-select [label]="'Automatic lockdown'" [(value)]="autoLockdown" (valueChange)="updateAutoLockdown()">
-        <ph-button [value]="'off'">OFF</ph-button>
-        <ph-button [value]="'on'">ON</ph-button>
-    </ph-button-select>
-    <ph-button-select [label]="'Play announcements'" [(value)]="lockdownAnnouncements" (valueChange)="updateLockdownAnnouncements()">
-        <ph-button [value]="'off'">OFF</ph-button>
-        <ph-button [value]="'on'">ON</ph-button>
-    </ph-button-select> -->
 </ph-form>

@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { BombAreaId, BombAreaState, ModeSilentState } from "proto/lsx.drone";
 import { LightId } from "proto/lsx.light";
+import { PowerState } from "proto/lsx.power";
 import { LightService } from "src/core/light/light.service";
 import { StateService } from "src/core/state/state.service";
 import { SoundService } from "src/platform/sound/sound.service";
@@ -51,8 +52,8 @@ export class DroneService {
 
     public async handleBombBase() {
         for (const lightline of this.light.getLightLines()) {
-            setTimeout(async () => { await lightline.setFlicker(true); console.log("start")}, 2650);
-            setTimeout(async () => { await lightline.setFlicker(false); console.log("stop")}, 3850);
+            setTimeout(async () => { await lightline.setPowerState(PowerState.POWER_STATE_CRITICAL); console.log("start")}, 2650);
+            setTimeout(async () => { await lightline.setPowerState(PowerState.POWER_STATE_POWERED); console.log("stop")}, 3850);
         }
     }
 
