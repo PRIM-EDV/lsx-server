@@ -25,6 +25,7 @@ export class BaseLockdownComponent implements OnInit {
       this.updateLocalAutoLockdown(autoLockdown);
       this.updateLocalLockdownAnnouncements(lockdownAnnouncements);
     });
+    
     this.backend.onRequest.subscribe(this.handleRequest.bind(this));
    }
 

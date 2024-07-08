@@ -38,6 +38,10 @@ export class BackendService {
         });
     }
 
+    public async disconnect() {
+        this.ws.complete();
+    }
+
     public refresh(token: string): void {
         this.ws.next({event: 'token', data: token});
     }

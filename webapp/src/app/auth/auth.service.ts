@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { jwtDecode } from "jwt-decode";
 import { BackendService } from '../backend/backend.service';
+import { Router } from '@angular/router';
 
 const LSX_SERVER_HOSTNAME = window?.__env?.lsxServerHostname != null ? `${window.__env.lsxServerHostname}` : window.location.hostname;
 const LSX_SERVER_PORT = window?.__env?.lsxServerPort != null ? window.__env.lsxServerPort : window.location.port;
@@ -11,10 +12,12 @@ export class AuthService {
 
     public role: string = "";
     private token: string = "";
+    private refreshInterval: any;
 
     constructor(
         private readonly backend: BackendService,
-        private readonly http: HttpClient
+        private readonly http: HttpClient,
+        private readonly router: Router,
     ) {}
 
     public async login(username: string, password: string): Promise<void> {
@@ -25,7 +28,23 @@ export class AuthService {
         this.role = payload.role;
 
         await this.backend.connect(token);
-        setInterval(() => { this.refreshJwt();}, 5000);
+        this.refreshInterval = setInterval(async () => { 
+            try {
+                await this.refreshJwt();
+            } catch (err) { 
+                console.error(err);
+                await this.logout();
+                await this.router.navigateByUrl('/auth');
+            }
+        }, 5000);
+    }
+
+    public async logout(): Promise<void> {
+        this.token = '';
+        this.role = '';
+
+        clearInterval(this.refreshInterval);
+        await this.backend.disconnect();
     }
 
     private async refreshJwt(): Promise<void> {
