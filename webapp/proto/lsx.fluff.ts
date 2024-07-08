@@ -3,11 +3,7 @@ import * as _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "";
 
-export interface GetFluffFiles {
-  request?: GetFluffFiles_Request | undefined;
-  response?: GetFluffFiles_Response | undefined;
-  error: string | undefined;
-}
+export interface GetFluffFiles {}
 
 export interface GetFluffFiles_Response {
   files: string[];
@@ -15,11 +11,7 @@ export interface GetFluffFiles_Response {
 
 export interface GetFluffFiles_Request {}
 
-export interface GetFluffState {
-  request?: GetFluffState_Request | undefined;
-  response?: GetFluffState_Response | undefined;
-  error: string | undefined;
-}
+export interface GetFluffState {}
 
 export interface GetFluffState_Response {
   state: boolean;
@@ -27,11 +19,7 @@ export interface GetFluffState_Response {
 
 export interface GetFluffState_Request {}
 
-export interface SetFluffState {
-  request?: SetFluffState_Request | undefined;
-  response?: SetFluffState_Response | undefined;
-  error: string | undefined;
-}
+export interface SetFluffState {}
 
 export interface SetFluffState_Request {
   state: boolean;
@@ -40,29 +28,14 @@ export interface SetFluffState_Request {
 export interface SetFluffState_Response {}
 
 function createBaseGetFluffFiles(): GetFluffFiles {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const GetFluffFiles = {
   encode(
-    message: GetFluffFiles,
+    _: GetFluffFiles,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      GetFluffFiles_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      GetFluffFiles_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -73,21 +46,6 @@ export const GetFluffFiles = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = GetFluffFiles_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = GetFluffFiles_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -96,45 +54,19 @@ export const GetFluffFiles = {
     return message;
   },
 
-  fromJSON(object: any): GetFluffFiles {
-    return {
-      request: isSet(object.request)
-        ? GetFluffFiles_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? GetFluffFiles_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): GetFluffFiles {
+    return {};
   },
 
-  toJSON(message: GetFluffFiles): unknown {
+  toJSON(_: GetFluffFiles): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? GetFluffFiles_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? GetFluffFiles_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<GetFluffFiles>, I>>(
-    object: I
+    _: I
   ): GetFluffFiles {
     const message = createBaseGetFluffFiles();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? GetFluffFiles_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? GetFluffFiles_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };
@@ -250,29 +182,14 @@ export const GetFluffFiles_Request = {
 };
 
 function createBaseGetFluffState(): GetFluffState {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const GetFluffState = {
   encode(
-    message: GetFluffState,
+    _: GetFluffState,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      GetFluffState_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      GetFluffState_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -283,21 +200,6 @@ export const GetFluffState = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = GetFluffState_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = GetFluffState_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -306,45 +208,19 @@ export const GetFluffState = {
     return message;
   },
 
-  fromJSON(object: any): GetFluffState {
-    return {
-      request: isSet(object.request)
-        ? GetFluffState_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? GetFluffState_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): GetFluffState {
+    return {};
   },
 
-  toJSON(message: GetFluffState): unknown {
+  toJSON(_: GetFluffState): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? GetFluffState_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? GetFluffState_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<GetFluffState>, I>>(
-    object: I
+    _: I
   ): GetFluffState {
     const message = createBaseGetFluffState();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? GetFluffState_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? GetFluffState_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };
@@ -454,29 +330,14 @@ export const GetFluffState_Request = {
 };
 
 function createBaseSetFluffState(): SetFluffState {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const SetFluffState = {
   encode(
-    message: SetFluffState,
+    _: SetFluffState,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      SetFluffState_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      SetFluffState_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -487,21 +348,6 @@ export const SetFluffState = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = SetFluffState_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = SetFluffState_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -510,45 +356,19 @@ export const SetFluffState = {
     return message;
   },
 
-  fromJSON(object: any): SetFluffState {
-    return {
-      request: isSet(object.request)
-        ? SetFluffState_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? SetFluffState_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): SetFluffState {
+    return {};
   },
 
-  toJSON(message: SetFluffState): unknown {
+  toJSON(_: SetFluffState): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? SetFluffState_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? SetFluffState_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<SetFluffState>, I>>(
-    object: I
+    _: I
   ): SetFluffState {
     const message = createBaseSetFluffState();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? SetFluffState_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? SetFluffState_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };

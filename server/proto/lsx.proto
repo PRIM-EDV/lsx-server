@@ -4,13 +4,14 @@ import "lsx.lockdown.proto";
 import "lsx.fluff.proto";
 import "lsx.power.proto";
 import "lsx.drone.proto";
+import "lsx.light.proto";
 
 message Request {
     oneof request {
         GetPowerPlantState.Request get_power_plant_state = 1;
         SetPowerPlantState.Request set_power_plant_state = 2;
-        GetPowerLineState.Request get_power_line_state = 3;
-        SetPowerLineState.Request set_power_line_state = 4;
+        // GetPowerLineState.Request get_power_line_state = 3;
+        // SetPowerLineState.Request set_power_line_state = 4;
         GetAnnouncementFiles.Request get_announcement_files = 5;
         GetLockdownState.Request get_lockdown_state = 6;
         SetLockdownState.Request set_lockdown_state = 7;
@@ -27,7 +28,16 @@ message Request {
         BombBase.Request bomb_base = 18;
         BombArea.Request bomb_area = 19;
         GetBombAreaState.Request get_bomb_area_state = 20;
-        
+
+        // Light
+        GetLightPowerState.Request get_light_power_state = 21;
+        SetLightPowerState.Request set_light_power_state = 22;
+        GetLightSwitchState.Request get_light_switch_state = 23;
+        SetLightSwitchState.Request set_light_switch_state = 24;
+        GetLightDmxState.Request get_light_dmx_state = 25;
+        SetLightDmxState.Request set_light_dmx_state = 26;
+        GetLightLockState.Request get_light_lock_state = 27;
+        SetLightLockState.Request set_light_lock_state = 28;
     }
 }
 
@@ -35,8 +45,8 @@ message Response {
     oneof response {
         GetPowerPlantState.Response get_power_plant_state = 1;
         SetPowerPlantState.Response set_power_plant_state = 2;
-        GetPowerLineState.Response get_power_line_state = 3;
-        SetPowerLineState.Response set_power_line_state = 4;
+        // GetPowerLineState.Response get_power_line_state = 3;
+        // SetPowerLineState.Response set_power_line_state = 4;
         GetAnnouncementFiles.Response get_announcement_files = 5;
         GetLockdownState.Response get_lockdown_state = 6;
         SetLockdownState.Response set_lockdown_state = 7;
@@ -53,7 +63,22 @@ message Response {
         BombBase.Response bomb_base = 18;
         BombArea.Response bomb_area = 19;
         GetBombAreaState.Response get_bomb_area_state = 20;
+
+        // Light
+        GetLightPowerState.Response get_light_power_state = 21;
+        SetLightPowerState.Response set_light_power_state = 22;
+        GetLightSwitchState.Response get_light_switch_state = 23;
+        SetLightSwitchState.Response set_light_switch_state = 24;
+        GetLightDmxState.Response get_light_dmx_state = 25;
+        SetLightDmxState.Response set_light_dmx_state = 26;
+        GetLightLockState.Response get_light_lock_state = 27;
+        SetLightLockState.Response set_light_lock_state = 28;
     }
+}
+
+message Error {
+    string type = 1;
+    string message = 2;
 }
 
 message LsxMessage {
@@ -62,6 +87,7 @@ message LsxMessage {
     oneof message{
         Request request = 2;
         Response response = 3;
+        Error error = 4;
     }
 }
 
@@ -70,15 +96,7 @@ message GetAnnouncementFiles {
         repeated string files = 1;
     }
 
-    message Request {
-
-    }
-
-    oneof message {
-        Request request = 1;
-        Response response = 2;
-        string error = 3;
-    }
+    message Request {}
 }
 
 message PlayAnnouncement {
@@ -86,15 +104,7 @@ message PlayAnnouncement {
         string filepath = 1;
     }
 
-    message Response {
-
-    }
-
-    oneof message {
-        Request request = 1;
-        Response response = 2;
-        string error = 3;
-    }
+    message Response {}
 }
 
 

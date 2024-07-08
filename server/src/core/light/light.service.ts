@@ -1,80 +1,80 @@
 import { Injectable } from '@nestjs/common';
-import { LightLineId, LightLineMode, Lightline } from './lightline/lightline';
-import { PowerLineId, PowerLineState } from 'proto/lsx.power';
+import { Lightline } from './lightline/lightline';
 import { QlcService } from 'src/platform/qlc/qlc.service';
 import { StateService } from '../state/state.service';
+import { LightDMXState, LightId } from 'proto/lsx.light';
+import { PowerState } from 'proto/lsx.power';
 
 
 @Injectable()
 export class LightService {
 
-    public lightlines =  new Map<LightLineId, Lightline>([
-        [LightLineId.LINE_OG_BASE_ADM, new Lightline(7, 0, PowerLineId.LINE_OG_BASE_ADM)],
-        [LightLineId.LINE_OG_BASE_CIC, new Lightline(5, 8, PowerLineId.LINE_OG_BASE_CIC)],
-        [LightLineId.LINE_OG_BASE_HC, new Lightline(18, 19, PowerLineId.LINE_OG_BASE_HC)],
-        [LightLineId.LINE_OG_BASE_MED, new Lightline(24, 25, PowerLineId.LINE_OG_BASE_MED)],
-        [LightLineId.LINE_OG_BASE_SCI, new Lightline(12, 13, PowerLineId.LINE_OG_BASE_SCI, new Map([
-            [LightLineMode.MODE_BLACKOUT, 0],
-            [LightLineMode.MODE_RED, 2],
-            [LightLineMode.MODE_WHITE, 1],
+    public lightlines =  new Map<LightId, Lightline>([
+        [LightId.LIGHT_OG_BASE_ADM, new Lightline(7, 0, LightId.LIGHT_OG_BASE_ADM)],
+        [LightId.LIGHT_OG_BASE_CIC, new Lightline(5, 8, LightId.LIGHT_OG_BASE_CIC)],
+        [LightId.LIGHT_OG_BASE_HC, new Lightline(18, 19, LightId.LIGHT_OG_BASE_HC)],
+        [LightId.LIGHT_OG_BASE_MED, new Lightline(24, 25, LightId.LIGHT_OG_BASE_MED)],
+        [LightId.LIGHT_OG_BASE_SCI, new Lightline(12, 13, LightId.LIGHT_OG_BASE_SCI, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_RED, 2],
+            [LightDMXState.DMX_STATE_WHITE, 1],
         ]))],
-        [LightLineId.LINE_OG_BASE_TEC, new Lightline(29, 30, PowerLineId.LINE_OG_BASE_TEC)],
-        [LightLineId.LINE_OG_COURTYARD, new Lightline(20, 21, PowerLineId.LINE_OG_COURTYARD)],
-        [LightLineId.LINE_OG_GATE, new Lightline(3, 4, PowerLineId.LINE_OG_GATE)],
-        [LightLineId.LINE_OG_MESSHALL, new Lightline(1, 2, PowerLineId.LINE_OG_MESSHALL)],
-        [LightLineId.LINE_OG_LOG, new Lightline(22, 23, PowerLineId.LINE_OG_LOG)],
-        [LightLineId.LINE_OG_HALL, new Lightline(15, 16, PowerLineId.LINE_OG_HALL)],
-        [LightLineId.LINE_OG_PARCELS, new Lightline(27, 28, PowerLineId.LINE_OG_PARCELS, new Map([
-            [LightLineMode.MODE_BLACKOUT, 0],
-            [LightLineMode.MODE_WHITE, 1],
+        [LightId.LIGHT_OG_BASE_TEC, new Lightline(29, 30, LightId.LIGHT_OG_BASE_TEC)],
+        [LightId.LIGHT_OG_COURTYARD, new Lightline(20, 21, LightId.LIGHT_OG_COURTYARD)],
+        [LightId.LIGHT_OG_GATE, new Lightline(3, 4, LightId.LIGHT_OG_GATE)],
+        [LightId.LIGHT_OG_MESSHALL, new Lightline(1, 2, LightId.LIGHT_OG_MESSHALL)],
+        [LightId.LIGHT_OG_LOG, new Lightline(22, 23, LightId.LIGHT_OG_LOG)],
+        [LightId.LIGHT_OG_HALL, new Lightline(15, 16, LightId.LIGHT_OG_HALL)],
+        [LightId.LIGHT_OG_PARCELS, new Lightline(27, 28, LightId.LIGHT_OG_PARCELS, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_WHITE, 1],
         ]))],
-        [LightLineId.LINE_OG_TUNNEL, new Lightline(32, 33)],
-        [LightLineId.LINE_UG_HALL, new Lightline(35, 36)],
-        [LightLineId.LINE_UG_RWALL, new Lightline(41, 42)]
+        // [LightId.LIGHT_OG_TUNNEL, new Lightline(32, 33)],
+        // [LightId.LIGHT_UG_HALL, new Lightline(35, 36)],
+        // [LightId.LIGHT_UG_RWALL, new Lightline(41, 42)]
     ])
 
     constructor(private dmx: QlcService, private state: StateService) {
         Lightline.dmx = this.dmx;
 
         // Special
-        this.lightlines.get(LightLineId.LINE_OG_BASE_CIC).specialCue = 9;
-        this.lightlines.get(LightLineId.LINE_OG_BASE_SCI).specialCue = 14;
-        this.lightlines.get(LightLineId.LINE_OG_HALL).specialCue = 17;
-        this.lightlines.get(LightLineId.LINE_OG_BASE_MED).specialCue = 26;
-        this.lightlines.get(LightLineId.LINE_OG_BASE_TEC).specialCue = 31;
-        this.lightlines.get(LightLineId.LINE_OG_TUNNEL).specialCue = 34;
+        // this.lightlines.get(LightId.LIGHT_OG_BASE_CIC).specialCue = 9;
+        // this.lightlines.get(LightId.LIGHT_OG_BASE_SCI).specialCue = 14;
+        // this.lightlines.get(LightId.LIGHT_OG_HALL).specialCue = 17;
+        // this.lightlines.get(LightId.LIGHT_OG_BASE_MED).specialCue = 26;
+        // this.lightlines.get(LightId.LIGHT_OG_BASE_TEC).specialCue = 31;
+        // this.lightlines.get(LightId.LIGHT_OG_TUNNEL).specialCue = 34;
         
     }
 
-    public getLightLines(): Array<Lightline> {
-        const lightlines = [];
-
-        for (const [lineId, line] of this.lightlines) {
-            lightlines.push(line);
-        }
-
-        return lightlines;
+    public async setPowerState(id: LightId, state: PowerState) {
+        const line = this.lightlines.get(id);
+        await line.setPowerState(state);
     }
 
-    public async setLightLines(mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
-        for (const [lineId, line] of this.lightlines) {
-            await this.setLightLine(lineId, mode);
-        }
+    public getLightLines(): Lightline[] {
+        return Array.from(this.lightlines.values());
     }
 
-    public async setLightLine(id: LightLineId, mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
-        const line = this.lightlines.get(id)
+    // public async setLightLines(mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
+    //     // for (const [lineId, line] of this.lightlines) {
+    //     //     await this.setLightLine(lineId, mode);
+    //     // }
+    // }
 
-        await line.setMode(mode);
-    }
+    // public async setLightLine(id: LightId, mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
+    //     // const line = this.lightlines.get(id)
 
-    public async getLightLineByPowerLineId(powerLineId: PowerLineId): Promise<Lightline> {
-        for (const [lineId, line] of this.lightlines) {
-            if (line.powerLineId == powerLineId) {
-                return line;
-            }
-        }
+    //     // await line.setMode(mode);
+    // }
 
-        throw new Error("No Lightline could be found!");
-    }
+    // public async getLightLineByLightId(LightId: any): Promise<Lightline> {
+    //     // for (const [lineId, line] of this.lightlines) {
+    //     //     if (line.LightId == LightId) {
+    //     //         return line;
+    //     //     }
+    //     // }
+
+    //     throw new Error("No Lightline could be found!");
+    // }
 }

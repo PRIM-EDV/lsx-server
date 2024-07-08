@@ -1,60 +1,34 @@
-import { PowerLineId } from "proto/lsx.power";
+import { LightDMXState, LightId, LightSwitchState } from "proto/lsx.light";
+import { PowerState } from "proto/lsx.power";
 import { QlcService } from "src/platform/qlc/qlc.service";
 
-
-export enum LightLineMode {
-    MODE_BLACKOUT = 1,
-    MODE_WHITE = 2,
-    MODE_RED = 3,
-    MODE_FLICKER = 4
-}
-
-export type LightLineMapping = Map<LightLineMode, number>;
-
-export enum LightLineId {
-    LINE_EMPTY = 0,
-    LINE_OG_BASE_MED = 1,
-    LINE_OG_BASE_ADM = 2,
-    LINE_OG_BASE_CIC = 3,
-    LINE_OG_BASE_SCI = 4,
-    LINE_OG_BASE_TEC = 5,
-    LINE_OG_BASE_HC = 7,
-    LINE_OG_HALL = 8,
-    LINE_OG_COURTYARD = 9,
-    LINE_OG_MESSHALL = 10,
-    LINE_OG_GATE = 11,
-    LINE_OG_PARCELS = 12,
-    LINE_UG_PARCELS_LEFT = 13,
-    LINE_UG_PARCELS_RIGHT = 14,
-    LINE_UG_HALL = 15,
-    LINE_OG_LOG = 16,
-    LINE_OG_TUNNEL= 17,
-    LINE_UG_RWALL = 18
-}
+export type LightDMXStates = Map<LightDMXState, number>;
 
 export class Lightline {
     public static dmx: QlcService;
-
+    public id: LightId;
     public staticCue: number;
     public flickerCue: number;
     public specialCue?: number;
-    public powerLineId : PowerLineId = 0;
-    public mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE = LightLineMode.MODE_WHITE;
-    public powered: boolean = true;
+
+    public dmxState: LightDMXState.DMX_STATE_OFF | LightDMXState.DMX_STATE_RED | LightDMXState.DMX_STATE_WHITE = LightDMXState.DMX_STATE_OFF;
+    public powerState: PowerState = PowerState.POWER_STATE_POWERED;
+    public switchState: LightSwitchState = LightSwitchState.SWITCH_STATE_ON;
+
     public flicker: boolean = true;
 
-    private mapping: LightLineMapping = new Map([
-        [LightLineMode.MODE_BLACKOUT, 0],
-        [LightLineMode.MODE_RED, 1],
-        [LightLineMode.MODE_WHITE, 2],
+    private dmxStates: LightDMXStates = new Map([
+        [LightDMXState.DMX_STATE_OFF, 0],
+        [LightDMXState.DMX_STATE_RED, 1],
+        [LightDMXState.DMX_STATE_WHITE, 2],
     ])
 
-    constructor(staticCue: number, flickerCue: number, powerLineId?: PowerLineId, mapping?: LightLineMapping) {
+    constructor(staticCue: number, flickerCue: number, id?: LightId, states?: LightDMXStates) {
         this.staticCue = staticCue;
         this.flickerCue = flickerCue;
 
-        this.powerLineId = powerLineId ? powerLineId : PowerLineId.LINE_EMPTY;
-        this.mapping = mapping ? mapping : this.mapping;
+        this.id = id ? id : LightId.LIGHT_EMPTY;
+        this.dmxStates = states ? states : this.dmxStates;
     }
 
     public async setBlackout(blackout) {
@@ -63,53 +37,54 @@ export class Lightline {
             await Lightline.dmx.setCue(this.specialCue, 'STOP');
           }
           await Lightline.dmx.setCue(this.flickerCue, 'STOP');
-          await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping.get(LightLineMode.MODE_BLACKOUT));
+          await Lightline.dmx.setCue(this.staticCue, 'STEP', this.dmxStates.get(LightDMXState.DMX_STATE_OFF));
         } else {
-          await this.setMode(this.mode);   
+          await this.setDmxState(this.dmxState);   
         }
     }
 
-    public async setPower(power: boolean) {
-        this.powered = power;
+    public async setPowerState(power: PowerState) {
+        this.powerState = power;
 
-        if (power) {
-            console.log(this.mode);
-            await this.setMode(this.mode);   
+        if (power && this.switchState === LightSwitchState.SWITCH_STATE_ON) {
+            await this.setDmxState(this.dmxState);   
         } else {
             if (this.specialCue) {
                 await Lightline.dmx.setCue(this.specialCue, 'STOP');
               }
           await Lightline.dmx.setCue(this.flickerCue, 'STOP');
-          await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping.get(LightLineMode.MODE_BLACKOUT));
+          await Lightline.dmx.setCue(this.staticCue, 'STEP', this.dmxStates.get(LightDMXState.DMX_STATE_OFF));
         }
 
     }
 
-    public async setMode(mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
-        switch (mode) {
-            case LightLineMode.MODE_BLACKOUT:
-            case LightLineMode.MODE_RED:
-            case LightLineMode.MODE_WHITE:
-                await this.setStatic(mode);
+    public async setDmxState(state: LightDMXState) {
+        switch (state) {
+            case LightDMXState.DMX_STATE_OFF:
+            case LightDMXState.DMX_STATE_RED:
+            case LightDMXState.DMX_STATE_WHITE:
+                await this.setStatic(state); break
+            case LightDMXState.DMX_STATE_FLICKER:
+                await this.setFlicker(true);
         }
     }
 
-    public async setStatic(mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
-        if (this.powered) {
+    public async setStatic(state: LightDMXState.DMX_STATE_OFF | LightDMXState.DMX_STATE_RED | LightDMXState.DMX_STATE_WHITE) {
+        if (this.powerState == PowerState.POWER_STATE_POWERED && this.switchState == LightSwitchState.SWITCH_STATE_ON) {
             if (this.specialCue) {
                 await Lightline.dmx.setCue(this.specialCue, 'STOP');
               }
             await Lightline.dmx.setCue(this.flickerCue, 'STOP');
-            await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping.get(mode));
+            await Lightline.dmx.setCue(this.staticCue, 'STEP', this.dmxStates.get(state));
         } else {
             if (this.specialCue) {
                 await Lightline.dmx.setCue(this.specialCue, 'STOP');
               }
             await Lightline.dmx.setCue(this.flickerCue, 'STOP');
-            await Lightline.dmx.setCue(this.staticCue, 'STEP', this.mapping.get(LightLineMode.MODE_BLACKOUT));
+            await Lightline.dmx.setCue(this.staticCue, 'STEP', this.dmxStates.get(LightDMXState.DMX_STATE_OFF));
         }
 
-        this.mode = mode;
+        this.dmxState = state;
     }
 
     public async setSpecial(special: boolean) {
@@ -118,12 +93,12 @@ export class Lightline {
             await Lightline.dmx.setCue(this.staticCue, 'STOP');
             await Lightline.dmx.setCue(this.specialCue, 'PLAY');
         } else {
-            this.setStatic(this.mode);
+            this.setStatic(this.dmxState);
         }
     }
 
     public async setFlicker(flicker: boolean) {
-        if (this.powered) {
+        if (this.powerState == PowerState.POWER_STATE_POWERED && this.switchState == LightSwitchState.SWITCH_STATE_ON) {
             if (flicker) {
                 if (this.specialCue) {
                     await Lightline.dmx.setCue(this.specialCue, 'STOP');
@@ -131,7 +106,7 @@ export class Lightline {
                 await Lightline.dmx.setCue(this.staticCue, 'STOP');
                 await Lightline.dmx.setCue(this.flickerCue, 'PLAY');
             } else {
-                this.setStatic(this.mode);
+                this.setStatic(this.dmxState);
             }
         }
 

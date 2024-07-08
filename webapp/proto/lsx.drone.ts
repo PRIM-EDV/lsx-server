@@ -150,21 +150,13 @@ export function modeSilentStateToJSON(object: ModeSilentState): string {
   }
 }
 
-export interface BombBase {
-  request?: BombBase_Request | undefined;
-  response?: BombBase_Response | undefined;
-  error: string | undefined;
-}
+export interface BombBase {}
 
 export interface BombBase_Response {}
 
 export interface BombBase_Request {}
 
-export interface BombArea {
-  request?: BombArea_Request | undefined;
-  response?: BombArea_Response | undefined;
-  error: string | undefined;
-}
+export interface BombArea {}
 
 export interface BombArea_Response {}
 
@@ -172,11 +164,7 @@ export interface BombArea_Request {
   id: BombAreaId;
 }
 
-export interface GetBombAreaState {
-  request?: GetBombAreaState_Request | undefined;
-  response?: GetBombAreaState_Response | undefined;
-  error: string | undefined;
-}
+export interface GetBombAreaState {}
 
 export interface GetBombAreaState_Response {
   state: BombAreaState;
@@ -186,11 +174,7 @@ export interface GetBombAreaState_Request {
   id: BombAreaId;
 }
 
-export interface GetModeSilentState {
-  request?: GetModeSilentState_Request | undefined;
-  response?: GetModeSilentState_Response | undefined;
-  error: string | undefined;
-}
+export interface GetModeSilentState {}
 
 export interface GetModeSilentState_Response {
   state: ModeSilentState;
@@ -198,11 +182,7 @@ export interface GetModeSilentState_Response {
 
 export interface GetModeSilentState_Request {}
 
-export interface SetModeSilentState {
-  request?: SetModeSilentState_Request | undefined;
-  response?: SetModeSilentState_Response | undefined;
-  error: string | undefined;
-}
+export interface SetModeSilentState {}
 
 export interface SetModeSilentState_Request {
   state: ModeSilentState;
@@ -211,29 +191,11 @@ export interface SetModeSilentState_Request {
 export interface SetModeSilentState_Response {}
 
 function createBaseBombBase(): BombBase {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const BombBase = {
-  encode(
-    message: BombBase,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.request !== undefined) {
-      BombBase_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      BombBase_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
+  encode(_: BombBase, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
@@ -244,15 +206,6 @@ export const BombBase = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = BombBase_Request.decode(reader, reader.uint32());
-          break;
-        case 2:
-          message.response = BombBase_Response.decode(reader, reader.uint32());
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -261,43 +214,17 @@ export const BombBase = {
     return message;
   },
 
-  fromJSON(object: any): BombBase {
-    return {
-      request: isSet(object.request)
-        ? BombBase_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? BombBase_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): BombBase {
+    return {};
   },
 
-  toJSON(message: BombBase): unknown {
+  toJSON(_: BombBase): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? BombBase_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? BombBase_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<BombBase>, I>>(object: I): BombBase {
+  fromPartial<I extends Exact<DeepPartial<BombBase>, I>>(_: I): BombBase {
     const message = createBaseBombBase();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? BombBase_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? BombBase_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };
@@ -391,29 +318,11 @@ export const BombBase_Request = {
 };
 
 function createBaseBombArea(): BombArea {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const BombArea = {
-  encode(
-    message: BombArea,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.request !== undefined) {
-      BombArea_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      BombArea_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
+  encode(_: BombArea, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
@@ -424,15 +333,6 @@ export const BombArea = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = BombArea_Request.decode(reader, reader.uint32());
-          break;
-        case 2:
-          message.response = BombArea_Response.decode(reader, reader.uint32());
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -441,43 +341,17 @@ export const BombArea = {
     return message;
   },
 
-  fromJSON(object: any): BombArea {
-    return {
-      request: isSet(object.request)
-        ? BombArea_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? BombArea_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): BombArea {
+    return {};
   },
 
-  toJSON(message: BombArea): unknown {
+  toJSON(_: BombArea): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? BombArea_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? BombArea_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<BombArea>, I>>(object: I): BombArea {
+  fromPartial<I extends Exact<DeepPartial<BombArea>, I>>(_: I): BombArea {
     const message = createBaseBombArea();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? BombArea_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? BombArea_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };
@@ -581,29 +455,14 @@ export const BombArea_Request = {
 };
 
 function createBaseGetBombAreaState(): GetBombAreaState {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const GetBombAreaState = {
   encode(
-    message: GetBombAreaState,
+    _: GetBombAreaState,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      GetBombAreaState_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      GetBombAreaState_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -614,21 +473,6 @@ export const GetBombAreaState = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = GetBombAreaState_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = GetBombAreaState_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -637,45 +481,19 @@ export const GetBombAreaState = {
     return message;
   },
 
-  fromJSON(object: any): GetBombAreaState {
-    return {
-      request: isSet(object.request)
-        ? GetBombAreaState_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? GetBombAreaState_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): GetBombAreaState {
+    return {};
   },
 
-  toJSON(message: GetBombAreaState): unknown {
+  toJSON(_: GetBombAreaState): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? GetBombAreaState_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? GetBombAreaState_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<GetBombAreaState>, I>>(
-    object: I
+    _: I
   ): GetBombAreaState {
     const message = createBaseGetBombAreaState();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? GetBombAreaState_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? GetBombAreaState_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };
@@ -796,29 +614,14 @@ export const GetBombAreaState_Request = {
 };
 
 function createBaseGetModeSilentState(): GetModeSilentState {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const GetModeSilentState = {
   encode(
-    message: GetModeSilentState,
+    _: GetModeSilentState,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      GetModeSilentState_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      GetModeSilentState_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -829,21 +632,6 @@ export const GetModeSilentState = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = GetModeSilentState_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = GetModeSilentState_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -852,45 +640,19 @@ export const GetModeSilentState = {
     return message;
   },
 
-  fromJSON(object: any): GetModeSilentState {
-    return {
-      request: isSet(object.request)
-        ? GetModeSilentState_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? GetModeSilentState_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): GetModeSilentState {
+    return {};
   },
 
-  toJSON(message: GetModeSilentState): unknown {
+  toJSON(_: GetModeSilentState): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? GetModeSilentState_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? GetModeSilentState_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<GetModeSilentState>, I>>(
-    object: I
+    _: I
   ): GetModeSilentState {
     const message = createBaseGetModeSilentState();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? GetModeSilentState_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? GetModeSilentState_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };
@@ -1001,29 +763,14 @@ export const GetModeSilentState_Request = {
 };
 
 function createBaseSetModeSilentState(): SetModeSilentState {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const SetModeSilentState = {
   encode(
-    message: SetModeSilentState,
+    _: SetModeSilentState,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      SetModeSilentState_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      SetModeSilentState_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -1034,21 +781,6 @@ export const SetModeSilentState = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = SetModeSilentState_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = SetModeSilentState_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1057,45 +789,19 @@ export const SetModeSilentState = {
     return message;
   },
 
-  fromJSON(object: any): SetModeSilentState {
-    return {
-      request: isSet(object.request)
-        ? SetModeSilentState_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? SetModeSilentState_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): SetModeSilentState {
+    return {};
   },
 
-  toJSON(message: SetModeSilentState): unknown {
+  toJSON(_: SetModeSilentState): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? SetModeSilentState_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? SetModeSilentState_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<SetModeSilentState>, I>>(
-    object: I
+    _: I
   ): SetModeSilentState {
     const message = createBaseSetModeSilentState();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? SetModeSilentState_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? SetModeSilentState_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };

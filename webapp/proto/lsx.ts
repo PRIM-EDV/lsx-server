@@ -2,12 +2,8 @@
 import {
   GetPowerPlantState_Request,
   SetPowerPlantState_Request,
-  GetPowerLineState_Request,
-  SetPowerLineState_Request,
   GetPowerPlantState_Response,
   SetPowerPlantState_Response,
-  GetPowerLineState_Response,
-  SetPowerLineState_Response,
 } from "./lsx.power";
 import {
   GetLockdownState_Request,
@@ -43,6 +39,20 @@ import {
   BombArea_Response,
   GetBombAreaState_Response,
 } from "./lsx.drone";
+import {
+  GetLightPowerState_Request,
+  SetLightPowerState_Request,
+  GetLightSwitchState_Request,
+  SetLightSwitchState_Request,
+  GetLightDmxState_Request,
+  SetLightDmxState_Request,
+  GetLightPowerState_Response,
+  SetLightPowerState_Response,
+  GetLightSwitchState_Response,
+  SetLightSwitchState_Response,
+  GetLightDmxState_Response,
+  SetLightDmxState_Response,
+} from "./lsx.light";
 import * as _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "";
@@ -50,8 +60,10 @@ export const protobufPackage = "";
 export interface Request {
   getPowerPlantState?: GetPowerPlantState_Request | undefined;
   setPowerPlantState?: SetPowerPlantState_Request | undefined;
-  getPowerLineState?: GetPowerLineState_Request | undefined;
-  setPowerLineState?: SetPowerLineState_Request | undefined;
+  /**
+   * GetPowerLineState.Request get_power_line_state = 3;
+   * SetPowerLineState.Request set_power_line_state = 4;
+   */
   getAnnouncementFiles?: GetAnnouncementFiles_Request | undefined;
   getLockdownState?: GetLockdownState_Request | undefined;
   setLockdownState?: SetLockdownState_Request | undefined;
@@ -68,13 +80,22 @@ export interface Request {
   bombBase?: BombBase_Request | undefined;
   bombArea?: BombArea_Request | undefined;
   getBombAreaState?: GetBombAreaState_Request | undefined;
+  /** Light */
+  getLightPowerState?: GetLightPowerState_Request | undefined;
+  setLightPowerState?: SetLightPowerState_Request | undefined;
+  getLightSwitchState?: GetLightSwitchState_Request | undefined;
+  setLightSwitchState?: SetLightSwitchState_Request | undefined;
+  getLightDmxState?: GetLightDmxState_Request | undefined;
+  setLightDmxState?: SetLightDmxState_Request | undefined;
 }
 
 export interface Response {
   getPowerPlantState?: GetPowerPlantState_Response | undefined;
   setPowerPlantState?: SetPowerPlantState_Response | undefined;
-  getPowerLineState?: GetPowerLineState_Response | undefined;
-  setPowerLineState?: SetPowerLineState_Response | undefined;
+  /**
+   * GetPowerLineState.Response get_power_line_state = 3;
+   * SetPowerLineState.Response set_power_line_state = 4;
+   */
   getAnnouncementFiles?: GetAnnouncementFiles_Response | undefined;
   getLockdownState?: GetLockdownState_Response | undefined;
   setLockdownState?: SetLockdownState_Response | undefined;
@@ -91,19 +112,28 @@ export interface Response {
   bombBase?: BombBase_Response | undefined;
   bombArea?: BombArea_Response | undefined;
   getBombAreaState?: GetBombAreaState_Response | undefined;
+  /** Light */
+  getLightPowerState?: GetLightPowerState_Response | undefined;
+  setLightPowerState?: SetLightPowerState_Response | undefined;
+  getLightSwitchState?: GetLightSwitchState_Response | undefined;
+  setLightSwitchState?: SetLightSwitchState_Response | undefined;
+  getLightDmxState?: GetLightDmxState_Response | undefined;
+  setLightDmxState?: SetLightDmxState_Response | undefined;
+}
+
+export interface Error {
+  type: string;
+  message: string;
 }
 
 export interface LsxMessage {
   id: string;
   request?: Request | undefined;
   response?: Response | undefined;
+  error?: Error | undefined;
 }
 
-export interface GetAnnouncementFiles {
-  request?: GetAnnouncementFiles_Request | undefined;
-  response?: GetAnnouncementFiles_Response | undefined;
-  error: string | undefined;
-}
+export interface GetAnnouncementFiles {}
 
 export interface GetAnnouncementFiles_Response {
   files: string[];
@@ -111,11 +141,7 @@ export interface GetAnnouncementFiles_Response {
 
 export interface GetAnnouncementFiles_Request {}
 
-export interface PlayAnnouncement {
-  request?: PlayAnnouncement_Request | undefined;
-  response?: PlayAnnouncement_Response | undefined;
-  error: string | undefined;
-}
+export interface PlayAnnouncement {}
 
 export interface PlayAnnouncement_Request {
   filepath: string;
@@ -127,8 +153,6 @@ function createBaseRequest(): Request {
   return {
     getPowerPlantState: undefined,
     setPowerPlantState: undefined,
-    getPowerLineState: undefined,
-    setPowerLineState: undefined,
     getAnnouncementFiles: undefined,
     getLockdownState: undefined,
     setLockdownState: undefined,
@@ -145,6 +169,12 @@ function createBaseRequest(): Request {
     bombBase: undefined,
     bombArea: undefined,
     getBombAreaState: undefined,
+    getLightPowerState: undefined,
+    setLightPowerState: undefined,
+    getLightSwitchState: undefined,
+    setLightSwitchState: undefined,
+    getLightDmxState: undefined,
+    setLightDmxState: undefined,
   };
 }
 
@@ -163,18 +193,6 @@ export const Request = {
       SetPowerPlantState_Request.encode(
         message.setPowerPlantState,
         writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.getPowerLineState !== undefined) {
-      GetPowerLineState_Request.encode(
-        message.getPowerLineState,
-        writer.uint32(26).fork()
-      ).ldelim();
-    }
-    if (message.setPowerLineState !== undefined) {
-      SetPowerLineState_Request.encode(
-        message.setPowerLineState,
-        writer.uint32(34).fork()
       ).ldelim();
     }
     if (message.getAnnouncementFiles !== undefined) {
@@ -273,6 +291,42 @@ export const Request = {
         writer.uint32(162).fork()
       ).ldelim();
     }
+    if (message.getLightPowerState !== undefined) {
+      GetLightPowerState_Request.encode(
+        message.getLightPowerState,
+        writer.uint32(170).fork()
+      ).ldelim();
+    }
+    if (message.setLightPowerState !== undefined) {
+      SetLightPowerState_Request.encode(
+        message.setLightPowerState,
+        writer.uint32(178).fork()
+      ).ldelim();
+    }
+    if (message.getLightSwitchState !== undefined) {
+      GetLightSwitchState_Request.encode(
+        message.getLightSwitchState,
+        writer.uint32(186).fork()
+      ).ldelim();
+    }
+    if (message.setLightSwitchState !== undefined) {
+      SetLightSwitchState_Request.encode(
+        message.setLightSwitchState,
+        writer.uint32(194).fork()
+      ).ldelim();
+    }
+    if (message.getLightDmxState !== undefined) {
+      GetLightDmxState_Request.encode(
+        message.getLightDmxState,
+        writer.uint32(202).fork()
+      ).ldelim();
+    }
+    if (message.setLightDmxState !== undefined) {
+      SetLightDmxState_Request.encode(
+        message.setLightDmxState,
+        writer.uint32(210).fork()
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -291,18 +345,6 @@ export const Request = {
           break;
         case 2:
           message.setPowerPlantState = SetPowerPlantState_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.getPowerLineState = GetPowerLineState_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 4:
-          message.setPowerLineState = SetPowerLineState_Request.decode(
             reader,
             reader.uint32()
           );
@@ -393,6 +435,42 @@ export const Request = {
             reader.uint32()
           );
           break;
+        case 21:
+          message.getLightPowerState = GetLightPowerState_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 22:
+          message.setLightPowerState = SetLightPowerState_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 23:
+          message.getLightSwitchState = GetLightSwitchState_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 24:
+          message.setLightSwitchState = SetLightSwitchState_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 25:
+          message.getLightDmxState = GetLightDmxState_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 26:
+          message.setLightDmxState = SetLightDmxState_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -408,12 +486,6 @@ export const Request = {
         : undefined,
       setPowerPlantState: isSet(object.setPowerPlantState)
         ? SetPowerPlantState_Request.fromJSON(object.setPowerPlantState)
-        : undefined,
-      getPowerLineState: isSet(object.getPowerLineState)
-        ? GetPowerLineState_Request.fromJSON(object.getPowerLineState)
-        : undefined,
-      setPowerLineState: isSet(object.setPowerLineState)
-        ? SetPowerLineState_Request.fromJSON(object.setPowerLineState)
         : undefined,
       getAnnouncementFiles: isSet(object.getAnnouncementFiles)
         ? GetAnnouncementFiles_Request.fromJSON(object.getAnnouncementFiles)
@@ -467,6 +539,24 @@ export const Request = {
       getBombAreaState: isSet(object.getBombAreaState)
         ? GetBombAreaState_Request.fromJSON(object.getBombAreaState)
         : undefined,
+      getLightPowerState: isSet(object.getLightPowerState)
+        ? GetLightPowerState_Request.fromJSON(object.getLightPowerState)
+        : undefined,
+      setLightPowerState: isSet(object.setLightPowerState)
+        ? SetLightPowerState_Request.fromJSON(object.setLightPowerState)
+        : undefined,
+      getLightSwitchState: isSet(object.getLightSwitchState)
+        ? GetLightSwitchState_Request.fromJSON(object.getLightSwitchState)
+        : undefined,
+      setLightSwitchState: isSet(object.setLightSwitchState)
+        ? SetLightSwitchState_Request.fromJSON(object.setLightSwitchState)
+        : undefined,
+      getLightDmxState: isSet(object.getLightDmxState)
+        ? GetLightDmxState_Request.fromJSON(object.getLightDmxState)
+        : undefined,
+      setLightDmxState: isSet(object.setLightDmxState)
+        ? SetLightDmxState_Request.fromJSON(object.setLightDmxState)
+        : undefined,
     };
   },
 
@@ -479,14 +569,6 @@ export const Request = {
     message.setPowerPlantState !== undefined &&
       (obj.setPowerPlantState = message.setPowerPlantState
         ? SetPowerPlantState_Request.toJSON(message.setPowerPlantState)
-        : undefined);
-    message.getPowerLineState !== undefined &&
-      (obj.getPowerLineState = message.getPowerLineState
-        ? GetPowerLineState_Request.toJSON(message.getPowerLineState)
-        : undefined);
-    message.setPowerLineState !== undefined &&
-      (obj.setPowerLineState = message.setPowerLineState
-        ? SetPowerLineState_Request.toJSON(message.setPowerLineState)
         : undefined);
     message.getAnnouncementFiles !== undefined &&
       (obj.getAnnouncementFiles = message.getAnnouncementFiles
@@ -556,6 +638,30 @@ export const Request = {
       (obj.getBombAreaState = message.getBombAreaState
         ? GetBombAreaState_Request.toJSON(message.getBombAreaState)
         : undefined);
+    message.getLightPowerState !== undefined &&
+      (obj.getLightPowerState = message.getLightPowerState
+        ? GetLightPowerState_Request.toJSON(message.getLightPowerState)
+        : undefined);
+    message.setLightPowerState !== undefined &&
+      (obj.setLightPowerState = message.setLightPowerState
+        ? SetLightPowerState_Request.toJSON(message.setLightPowerState)
+        : undefined);
+    message.getLightSwitchState !== undefined &&
+      (obj.getLightSwitchState = message.getLightSwitchState
+        ? GetLightSwitchState_Request.toJSON(message.getLightSwitchState)
+        : undefined);
+    message.setLightSwitchState !== undefined &&
+      (obj.setLightSwitchState = message.setLightSwitchState
+        ? SetLightSwitchState_Request.toJSON(message.setLightSwitchState)
+        : undefined);
+    message.getLightDmxState !== undefined &&
+      (obj.getLightDmxState = message.getLightDmxState
+        ? GetLightDmxState_Request.toJSON(message.getLightDmxState)
+        : undefined);
+    message.setLightDmxState !== undefined &&
+      (obj.setLightDmxState = message.setLightDmxState
+        ? SetLightDmxState_Request.toJSON(message.setLightDmxState)
+        : undefined);
     return obj;
   },
 
@@ -570,16 +676,6 @@ export const Request = {
       object.setPowerPlantState !== undefined &&
       object.setPowerPlantState !== null
         ? SetPowerPlantState_Request.fromPartial(object.setPowerPlantState)
-        : undefined;
-    message.getPowerLineState =
-      object.getPowerLineState !== undefined &&
-      object.getPowerLineState !== null
-        ? GetPowerLineState_Request.fromPartial(object.getPowerLineState)
-        : undefined;
-    message.setPowerLineState =
-      object.setPowerLineState !== undefined &&
-      object.setPowerLineState !== null
-        ? SetPowerLineState_Request.fromPartial(object.setPowerLineState)
         : undefined;
     message.getAnnouncementFiles =
       object.getAnnouncementFiles !== undefined &&
@@ -654,6 +750,34 @@ export const Request = {
       object.getBombAreaState !== undefined && object.getBombAreaState !== null
         ? GetBombAreaState_Request.fromPartial(object.getBombAreaState)
         : undefined;
+    message.getLightPowerState =
+      object.getLightPowerState !== undefined &&
+      object.getLightPowerState !== null
+        ? GetLightPowerState_Request.fromPartial(object.getLightPowerState)
+        : undefined;
+    message.setLightPowerState =
+      object.setLightPowerState !== undefined &&
+      object.setLightPowerState !== null
+        ? SetLightPowerState_Request.fromPartial(object.setLightPowerState)
+        : undefined;
+    message.getLightSwitchState =
+      object.getLightSwitchState !== undefined &&
+      object.getLightSwitchState !== null
+        ? GetLightSwitchState_Request.fromPartial(object.getLightSwitchState)
+        : undefined;
+    message.setLightSwitchState =
+      object.setLightSwitchState !== undefined &&
+      object.setLightSwitchState !== null
+        ? SetLightSwitchState_Request.fromPartial(object.setLightSwitchState)
+        : undefined;
+    message.getLightDmxState =
+      object.getLightDmxState !== undefined && object.getLightDmxState !== null
+        ? GetLightDmxState_Request.fromPartial(object.getLightDmxState)
+        : undefined;
+    message.setLightDmxState =
+      object.setLightDmxState !== undefined && object.setLightDmxState !== null
+        ? SetLightDmxState_Request.fromPartial(object.setLightDmxState)
+        : undefined;
     return message;
   },
 };
@@ -662,8 +786,6 @@ function createBaseResponse(): Response {
   return {
     getPowerPlantState: undefined,
     setPowerPlantState: undefined,
-    getPowerLineState: undefined,
-    setPowerLineState: undefined,
     getAnnouncementFiles: undefined,
     getLockdownState: undefined,
     setLockdownState: undefined,
@@ -680,6 +802,12 @@ function createBaseResponse(): Response {
     bombBase: undefined,
     bombArea: undefined,
     getBombAreaState: undefined,
+    getLightPowerState: undefined,
+    setLightPowerState: undefined,
+    getLightSwitchState: undefined,
+    setLightSwitchState: undefined,
+    getLightDmxState: undefined,
+    setLightDmxState: undefined,
   };
 }
 
@@ -698,18 +826,6 @@ export const Response = {
       SetPowerPlantState_Response.encode(
         message.setPowerPlantState,
         writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.getPowerLineState !== undefined) {
-      GetPowerLineState_Response.encode(
-        message.getPowerLineState,
-        writer.uint32(26).fork()
-      ).ldelim();
-    }
-    if (message.setPowerLineState !== undefined) {
-      SetPowerLineState_Response.encode(
-        message.setPowerLineState,
-        writer.uint32(34).fork()
       ).ldelim();
     }
     if (message.getAnnouncementFiles !== undefined) {
@@ -808,6 +924,42 @@ export const Response = {
         writer.uint32(162).fork()
       ).ldelim();
     }
+    if (message.getLightPowerState !== undefined) {
+      GetLightPowerState_Response.encode(
+        message.getLightPowerState,
+        writer.uint32(170).fork()
+      ).ldelim();
+    }
+    if (message.setLightPowerState !== undefined) {
+      SetLightPowerState_Response.encode(
+        message.setLightPowerState,
+        writer.uint32(178).fork()
+      ).ldelim();
+    }
+    if (message.getLightSwitchState !== undefined) {
+      GetLightSwitchState_Response.encode(
+        message.getLightSwitchState,
+        writer.uint32(186).fork()
+      ).ldelim();
+    }
+    if (message.setLightSwitchState !== undefined) {
+      SetLightSwitchState_Response.encode(
+        message.setLightSwitchState,
+        writer.uint32(194).fork()
+      ).ldelim();
+    }
+    if (message.getLightDmxState !== undefined) {
+      GetLightDmxState_Response.encode(
+        message.getLightDmxState,
+        writer.uint32(202).fork()
+      ).ldelim();
+    }
+    if (message.setLightDmxState !== undefined) {
+      SetLightDmxState_Response.encode(
+        message.setLightDmxState,
+        writer.uint32(210).fork()
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -826,18 +978,6 @@ export const Response = {
           break;
         case 2:
           message.setPowerPlantState = SetPowerPlantState_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.getPowerLineState = GetPowerLineState_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 4:
-          message.setPowerLineState = SetPowerLineState_Response.decode(
             reader,
             reader.uint32()
           );
@@ -928,6 +1068,42 @@ export const Response = {
             reader.uint32()
           );
           break;
+        case 21:
+          message.getLightPowerState = GetLightPowerState_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 22:
+          message.setLightPowerState = SetLightPowerState_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 23:
+          message.getLightSwitchState = GetLightSwitchState_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 24:
+          message.setLightSwitchState = SetLightSwitchState_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 25:
+          message.getLightDmxState = GetLightDmxState_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 26:
+          message.setLightDmxState = SetLightDmxState_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -943,12 +1119,6 @@ export const Response = {
         : undefined,
       setPowerPlantState: isSet(object.setPowerPlantState)
         ? SetPowerPlantState_Response.fromJSON(object.setPowerPlantState)
-        : undefined,
-      getPowerLineState: isSet(object.getPowerLineState)
-        ? GetPowerLineState_Response.fromJSON(object.getPowerLineState)
-        : undefined,
-      setPowerLineState: isSet(object.setPowerLineState)
-        ? SetPowerLineState_Response.fromJSON(object.setPowerLineState)
         : undefined,
       getAnnouncementFiles: isSet(object.getAnnouncementFiles)
         ? GetAnnouncementFiles_Response.fromJSON(object.getAnnouncementFiles)
@@ -1002,6 +1172,24 @@ export const Response = {
       getBombAreaState: isSet(object.getBombAreaState)
         ? GetBombAreaState_Response.fromJSON(object.getBombAreaState)
         : undefined,
+      getLightPowerState: isSet(object.getLightPowerState)
+        ? GetLightPowerState_Response.fromJSON(object.getLightPowerState)
+        : undefined,
+      setLightPowerState: isSet(object.setLightPowerState)
+        ? SetLightPowerState_Response.fromJSON(object.setLightPowerState)
+        : undefined,
+      getLightSwitchState: isSet(object.getLightSwitchState)
+        ? GetLightSwitchState_Response.fromJSON(object.getLightSwitchState)
+        : undefined,
+      setLightSwitchState: isSet(object.setLightSwitchState)
+        ? SetLightSwitchState_Response.fromJSON(object.setLightSwitchState)
+        : undefined,
+      getLightDmxState: isSet(object.getLightDmxState)
+        ? GetLightDmxState_Response.fromJSON(object.getLightDmxState)
+        : undefined,
+      setLightDmxState: isSet(object.setLightDmxState)
+        ? SetLightDmxState_Response.fromJSON(object.setLightDmxState)
+        : undefined,
     };
   },
 
@@ -1014,14 +1202,6 @@ export const Response = {
     message.setPowerPlantState !== undefined &&
       (obj.setPowerPlantState = message.setPowerPlantState
         ? SetPowerPlantState_Response.toJSON(message.setPowerPlantState)
-        : undefined);
-    message.getPowerLineState !== undefined &&
-      (obj.getPowerLineState = message.getPowerLineState
-        ? GetPowerLineState_Response.toJSON(message.getPowerLineState)
-        : undefined);
-    message.setPowerLineState !== undefined &&
-      (obj.setPowerLineState = message.setPowerLineState
-        ? SetPowerLineState_Response.toJSON(message.setPowerLineState)
         : undefined);
     message.getAnnouncementFiles !== undefined &&
       (obj.getAnnouncementFiles = message.getAnnouncementFiles
@@ -1091,6 +1271,30 @@ export const Response = {
       (obj.getBombAreaState = message.getBombAreaState
         ? GetBombAreaState_Response.toJSON(message.getBombAreaState)
         : undefined);
+    message.getLightPowerState !== undefined &&
+      (obj.getLightPowerState = message.getLightPowerState
+        ? GetLightPowerState_Response.toJSON(message.getLightPowerState)
+        : undefined);
+    message.setLightPowerState !== undefined &&
+      (obj.setLightPowerState = message.setLightPowerState
+        ? SetLightPowerState_Response.toJSON(message.setLightPowerState)
+        : undefined);
+    message.getLightSwitchState !== undefined &&
+      (obj.getLightSwitchState = message.getLightSwitchState
+        ? GetLightSwitchState_Response.toJSON(message.getLightSwitchState)
+        : undefined);
+    message.setLightSwitchState !== undefined &&
+      (obj.setLightSwitchState = message.setLightSwitchState
+        ? SetLightSwitchState_Response.toJSON(message.setLightSwitchState)
+        : undefined);
+    message.getLightDmxState !== undefined &&
+      (obj.getLightDmxState = message.getLightDmxState
+        ? GetLightDmxState_Response.toJSON(message.getLightDmxState)
+        : undefined);
+    message.setLightDmxState !== undefined &&
+      (obj.setLightDmxState = message.setLightDmxState
+        ? SetLightDmxState_Response.toJSON(message.setLightDmxState)
+        : undefined);
     return obj;
   },
 
@@ -1105,16 +1309,6 @@ export const Response = {
       object.setPowerPlantState !== undefined &&
       object.setPowerPlantState !== null
         ? SetPowerPlantState_Response.fromPartial(object.setPowerPlantState)
-        : undefined;
-    message.getPowerLineState =
-      object.getPowerLineState !== undefined &&
-      object.getPowerLineState !== null
-        ? GetPowerLineState_Response.fromPartial(object.getPowerLineState)
-        : undefined;
-    message.setPowerLineState =
-      object.setPowerLineState !== undefined &&
-      object.setPowerLineState !== null
-        ? SetPowerLineState_Response.fromPartial(object.setPowerLineState)
         : undefined;
     message.getAnnouncementFiles =
       object.getAnnouncementFiles !== undefined &&
@@ -1189,12 +1383,98 @@ export const Response = {
       object.getBombAreaState !== undefined && object.getBombAreaState !== null
         ? GetBombAreaState_Response.fromPartial(object.getBombAreaState)
         : undefined;
+    message.getLightPowerState =
+      object.getLightPowerState !== undefined &&
+      object.getLightPowerState !== null
+        ? GetLightPowerState_Response.fromPartial(object.getLightPowerState)
+        : undefined;
+    message.setLightPowerState =
+      object.setLightPowerState !== undefined &&
+      object.setLightPowerState !== null
+        ? SetLightPowerState_Response.fromPartial(object.setLightPowerState)
+        : undefined;
+    message.getLightSwitchState =
+      object.getLightSwitchState !== undefined &&
+      object.getLightSwitchState !== null
+        ? GetLightSwitchState_Response.fromPartial(object.getLightSwitchState)
+        : undefined;
+    message.setLightSwitchState =
+      object.setLightSwitchState !== undefined &&
+      object.setLightSwitchState !== null
+        ? SetLightSwitchState_Response.fromPartial(object.setLightSwitchState)
+        : undefined;
+    message.getLightDmxState =
+      object.getLightDmxState !== undefined && object.getLightDmxState !== null
+        ? GetLightDmxState_Response.fromPartial(object.getLightDmxState)
+        : undefined;
+    message.setLightDmxState =
+      object.setLightDmxState !== undefined && object.setLightDmxState !== null
+        ? SetLightDmxState_Response.fromPartial(object.setLightDmxState)
+        : undefined;
+    return message;
+  },
+};
+
+function createBaseError(): Error {
+  return { type: "", message: "" };
+}
+
+export const Error = {
+  encode(message: Error, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.type !== "") {
+      writer.uint32(10).string(message.type);
+    }
+    if (message.message !== "") {
+      writer.uint32(18).string(message.message);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Error {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseError();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.type = reader.string();
+          break;
+        case 2:
+          message.message = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Error {
+    return {
+      type: isSet(object.type) ? String(object.type) : "",
+      message: isSet(object.message) ? String(object.message) : "",
+    };
+  },
+
+  toJSON(message: Error): unknown {
+    const obj: any = {};
+    message.type !== undefined && (obj.type = message.type);
+    message.message !== undefined && (obj.message = message.message);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Error>, I>>(object: I): Error {
+    const message = createBaseError();
+    message.type = object.type ?? "";
+    message.message = object.message ?? "";
     return message;
   },
 };
 
 function createBaseLsxMessage(): LsxMessage {
-  return { id: "", request: undefined, response: undefined };
+  return { id: "", request: undefined, response: undefined, error: undefined };
 }
 
 export const LsxMessage = {
@@ -1210,6 +1490,9 @@ export const LsxMessage = {
     }
     if (message.response !== undefined) {
       Response.encode(message.response, writer.uint32(26).fork()).ldelim();
+    }
+    if (message.error !== undefined) {
+      Error.encode(message.error, writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
@@ -1230,6 +1513,9 @@ export const LsxMessage = {
         case 3:
           message.response = Response.decode(reader, reader.uint32());
           break;
+        case 4:
+          message.error = Error.decode(reader, reader.uint32());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1247,6 +1533,7 @@ export const LsxMessage = {
       response: isSet(object.response)
         ? Response.fromJSON(object.response)
         : undefined,
+      error: isSet(object.error) ? Error.fromJSON(object.error) : undefined,
     };
   },
 
@@ -1261,6 +1548,8 @@ export const LsxMessage = {
       (obj.response = message.response
         ? Response.toJSON(message.response)
         : undefined);
+    message.error !== undefined &&
+      (obj.error = message.error ? Error.toJSON(message.error) : undefined);
     return obj;
   },
 
@@ -1277,34 +1566,23 @@ export const LsxMessage = {
       object.response !== undefined && object.response !== null
         ? Response.fromPartial(object.response)
         : undefined;
+    message.error =
+      object.error !== undefined && object.error !== null
+        ? Error.fromPartial(object.error)
+        : undefined;
     return message;
   },
 };
 
 function createBaseGetAnnouncementFiles(): GetAnnouncementFiles {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const GetAnnouncementFiles = {
   encode(
-    message: GetAnnouncementFiles,
+    _: GetAnnouncementFiles,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      GetAnnouncementFiles_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      GetAnnouncementFiles_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -1318,21 +1596,6 @@ export const GetAnnouncementFiles = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = GetAnnouncementFiles_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = GetAnnouncementFiles_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1341,45 +1604,19 @@ export const GetAnnouncementFiles = {
     return message;
   },
 
-  fromJSON(object: any): GetAnnouncementFiles {
-    return {
-      request: isSet(object.request)
-        ? GetAnnouncementFiles_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? GetAnnouncementFiles_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): GetAnnouncementFiles {
+    return {};
   },
 
-  toJSON(message: GetAnnouncementFiles): unknown {
+  toJSON(_: GetAnnouncementFiles): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? GetAnnouncementFiles_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? GetAnnouncementFiles_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<GetAnnouncementFiles>, I>>(
-    object: I
+    _: I
   ): GetAnnouncementFiles {
     const message = createBaseGetAnnouncementFiles();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? GetAnnouncementFiles_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? GetAnnouncementFiles_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };
@@ -1495,29 +1732,14 @@ export const GetAnnouncementFiles_Request = {
 };
 
 function createBasePlayAnnouncement(): PlayAnnouncement {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const PlayAnnouncement = {
   encode(
-    message: PlayAnnouncement,
+    _: PlayAnnouncement,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      PlayAnnouncement_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      PlayAnnouncement_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -1528,21 +1750,6 @@ export const PlayAnnouncement = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = PlayAnnouncement_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = PlayAnnouncement_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1551,45 +1758,19 @@ export const PlayAnnouncement = {
     return message;
   },
 
-  fromJSON(object: any): PlayAnnouncement {
-    return {
-      request: isSet(object.request)
-        ? PlayAnnouncement_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? PlayAnnouncement_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): PlayAnnouncement {
+    return {};
   },
 
-  toJSON(message: PlayAnnouncement): unknown {
+  toJSON(_: PlayAnnouncement): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? PlayAnnouncement_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? PlayAnnouncement_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<PlayAnnouncement>, I>>(
-    object: I
+    _: I
   ): PlayAnnouncement {
     const message = createBasePlayAnnouncement();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? PlayAnnouncement_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? PlayAnnouncement_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };

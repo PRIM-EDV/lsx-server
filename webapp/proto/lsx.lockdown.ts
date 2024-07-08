@@ -42,11 +42,7 @@ export function lockdownStateToJSON(object: LockdownState): string {
   }
 }
 
-export interface GetAutoLockdown {
-  request?: GetAutoLockdown_Request | undefined;
-  response?: GetAutoLockdown_Response | undefined;
-  error: string | undefined;
-}
+export interface GetAutoLockdown {}
 
 export interface GetAutoLockdown_Response {
   state: boolean;
@@ -54,11 +50,7 @@ export interface GetAutoLockdown_Response {
 
 export interface GetAutoLockdown_Request {}
 
-export interface SetAutoLockdown {
-  request?: SetAutoLockdown_Request | undefined;
-  response?: SetAutoLockdown_Response | undefined;
-  error: string | undefined;
-}
+export interface SetAutoLockdown {}
 
 export interface SetAutoLockdown_Request {
   state: boolean;
@@ -66,11 +58,7 @@ export interface SetAutoLockdown_Request {
 
 export interface SetAutoLockdown_Response {}
 
-export interface GetLockdownState {
-  request?: GetLockdownState_Request | undefined;
-  response?: GetLockdownState_Response | undefined;
-  error: string | undefined;
-}
+export interface GetLockdownState {}
 
 export interface GetLockdownState_Response {
   state: LockdownState;
@@ -78,11 +66,7 @@ export interface GetLockdownState_Response {
 
 export interface GetLockdownState_Request {}
 
-export interface SetLockdownState {
-  request?: SetLockdownState_Request | undefined;
-  response?: SetLockdownState_Response | undefined;
-  error: string | undefined;
-}
+export interface SetLockdownState {}
 
 export interface SetLockdownState_Request {
   state: LockdownState;
@@ -90,11 +74,7 @@ export interface SetLockdownState_Request {
 
 export interface SetLockdownState_Response {}
 
-export interface GetLockdownAnnouncements {
-  request?: GetLockdownAnnouncements_Request | undefined;
-  response?: GetLockdownAnnouncements_Response | undefined;
-  error: string | undefined;
-}
+export interface GetLockdownAnnouncements {}
 
 export interface GetLockdownAnnouncements_Response {
   state: boolean;
@@ -102,11 +82,7 @@ export interface GetLockdownAnnouncements_Response {
 
 export interface GetLockdownAnnouncements_Request {}
 
-export interface SetLockdownAnnouncements {
-  request?: SetLockdownAnnouncements_Request | undefined;
-  response?: SetLockdownAnnouncements_Response | undefined;
-  error: string | undefined;
-}
+export interface SetLockdownAnnouncements {}
 
 export interface SetLockdownAnnouncements_Request {
   state: boolean;
@@ -115,29 +91,14 @@ export interface SetLockdownAnnouncements_Request {
 export interface SetLockdownAnnouncements_Response {}
 
 function createBaseGetAutoLockdown(): GetAutoLockdown {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const GetAutoLockdown = {
   encode(
-    message: GetAutoLockdown,
+    _: GetAutoLockdown,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      GetAutoLockdown_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      GetAutoLockdown_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -148,21 +109,6 @@ export const GetAutoLockdown = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = GetAutoLockdown_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = GetAutoLockdown_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -171,45 +117,19 @@ export const GetAutoLockdown = {
     return message;
   },
 
-  fromJSON(object: any): GetAutoLockdown {
-    return {
-      request: isSet(object.request)
-        ? GetAutoLockdown_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? GetAutoLockdown_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): GetAutoLockdown {
+    return {};
   },
 
-  toJSON(message: GetAutoLockdown): unknown {
+  toJSON(_: GetAutoLockdown): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? GetAutoLockdown_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? GetAutoLockdown_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<GetAutoLockdown>, I>>(
-    object: I
+    _: I
   ): GetAutoLockdown {
     const message = createBaseGetAutoLockdown();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? GetAutoLockdown_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? GetAutoLockdown_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };
@@ -319,29 +239,14 @@ export const GetAutoLockdown_Request = {
 };
 
 function createBaseSetAutoLockdown(): SetAutoLockdown {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const SetAutoLockdown = {
   encode(
-    message: SetAutoLockdown,
+    _: SetAutoLockdown,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      SetAutoLockdown_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      SetAutoLockdown_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -352,21 +257,6 @@ export const SetAutoLockdown = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = SetAutoLockdown_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = SetAutoLockdown_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -375,45 +265,19 @@ export const SetAutoLockdown = {
     return message;
   },
 
-  fromJSON(object: any): SetAutoLockdown {
-    return {
-      request: isSet(object.request)
-        ? SetAutoLockdown_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? SetAutoLockdown_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): SetAutoLockdown {
+    return {};
   },
 
-  toJSON(message: SetAutoLockdown): unknown {
+  toJSON(_: SetAutoLockdown): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? SetAutoLockdown_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? SetAutoLockdown_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<SetAutoLockdown>, I>>(
-    object: I
+    _: I
   ): SetAutoLockdown {
     const message = createBaseSetAutoLockdown();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? SetAutoLockdown_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? SetAutoLockdown_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };
@@ -523,29 +387,14 @@ export const SetAutoLockdown_Response = {
 };
 
 function createBaseGetLockdownState(): GetLockdownState {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const GetLockdownState = {
   encode(
-    message: GetLockdownState,
+    _: GetLockdownState,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      GetLockdownState_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      GetLockdownState_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -556,21 +405,6 @@ export const GetLockdownState = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = GetLockdownState_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = GetLockdownState_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -579,45 +413,19 @@ export const GetLockdownState = {
     return message;
   },
 
-  fromJSON(object: any): GetLockdownState {
-    return {
-      request: isSet(object.request)
-        ? GetLockdownState_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? GetLockdownState_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): GetLockdownState {
+    return {};
   },
 
-  toJSON(message: GetLockdownState): unknown {
+  toJSON(_: GetLockdownState): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? GetLockdownState_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? GetLockdownState_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<GetLockdownState>, I>>(
-    object: I
+    _: I
   ): GetLockdownState {
     const message = createBaseGetLockdownState();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? GetLockdownState_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? GetLockdownState_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };
@@ -728,29 +536,14 @@ export const GetLockdownState_Request = {
 };
 
 function createBaseSetLockdownState(): SetLockdownState {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const SetLockdownState = {
   encode(
-    message: SetLockdownState,
+    _: SetLockdownState,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      SetLockdownState_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      SetLockdownState_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -761,21 +554,6 @@ export const SetLockdownState = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = SetLockdownState_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = SetLockdownState_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -784,45 +562,19 @@ export const SetLockdownState = {
     return message;
   },
 
-  fromJSON(object: any): SetLockdownState {
-    return {
-      request: isSet(object.request)
-        ? SetLockdownState_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? SetLockdownState_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): SetLockdownState {
+    return {};
   },
 
-  toJSON(message: SetLockdownState): unknown {
+  toJSON(_: SetLockdownState): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? SetLockdownState_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? SetLockdownState_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<SetLockdownState>, I>>(
-    object: I
+    _: I
   ): SetLockdownState {
     const message = createBaseSetLockdownState();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? SetLockdownState_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? SetLockdownState_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };
@@ -933,29 +685,14 @@ export const SetLockdownState_Response = {
 };
 
 function createBaseGetLockdownAnnouncements(): GetLockdownAnnouncements {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const GetLockdownAnnouncements = {
   encode(
-    message: GetLockdownAnnouncements,
+    _: GetLockdownAnnouncements,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      GetLockdownAnnouncements_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      GetLockdownAnnouncements_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -969,21 +706,6 @@ export const GetLockdownAnnouncements = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = GetLockdownAnnouncements_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = GetLockdownAnnouncements_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -992,45 +714,19 @@ export const GetLockdownAnnouncements = {
     return message;
   },
 
-  fromJSON(object: any): GetLockdownAnnouncements {
-    return {
-      request: isSet(object.request)
-        ? GetLockdownAnnouncements_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? GetLockdownAnnouncements_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): GetLockdownAnnouncements {
+    return {};
   },
 
-  toJSON(message: GetLockdownAnnouncements): unknown {
+  toJSON(_: GetLockdownAnnouncements): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? GetLockdownAnnouncements_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? GetLockdownAnnouncements_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<GetLockdownAnnouncements>, I>>(
-    object: I
+    _: I
   ): GetLockdownAnnouncements {
     const message = createBaseGetLockdownAnnouncements();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? GetLockdownAnnouncements_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? GetLockdownAnnouncements_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };
@@ -1140,29 +836,14 @@ export const GetLockdownAnnouncements_Request = {
 };
 
 function createBaseSetLockdownAnnouncements(): SetLockdownAnnouncements {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const SetLockdownAnnouncements = {
   encode(
-    message: SetLockdownAnnouncements,
+    _: SetLockdownAnnouncements,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      SetLockdownAnnouncements_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      SetLockdownAnnouncements_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -1176,21 +857,6 @@ export const SetLockdownAnnouncements = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = SetLockdownAnnouncements_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = SetLockdownAnnouncements_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1199,45 +865,19 @@ export const SetLockdownAnnouncements = {
     return message;
   },
 
-  fromJSON(object: any): SetLockdownAnnouncements {
-    return {
-      request: isSet(object.request)
-        ? SetLockdownAnnouncements_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? SetLockdownAnnouncements_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): SetLockdownAnnouncements {
+    return {};
   },
 
-  toJSON(message: SetLockdownAnnouncements): unknown {
+  toJSON(_: SetLockdownAnnouncements): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? SetLockdownAnnouncements_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? SetLockdownAnnouncements_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<SetLockdownAnnouncements>, I>>(
-    object: I
+    _: I
   ): SetLockdownAnnouncements {
     const message = createBaseSetLockdownAnnouncements();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? SetLockdownAnnouncements_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? SetLockdownAnnouncements_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };

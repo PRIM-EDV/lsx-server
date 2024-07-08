@@ -1,22 +1,12 @@
 <ph-form>
-    <ph-group [label]="'Section Tec'">
-        <ph-button-select [label]="'State'" [(value)]="testState">
-            <ph-button [value]="'off'">OFF</ph-button>
-            <ph-button [value]="'on'">ON</ph-button>
+    <ph-group [label]="light.label" *ngFor="let light of this.service.lights">
+        <ph-button-select [label]="'State'" [(value)]="light.switchState" (valueChange)="blub()">
+            <ph-button [value]="lightSwitchState.SWITCH_STATE_OFF">OFF</ph-button>
+            <ph-button [value]="lightSwitchState.SWITCH_STATE_ON">ON</ph-button>
         </ph-button-select>
-        <ph-button-select [label]="'Lock'" [(value)]="testState">
-            <ph-button [value]="'unlocked'">UNLOCKED</ph-button>
-            <ph-button [value]="'locked'">LOCKED</ph-button>
-        </ph-button-select>
-    </ph-group>
-    <ph-group [label]="'Section Ird'">
-        <ph-button-select [label]="'State'" [(value)]="testState">
-            <ph-button [value]="'off'">OFF</ph-button>
-            <ph-button [value]="'on'">ON</ph-button>
-        </ph-button-select>
-        <ph-button-select [label]="'Lock'" [(value)]="testState">
-            <ph-button [value]="'unlocked'">UNLOCKED</ph-button>
-            <ph-button [value]="'locked'">LOCKED</ph-button>
+        <ph-button-select [label]="'Lock'" [(value)]="light.lockState">
+            <ph-button [value]="lightLockState.LOCK_STATE_UNLOCKED">UNLOCKED</ph-button>
+            <ph-button [value]="lightLockState.LOCK_STATE_LOCKED">LOCKED</ph-button>
         </ph-button-select>
     </ph-group>
     <!-- <ph-button-select [label]="'State'" [(value)]="lockdownState" (valueChange)="updateServerBaseState()">

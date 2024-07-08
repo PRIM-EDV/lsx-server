@@ -15,6 +15,7 @@ import { LoggingModule } from './core/logging/logging.module';
 import { StateModule } from './core/state/state.module';
 import { QlcModule } from './platform/qlc/qlc.module';
 import { SoundModule } from './platform/sound/sound.module';
+import { PowerModule } from './api/power/power.module';
 
 @Global()
 @Module({
@@ -31,6 +32,7 @@ import { SoundModule } from './platform/sound/sound.module';
     FluffModule,
     SoundModule,
     DroneModule,
+    PowerModule,
     QlcModule,
     LightModule
   ],

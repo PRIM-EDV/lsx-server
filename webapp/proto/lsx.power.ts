@@ -3,6 +3,51 @@ import * as _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "";
 
+export enum PowerState {
+  POWER_STATE_EMPTY = 0,
+  POWER_STATE_POWERED = 1,
+  POWER_STATE_CRITICAL = 2,
+  POWER_STATE_UNPOWERED = 3,
+  UNRECOGNIZED = -1,
+}
+
+export function powerStateFromJSON(object: any): PowerState {
+  switch (object) {
+    case 0:
+    case "POWER_STATE_EMPTY":
+      return PowerState.POWER_STATE_EMPTY;
+    case 1:
+    case "POWER_STATE_POWERED":
+      return PowerState.POWER_STATE_POWERED;
+    case 2:
+    case "POWER_STATE_CRITICAL":
+      return PowerState.POWER_STATE_CRITICAL;
+    case 3:
+    case "POWER_STATE_UNPOWERED":
+      return PowerState.POWER_STATE_UNPOWERED;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return PowerState.UNRECOGNIZED;
+  }
+}
+
+export function powerStateToJSON(object: PowerState): string {
+  switch (object) {
+    case PowerState.POWER_STATE_EMPTY:
+      return "POWER_STATE_EMPTY";
+    case PowerState.POWER_STATE_POWERED:
+      return "POWER_STATE_POWERED";
+    case PowerState.POWER_STATE_CRITICAL:
+      return "POWER_STATE_CRITICAL";
+    case PowerState.POWER_STATE_UNPOWERED:
+      return "POWER_STATE_UNPOWERED";
+    case PowerState.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 export enum PowerPlantState {
   STATE_EMPTY = 0,
   STATE_NORMAL = 1,
@@ -54,188 +99,7 @@ export function powerPlantStateToJSON(object: PowerPlantState): string {
   }
 }
 
-export enum PowerLineState {
-  STATE_POWERED = 0,
-  STATE_UNPOWERED = 1,
-  UNRECOGNIZED = -1,
-}
-
-export function powerLineStateFromJSON(object: any): PowerLineState {
-  switch (object) {
-    case 0:
-    case "STATE_POWERED":
-      return PowerLineState.STATE_POWERED;
-    case 1:
-    case "STATE_UNPOWERED":
-      return PowerLineState.STATE_UNPOWERED;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return PowerLineState.UNRECOGNIZED;
-  }
-}
-
-export function powerLineStateToJSON(object: PowerLineState): string {
-  switch (object) {
-    case PowerLineState.STATE_POWERED:
-      return "STATE_POWERED";
-    case PowerLineState.STATE_UNPOWERED:
-      return "STATE_UNPOWERED";
-    case PowerLineState.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
-export enum PowerLineId {
-  LINE_EMPTY = 0,
-  LINE_OG_BASE_MED = 1,
-  LINE_OG_BASE_ADM = 2,
-  LINE_OG_BASE_CIC = 3,
-  LINE_OG_BASE_SCI = 4,
-  LINE_OG_BASE_TEC = 5,
-  LINE_OG_BASE_HC = 7,
-  LINE_OG_HALL = 8,
-  LINE_OG_COURTYARD = 9,
-  LINE_OG_MESSHALL = 10,
-  LINE_OG_GATE = 11,
-  LINE_OG_PARCELS = 12,
-  LINE_UG_PARCELS_LEFT = 13,
-  LINE_UG_PARCELS_RIGHT = 14,
-  LINE_UG_HALL = 15,
-  LINE_OG_LOG = 16,
-  UNRECOGNIZED = -1,
-}
-
-export function powerLineIdFromJSON(object: any): PowerLineId {
-  switch (object) {
-    case 0:
-    case "LINE_EMPTY":
-      return PowerLineId.LINE_EMPTY;
-    case 1:
-    case "LINE_OG_BASE_MED":
-      return PowerLineId.LINE_OG_BASE_MED;
-    case 2:
-    case "LINE_OG_BASE_ADM":
-      return PowerLineId.LINE_OG_BASE_ADM;
-    case 3:
-    case "LINE_OG_BASE_CIC":
-      return PowerLineId.LINE_OG_BASE_CIC;
-    case 4:
-    case "LINE_OG_BASE_SCI":
-      return PowerLineId.LINE_OG_BASE_SCI;
-    case 5:
-    case "LINE_OG_BASE_TEC":
-      return PowerLineId.LINE_OG_BASE_TEC;
-    case 7:
-    case "LINE_OG_BASE_HC":
-      return PowerLineId.LINE_OG_BASE_HC;
-    case 8:
-    case "LINE_OG_HALL":
-      return PowerLineId.LINE_OG_HALL;
-    case 9:
-    case "LINE_OG_COURTYARD":
-      return PowerLineId.LINE_OG_COURTYARD;
-    case 10:
-    case "LINE_OG_MESSHALL":
-      return PowerLineId.LINE_OG_MESSHALL;
-    case 11:
-    case "LINE_OG_GATE":
-      return PowerLineId.LINE_OG_GATE;
-    case 12:
-    case "LINE_OG_PARCELS":
-      return PowerLineId.LINE_OG_PARCELS;
-    case 13:
-    case "LINE_UG_PARCELS_LEFT":
-      return PowerLineId.LINE_UG_PARCELS_LEFT;
-    case 14:
-    case "LINE_UG_PARCELS_RIGHT":
-      return PowerLineId.LINE_UG_PARCELS_RIGHT;
-    case 15:
-    case "LINE_UG_HALL":
-      return PowerLineId.LINE_UG_HALL;
-    case 16:
-    case "LINE_OG_LOG":
-      return PowerLineId.LINE_OG_LOG;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return PowerLineId.UNRECOGNIZED;
-  }
-}
-
-export function powerLineIdToJSON(object: PowerLineId): string {
-  switch (object) {
-    case PowerLineId.LINE_EMPTY:
-      return "LINE_EMPTY";
-    case PowerLineId.LINE_OG_BASE_MED:
-      return "LINE_OG_BASE_MED";
-    case PowerLineId.LINE_OG_BASE_ADM:
-      return "LINE_OG_BASE_ADM";
-    case PowerLineId.LINE_OG_BASE_CIC:
-      return "LINE_OG_BASE_CIC";
-    case PowerLineId.LINE_OG_BASE_SCI:
-      return "LINE_OG_BASE_SCI";
-    case PowerLineId.LINE_OG_BASE_TEC:
-      return "LINE_OG_BASE_TEC";
-    case PowerLineId.LINE_OG_BASE_HC:
-      return "LINE_OG_BASE_HC";
-    case PowerLineId.LINE_OG_HALL:
-      return "LINE_OG_HALL";
-    case PowerLineId.LINE_OG_COURTYARD:
-      return "LINE_OG_COURTYARD";
-    case PowerLineId.LINE_OG_MESSHALL:
-      return "LINE_OG_MESSHALL";
-    case PowerLineId.LINE_OG_GATE:
-      return "LINE_OG_GATE";
-    case PowerLineId.LINE_OG_PARCELS:
-      return "LINE_OG_PARCELS";
-    case PowerLineId.LINE_UG_PARCELS_LEFT:
-      return "LINE_UG_PARCELS_LEFT";
-    case PowerLineId.LINE_UG_PARCELS_RIGHT:
-      return "LINE_UG_PARCELS_RIGHT";
-    case PowerLineId.LINE_UG_HALL:
-      return "LINE_UG_HALL";
-    case PowerLineId.LINE_OG_LOG:
-      return "LINE_OG_LOG";
-    case PowerLineId.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
-export interface GetPowerLineState {
-  request?: GetPowerLineState_Request | undefined;
-  response?: GetPowerLineState_Response | undefined;
-  error: string | undefined;
-}
-
-export interface GetPowerLineState_Response {
-  state: PowerLineState;
-}
-
-export interface GetPowerLineState_Request {
-  id: PowerLineId;
-}
-
-export interface SetPowerLineState {
-  request?: SetPowerLineState_Request | undefined;
-  response?: SetPowerLineState_Response | undefined;
-  error: string | undefined;
-}
-
-export interface SetPowerLineState_Request {
-  id: PowerLineId;
-  state: PowerLineState;
-}
-
-export interface SetPowerLineState_Response {}
-
-export interface GetPowerPlantState {
-  request?: GetPowerPlantState_Request | undefined;
-  response?: GetPowerPlantState_Response | undefined;
-  error: string | undefined;
-}
+export interface GetPowerPlantState {}
 
 export interface GetPowerPlantState_Request {}
 
@@ -243,11 +107,7 @@ export interface GetPowerPlantState_Response {
   state: PowerPlantState;
 }
 
-export interface SetPowerPlantState {
-  request?: SetPowerPlantState_Request | undefined;
-  response?: SetPowerPlantState_Response | undefined;
-  error: string | undefined;
-}
+export interface SetPowerPlantState {}
 
 export interface SetPowerPlantState_Request {
   state: PowerPlantState;
@@ -255,459 +115,15 @@ export interface SetPowerPlantState_Request {
 
 export interface SetPowerPlantState_Response {}
 
-function createBaseGetPowerLineState(): GetPowerLineState {
-  return { request: undefined, response: undefined, error: undefined };
-}
-
-export const GetPowerLineState = {
-  encode(
-    message: GetPowerLineState,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.request !== undefined) {
-      GetPowerLineState_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      GetPowerLineState_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): GetPowerLineState {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGetPowerLineState();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.request = GetPowerLineState_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = GetPowerLineState_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): GetPowerLineState {
-    return {
-      request: isSet(object.request)
-        ? GetPowerLineState_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? GetPowerLineState_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
-  },
-
-  toJSON(message: GetPowerLineState): unknown {
-    const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? GetPowerLineState_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? GetPowerLineState_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<GetPowerLineState>, I>>(
-    object: I
-  ): GetPowerLineState {
-    const message = createBaseGetPowerLineState();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? GetPowerLineState_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? GetPowerLineState_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
-    return message;
-  },
-};
-
-function createBaseGetPowerLineState_Response(): GetPowerLineState_Response {
-  return { state: 0 };
-}
-
-export const GetPowerLineState_Response = {
-  encode(
-    message: GetPowerLineState_Response,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.state !== 0) {
-      writer.uint32(8).int32(message.state);
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): GetPowerLineState_Response {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGetPowerLineState_Response();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.state = reader.int32() as any;
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): GetPowerLineState_Response {
-    return {
-      state: isSet(object.state) ? powerLineStateFromJSON(object.state) : 0,
-    };
-  },
-
-  toJSON(message: GetPowerLineState_Response): unknown {
-    const obj: any = {};
-    message.state !== undefined &&
-      (obj.state = powerLineStateToJSON(message.state));
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<GetPowerLineState_Response>, I>>(
-    object: I
-  ): GetPowerLineState_Response {
-    const message = createBaseGetPowerLineState_Response();
-    message.state = object.state ?? 0;
-    return message;
-  },
-};
-
-function createBaseGetPowerLineState_Request(): GetPowerLineState_Request {
-  return { id: 0 };
-}
-
-export const GetPowerLineState_Request = {
-  encode(
-    message: GetPowerLineState_Request,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.id !== 0) {
-      writer.uint32(8).int32(message.id);
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): GetPowerLineState_Request {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGetPowerLineState_Request();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.id = reader.int32() as any;
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): GetPowerLineState_Request {
-    return {
-      id: isSet(object.id) ? powerLineIdFromJSON(object.id) : 0,
-    };
-  },
-
-  toJSON(message: GetPowerLineState_Request): unknown {
-    const obj: any = {};
-    message.id !== undefined && (obj.id = powerLineIdToJSON(message.id));
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<GetPowerLineState_Request>, I>>(
-    object: I
-  ): GetPowerLineState_Request {
-    const message = createBaseGetPowerLineState_Request();
-    message.id = object.id ?? 0;
-    return message;
-  },
-};
-
-function createBaseSetPowerLineState(): SetPowerLineState {
-  return { request: undefined, response: undefined, error: undefined };
-}
-
-export const SetPowerLineState = {
-  encode(
-    message: SetPowerLineState,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.request !== undefined) {
-      SetPowerLineState_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      SetPowerLineState_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): SetPowerLineState {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseSetPowerLineState();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.request = SetPowerLineState_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = SetPowerLineState_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): SetPowerLineState {
-    return {
-      request: isSet(object.request)
-        ? SetPowerLineState_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? SetPowerLineState_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
-  },
-
-  toJSON(message: SetPowerLineState): unknown {
-    const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? SetPowerLineState_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? SetPowerLineState_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<SetPowerLineState>, I>>(
-    object: I
-  ): SetPowerLineState {
-    const message = createBaseSetPowerLineState();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? SetPowerLineState_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? SetPowerLineState_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
-    return message;
-  },
-};
-
-function createBaseSetPowerLineState_Request(): SetPowerLineState_Request {
-  return { id: 0, state: 0 };
-}
-
-export const SetPowerLineState_Request = {
-  encode(
-    message: SetPowerLineState_Request,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.id !== 0) {
-      writer.uint32(8).int32(message.id);
-    }
-    if (message.state !== 0) {
-      writer.uint32(16).int32(message.state);
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): SetPowerLineState_Request {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseSetPowerLineState_Request();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.id = reader.int32() as any;
-          break;
-        case 2:
-          message.state = reader.int32() as any;
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): SetPowerLineState_Request {
-    return {
-      id: isSet(object.id) ? powerLineIdFromJSON(object.id) : 0,
-      state: isSet(object.state) ? powerLineStateFromJSON(object.state) : 0,
-    };
-  },
-
-  toJSON(message: SetPowerLineState_Request): unknown {
-    const obj: any = {};
-    message.id !== undefined && (obj.id = powerLineIdToJSON(message.id));
-    message.state !== undefined &&
-      (obj.state = powerLineStateToJSON(message.state));
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<SetPowerLineState_Request>, I>>(
-    object: I
-  ): SetPowerLineState_Request {
-    const message = createBaseSetPowerLineState_Request();
-    message.id = object.id ?? 0;
-    message.state = object.state ?? 0;
-    return message;
-  },
-};
-
-function createBaseSetPowerLineState_Response(): SetPowerLineState_Response {
-  return {};
-}
-
-export const SetPowerLineState_Response = {
-  encode(
-    _: SetPowerLineState_Response,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): SetPowerLineState_Response {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseSetPowerLineState_Response();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(_: any): SetPowerLineState_Response {
-    return {};
-  },
-
-  toJSON(_: SetPowerLineState_Response): unknown {
-    const obj: any = {};
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<SetPowerLineState_Response>, I>>(
-    _: I
-  ): SetPowerLineState_Response {
-    const message = createBaseSetPowerLineState_Response();
-    return message;
-  },
-};
-
 function createBaseGetPowerPlantState(): GetPowerPlantState {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const GetPowerPlantState = {
   encode(
-    message: GetPowerPlantState,
+    _: GetPowerPlantState,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      GetPowerPlantState_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      GetPowerPlantState_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -718,21 +134,6 @@ export const GetPowerPlantState = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = GetPowerPlantState_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = GetPowerPlantState_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -741,45 +142,19 @@ export const GetPowerPlantState = {
     return message;
   },
 
-  fromJSON(object: any): GetPowerPlantState {
-    return {
-      request: isSet(object.request)
-        ? GetPowerPlantState_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? GetPowerPlantState_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): GetPowerPlantState {
+    return {};
   },
 
-  toJSON(message: GetPowerPlantState): unknown {
+  toJSON(_: GetPowerPlantState): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? GetPowerPlantState_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? GetPowerPlantState_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<GetPowerPlantState>, I>>(
-    object: I
+    _: I
   ): GetPowerPlantState {
     const message = createBaseGetPowerPlantState();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? GetPowerPlantState_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? GetPowerPlantState_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };
@@ -890,29 +265,14 @@ export const GetPowerPlantState_Response = {
 };
 
 function createBaseSetPowerPlantState(): SetPowerPlantState {
-  return { request: undefined, response: undefined, error: undefined };
+  return {};
 }
 
 export const SetPowerPlantState = {
   encode(
-    message: SetPowerPlantState,
+    _: SetPowerPlantState,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.request !== undefined) {
-      SetPowerPlantState_Request.encode(
-        message.request,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.response !== undefined) {
-      SetPowerPlantState_Response.encode(
-        message.response,
-        writer.uint32(18).fork()
-      ).ldelim();
-    }
-    if (message.error !== undefined) {
-      writer.uint32(26).string(message.error);
-    }
     return writer;
   },
 
@@ -923,21 +283,6 @@ export const SetPowerPlantState = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.request = SetPowerPlantState_Request.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 2:
-          message.response = SetPowerPlantState_Response.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 3:
-          message.error = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -946,45 +291,19 @@ export const SetPowerPlantState = {
     return message;
   },
 
-  fromJSON(object: any): SetPowerPlantState {
-    return {
-      request: isSet(object.request)
-        ? SetPowerPlantState_Request.fromJSON(object.request)
-        : undefined,
-      response: isSet(object.response)
-        ? SetPowerPlantState_Response.fromJSON(object.response)
-        : undefined,
-      error: isSet(object.error) ? String(object.error) : undefined,
-    };
+  fromJSON(_: any): SetPowerPlantState {
+    return {};
   },
 
-  toJSON(message: SetPowerPlantState): unknown {
+  toJSON(_: SetPowerPlantState): unknown {
     const obj: any = {};
-    message.request !== undefined &&
-      (obj.request = message.request
-        ? SetPowerPlantState_Request.toJSON(message.request)
-        : undefined);
-    message.response !== undefined &&
-      (obj.response = message.response
-        ? SetPowerPlantState_Response.toJSON(message.response)
-        : undefined);
-    message.error !== undefined && (obj.error = message.error);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<SetPowerPlantState>, I>>(
-    object: I
+    _: I
   ): SetPowerPlantState {
     const message = createBaseSetPowerPlantState();
-    message.request =
-      object.request !== undefined && object.request !== null
-        ? SetPowerPlantState_Request.fromPartial(object.request)
-        : undefined;
-    message.response =
-      object.response !== undefined && object.response !== null
-        ? SetPowerPlantState_Response.fromPartial(object.response)
-        : undefined;
-    message.error = object.error ?? undefined;
     return message;
   },
 };

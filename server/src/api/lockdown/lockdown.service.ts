@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Request } from 'proto/lsx';
 import { LockdownState } from 'proto/lsx.lockdown';
 import { ModeSilentState } from 'proto/lsx.drone';
-import { AppGateway } from 'src/app.gateway';
 import { LightService } from 'src/core/light/light.service';
-import { LightLineMode } from 'src/core/light/lightline/lightline';
 import { StateService } from 'src/core/state/state.service';
 import { SoundService } from 'src/platform/sound/sound.service';
 
@@ -38,21 +35,21 @@ export class LockdownService {
             case LockdownState.LOCKDOWN_STATE_NORMAL:
                 if(this.lockdownAnnouncements) {
                     this.sound.playWav('assets/wav/lockdown-timer/lockdown-vorbei.wav').then( () => {
-                       this.light.setLightLines(LightLineMode.MODE_WHITE).then().catch((err) => {console.log(err)});
+                    //    this.light.setLightLines(LightLineMode.MODE_WHITE).then().catch((err) => {console.log(err)});
                     }
                     ).catch((err) =>{console.log(err)});
                 } else {
-                    this.light.setLightLines(LightLineMode.MODE_WHITE).then().catch((err) => {console.log(err)});
+                    // this.light.setLightLines(LightLineMode.MODE_WHITE).then().catch((err) => {console.log(err)});
                 } break;
 
             case LockdownState.LOCKDOWN_STATE_LOCKDOWN:
                 if (this.lockdownAnnouncements) {
                     this.sound.playWav('assets/wav/lockdown-timer/lockdown-now.wav').then( () => {
-                       this.light.setLightLines(LightLineMode.MODE_RED).then().catch((err) => {console.log(err)});
+                    //    this.light.setLightLines(LightLineMode.MODE_RED).then().catch((err) => {console.log(err)});
                     }
                     ).catch((err) =>{console.log(err)});
                 } else {
-                    this.light.setLightLines(LightLineMode.MODE_RED).then().catch((err) => {console.log(err)});
+                    // this.light.setLightLines(LightLineMode.MODE_RED).then().catch((err) => {console.log(err)});
                 } break;
 
         }
