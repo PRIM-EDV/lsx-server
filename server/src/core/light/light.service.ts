@@ -4,6 +4,7 @@ import { QlcService } from 'src/platform/qlc/qlc.service';
 import { StateService } from '../state/state.service';
 import { LightDMXState, LightId, LightSwitchState } from 'proto/lsx.light';
 import { PowerState } from 'proto/lsx.power';
+import { LockState } from 'proto/lsx.common';
 
 
 @Injectable()
@@ -56,9 +57,24 @@ export class LightService {
         await line.setPowerState(state);
     }
 
+    public getLightSwitchState(id: LightId): LightSwitchState {
+        const line = this.lightlines.get(id);
+        return line.switchState;
+    }
+
     public async setLightSwitchState(id: LightId, state: LightSwitchState) { 
         const line = this.lightlines.get(id);
         await line.setSwitchState(state);
+    }
+
+    public getLightLockState(id: LightId): LockState {
+        const line = this.lightlines.get(id);
+        return line.lockState;
+    }
+
+    public setLightLockState(id: LightId, state: LockState) {
+        const line = this.lightlines.get(id);
+        line.lockState = state;
     }
 
     public getLightLines(): Lightline[] {

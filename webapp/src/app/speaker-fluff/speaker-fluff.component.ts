@@ -59,7 +59,6 @@ export class SpeakerFluffComponent implements OnInit {
     }
 
     ngOnDestroy() {
-      console.log("?")
     }
 }
 

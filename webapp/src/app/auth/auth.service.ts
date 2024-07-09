@@ -51,6 +51,7 @@ export class AuthService {
         const route = `${window.location.protocol}//${LSX_SERVER_HOSTNAME}:${LSX_SERVER_PORT}/api/auth/refresh`;
         const headers = { Authorization: `Bearer ${this.token}` };
         return new Promise<void>((resolve, reject) => {
+            console.log(`${new Date()} refreshing token`);
             this.http.post<{ access_token: string }>(route, {access_token: this.token}, {headers: headers}).subscribe({
                 next: (res) => {
                     this.token = res.access_token;

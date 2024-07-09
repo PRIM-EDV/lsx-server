@@ -1,3 +1,4 @@
+import { LockState } from "proto/lsx.common";
 import { LightDMXState, LightId, LightMode, LightSwitchState } from "proto/lsx.light";
 import { PowerState } from "proto/lsx.power";
 import { QlcService } from "src/platform/qlc/qlc.service";
@@ -15,6 +16,7 @@ export class Lightline {
     public dmxState: LightDMXState.DMX_STATE_OFF | LightDMXState.DMX_STATE_RED | LightDMXState.DMX_STATE_WHITE = LightDMXState.DMX_STATE_OFF;
     public powerState: PowerState = PowerState.POWER_STATE_POWERED;
     public switchState: LightSwitchState = LightSwitchState.SWITCH_STATE_ON;
+    public lockState: LockState = LockState.LOCK_STATE_UNLOCKED;
 
     public flicker: boolean = true;
 

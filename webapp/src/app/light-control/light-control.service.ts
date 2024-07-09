@@ -8,8 +8,8 @@ import { Request } from "proto/lsx";
 
 @Injectable({
     providedIn: 'root'
-  })
-  export class LightControlService {
+})
+export class LightControlService {
 
     public lights: Light[] = [
         { id: LightId.LIGHT_OG_BASE_ADM, label: 'Section ADM', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
@@ -18,29 +18,29 @@ import { Request } from "proto/lsx";
         { id: LightId.LIGHT_OG_BASE_MED, label: 'Section MED', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
         { id: LightId.LIGHT_OG_BASE_SCI, label: 'Section SCI', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
         { id: LightId.LIGHT_OG_BASE_TEC, label: 'Section TEC', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
-      ];
-  
+    ];
+
     constructor(private readonly backend: BackendService) {
-      this.backend.onOpen.subscribe(async () => {
-        // const modeSilentState = await this.droneControlService.getModeSilentState();
-        // this.updateLocalModeSilentState(modeSilentState);
-      });
-      this.backend.onRequest.subscribe(this.handleRequest.bind(this));
-     }
+        this.backend.onOpen.subscribe(async () => {
+            // const modeSilentState = await this.droneControlService.getModeSilentState();
+            // this.updateLocalModeSilentState(modeSilentState);
+        });
+        this.backend.onRequest.subscribe(this.handleRequest.bind(this));
+    }
 
-     private setLightSwitchState(request: SetLightSwitchState_Request) {
-      const light = this.lights.find(l => l.id === request.id);
-      if(light) {
-        light.switchState = request.state;
-      }
-     }
-
-     private handleRequest(event: {id: string, request: Request}) {
-        const req = event.request;
-        if(req.setLightSwitchState) {
-          console.log(req.setLightSwitchState);
-            this.setLightSwitchState(req.setLightSwitchState);
+    private setLightSwitchState(request: SetLightSwitchState_Request) {
+        const light = this.lights.find(l => l.id === request.id);
+        if (light) {
+            light.switchState = request.state;
         }
-     }
+    }
 
-  }
+    private handleRequest(event: { id: string, request: Request }) {
+        const req = event.request;
+        if (req.setLightSwitchState) {
+            this.setLightSwitchState(req.setLightSwitchState);
+            this.backend.respond(event.id, {});
+        }
+    }
+
+}

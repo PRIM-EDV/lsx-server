@@ -3,7 +3,6 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ReactorModule } from './api/reactor/reactor.module';
 import { AuthModule } from './api/auth/auth.module';
 import { AnnouncementsModule } from './api/announcements/announcements.module';
 import { LockdownModule } from './api/lockdown/lockdown.module';
@@ -22,7 +21,6 @@ import { ApiModule } from './api/api.module';
 @Module({
   imports: [
     AuthModule,
-    ReactorModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),

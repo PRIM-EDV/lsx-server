@@ -48,7 +48,7 @@ export class LightControlComponent {
         state: state
       }
     }
-    console.log(req);
+    
     await this.backend.request(req);
   }
 

@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { v4 as uuidv4 } from 'uuid';
 import { Subject } from "rxjs";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
-import { LsxMessage, Request, Response } from "proto/lsx";
+import { LsxMessage, Request, Response, Error } from "proto/lsx";
 import { Router } from "@angular/router";
 
 const LSX_SERVER_HOSTNAME = window?.__env?.lsxServerHostname != null ? `${window.__env.lsxServerHostname}` : window.location.hostname;
@@ -24,6 +23,7 @@ export class BackendService {
     public onClose: Subject<void> = new Subject<void>();
 
     private requests: Map<string, (value: Response) => void> = new Map<string, (value: Response) => void>();
+    private errors: Map<string, (value: Error) => void> = new Map<string, (value: Error) => void>();
     private ws!: WebSocketSubject<any>;
 
     constructor(private readonly router: Router) {}
@@ -63,6 +63,8 @@ export class BackendService {
             }
 
             this.requests.set(msg.id, resolve.bind(this));
+            this.errors.set(msg.id, reject.bind(this));
+
             setTimeout(this.rejectOnTimeout.bind(this, msg.id, reject), 5000);
             this.ws.next({event: 'msg', data: JSON.stringify(LsxMessage.toJSON(msg))});
         });
@@ -88,6 +90,15 @@ export class BackendService {
             if(this.requests.has(msg.id)) {
                 this.requests.get(msg.id)!(msg.response);
                 this.requests.delete(msg.id);
+                this.errors.delete(msg.id);
+            }
+        }
+
+        if(msg.error) {
+            if(this.requests.has(msg.id)) {
+                this.errors.get(msg.id)!(msg.error);
+                this.requests.delete(msg.id);
+                this.errors.delete(msg.id);
             }
         }
 

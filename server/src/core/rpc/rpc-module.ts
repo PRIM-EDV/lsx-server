@@ -1,5 +1,4 @@
 import { MetadataScanner, NestContainer } from "@nestjs/core";
-import { GuardsConsumer, GuardsContextCreator } from "@nestjs/core/guards";
 import { RpcContextCreator } from "./rpc-context-creator";
 import { InjectionToken } from "@nestjs/common";
 import { Injectable } from "@nestjs/common/interfaces";
@@ -58,10 +57,8 @@ export class RpcModule {
                         gateway.respond(event.client.id, event.msgId, response);
                     }
                     ).catch((err) => {
-                        console.log(err)
-                        // const response = { [rpcMethod.name]: {error: err.message}}
-                        // global.onWebsocketResponse.next({clientId: event.clientId, msgId: event.msgId, response: response})
-                        // console.log(err);
+                        gateway.error(event.client.id, event.msgId, err);
+                        console.error(err);
                     });
                 }
             }

@@ -109,6 +109,14 @@ export class AppGateway {
     this.sendToClient(this.activeClients.get(clientId), msg);
   }
 
+  public error(clientId: string, msgId: string, err: Error) {
+    const msg: LsxMessage = {
+        id: msgId,
+        error: {type: err.name, message: err.message}
+    }
+    this.sendToClient(this.activeClients.get(clientId), msg);
+  }
+
   protected rejectOnTimeout(id: string, reject: (reason?: any) => void) {
     if(this.requests.delete(id)) {
         reject();
