@@ -12,7 +12,7 @@ import { PowerState } from "proto/lsx.power";
 
 @RpcHandler(AppGateway)
 @UseGuards(RolesGuard)
-export class PowerController {
+export class PowerApiController {
     constructor(private readonly gateway: AppGateway, private readonly light: LightService) {
 
     }
@@ -31,4 +31,17 @@ export class PowerController {
         this.light.setPowerState(req.id, req.state);
         this.gateway.requestAllButOne(client.id, { setLightPowerState: req }).then();
     }
+
+    @Rpc()
+    @Roles(['admin', 'tec'])
+    public async getDevicePowerState(client: Ws, req: GetLightPowerState_Request) {
+    
+    }
+    
+    @Rpc()
+    @Roles(['admin', 'tec'])
+    public async setDevicePowerState(client: Ws, req: SetLightPowerState_Request) {
+
+    }
+
 }

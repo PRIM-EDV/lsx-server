@@ -4,7 +4,7 @@ import { AppGateway } from "src/app.gateway";
 import { Roles } from "src/common/decorators/roles.decorator";
 import { RolesGuard } from "src/common/guards/roles.guards";
 import { Rpc, RpcHandler } from "src/core/rpc/decorators";
-import { GetLightSwitchState_Request, GetLightSwitchState_Response, LightSwitchState, SetLightLockState_Request, SetLightSwitchState_Request } from "proto/lsx.light";
+import { GetLightLockState_Response, GetLightSwitchState_Request, GetLightSwitchState_Response, LightSwitchState, SetLightLockState_Request, SetLightSwitchState_Request } from "proto/lsx.light";
 import { Ws } from "src/common/interfaces/ws";
 import { LightService } from "src/core/light/light.service";
 import { JwtService } from "@nestjs/jwt";
@@ -23,8 +23,10 @@ export class LightApiController {
     @Rpc()
     @Roles(['admin', 'tec'])
     public async getLightSwitchState(client: Ws, req: GetLightSwitchState_Request): Promise<GetLightSwitchState_Response> {
+        const state = this.light.getLightSwitchState(req.id);
+
         return {
-            state: LightSwitchState.SWITCH_STATE_OFF
+            state: state
         }
     }
     
@@ -44,8 +46,18 @@ export class LightApiController {
     }
 
     @Rpc()
+    @Roles(['admin', 'tec'])
+    public async getLightLockState(client: Ws, req: GetLightSwitchState_Request): Promise<GetLightLockState_Response> {
+        const state = this.light.getLightLockState(req.id);
+
+        return {
+            state: state
+        }
+    }
+
+    @Rpc()
     @Roles(['admin'])
     public async setLightLockState(client: Ws, req: SetLightLockState_Request) {
-        
+        this.light.setLightLockState(req.id, req.state);
     }
 }
