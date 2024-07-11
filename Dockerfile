@@ -9,6 +9,7 @@ COPY ./webapp/*.json ./
 RUN npm install
 
 # Build webapp
+COPY ./webapp/lib ./lib
 COPY ./webapp/src ./src
 COPY ./protocol ../protocol
 
