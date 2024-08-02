@@ -1,7 +1,7 @@
 import { MetadataScanner, NestContainer } from "@nestjs/core";
 import { RpcContextCreator } from "./rpc-context-creator";
 import { InjectionToken } from "@nestjs/common";
-import { Injectable } from "@nestjs/common/interfaces";
+import { Controller, Injectable } from "@nestjs/common/interfaces";
 import { iterate } from 'iterare';
 import { InstanceWrapper } from "@nestjs/core/injector/instance-wrapper";
 import { RPC_HANDLER_GATEWAY_METADATA, RPC_HANDLER_METADATA, RPC_METADATA } from "./constants";
@@ -19,13 +19,18 @@ export class RpcModule {
         this.contextCreator = new RpcContextCreator(container);
         
         const modules = container.getModules();
-        modules.forEach(({ providers }, moduleName: string) =>
-            this.connectAllHandlers(providers, moduleName),
-        );
+        modules.forEach(({ providers }, moduleName: string) => {
+            console.log(providers)
+            this.connectAllHandlers<Injectable>(providers, moduleName)
+        });
+        modules.forEach(({ controllers }, moduleName: string) => {
+            console.log(controllers)
+            this.connectAllHandlers<Controller>(controllers, moduleName)
+        });
     }
 
-    public connectAllHandlers(
-        providers: Map<InjectionToken, InstanceWrapper<Injectable>>,
+    public connectAllHandlers<T>(
+        providers: Map<InjectionToken, InstanceWrapper<T>>,
         moduleName: string,
     ) {
         iterate(providers.values())

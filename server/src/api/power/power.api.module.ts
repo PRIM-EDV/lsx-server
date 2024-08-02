@@ -4,6 +4,6 @@ import { PowerApiController } from './power.api.controller';
 @Module({
   imports: [
   ],
-  providers: [PowerApiController],
+  controllers: [PowerApiController],
 })
 export class PowerApiModule {}

@@ -1,4 +1,4 @@
-import { UseGuards } from "@nestjs/common";
+import { Controller, UseGuards } from "@nestjs/common";
 
 import { AppGateway } from "src/app.gateway";
 import { Roles } from "src/common/decorators/roles.decorator";
@@ -10,6 +10,7 @@ import { LightService } from "src/core/light/light.service";
 import { PowerState } from "proto/lsx.power";
 
 
+@Controller('api/power')
 @RpcHandler(AppGateway)
 @UseGuards(RolesGuard)
 export class PowerApiController {
@@ -33,7 +34,6 @@ export class PowerApiController {
     }
 
     @Rpc()
-    @Roles(['admin', 'tec'])
     public async getDevicePowerState(client: Ws, req: GetLightPowerState_Request) {
     
     }
