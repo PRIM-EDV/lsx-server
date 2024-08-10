@@ -50,7 +50,6 @@ export class SpeakerFluffComponent implements OnInit {
         (state) ? this.fluffState = 'on' : this.fluffState = 'off';
     }
 
-    
     private handleRequest(event: {id: string, request: Request}) {
         if(event.request.setFluffState) {
           this.updateLocalFluffState(event.request.setFluffState.state!);

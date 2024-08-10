@@ -105,6 +105,39 @@ export function powerPlantStateToJSON(object: PowerPlantState): string {
   }
 }
 
+export enum PowerDevice {
+  DEVICE_CIC_MAPTOOL = 0,
+  DEVICE_ADM_BASETOOL = 1,
+  UNRECOGNIZED = -1,
+}
+
+export function powerDeviceFromJSON(object: any): PowerDevice {
+  switch (object) {
+    case 0:
+    case "DEVICE_CIC_MAPTOOL":
+      return PowerDevice.DEVICE_CIC_MAPTOOL;
+    case 1:
+    case "DEVICE_ADM_BASETOOL":
+      return PowerDevice.DEVICE_ADM_BASETOOL;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return PowerDevice.UNRECOGNIZED;
+  }
+}
+
+export function powerDeviceToJSON(object: PowerDevice): string {
+  switch (object) {
+    case PowerDevice.DEVICE_CIC_MAPTOOL:
+      return "DEVICE_CIC_MAPTOOL";
+    case PowerDevice.DEVICE_ADM_BASETOOL:
+      return "DEVICE_ADM_BASETOOL";
+    case PowerDevice.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 export interface GetPowerPlantState {
 }
 
@@ -123,6 +156,28 @@ export interface SetPowerPlantState_Request {
 }
 
 export interface SetPowerPlantState_Response {
+}
+
+export interface SetDevicePowerState {
+}
+
+export interface SetDevicePowerState_Request {
+  device: PowerDevice;
+  state: PowerState;
+}
+
+export interface SetDevicePowerState_Response {
+}
+
+export interface GetDevicePowerState {
+}
+
+export interface GetDevicePowerState_Request {
+  device: PowerDevice;
+}
+
+export interface GetDevicePowerState_Response {
+  state: PowerState;
 }
 
 function createBaseGetPowerPlantState(): GetPowerPlantState {
@@ -407,6 +462,323 @@ export const SetPowerPlantState_Response = {
   },
   fromPartial<I extends Exact<DeepPartial<SetPowerPlantState_Response>, I>>(_: I): SetPowerPlantState_Response {
     const message = createBaseSetPowerPlantState_Response();
+    return message;
+  },
+};
+
+function createBaseSetDevicePowerState(): SetDevicePowerState {
+  return {};
+}
+
+export const SetDevicePowerState = {
+  encode(_: SetDevicePowerState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): SetDevicePowerState {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSetDevicePowerState();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(_: any): SetDevicePowerState {
+    return {};
+  },
+
+  toJSON(_: SetDevicePowerState): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<SetDevicePowerState>, I>>(base?: I): SetDevicePowerState {
+    return SetDevicePowerState.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<SetDevicePowerState>, I>>(_: I): SetDevicePowerState {
+    const message = createBaseSetDevicePowerState();
+    return message;
+  },
+};
+
+function createBaseSetDevicePowerState_Request(): SetDevicePowerState_Request {
+  return { device: 0, state: 0 };
+}
+
+export const SetDevicePowerState_Request = {
+  encode(message: SetDevicePowerState_Request, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.device !== 0) {
+      writer.uint32(8).int32(message.device);
+    }
+    if (message.state !== 0) {
+      writer.uint32(16).int32(message.state);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): SetDevicePowerState_Request {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSetDevicePowerState_Request();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.device = reader.int32() as any;
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.state = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): SetDevicePowerState_Request {
+    return {
+      device: isSet(object.device) ? powerDeviceFromJSON(object.device) : 0,
+      state: isSet(object.state) ? powerStateFromJSON(object.state) : 0,
+    };
+  },
+
+  toJSON(message: SetDevicePowerState_Request): unknown {
+    const obj: any = {};
+    if (message.device !== 0) {
+      obj.device = powerDeviceToJSON(message.device);
+    }
+    if (message.state !== 0) {
+      obj.state = powerStateToJSON(message.state);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<SetDevicePowerState_Request>, I>>(base?: I): SetDevicePowerState_Request {
+    return SetDevicePowerState_Request.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<SetDevicePowerState_Request>, I>>(object: I): SetDevicePowerState_Request {
+    const message = createBaseSetDevicePowerState_Request();
+    message.device = object.device ?? 0;
+    message.state = object.state ?? 0;
+    return message;
+  },
+};
+
+function createBaseSetDevicePowerState_Response(): SetDevicePowerState_Response {
+  return {};
+}
+
+export const SetDevicePowerState_Response = {
+  encode(_: SetDevicePowerState_Response, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): SetDevicePowerState_Response {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSetDevicePowerState_Response();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(_: any): SetDevicePowerState_Response {
+    return {};
+  },
+
+  toJSON(_: SetDevicePowerState_Response): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<SetDevicePowerState_Response>, I>>(base?: I): SetDevicePowerState_Response {
+    return SetDevicePowerState_Response.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<SetDevicePowerState_Response>, I>>(_: I): SetDevicePowerState_Response {
+    const message = createBaseSetDevicePowerState_Response();
+    return message;
+  },
+};
+
+function createBaseGetDevicePowerState(): GetDevicePowerState {
+  return {};
+}
+
+export const GetDevicePowerState = {
+  encode(_: GetDevicePowerState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetDevicePowerState {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetDevicePowerState();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(_: any): GetDevicePowerState {
+    return {};
+  },
+
+  toJSON(_: GetDevicePowerState): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GetDevicePowerState>, I>>(base?: I): GetDevicePowerState {
+    return GetDevicePowerState.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<GetDevicePowerState>, I>>(_: I): GetDevicePowerState {
+    const message = createBaseGetDevicePowerState();
+    return message;
+  },
+};
+
+function createBaseGetDevicePowerState_Request(): GetDevicePowerState_Request {
+  return { device: 0 };
+}
+
+export const GetDevicePowerState_Request = {
+  encode(message: GetDevicePowerState_Request, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.device !== 0) {
+      writer.uint32(8).int32(message.device);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetDevicePowerState_Request {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetDevicePowerState_Request();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.device = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GetDevicePowerState_Request {
+    return { device: isSet(object.device) ? powerDeviceFromJSON(object.device) : 0 };
+  },
+
+  toJSON(message: GetDevicePowerState_Request): unknown {
+    const obj: any = {};
+    if (message.device !== 0) {
+      obj.device = powerDeviceToJSON(message.device);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GetDevicePowerState_Request>, I>>(base?: I): GetDevicePowerState_Request {
+    return GetDevicePowerState_Request.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<GetDevicePowerState_Request>, I>>(object: I): GetDevicePowerState_Request {
+    const message = createBaseGetDevicePowerState_Request();
+    message.device = object.device ?? 0;
+    return message;
+  },
+};
+
+function createBaseGetDevicePowerState_Response(): GetDevicePowerState_Response {
+  return { state: 0 };
+}
+
+export const GetDevicePowerState_Response = {
+  encode(message: GetDevicePowerState_Response, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.state !== 0) {
+      writer.uint32(8).int32(message.state);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetDevicePowerState_Response {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetDevicePowerState_Response();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.state = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GetDevicePowerState_Response {
+    return { state: isSet(object.state) ? powerStateFromJSON(object.state) : 0 };
+  },
+
+  toJSON(message: GetDevicePowerState_Response): unknown {
+    const obj: any = {};
+    if (message.state !== 0) {
+      obj.state = powerStateToJSON(message.state);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GetDevicePowerState_Response>, I>>(base?: I): GetDevicePowerState_Response {
+    return GetDevicePowerState_Response.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<GetDevicePowerState_Response>, I>>(object: I): GetDevicePowerState_Response {
+    const message = createBaseGetDevicePowerState_Response();
+    message.state = object.state ?? 0;
     return message;
   },
 };

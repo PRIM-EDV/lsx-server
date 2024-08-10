@@ -89,6 +89,51 @@ export function lightDMXStateToJSON(object: LightDMXState): string {
   }
 }
 
+export enum LightMode {
+  LIGHT_MODE_EMPTY = 0,
+  LIGHT_MODE_WHITE = 1,
+  LIGHT_MODE_RED = 2,
+  LIGHT_MODE_BLACKOUT = 3,
+  UNRECOGNIZED = -1,
+}
+
+export function lightModeFromJSON(object: any): LightMode {
+  switch (object) {
+    case 0:
+    case "LIGHT_MODE_EMPTY":
+      return LightMode.LIGHT_MODE_EMPTY;
+    case 1:
+    case "LIGHT_MODE_WHITE":
+      return LightMode.LIGHT_MODE_WHITE;
+    case 2:
+    case "LIGHT_MODE_RED":
+      return LightMode.LIGHT_MODE_RED;
+    case 3:
+    case "LIGHT_MODE_BLACKOUT":
+      return LightMode.LIGHT_MODE_BLACKOUT;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return LightMode.UNRECOGNIZED;
+  }
+}
+
+export function lightModeToJSON(object: LightMode): string {
+  switch (object) {
+    case LightMode.LIGHT_MODE_EMPTY:
+      return "LIGHT_MODE_EMPTY";
+    case LightMode.LIGHT_MODE_WHITE:
+      return "LIGHT_MODE_WHITE";
+    case LightMode.LIGHT_MODE_RED:
+      return "LIGHT_MODE_RED";
+    case LightMode.LIGHT_MODE_BLACKOUT:
+      return "LIGHT_MODE_BLACKOUT";
+    case LightMode.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 export enum LightId {
   LIGHT_EMPTY = 0,
   LIGHT_OG_BASE_MED = 1,
@@ -313,6 +358,33 @@ export interface SetLightLockState_Request {
 }
 
 export interface SetLightLockState_Response {}
+
+export interface GetLightMode {
+  request?: GetLightMode_Request | undefined;
+  response?: GetLightMode_Response | undefined;
+  error: string | undefined;
+}
+
+export interface GetLightMode_Response {
+  mode: LightMode;
+}
+
+export interface GetLightMode_Request {
+  id: LightId;
+}
+
+export interface SetLightMode {
+  request?: SetLightMode_Request | undefined;
+  response?: SetLightMode_Response | undefined;
+  error: string | undefined;
+}
+
+export interface SetLightMode_Request {
+  id: LightId;
+  mode: LightMode;
+}
+
+export interface SetLightMode_Response {}
 
 function createBaseGetLightPowerState(): GetLightPowerState {
   return { request: undefined, response: undefined, error: undefined };
@@ -2024,6 +2096,433 @@ export const SetLightLockState_Response = {
     _: I
   ): SetLightLockState_Response {
     const message = createBaseSetLightLockState_Response();
+    return message;
+  },
+};
+
+function createBaseGetLightMode(): GetLightMode {
+  return { request: undefined, response: undefined, error: undefined };
+}
+
+export const GetLightMode = {
+  encode(
+    message: GetLightMode,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.request !== undefined) {
+      GetLightMode_Request.encode(
+        message.request,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    if (message.response !== undefined) {
+      GetLightMode_Response.encode(
+        message.response,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    if (message.error !== undefined) {
+      writer.uint32(26).string(message.error);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetLightMode {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetLightMode();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.request = GetLightMode_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 2:
+          message.response = GetLightMode_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 3:
+          message.error = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GetLightMode {
+    return {
+      request: isSet(object.request)
+        ? GetLightMode_Request.fromJSON(object.request)
+        : undefined,
+      response: isSet(object.response)
+        ? GetLightMode_Response.fromJSON(object.response)
+        : undefined,
+      error: isSet(object.error) ? String(object.error) : undefined,
+    };
+  },
+
+  toJSON(message: GetLightMode): unknown {
+    const obj: any = {};
+    message.request !== undefined &&
+      (obj.request = message.request
+        ? GetLightMode_Request.toJSON(message.request)
+        : undefined);
+    message.response !== undefined &&
+      (obj.response = message.response
+        ? GetLightMode_Response.toJSON(message.response)
+        : undefined);
+    message.error !== undefined && (obj.error = message.error);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GetLightMode>, I>>(
+    object: I
+  ): GetLightMode {
+    const message = createBaseGetLightMode();
+    message.request =
+      object.request !== undefined && object.request !== null
+        ? GetLightMode_Request.fromPartial(object.request)
+        : undefined;
+    message.response =
+      object.response !== undefined && object.response !== null
+        ? GetLightMode_Response.fromPartial(object.response)
+        : undefined;
+    message.error = object.error ?? undefined;
+    return message;
+  },
+};
+
+function createBaseGetLightMode_Response(): GetLightMode_Response {
+  return { mode: 0 };
+}
+
+export const GetLightMode_Response = {
+  encode(
+    message: GetLightMode_Response,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.mode !== 0) {
+      writer.uint32(8).int32(message.mode);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GetLightMode_Response {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetLightMode_Response();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.mode = reader.int32() as any;
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GetLightMode_Response {
+    return {
+      mode: isSet(object.mode) ? lightModeFromJSON(object.mode) : 0,
+    };
+  },
+
+  toJSON(message: GetLightMode_Response): unknown {
+    const obj: any = {};
+    message.mode !== undefined && (obj.mode = lightModeToJSON(message.mode));
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GetLightMode_Response>, I>>(
+    object: I
+  ): GetLightMode_Response {
+    const message = createBaseGetLightMode_Response();
+    message.mode = object.mode ?? 0;
+    return message;
+  },
+};
+
+function createBaseGetLightMode_Request(): GetLightMode_Request {
+  return { id: 0 };
+}
+
+export const GetLightMode_Request = {
+  encode(
+    message: GetLightMode_Request,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).int32(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GetLightMode_Request {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetLightMode_Request();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = reader.int32() as any;
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GetLightMode_Request {
+    return {
+      id: isSet(object.id) ? lightIdFromJSON(object.id) : 0,
+    };
+  },
+
+  toJSON(message: GetLightMode_Request): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = lightIdToJSON(message.id));
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GetLightMode_Request>, I>>(
+    object: I
+  ): GetLightMode_Request {
+    const message = createBaseGetLightMode_Request();
+    message.id = object.id ?? 0;
+    return message;
+  },
+};
+
+function createBaseSetLightMode(): SetLightMode {
+  return { request: undefined, response: undefined, error: undefined };
+}
+
+export const SetLightMode = {
+  encode(
+    message: SetLightMode,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.request !== undefined) {
+      SetLightMode_Request.encode(
+        message.request,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    if (message.response !== undefined) {
+      SetLightMode_Response.encode(
+        message.response,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    if (message.error !== undefined) {
+      writer.uint32(26).string(message.error);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): SetLightMode {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSetLightMode();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.request = SetLightMode_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 2:
+          message.response = SetLightMode_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 3:
+          message.error = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): SetLightMode {
+    return {
+      request: isSet(object.request)
+        ? SetLightMode_Request.fromJSON(object.request)
+        : undefined,
+      response: isSet(object.response)
+        ? SetLightMode_Response.fromJSON(object.response)
+        : undefined,
+      error: isSet(object.error) ? String(object.error) : undefined,
+    };
+  },
+
+  toJSON(message: SetLightMode): unknown {
+    const obj: any = {};
+    message.request !== undefined &&
+      (obj.request = message.request
+        ? SetLightMode_Request.toJSON(message.request)
+        : undefined);
+    message.response !== undefined &&
+      (obj.response = message.response
+        ? SetLightMode_Response.toJSON(message.response)
+        : undefined);
+    message.error !== undefined && (obj.error = message.error);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<SetLightMode>, I>>(
+    object: I
+  ): SetLightMode {
+    const message = createBaseSetLightMode();
+    message.request =
+      object.request !== undefined && object.request !== null
+        ? SetLightMode_Request.fromPartial(object.request)
+        : undefined;
+    message.response =
+      object.response !== undefined && object.response !== null
+        ? SetLightMode_Response.fromPartial(object.response)
+        : undefined;
+    message.error = object.error ?? undefined;
+    return message;
+  },
+};
+
+function createBaseSetLightMode_Request(): SetLightMode_Request {
+  return { id: 0, mode: 0 };
+}
+
+export const SetLightMode_Request = {
+  encode(
+    message: SetLightMode_Request,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).int32(message.id);
+    }
+    if (message.mode !== 0) {
+      writer.uint32(16).int32(message.mode);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): SetLightMode_Request {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSetLightMode_Request();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = reader.int32() as any;
+          break;
+        case 2:
+          message.mode = reader.int32() as any;
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): SetLightMode_Request {
+    return {
+      id: isSet(object.id) ? lightIdFromJSON(object.id) : 0,
+      mode: isSet(object.mode) ? lightModeFromJSON(object.mode) : 0,
+    };
+  },
+
+  toJSON(message: SetLightMode_Request): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = lightIdToJSON(message.id));
+    message.mode !== undefined && (obj.mode = lightModeToJSON(message.mode));
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<SetLightMode_Request>, I>>(
+    object: I
+  ): SetLightMode_Request {
+    const message = createBaseSetLightMode_Request();
+    message.id = object.id ?? 0;
+    message.mode = object.mode ?? 0;
+    return message;
+  },
+};
+
+function createBaseSetLightMode_Response(): SetLightMode_Response {
+  return {};
+}
+
+export const SetLightMode_Response = {
+  encode(
+    _: SetLightMode_Response,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): SetLightMode_Response {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSetLightMode_Response();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): SetLightMode_Response {
+    return {};
+  },
+
+  toJSON(_: SetLightMode_Response): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<SetLightMode_Response>, I>>(
+    _: I
+  ): SetLightMode_Response {
+    const message = createBaseSetLightMode_Response();
     return message;
   },
 };

@@ -63,8 +63,12 @@ import {
   SetLockdownState_Response,
 } from "./lsx.lockdown";
 import {
+  GetDevicePowerState_Request,
+  GetDevicePowerState_Response,
   GetPowerPlantState_Request,
   GetPowerPlantState_Response,
+  SetDevicePowerState_Request,
+  SetDevicePowerState_Response,
   SetPowerPlantState_Request,
   SetPowerPlantState_Response,
 } from "./lsx.power";
@@ -108,7 +112,12 @@ export interface Request {
   getLightLockState?: GetLightLockState_Request | undefined;
   setLightLockState?: SetLightLockState_Request | undefined;
   getLightMode?: GetLightMode_Request | undefined;
-  setLightMode?: SetLightMode_Request | undefined;
+  setLightMode?:
+    | SetLightMode_Request
+    | undefined;
+  /**  */
+  getDevicePowerState?: GetDevicePowerState_Request | undefined;
+  setDevicePowerState?: SetDevicePowerState_Request | undefined;
 }
 
 export interface Response {
@@ -148,7 +157,12 @@ export interface Response {
   getLightLockState?: GetLightLockState_Response | undefined;
   setLightLockState?: SetLightLockState_Response | undefined;
   getLightMode?: GetLightMode_Response | undefined;
-  setLightMode?: SetLightMode_Response | undefined;
+  setLightMode?:
+    | SetLightMode_Response
+    | undefined;
+  /**  */
+  getDevicePowerState?: GetDevicePowerState_Response | undefined;
+  setDevicePowerState?: SetDevicePowerState_Response | undefined;
 }
 
 export interface Error {
@@ -213,6 +227,8 @@ function createBaseRequest(): Request {
     setLightLockState: undefined,
     getLightMode: undefined,
     setLightMode: undefined,
+    getDevicePowerState: undefined,
+    setDevicePowerState: undefined,
   };
 }
 
@@ -301,6 +317,12 @@ export const Request = {
     }
     if (message.setLightMode !== undefined) {
       SetLightMode_Request.encode(message.setLightMode, writer.uint32(242).fork()).ldelim();
+    }
+    if (message.getDevicePowerState !== undefined) {
+      GetDevicePowerState_Request.encode(message.getDevicePowerState, writer.uint32(250).fork()).ldelim();
+    }
+    if (message.setDevicePowerState !== undefined) {
+      SetDevicePowerState_Request.encode(message.setDevicePowerState, writer.uint32(258).fork()).ldelim();
     }
     return writer;
   },
@@ -508,6 +530,20 @@ export const Request = {
 
           message.setLightMode = SetLightMode_Request.decode(reader, reader.uint32());
           continue;
+        case 31:
+          if (tag !== 250) {
+            break;
+          }
+
+          message.getDevicePowerState = GetDevicePowerState_Request.decode(reader, reader.uint32());
+          continue;
+        case 32:
+          if (tag !== 258) {
+            break;
+          }
+
+          message.setDevicePowerState = SetDevicePowerState_Request.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -589,6 +625,12 @@ export const Request = {
         : undefined,
       getLightMode: isSet(object.getLightMode) ? GetLightMode_Request.fromJSON(object.getLightMode) : undefined,
       setLightMode: isSet(object.setLightMode) ? SetLightMode_Request.fromJSON(object.setLightMode) : undefined,
+      getDevicePowerState: isSet(object.getDevicePowerState)
+        ? GetDevicePowerState_Request.fromJSON(object.getDevicePowerState)
+        : undefined,
+      setDevicePowerState: isSet(object.setDevicePowerState)
+        ? SetDevicePowerState_Request.fromJSON(object.setDevicePowerState)
+        : undefined,
     };
   },
 
@@ -677,6 +719,12 @@ export const Request = {
     }
     if (message.setLightMode !== undefined) {
       obj.setLightMode = SetLightMode_Request.toJSON(message.setLightMode);
+    }
+    if (message.getDevicePowerState !== undefined) {
+      obj.getDevicePowerState = GetDevicePowerState_Request.toJSON(message.getDevicePowerState);
+    }
+    if (message.setDevicePowerState !== undefined) {
+      obj.setDevicePowerState = SetDevicePowerState_Request.toJSON(message.setDevicePowerState);
     }
     return obj;
   },
@@ -772,6 +820,12 @@ export const Request = {
     message.setLightMode = (object.setLightMode !== undefined && object.setLightMode !== null)
       ? SetLightMode_Request.fromPartial(object.setLightMode)
       : undefined;
+    message.getDevicePowerState = (object.getDevicePowerState !== undefined && object.getDevicePowerState !== null)
+      ? GetDevicePowerState_Request.fromPartial(object.getDevicePowerState)
+      : undefined;
+    message.setDevicePowerState = (object.setDevicePowerState !== undefined && object.setDevicePowerState !== null)
+      ? SetDevicePowerState_Request.fromPartial(object.setDevicePowerState)
+      : undefined;
     return message;
   },
 };
@@ -806,6 +860,8 @@ function createBaseResponse(): Response {
     setLightLockState: undefined,
     getLightMode: undefined,
     setLightMode: undefined,
+    getDevicePowerState: undefined,
+    setDevicePowerState: undefined,
   };
 }
 
@@ -894,6 +950,12 @@ export const Response = {
     }
     if (message.setLightMode !== undefined) {
       SetLightMode_Response.encode(message.setLightMode, writer.uint32(242).fork()).ldelim();
+    }
+    if (message.getDevicePowerState !== undefined) {
+      GetDevicePowerState_Response.encode(message.getDevicePowerState, writer.uint32(250).fork()).ldelim();
+    }
+    if (message.setDevicePowerState !== undefined) {
+      SetDevicePowerState_Response.encode(message.setDevicePowerState, writer.uint32(258).fork()).ldelim();
     }
     return writer;
   },
@@ -1101,6 +1163,20 @@ export const Response = {
 
           message.setLightMode = SetLightMode_Response.decode(reader, reader.uint32());
           continue;
+        case 31:
+          if (tag !== 250) {
+            break;
+          }
+
+          message.getDevicePowerState = GetDevicePowerState_Response.decode(reader, reader.uint32());
+          continue;
+        case 32:
+          if (tag !== 258) {
+            break;
+          }
+
+          message.setDevicePowerState = SetDevicePowerState_Response.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1182,6 +1258,12 @@ export const Response = {
         : undefined,
       getLightMode: isSet(object.getLightMode) ? GetLightMode_Response.fromJSON(object.getLightMode) : undefined,
       setLightMode: isSet(object.setLightMode) ? SetLightMode_Response.fromJSON(object.setLightMode) : undefined,
+      getDevicePowerState: isSet(object.getDevicePowerState)
+        ? GetDevicePowerState_Response.fromJSON(object.getDevicePowerState)
+        : undefined,
+      setDevicePowerState: isSet(object.setDevicePowerState)
+        ? SetDevicePowerState_Response.fromJSON(object.setDevicePowerState)
+        : undefined,
     };
   },
 
@@ -1270,6 +1352,12 @@ export const Response = {
     }
     if (message.setLightMode !== undefined) {
       obj.setLightMode = SetLightMode_Response.toJSON(message.setLightMode);
+    }
+    if (message.getDevicePowerState !== undefined) {
+      obj.getDevicePowerState = GetDevicePowerState_Response.toJSON(message.getDevicePowerState);
+    }
+    if (message.setDevicePowerState !== undefined) {
+      obj.setDevicePowerState = SetDevicePowerState_Response.toJSON(message.setDevicePowerState);
     }
     return obj;
   },
@@ -1364,6 +1452,12 @@ export const Response = {
       : undefined;
     message.setLightMode = (object.setLightMode !== undefined && object.setLightMode !== null)
       ? SetLightMode_Response.fromPartial(object.setLightMode)
+      : undefined;
+    message.getDevicePowerState = (object.getDevicePowerState !== undefined && object.getDevicePowerState !== null)
+      ? GetDevicePowerState_Response.fromPartial(object.getDevicePowerState)
+      : undefined;
+    message.setDevicePowerState = (object.setDevicePowerState !== undefined && object.setDevicePowerState !== null)
+      ? SetDevicePowerState_Response.fromPartial(object.setDevicePowerState)
       : undefined;
     return message;
   },

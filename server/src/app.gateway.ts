@@ -11,7 +11,6 @@ import { LoggingService } from 'src/core/logging/logging.service';
 import { Subject } from 'rxjs';
 import { UseGuards } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/api/auth/auth.service';
 import { AuthGuard } from './common/guards/auth.guard';
 import { Ws } from './common/interfaces/ws';
 

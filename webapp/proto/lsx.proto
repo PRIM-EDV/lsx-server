@@ -36,6 +36,14 @@ message Request {
         SetLightSwitchState.Request set_light_switch_state = 24;
         GetLightDmxState.Request get_light_dmx_state = 25;
         SetLightDmxState.Request set_light_dmx_state = 26;
+        GetLightLockState.Request get_light_lock_state = 27;
+        SetLightLockState.Request set_light_lock_state = 28;
+        GetLightMode.Request get_light_mode = 29;
+        SetLightMode.Request set_light_mode = 30;
+
+        //
+        GetDevicePowerState.Request get_device_power_state = 31;
+        SetDevicePowerState.Request set_device_power_state = 32;
     }
 }
 
@@ -69,6 +77,14 @@ message Response {
         SetLightSwitchState.Response set_light_switch_state = 24;
         GetLightDmxState.Response get_light_dmx_state = 25;
         SetLightDmxState.Response set_light_dmx_state = 26;
+        GetLightLockState.Response get_light_lock_state = 27;
+        SetLightLockState.Response set_light_lock_state = 28;
+        GetLightMode.Response get_light_mode = 29;
+        SetLightMode.Response set_light_mode = 30;
+        
+        //
+        GetDevicePowerState.Response get_device_power_state = 31;
+        SetDevicePowerState.Response set_device_power_state = 32;
     }
 }
 
