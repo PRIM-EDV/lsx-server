@@ -4,7 +4,7 @@ import { GetFluffFiles_Response, GetFluffState_Response, SetFluffState_Request }
 import { AppGateway } from "src/app.gateway";
 import { Roles } from "src/common/decorators/roles.decorator";
 import { RolesGuard } from "src/common/guards/roles.guards";
-import { Rpc, RpcHandler } from "src/core/rpc/decorators";
+import { Rpc, RpcHandler } from "lib/decorators";
 import { FluffService } from "./fluff.service";
 import { Ws } from "src/common/interfaces/ws";
 

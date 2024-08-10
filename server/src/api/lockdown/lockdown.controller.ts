@@ -1,7 +1,7 @@
 import { UseGuards } from "@nestjs/common";
 import { AppGateway } from "src/app.gateway";
 import { RolesGuard } from "src/common/guards/roles.guards";
-import { Rpc, RpcHandler } from "src/core/rpc/decorators";
+import { Rpc, RpcHandler } from "lib/decorators";
 import { LockdownService } from "./lockdown.service";
 import { 
     GetAutoLockdown_Response, 

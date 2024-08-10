@@ -1,7 +1,7 @@
 import { UseGuards } from "@nestjs/common";
 import { AppGateway } from "src/app.gateway";
 import { RolesGuard } from "src/common/guards/roles.guards";
-import { RpcHandler, Rpc } from "src/core/rpc/decorators";
+import { RpcHandler, Rpc } from "lib/decorators";
 import { Roles } from "src/common/decorators/roles.decorator";
 import { DroneService } from "./drone.service";
 import { StateService } from "src/core/state/state.service";

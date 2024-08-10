@@ -3,7 +3,7 @@ import { UseGuards } from "@nestjs/common";
 import { AppGateway } from "src/app.gateway";
 import { Roles } from "src/common/decorators/roles.decorator";
 import { RolesGuard } from "src/common/guards/roles.guards";
-import { Rpc, RpcHandler } from "src/core/rpc/decorators";
+import { Rpc, RpcHandler } from "lib/decorators";
 import { GetLightLockState_Response, GetLightSwitchState_Request, GetLightSwitchState_Response, LightSwitchState, SetLightLockState_Request, SetLightSwitchState_Request } from "proto/lsx.light";
 import { Ws } from "src/common/interfaces/ws";
 import { LightService } from "src/core/light/light.service";

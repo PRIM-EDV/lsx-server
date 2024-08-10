@@ -4,7 +4,7 @@ import { AppGateway } from "src/app.gateway";
 import { Roles } from "src/common/decorators/roles.decorator";
 import { RolesGuard } from "src/common/guards/roles.guards";
 import { Ws } from "src/common/interfaces/ws";
-import { Rpc, RpcHandler } from "src/core/rpc/decorators";
+import { Rpc, RpcHandler } from "lib/decorators";
 import { AnnouncementsService } from "./announcements.service";
 
 @RpcHandler(AppGateway)
