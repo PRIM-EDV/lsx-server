@@ -10,7 +10,7 @@ export class AudioService {
 
     }
 
-    public async createTrack(): Promise<Track> {
+    public createTrack(): Track {
         if (platform() === 'linux') {
             return new AplayTrack();
         } else {

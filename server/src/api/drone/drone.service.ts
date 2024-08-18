@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { BombAreaId, BombAreaState, ModeSilentState } from "proto/lsx.drone";
-import { LightId } from "proto/lsx.light";
+import { LightId, LightMode } from "proto/lsx.light";
 import { PowerState } from "proto/lsx.power";
 import { LightService } from "src/core/light/light.service";
+import { SoundService } from "src/core/sound/sound.service";
 import { StateService } from "src/core/state/state.service";
-import { SoundService } from "src/platform/sound/sound.service";
 
 @Injectable()
 export class DroneService {
@@ -43,9 +43,9 @@ export class DroneService {
         const lightLineId = this.getLightLineByBombAreaId(id);
         // const lightLine = this.light.lightlines.get(lightLineId);
 
-        this.state.bombAreaStates.set(id, BombAreaState.STATE_FUSED);
+        // this.state.bombAreaStates.set(id, BombAreaState.STATE_FUSED);
 
-        this.sound.playWav(this.bombFiles[Math.floor(Math.random() * this.bombFiles.length)]).then();
+        // this.sound.playWav(this.bombFiles[Math.floor(Math.random() * this.bombFiles.length)]).then();
 
         // setTimeout(async () => { await lightLine.setSpecial(true)}, 2650);
     }
@@ -61,21 +61,20 @@ export class DroneService {
         switch(state) {
             case ModeSilentState.MODE_SILENT_STATE_NORMAL:
                 if (this.state.modeSilentState == ModeSilentState.MODE_SILENT_STATE_SILENT_DRONE) {
-                    this.sound.playWav('assets/wav/drone/DROHNE-basismodus-silent-beendet.wav').then( () => {
-                        // this.light.setLightLines(LightLineMode.MODE_WHITE).then().catch((err) => console.log(err));
-                    }
-                    ).catch((err) =>{console.log(err)});
+                    this.sound.announcementTrack.play('assets/wav/drone/DROHNE-basismodus-silent-beendet.wav').then( () => {
+                        this.light.getLightLines().forEach(async (line) => { await line.setMode(LightMode.LIGHT_MODE_WHITE)} );
+                    }).catch((err) =>{console.log(err)});
                 } else {
-                    // this.light.setLightLines(LightLineMode.MODE_WHITE).then().catch((err) => console.log(err));
+                    this.light.getLightLines().forEach(async (line) => { await line.setMode(LightMode.LIGHT_MODE_WHITE)} );
                 }
                 break;
             case ModeSilentState.MODE_SILENT_STATE_SILENT_DRONE:
-                this.sound.playWav('assets/wav/drone/DROHNE-alarm.wav').then( () => {
-                    // this.light.setLightLines(LightLineMode.MODE_RED).then().catch((err) => console.log(err));
+                this.sound.announcementTrack.play('assets/wav/drone/DROHNE-alarm.wav').then( () => {
+                    this.light.getLightLines().forEach(async (line) => { await line.setMode(LightMode.LIGHT_MODE_RED)} );
                 }
                 ).catch((err) =>{console.log(err)}); break;
             case ModeSilentState.MODE_SILENT_STATE_SILENT:
-                // this.light.setLightLines(LightLineMode.MODE_RED).then().catch((err) => console.log(err));
+                this.light.getLightLines().forEach(async (line) => { await line.setMode(LightMode.LIGHT_MODE_RED)} );
                 break;
         }
     }

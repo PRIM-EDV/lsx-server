@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 
 import { Injectable, UseGuards } from '@nestjs/common';
-import { SoundService } from 'src/platform/sound/sound.service';
+import { SoundService } from 'src/core/sound/sound.service';
 
 @Injectable()
 export class AnnouncementsService {
@@ -21,6 +21,6 @@ export class AnnouncementsService {
     }
 
     public async playAnnouncement(filepath: string): Promise<void> {
-        this.sound.playWav(filepath);
+        this.sound.announcementTrack.play(filepath);
     }
 }

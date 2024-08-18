@@ -23,6 +23,6 @@ export class AnnouncementsController {
     @Rpc()
     @Roles(['admin', 'tec'])
     public async playAnnouncement(client: Ws, req: PlayAnnouncement_Request) {
-        this.service.playAnnouncement(req.filepath);
+        this.service.playAnnouncement(req.filepath).then().catch(console.error);
     }
 }

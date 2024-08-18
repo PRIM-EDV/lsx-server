@@ -60,6 +60,11 @@ export class Lightline {
         }
     }
 
+    public async setMode(mode: LightMode) {
+        this.mode = mode;
+        await this.update();
+    }
+
     public async setSwitchState(state: LightSwitchState) { 
         this.switchState = state;
         await this.update();

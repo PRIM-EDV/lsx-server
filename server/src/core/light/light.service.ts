@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Lightline } from './lightline/lightline';
 import { QlcService } from 'src/platform/qlc/qlc.service';
 import { StateService } from '../state/state.service';
-import { LightDMXState, LightId, LightSwitchState } from 'proto/lsx.light';
+import { LightDMXState, LightId, LightMode, LightSwitchState } from 'proto/lsx.light';
 import { PowerState } from 'proto/lsx.power';
 import { LockState } from 'proto/lsx.common';
 
@@ -79,6 +79,11 @@ export class LightService {
 
     public getLightLines(): Lightline[] {
         return Array.from(this.lightlines.values());
+    }
+
+    public setLightMode(id: LightId, mode: LightMode) {
+        const line = this.lightlines.get(id);
+        line.setMode(mode);
     }
 
     // public async setLightLines(mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {
