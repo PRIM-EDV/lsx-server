@@ -1,19 +1,23 @@
+import { EventEmitter2 } from "@nestjs/event-emitter";
 import { LockState } from "proto/lsx.common";
 import { LightDMXState, LightId, LightMode, LightSwitchState } from "proto/lsx.light";
 import { PowerState } from "proto/lsx.power";
 import { QlcService } from "src/platform/qlc/qlc.service";
+import { LightChangedEvent } from "../../common/events/light-changed.event";
 
 export type LightDMXStates = Map<LightDMXState, number>;
 
 export class Lightline {
     public static dmx: QlcService;
+    public static eventEmitter: EventEmitter2;
+
     public id: LightId;
     public staticCue: number;
     public flickerCue: number;
     public specialCue?: number;
 
     public mode: LightMode = LightMode.LIGHT_MODE_WHITE;
-    public dmxState: LightDMXState.DMX_STATE_OFF | LightDMXState.DMX_STATE_RED | LightDMXState.DMX_STATE_WHITE = LightDMXState.DMX_STATE_OFF;
+    public dmxState: LightDMXState = LightDMXState.DMX_STATE_OFF;
     public powerState: PowerState = PowerState.POWER_STATE_POWERED;
     public switchState: LightSwitchState = LightSwitchState.SWITCH_STATE_ON;
     public lockState: LockState = LockState.LOCK_STATE_UNLOCKED;
@@ -58,6 +62,8 @@ export class Lightline {
                 await Lightline.dmx.setCue(this.staticCue, 'STOP');
                 await Lightline.dmx.setCue(this.flickerCue, 'PLAY'); break;
         }
+
+        this.dmxState = state;
     }
 
     public async setMode(mode: LightMode) {
@@ -88,7 +94,17 @@ export class Lightline {
               }
           await Lightline.dmx.setCue(this.flickerCue, 'STOP');
           await Lightline.dmx.setCue(this.staticCue, 'STEP', this.dmxStates.get(LightDMXState.DMX_STATE_OFF));
+
+          this.dmxState = LightDMXState.DMX_STATE_OFF;
         }
+
+        Lightline.eventEmitter.emit('light.changed',
+            new LightChangedEvent(
+                this.id,
+                this.dmxState,
+            ),
+        );
+          
     }
 
     public async setSpecial(special: boolean) {

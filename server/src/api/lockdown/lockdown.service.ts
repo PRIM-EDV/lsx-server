@@ -4,6 +4,7 @@ import { ModeSilentState } from 'proto/lsx.drone';
 import { LightService } from 'src/core/light/light.service';
 import { StateService } from 'src/core/state/state.service';
 import { SoundService } from 'src/core/sound/sound.service';
+import { LightMode } from 'proto/lsx.light';
 
 @Injectable()
 export class LockdownService {
@@ -35,21 +36,21 @@ export class LockdownService {
             case LockdownState.LOCKDOWN_STATE_NORMAL:
                 if(this.lockdownAnnouncements) {
                     this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-vorbei.wav').then( () => {
-                    //    this.light.setLightLines(LightLineMode.MODE_WHITE).then().catch((err) => {console.log(err)});
+                        this.light.lightlines.forEach(async (lightline) => {this.light.setLightMode(lightline.id, LightMode.LIGHT_MODE_WHITE)});
                     }
                     ).catch((err) =>{console.log(err)});
                 } else {
-                    // this.light.setLightLines(LightLineMode.MODE_WHITE).then().catch((err) => {console.log(err)});
+                    this.light.lightlines.forEach(async (lightline) => {this.light.setLightMode(lightline.id, LightMode.LIGHT_MODE_WHITE)});
                 } break;
 
             case LockdownState.LOCKDOWN_STATE_LOCKDOWN:
                 if (this.lockdownAnnouncements) {
                     this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-now.wav').then( () => {
-                    //    this.light.setLightLines(LightLineMode.MODE_RED).then().catch((err) => {console.log(err)});
+                        this.light.lightlines.forEach(async (lightline) => {this.light.setLightMode(lightline.id, LightMode.LIGHT_MODE_RED)});
                     }
                     ).catch((err) =>{console.log(err)});
                 } else {
-                    // this.light.setLightLines(LightLineMode.MODE_RED).then().catch((err) => {console.log(err)});
+                    this.light.lightlines.forEach(async (lightline) => {this.light.setLightMode(lightline.id, LightMode.LIGHT_MODE_RED)});
                 } break;
 
         }

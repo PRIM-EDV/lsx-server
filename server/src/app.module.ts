@@ -16,6 +16,7 @@ import { QlcModule } from './platform/qlc/qlc.module';
 import { ApiModule } from './api/api.module';
 import { SoundModule } from './core/sound/sound.module';
 import { AudioService } from './platform/audio/audio.service';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Global()
 @Module({
@@ -24,6 +25,7 @@ import { AudioService } from './platform/audio/audio.service';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
+    EventEmitterModule.forRoot(),
     ApiModule,
     AnnouncementsModule,
     StateModule,

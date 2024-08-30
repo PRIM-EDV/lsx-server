@@ -1,11 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Lightline } from './lightline/lightline';
 import { QlcService } from 'src/platform/qlc/qlc.service';
 import { StateService } from '../state/state.service';
 import { LightDMXState, LightId, LightMode, LightSwitchState } from 'proto/lsx.light';
 import { PowerState } from 'proto/lsx.power';
 import { LockState } from 'proto/lsx.common';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
+import { LightChangedEvent } from '../common/events/light-changed.event';
+import { ILightRpcAdapter } from '../common/interfaces/light.rpc.adapter.interface';
 
+const LightRpcAdapter = () => Inject('LightRpcAdapter');
 
 @Injectable()
 export class LightService {
@@ -35,8 +39,14 @@ export class LightService {
         // [LightId.LIGHT_UG_RWALL, new Lightline(41, 42)]
     ])
 
-    constructor(private dmx: QlcService, private state: StateService) {
+    constructor(
+        private dmx: QlcService, 
+        private state: StateService,
+        private eventEmitter: EventEmitter2,
+        @LightRpcAdapter() private readonly lightRpcAdapter: ILightRpcAdapter
+    ) {
         Lightline.dmx = this.dmx;
+        Lightline.eventEmitter = this.eventEmitter;
 
         // Special
         // this.lightlines.get(LightId.LIGHT_OG_BASE_CIC).specialCue = 9;
@@ -49,7 +59,8 @@ export class LightService {
     }
 
     public async setLightDMXState(id: LightId, state: LightDMXState) { 
-    
+        const line = this.lightlines.get(id);
+        await line.setDmxState(state);
     }
 
     public async setPowerState(id: LightId, state: PowerState) {
@@ -84,6 +95,17 @@ export class LightService {
     public setLightMode(id: LightId, mode: LightMode) {
         const line = this.lightlines.get(id);
         line.setMode(mode);
+    }
+
+    public getLightDmxState(id: LightId): LightDMXState {
+        const line = this.lightlines.get(id);
+        return line.dmxState;
+    }
+
+    @OnEvent('light.changed')
+    handleOrderCreatedEvent(light: LightChangedEvent) {
+        console.log('Light changed event', light);
+        this.lightRpcAdapter.setDmxState(light.id, light.state);
     }
 
     // public async setLightLines(mode: LightLineMode.MODE_BLACKOUT | LightLineMode.MODE_RED | LightLineMode.MODE_WHITE) {

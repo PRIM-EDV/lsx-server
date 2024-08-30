@@ -60,4 +60,26 @@ export class LightControlComponent {
 
     // await this.backend.request(req);
   }
+
+  public async onLightPowerStateChange(id: LightId, state: PowerState) {
+    const req: Request = {
+      setLightPowerState: {
+        id: id,
+        state: state
+      }
+    }
+
+    await this.backend.request(req);
+  }
+
+  public async onLightDMXStateChange(id: LightId, state: LightDMXState) {
+    const req: Request = {
+      setLightDmxState: {
+        id: id,
+        state: state
+      }
+    }
+
+    await this.backend.request(req);
+  }
 }

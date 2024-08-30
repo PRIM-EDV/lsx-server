@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BackendService } from "../backend/backend.service";
 import { Light } from "./light-control.component";
-import { LightDMXState, LightId, LightSwitchState, SetLightSwitchState_Request } from "proto/lsx.light";
+import { LightDMXState, LightId, LightSwitchState, SetLightDmxState_Request, SetLightLockState_Request, SetLightPowerState_Request, SetLightSwitchState_Request } from "proto/lsx.light";
 import { LockState } from "proto/lsx.common";
 import { PowerState } from "proto/lsx.power";
 import { Request } from "proto/lsx";
@@ -35,12 +35,48 @@ export class LightControlService {
         }
     }
 
+    private setLightLockState(request: SetLightLockState_Request) {
+        const light = this.lights.find(l => l.id === request.id);
+        if (light) {
+            light.lockState = request.state;
+        }
+    }
+
+    private setLightPowerState(request: SetLightPowerState_Request) {
+        const light = this.lights.find(l => l.id === request.id);
+        if (light) {
+            light.powerState = request.state;
+        }
+    }
+
+    private setLightDMXState(request: SetLightDmxState_Request) {
+        const light = this.lights.find(l => l.id === request.id);
+        if (light) {
+            light.dmxState = request.state;
+        }
+    }
+
     private handleRequest(event: { id: string, request: Request }) {
         const req = event.request;
         if (req.setLightSwitchState) {
             this.setLightSwitchState(req.setLightSwitchState);
             this.backend.respond(event.id, {});
         }
+
+        if (req.setLightLockState) {
+            this.setLightLockState(req.setLightLockState);
+            this.backend.respond(event.id, {});
+        }
+
+        if (req.setLightPowerState) {
+            this.setLightPowerState(req.setLightPowerState);
+            this.backend.respond(event.id, {});
+        }   
+
+        if (req.setLightDmxState) {
+            this.setLightDMXState(req.setLightDmxState);
+            this.backend.respond(event.id, {});
+        }   
     }
 
 }

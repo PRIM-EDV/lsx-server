@@ -37,9 +37,9 @@ export class FluffService {
         if (this.fluffState && this.state.modeSilentState == ModeSilentState.MODE_SILENT_STATE_NORMAL) {
             if (seconds == 0 && (hours > 9 || hours < 3)) {
                 switch (minutes) {
-                    case 15: this.sound.announcementTrack.play(`assets/wav/fluff/${fluffFiles[Math.floor(Math.random() * fluffFiles.length)]}`); break;
-                    case 35: this.sound.announcementTrack.play(`assets/wav/fluff/${fluffFiles[Math.floor(Math.random() * fluffFiles.length)]}`); break;
-                    case 55: this.sound.announcementTrack.play(`assets/wav/fluff/${fluffFiles[Math.floor(Math.random() * fluffFiles.length)]}`); break;
+                    case 15: this.sound.announcementTrack.play(`assets/wav/fluff/${fluffFiles[Math.floor(Math.random() * fluffFiles.length)]}`).then().catch(); break;
+                    case 35: this.sound.announcementTrack.play(`assets/wav/fluff/${fluffFiles[Math.floor(Math.random() * fluffFiles.length)]}`).then().catch(); break;
+                    case 55: this.sound.announcementTrack.play(`assets/wav/fluff/${fluffFiles[Math.floor(Math.random() * fluffFiles.length)]}`).then().catch(); break;
                 }
             }
         }
