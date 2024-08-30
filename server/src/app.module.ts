@@ -13,8 +13,9 @@ import { LightModule } from './core/light/light.module';
 import { LoggingModule } from './core/logging/logging.module';
 import { StateModule } from './core/state/state.module';
 import { QlcModule } from './platform/qlc/qlc.module';
-import { SoundModule } from './platform/sound/sound.module';
 import { ApiModule } from './api/api.module';
+import { SoundModule } from './core/sound/sound.module';
+import { AudioService } from './platform/audio/audio.service';
 
 @Global()
 @Module({
@@ -35,7 +36,7 @@ import { ApiModule } from './api/api.module';
     LightModule
   ],
   controllers: [AppController],
-  providers: [AppService, AppGateway],
-  exports: [AppGateway]
+  providers: [AppService, AppGateway, AudioService],
+  exports: [AppGateway, AudioService]
 })
 export class AppModule {}

@@ -3,7 +3,7 @@ import { LockdownState } from 'proto/lsx.lockdown';
 import { ModeSilentState } from 'proto/lsx.drone';
 import { LightService } from 'src/core/light/light.service';
 import { StateService } from 'src/core/state/state.service';
-import { SoundService } from 'src/platform/sound/sound.service';
+import { SoundService } from 'src/core/sound/sound.service';
 
 @Injectable()
 export class LockdownService {
@@ -34,7 +34,7 @@ export class LockdownService {
         switch(state) {
             case LockdownState.LOCKDOWN_STATE_NORMAL:
                 if(this.lockdownAnnouncements) {
-                    this.sound.playWav('assets/wav/lockdown-timer/lockdown-vorbei.wav').then( () => {
+                    this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-vorbei.wav').then( () => {
                     //    this.light.setLightLines(LightLineMode.MODE_WHITE).then().catch((err) => {console.log(err)});
                     }
                     ).catch((err) =>{console.log(err)});
@@ -44,7 +44,7 @@ export class LockdownService {
 
             case LockdownState.LOCKDOWN_STATE_LOCKDOWN:
                 if (this.lockdownAnnouncements) {
-                    this.sound.playWav('assets/wav/lockdown-timer/lockdown-now.wav').then( () => {
+                    this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-now.wav').then( () => {
                     //    this.light.setLightLines(LightLineMode.MODE_RED).then().catch((err) => {console.log(err)});
                     }
                     ).catch((err) =>{console.log(err)});
@@ -64,28 +64,28 @@ export class LockdownService {
         if (this.lockdownAnnouncements && this.state.modeSilentState == ModeSilentState.MODE_SILENT_STATE_NORMAL) {
             if (minutes == 0 && seconds == 0) {
                 switch(hours) {
-                    case 0: this.sound.playWav('assets/wav/lockdown-timer/lockdown-3h.wav'); break;
-                    case 1: this.sound.playWav('assets/wav/lockdown-timer/lockdown-2h.wav'); break;
-                    case 2: this.sound.playWav('assets/wav/lockdown-timer/lockdown-1h.wav'); break;
-                    case 10: this.sound.playWav('assets/wav/lockdown-timer/lockdown-17h.wav'); break;
-                    case 11: this.sound.playWav('assets/wav/lockdown-timer/lockdown-16h.wav'); break;
-                    case 12: this.sound.playWav('assets/wav/lockdown-timer/lockdown-15h.wav'); break;
-                    case 13: this.sound.playWav('assets/wav/lockdown-timer/lockdown-14h.wav'); break;
-                    case 14: this.sound.playWav('assets/wav/lockdown-timer/lockdown-13h.wav'); break;
-                    case 15: this.sound.playWav('assets/wav/lockdown-timer/lockdown-12h.wav'); break;
-                    case 16: this.sound.playWav('assets/wav/lockdown-timer/lockdown-11h.wav'); break;
-                    case 17: this.sound.playWav('assets/wav/lockdown-timer/lockdown-10h.wav'); break;
-                    case 18: this.sound.playWav('assets/wav/lockdown-timer/lockdown-9h.wav'); break;
-                    case 19: this.sound.playWav('assets/wav/lockdown-timer/lockdown-8h.wav'); break;
-                    case 20: this.sound.playWav('assets/wav/lockdown-timer/lockdown-7h.wav'); break;
-                    case 21: this.sound.playWav('assets/wav/lockdown-timer/lockdown-6h.wav'); break;
-                    case 22: this.sound.playWav('assets/wav/lockdown-timer/lockdown-5h.wav'); break;
-                    case 23: this.sound.playWav('assets/wav/lockdown-timer/lockdown-4h.wav'); break;
+                    case 0: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-3h.wav'); break;
+                    case 1: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-2h.wav'); break;
+                    case 2: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-1h.wav'); break;
+                    case 10: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-17h.wav'); break;
+                    case 11: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-16h.wav'); break;
+                    case 12: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-15h.wav'); break;
+                    case 13: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-14h.wav'); break;
+                    case 14: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-13h.wav'); break;
+                    case 15: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-12h.wav'); break;
+                    case 16: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-11h.wav'); break;
+                    case 17: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-10h.wav'); break;
+                    case 18: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-9h.wav'); break;
+                    case 19: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-8h.wav'); break;
+                    case 20: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-7h.wav'); break;
+                    case 21: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-6h.wav'); break;
+                    case 22: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-5h.wav'); break;
+                    case 23: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-4h.wav'); break;
                 }
             } else if (hours == 2 && seconds == 0) {
                 switch(minutes) {
-                    case 30: this.sound.playWav('assets/wav/lockdown-timer/lockdown-30m.wav'); break;
-                    case 55: this.sound.playWav('assets/wav/lockdown-timer/lockdown-5m.wav'); break;
+                    case 30: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-30m.wav'); break;
+                    case 55: this.sound.announcementTrack.play('assets/wav/lockdown-timer/lockdown-5m.wav'); break;
                 }
             }
         }

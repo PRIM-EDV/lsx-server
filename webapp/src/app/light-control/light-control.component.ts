@@ -28,12 +28,10 @@ export interface Light {
   styleUrl: './light-control.component.scss'
 })
 export class LightControlComponent {
-
-  public testState: string = 'off';
-
-
   public lightSwitchState = LightSwitchState;
   public lightLockState = LockState;
+  public lightPowerState = PowerState;
+  public lightDMXState = LightDMXState;
 
   constructor(
     private readonly backend: BackendService,
