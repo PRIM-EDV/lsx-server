@@ -1,0 +1,10 @@
+<ph-form>
+        <ph-button-select [label]="'MAPTOOL'" [(value)]="maptoolPowerState" (valueChange)="onMaptoolPowerStateChange($event)">
+            <ph-button [value]="powerState.POWER_STATE_POWERED">POWERED</ph-button>
+            <ph-button [value]="powerState.POWER_STATE_UNPOWERED">UNPOWERED</ph-button>
+        </ph-button-select>
+        <ph-button-select [label]="'BASETOOL'" [(value)]="basetoolPowerState" (valueChange)="onBasetoolPowerStateChange($event)">
+            <ph-button [value]="powerState.POWER_STATE_POWERED">POWERED</ph-button>
+            <ph-button [value]="powerState.POWER_STATE_UNPOWERED">UNPOWERED</ph-button>
+        </ph-button-select>
+</ph-form>

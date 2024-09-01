@@ -7,7 +7,7 @@ import { Rpc, RpcHandler } from "lib/decorators";
 import { GetLightPowerState_Request, GetLightPowerState_Response, SetLightPowerState_Request } from "proto/lsx.light";
 import { Ws } from "src/common/interfaces/ws";
 import { LightService } from "src/core/light/light.service";
-import { PowerState } from "proto/lsx.power";
+import { PowerState, SetDevicePowerState_Request } from "proto/lsx.power";
 
 
 @Controller('api/power')
@@ -35,13 +35,13 @@ export class PowerApiController {
 
     @Rpc()
     public async getDevicePowerState(client: Ws, req: GetLightPowerState_Request) {
-    
+        // TODO: Implement
     }
     
     @Rpc()
     @Roles(['admin', 'tec'])
-    public async setDevicePowerState(client: Ws, req: SetLightPowerState_Request) {
-
+    public async setDevicePowerState(client: Ws, req: SetDevicePowerState_Request) {
+        this.gateway.requestAllButOne(client.id, { setDevicePowerState: req }).then();
     }
 
 }

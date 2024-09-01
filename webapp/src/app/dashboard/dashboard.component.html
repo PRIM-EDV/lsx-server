@@ -15,10 +15,10 @@
             <ph-window *ngIf="this.tab == 'GNRL'" [title]="'POWER PLANT'" [subtitle]="'TR2805'" style="grid-row:1/5; grid-column: 1/38">
                 <app-power-plant></app-power-plant>
             </ph-window>
-            <!-- <ph-window *ngIf="this.tab == 'GNRL'" [title]="'BASE POWER GRID'" [subtitle]="'GRD8015'" style="grid-row:5/36; grid-column: 1/38">
-                <app-power-control></app-power-control>
-            </ph-window> -->
-            <ph-window *ngIf="this.tab == 'GNRL'" [title]="'BASE POWER GRID'" [subtitle]="'GRD8015'" style="grid-row:5/36; grid-column: 1/38">
+            <ph-window *ngIf="this.tab == 'GNRL'" [title]="'BASE DEVICE POWER'" [subtitle]="'GRD8015'" style="grid-row:5/9; grid-column: 1/38">
+                <lsx-device-control></lsx-device-control>
+            </ph-window>
+            <ph-window *ngIf="this.tab == 'GNRL'" [title]="'BASE POWER GRID'" [subtitle]="'GRD8015'" style="grid-row:9/36; grid-column: 1/38">
                 <lsx-light-control></lsx-light-control>
             </ph-window>
             <ph-window *ngIf="auth.role == 'admin' && this.tab == 'GNRL'" [title]="'LOCKDOWN'" [subtitle]="'TR2805'" style="grid-row:1/6; grid-column: 38/58">

@@ -35,8 +35,11 @@ export class LightControlComponent {
 
   constructor(
     private readonly backend: BackendService,
-    public readonly service: LightControlService) {
-   
+    public readonly service: LightControlService
+  ){
+    this.backend.onOpen.subscribe(() => {
+
+    });
   }
     
   public async onLightSwitchStateChange(id: LightId, state: LightSwitchState) {

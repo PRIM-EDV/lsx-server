@@ -10,6 +10,7 @@ import { DroneControlModule } from '../drone-control/drone-control.module';
 import { DroneBombardmentModule } from '../drone-bombardment/drone-bombardment.module';
 import { PhElementsModule } from 'lib/phobos-elements/ph-elements.module';
 import { LightControlComponent } from '../light-control/light-control.component';
+import { DeviceControlComponent } from "../device-control/device-control.component";
 
 
 
@@ -27,7 +28,8 @@ import { LightControlComponent } from '../light-control/light-control.component'
     SpeakerAnnouncementsModule,
     SpeakerFluffModule,
     DroneControlModule,
-    DroneBombardmentModule
-  ]
+    DroneBombardmentModule,
+    DeviceControlComponent
+]
 })
 export class DashboardModule { }
