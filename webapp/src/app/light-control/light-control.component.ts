@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { PhElementsModule } from 'lib/phobos-elements/ph-elements.module';
 import { LockState } from 'proto/lsx.common';
-import { LightDMXState, LightId, LightSwitchState } from 'proto/lsx.light';
+import { GetLightDmxState_Response, GetLightLockState_Response, GetLightMode_Response, GetLightPowerState_Response, GetLightSwitchState_Response, LightDMXState, LightId, LightMode, LightSwitchState } from 'proto/lsx.light';
 import { PowerState } from 'proto/lsx.power';
 import { BackendService } from '../backend/backend.service';
 import { LightControlService } from './light-control.service';
@@ -38,7 +38,12 @@ export class LightControlComponent {
     public readonly service: LightControlService
   ){
     this.backend.onOpen.subscribe(() => {
-
+      this.service.lights.forEach(async (light) => {
+        light.dmxState = await this.getLightDMXState(light.id);
+        light.switchState = await this.getLightSwitchState(light.id);
+        light.powerState = await this.getLightPowerState(light.id);
+        light.lockState = await this.getLightLockState(light.id);
+      });
     });
   }
     
@@ -84,5 +89,65 @@ export class LightControlComponent {
     }
 
     await this.backend.request(req);
+  }
+
+  private async getLightDMXState(id: LightId): Promise<LightDMXState> {
+    const req: Request = {
+      getLightDmxState: {
+        id: id
+      }
+    }
+
+    const res = (await this.backend.request(req)).getLightDmxState as GetLightDmxState_Response;
+
+    return res.state;
+  }
+
+  private async getLightPowerState(id: LightId): Promise<PowerState> {
+    const req: Request = {
+      getLightPowerState: {
+        id: id
+      }
+    }
+
+    const res = (await this.backend.request(req)).getLightPowerState as GetLightPowerState_Response;
+
+    return res.state;
+  }
+
+  private async getLightSwitchState(id: LightId): Promise<LightSwitchState> {
+    const req: Request = {
+      getLightSwitchState: {
+        id: id
+      }
+    }
+
+    const res = (await this.backend.request(req)).getLightSwitchState as GetLightSwitchState_Response;
+
+    return res.state;
+  }
+
+  private async getLightLockState(id: LightId): Promise<LockState> {
+    const req: Request = {
+      getLightLockState: {
+        id: id
+      }
+    }
+
+    const res = (await this.backend.request(req)).getLightLockState as GetLightLockState_Response;
+
+    return res.state;
+  }
+
+  public async getLightMode(id: LightId): Promise<LightMode> {
+    const req: Request = {
+      getLightMode: {
+        id: id
+      }
+    }
+
+    const res = (await this.backend.request(req)).getLightMode as GetLightMode_Response;
+
+    return res.mode;
   }
 }
