@@ -68,6 +68,11 @@ export class LightService {
         await line.setPowerState(state);
     }
 
+    public async getLightPowerState(id: LightId): Promise<PowerState> {
+        const line = this.lightlines.get(id);
+        return line.powerState;
+    }
+
     public getLightSwitchState(id: LightId): LightSwitchState {
         const line = this.lightlines.get(id);
         return line.switchState;

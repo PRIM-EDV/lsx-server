@@ -17,6 +17,7 @@ import { ApiModule } from './api/api.module';
 import { SoundModule } from './core/sound/sound.module';
 import { AudioService } from './platform/audio/audio.service';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { DeviceModule } from './core/device/device.module';
 
 @Global()
 @Module({
@@ -35,7 +36,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     SoundModule,
     DroneModule,
     QlcModule,
-    LightModule
+    LightModule,
+    DeviceModule
   ],
   controllers: [AppController],
   providers: [AppService, AppGateway, AudioService],
