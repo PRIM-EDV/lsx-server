@@ -17,7 +17,8 @@ export class AplayTrack implements Track {
         return new Promise((resolve, reject) => {
             if(!this.isPlaying) { 
                 this.wav = wav;
-                this.process = spawn('aplay', [ "-Dplug:dmix", wav ]);
+                this.process = spawn('aplay', [ wav ]);
+                this.isPlaying = true;
 
                 this.process.on('exit', () => {
                     this.isPlaying = false;
