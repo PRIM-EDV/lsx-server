@@ -31,6 +31,7 @@ RUN npm install
 # Build server
 COPY ./server/assets ./assets
 COPY ./server/src ./src
+COPY ./server/lib ./lib
 COPY ./protocol ../protocol
 
 RUN npm run proto:generate
