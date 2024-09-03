@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PowerDevice, PowerState } from "proto/lsx.power";
+import { LightService } from "../light/light.service";
 
 @Injectable()
 export class DeviceService {
@@ -9,7 +10,7 @@ export class DeviceService {
         [PowerDevice.DEVICE_CIC_MAPTOOL, PowerState.POWER_STATE_POWERED],
     ]);
 
-    constructor() {
+    constructor(private readonly light: LightService) {
 
     }
 

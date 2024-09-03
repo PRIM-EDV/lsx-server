@@ -18,12 +18,31 @@ export class LightControlService {
         { id: LightId.LIGHT_OG_BASE_MED, label: 'Section MED', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
         { id: LightId.LIGHT_OG_BASE_SCI, label: 'Section SCI', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
         { id: LightId.LIGHT_OG_BASE_TEC, label: 'Section TEC', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
+        { id: LightId.LIGHT_OG_BASE_FC, label: 'Section FC', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
+        { id: LightId.LIGHT_OG_HALL, label: 'Hall Upper', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
+        { id: LightId.LIGHT_OG_PARCELS, label: 'Parcels Upper', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
+        { id: LightId.LIGHT_OG_LOG, label: 'Section LOG', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
+        { id: LightId.LIGHT_OG_COURTYARD, label: 'Courtyard', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
+        { id: LightId.LIGHT_OG_MESSHALL, label: 'Messhall', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
+        { id: LightId.LIGHT_OG_GATE, label: 'Gate', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
+        { id: LightId.LIGHT_TUNNEL, label: 'Tunnel', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
+        { id: LightId.LIGHT_UG_BASE_SEC, label: 'Section SEC', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
+        { id: LightId.LIGHT_UG_RWALL, label: 'Rear Wall', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED },
+        { id: LightId.LIGHT_UG_HALL, label: 'Hall Lower', dmxState: LightDMXState.DMX_STATE_OFF, switchState: LightSwitchState.SWITCH_STATE_OFF, powerState: PowerState.POWER_STATE_POWERED, lockState: LockState.LOCK_STATE_UNLOCKED }
     ];
 
     constructor(private readonly backend: BackendService) {
         this.backend.onOpen.subscribe(async () => {
-            // const modeSilentState = await this.droneControlService.getModeSilentState();
-            // this.updateLocalModeSilentState(modeSilentState);
+            this.lights.map(async (light) => {
+                const dmxState = (await this.backend.request({ getLightDmxState: { id: light.id } })).getLightDmxState?.state;
+                const switchState = (await this.backend.request({ getLightSwitchState: { id: light.id } })).getLightSwitchState?.state;
+                const lockState = (await this.backend.request({ getLightLockState: { id: light.id } })).getLightLockState?.state;
+
+                light.dmxState = dmxState ? dmxState : light.dmxState;
+                light.switchState = switchState ? switchState : light.switchState;
+                light.lockState = lockState ? lockState : light.lockState;
+            });
+
         });
         this.backend.onRequest.subscribe(this.handleRequest.bind(this));
     }

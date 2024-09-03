@@ -10,6 +10,7 @@
         </ph-button-select>
         <ph-button-select [label]="'Power'" [(value)]="light.powerState" (valueChange)="onLightPowerStateChange(light.id, $event)">
             <ph-button [value]="lightPowerState.POWER_STATE_UNPOWERED">OFF</ph-button>
+            <ph-button [value]="lightPowerState.POWER_STATE_EMERGENCY">EMERGENCY</ph-button>
             <ph-button [value]="lightPowerState.POWER_STATE_CRITICAL">CRITICAL</ph-button>
             <ph-button [value]="lightPowerState.POWER_STATE_POWERED">ON</ph-button>
         </ph-button-select>

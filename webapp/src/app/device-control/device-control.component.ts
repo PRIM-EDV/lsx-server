@@ -16,10 +16,14 @@ import { BackendService } from '../backend/backend.service';
   styleUrl: './device-control.component.scss'
 })
 export class DeviceControlComponent {
+  public powerDevice = PowerDevice;
   public powerState = PowerState;
 
   public maptoolPowerState = PowerState.POWER_STATE_POWERED;
   public basetoolPowerState = PowerState.POWER_STATE_POWERED;
+  public cicCoffee = PowerState.POWER_STATE_POWERED;
+  public sciRapidCare = PowerState.POWER_STATE_POWERED;
+  public medOpRapidCare = PowerState.POWER_STATE_POWERED
 
 
   constructor(private backend: BackendService) {
@@ -44,7 +48,15 @@ export class DeviceControlComponent {
         state: state
       }
     }
-    
+  }
+
+  public async onLightDevicePowerStateChange(device: PowerDevice, state: PowerState) {
+    const req: Request = {
+      setDevicePowerState: {
+        device: device,
+        state: state
+      }
+    }
     await this.backend.request(req);
   }
 

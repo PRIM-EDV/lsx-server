@@ -8,6 +8,7 @@ export enum PowerState {
   POWER_STATE_POWERED = 1,
   POWER_STATE_CRITICAL = 2,
   POWER_STATE_UNPOWERED = 3,
+  POWER_STATE_EMERGENCY = 4,
   UNRECOGNIZED = -1,
 }
 
@@ -25,6 +26,9 @@ export function powerStateFromJSON(object: any): PowerState {
     case 3:
     case "POWER_STATE_UNPOWERED":
       return PowerState.POWER_STATE_UNPOWERED;
+    case 4:
+    case "POWER_STATE_EMERGENCY":
+      return PowerState.POWER_STATE_EMERGENCY;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -42,6 +46,8 @@ export function powerStateToJSON(object: PowerState): string {
       return "POWER_STATE_CRITICAL";
     case PowerState.POWER_STATE_UNPOWERED:
       return "POWER_STATE_UNPOWERED";
+    case PowerState.POWER_STATE_EMERGENCY:
+      return "POWER_STATE_EMERGENCY";
     case PowerState.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -102,6 +108,9 @@ export function powerPlantStateToJSON(object: PowerPlantState): string {
 export enum PowerDevice {
   DEVICE_CIC_MAPTOOL = 0,
   DEVICE_ADM_BASETOOL = 1,
+  DEVICE_IRD_RAPIDCARE = 2,
+  DEVICE_MED_OP_ROOM = 3,
+  DEVICE_CIC_COFFEE = 4,
   UNRECOGNIZED = -1,
 }
 
@@ -113,6 +122,15 @@ export function powerDeviceFromJSON(object: any): PowerDevice {
     case 1:
     case "DEVICE_ADM_BASETOOL":
       return PowerDevice.DEVICE_ADM_BASETOOL;
+    case 2:
+    case "DEVICE_IRD_RAPIDCARE":
+      return PowerDevice.DEVICE_IRD_RAPIDCARE;
+    case 3:
+    case "DEVICE_MED_OP_ROOM":
+      return PowerDevice.DEVICE_MED_OP_ROOM;
+    case 4:
+    case "DEVICE_CIC_COFFEE":
+      return PowerDevice.DEVICE_CIC_COFFEE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -126,6 +144,12 @@ export function powerDeviceToJSON(object: PowerDevice): string {
       return "DEVICE_CIC_MAPTOOL";
     case PowerDevice.DEVICE_ADM_BASETOOL:
       return "DEVICE_ADM_BASETOOL";
+    case PowerDevice.DEVICE_IRD_RAPIDCARE:
+      return "DEVICE_IRD_RAPIDCARE";
+    case PowerDevice.DEVICE_MED_OP_ROOM:
+      return "DEVICE_MED_OP_ROOM";
+    case PowerDevice.DEVICE_CIC_COFFEE:
+      return "DEVICE_CIC_COFFEE";
     case PowerDevice.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

@@ -15,29 +15,113 @@ const LightRpcAdapter = () => Inject('LightRpcAdapter');
 export class LightService {
 
     public lightlines =  new Map<LightId, Lightline>([
-        [LightId.LIGHT_OG_BASE_ADM, new Lightline(7, 0, LightId.LIGHT_OG_BASE_ADM)],
-        [LightId.LIGHT_OG_BASE_CIC, new Lightline(5, 8, LightId.LIGHT_OG_BASE_CIC)],
-        [LightId.LIGHT_OG_BASE_HC, new Lightline(18, 19, LightId.LIGHT_OG_BASE_HC)],
-        [LightId.LIGHT_OG_BASE_MED, new Lightline(24, 25, LightId.LIGHT_OG_BASE_MED)],
-        [LightId.LIGHT_OG_BASE_SCI, new Lightline(12, 13, LightId.LIGHT_OG_BASE_SCI, new Map([
+        [LightId.LIGHT_OG_BASE_ADM, new Lightline(1, 2, LightId.LIGHT_OG_BASE_ADM, new Map([
             [LightDMXState.DMX_STATE_OFF, 0],
             [LightDMXState.DMX_STATE_RED, 2],
-            [LightDMXState.DMX_STATE_WHITE, 1],
+            [LightDMXState.DMX_STATE_WHITE, 3]
         ]))],
-        [LightId.LIGHT_OG_BASE_TEC, new Lightline(29, 30, LightId.LIGHT_OG_BASE_TEC)],
-        [LightId.LIGHT_OG_COURTYARD, new Lightline(20, 21, LightId.LIGHT_OG_COURTYARD)],
-        [LightId.LIGHT_OG_GATE, new Lightline(3, 4, LightId.LIGHT_OG_GATE)],
-        [LightId.LIGHT_OG_MESSHALL, new Lightline(1, 2, LightId.LIGHT_OG_MESSHALL)],
-        [LightId.LIGHT_OG_LOG, new Lightline(22, 23, LightId.LIGHT_OG_LOG)],
-        [LightId.LIGHT_OG_HALL, new Lightline(15, 16, LightId.LIGHT_OG_HALL)],
-        [LightId.LIGHT_OG_PARCELS, new Lightline(27, 28, LightId.LIGHT_OG_PARCELS, new Map([
+        [LightId.LIGHT_OG_MESSHALL, new Lightline(3, 4, LightId.LIGHT_OG_MESSHALL, new Map([
             [LightDMXState.DMX_STATE_OFF, 0],
-            [LightDMXState.DMX_STATE_WHITE, 1],
+            [LightDMXState.DMX_STATE_RED, 1],
+            [LightDMXState.DMX_STATE_WHITE, 2]
         ]))],
+        [LightId.LIGHT_OG_BASE_MED, new Lightline(5, 6, LightId.LIGHT_OG_BASE_MED, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_RED, 1],
+            [LightDMXState.DMX_STATE_WHITE, 4]
+        ]))],
+        [LightId.LIGHT_OG_BASE_CIC, new Lightline(7, 8, LightId.LIGHT_OG_BASE_CIC, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_RED, 2],
+            [LightDMXState.DMX_STATE_WHITE, 3]
+        ]))],
+        [LightId.LIGHT_OG_BASE_FC, new Lightline(9, 10, LightId.LIGHT_OG_BASE_FC, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_RED, 1],
+            [LightDMXState.DMX_STATE_WHITE, 2]
+        ]))],
+        [LightId.LIGHT_OG_BASE_SCI, new Lightline(11, 12, LightId.LIGHT_OG_BASE_SCI, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_RED, 2],
+            [LightDMXState.DMX_STATE_WHITE, 3]
+        ]))],
+        [LightId.LIGHT_OG_HALL, new Lightline(13, 14, LightId.LIGHT_OG_HALL, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_RED, 1],
+            [LightDMXState.DMX_STATE_WHITE, 2]
+        ]))],
+        [LightId.LIGHT_OG_COURTYARD, new Lightline(15, 17, LightId.LIGHT_OG_COURTYARD, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_RED, 1],
+            [LightDMXState.DMX_STATE_WHITE, 2]
+        ]))],
+        [LightId.LIGHT_OG_BASE_HC, new Lightline(18, 19, LightId.LIGHT_OG_BASE_HC, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_RED, 1],
+            [LightDMXState.DMX_STATE_WHITE, 2]
+        ]))],
+        [LightId.LIGHT_OG_LOG, new Lightline(20, 21, LightId.LIGHT_OG_LOG, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_RED, 1],
+            [LightDMXState.DMX_STATE_WHITE, 2]
+        ]))],
+        [LightId.LIGHT_OG_PARCELS, new Lightline(22, 23, LightId.LIGHT_OG_PARCELS, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_WHITE, 1]
+        ]))],
+        [LightId.LIGHT_OG_GATE, new Lightline(24, 25, LightId.LIGHT_OG_GATE, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_RED, 1],
+            [LightDMXState.DMX_STATE_WHITE, 2]
+        ]))],
+        [LightId.LIGHT_UG_RWALL, new Lightline(26, 27, LightId.LIGHT_UG_RWALL, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_RED, 1],
+            [LightDMXState.DMX_STATE_WHITE, 2]
+        ]))],
+        [LightId.LIGHT_UG_BASE_SEC, new Lightline(28, 29, LightId.LIGHT_UG_BASE_SEC, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_RED, 1],
+            [LightDMXState.DMX_STATE_WHITE, 2]
+        ]))],
+        [LightId.LIGHT_OG_BASE_TEC, new Lightline(30, 31, LightId.LIGHT_OG_BASE_TEC, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_RED, 2],
+            [LightDMXState.DMX_STATE_WHITE, 3]
+        ]))],
+        [LightId.LIGHT_TUNNEL, new Lightline(32, 33, LightId.LIGHT_TUNNEL, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_RED, 1],
+            [LightDMXState.DMX_STATE_WHITE, 2]
+        ]))],
+        [LightId.LIGHT_UG_HALL, new Lightline(34, 35, LightId.LIGHT_UG_HALL, new Map([
+            [LightDMXState.DMX_STATE_OFF, 0],
+            [LightDMXState.DMX_STATE_RED, 1],
+            [LightDMXState.DMX_STATE_WHITE, 2]
+        ]))]
+        ]
+        // [LightId.LIGHT_OG_BASE_CIC, new Lightline(5, 8, LightId.LIGHT_OG_BASE_CIC)],
+        // [LightId.LIGHT_OG_BASE_HC, new Lightline(18, 19, LightId.LIGHT_OG_BASE_HC)],
+        // [LightId.LIGHT_OG_BASE_MED, new Lightline(24, 25, LightId.LIGHT_OG_BASE_MED)],
+        // [LightId.LIGHT_OG_BASE_SCI, new Lightline(12, 13, LightId.LIGHT_OG_BASE_SCI, new Map([
+        //     [LightDMXState.DMX_STATE_OFF, 0],
+        //     [LightDMXState.DMX_STATE_RED, 2],
+        //     [LightDMXState.DMX_STATE_WHITE, 1],
+        // ]))],
+        // [LightId.LIGHT_OG_BASE_TEC, new Lightline(29, 30, LightId.LIGHT_OG_BASE_TEC)],
+        // [LightId.LIGHT_OG_COURTYARD, new Lightline(20, 21, LightId.LIGHT_OG_COURTYARD)],
+        // [LightId.LIGHT_OG_GATE, new Lightline(3, 4, LightId.LIGHT_OG_GATE)],
+        // [LightId.LIGHT_OG_MESSHALL, new Lightline(1, 2, LightId.LIGHT_OG_MESSHALL)],
+        // [LightId.LIGHT_OG_LOG, new Lightline(22, 23, LightId.LIGHT_OG_LOG)],
+        // [LightId.LIGHT_OG_HALL, new Lightline(15, 16, LightId.LIGHT_OG_HALL)],
+        // [LightId.LIGHT_OG_PARCELS, new Lightline(27, 28, LightId.LIGHT_OG_PARCELS, new Map([
+        //     [LightDMXState.DMX_STATE_OFF, 0],
+        //     [LightDMXState.DMX_STATE_WHITE, 1],
+        // ]))],
         // [LightId.LIGHT_OG_TUNNEL, new Lightline(32, 33)],
         // [LightId.LIGHT_UG_HALL, new Lightline(35, 36)],
         // [LightId.LIGHT_UG_RWALL, new Lightline(41, 42)]
-    ])
+    )
 
     constructor(
         private dmx: QlcService, 

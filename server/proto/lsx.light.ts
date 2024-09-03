@@ -153,10 +153,13 @@ export enum LightId {
   LIGHT_OG_MESSHALL = 10,
   LIGHT_OG_GATE = 11,
   LIGHT_OG_PARCELS = 12,
-  LIGHT_UG_PARCELS_LEFT = 13,
-  LIGHT_UG_PARCELS_RIGHT = 14,
+  LIGHT_UG_RWALL = 13,
+  /** LIGHT_UG_HALL - LIGHT_UG_PARCELS_RIGHT = 14; */
   LIGHT_UG_HALL = 15,
   LIGHT_OG_LOG = 16,
+  LIGHT_OG_BASE_FC = 17,
+  LIGHT_UG_BASE_SEC = 18,
+  LIGHT_TUNNEL = 19,
   UNRECOGNIZED = -1,
 }
 
@@ -199,17 +202,23 @@ export function lightIdFromJSON(object: any): LightId {
     case "LIGHT_OG_PARCELS":
       return LightId.LIGHT_OG_PARCELS;
     case 13:
-    case "LIGHT_UG_PARCELS_LEFT":
-      return LightId.LIGHT_UG_PARCELS_LEFT;
-    case 14:
-    case "LIGHT_UG_PARCELS_RIGHT":
-      return LightId.LIGHT_UG_PARCELS_RIGHT;
+    case "LIGHT_UG_RWALL":
+      return LightId.LIGHT_UG_RWALL;
     case 15:
     case "LIGHT_UG_HALL":
       return LightId.LIGHT_UG_HALL;
     case 16:
     case "LIGHT_OG_LOG":
       return LightId.LIGHT_OG_LOG;
+    case 17:
+    case "LIGHT_OG_BASE_FC":
+      return LightId.LIGHT_OG_BASE_FC;
+    case 18:
+    case "LIGHT_UG_BASE_SEC":
+      return LightId.LIGHT_UG_BASE_SEC;
+    case 19:
+    case "LIGHT_TUNNEL":
+      return LightId.LIGHT_TUNNEL;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -243,14 +252,18 @@ export function lightIdToJSON(object: LightId): string {
       return "LIGHT_OG_GATE";
     case LightId.LIGHT_OG_PARCELS:
       return "LIGHT_OG_PARCELS";
-    case LightId.LIGHT_UG_PARCELS_LEFT:
-      return "LIGHT_UG_PARCELS_LEFT";
-    case LightId.LIGHT_UG_PARCELS_RIGHT:
-      return "LIGHT_UG_PARCELS_RIGHT";
+    case LightId.LIGHT_UG_RWALL:
+      return "LIGHT_UG_RWALL";
     case LightId.LIGHT_UG_HALL:
       return "LIGHT_UG_HALL";
     case LightId.LIGHT_OG_LOG:
       return "LIGHT_OG_LOG";
+    case LightId.LIGHT_OG_BASE_FC:
+      return "LIGHT_OG_BASE_FC";
+    case LightId.LIGHT_UG_BASE_SEC:
+      return "LIGHT_UG_BASE_SEC";
+    case LightId.LIGHT_TUNNEL:
+      return "LIGHT_TUNNEL";
     case LightId.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

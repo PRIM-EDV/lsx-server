@@ -76,7 +76,7 @@ export class Lightline {
         await this.update();
     }
 
-    private async update() {
+    public async update() {
         if (this.switchState === LightSwitchState.SWITCH_STATE_ON) {
             if (this.powerState == PowerState.POWER_STATE_POWERED) {
                 switch (this.mode) { 
@@ -87,6 +87,10 @@ export class Lightline {
                 }
             } else if (this.powerState == PowerState.POWER_STATE_CRITICAL) { 
                 await this.setDmxState(LightDMXState.DMX_STATE_FLICKER);
+            } else if (this.powerState == PowerState.POWER_STATE_EMERGENCY) {
+                await this.setDmxState(LightDMXState.DMX_STATE_RED);
+            } else if (this.powerState == PowerState.POWER_STATE_UNPOWERED) {
+                await this.setDmxState(LightDMXState.DMX_STATE_OFF);
             }
         } else {
             if (this.specialCue) {

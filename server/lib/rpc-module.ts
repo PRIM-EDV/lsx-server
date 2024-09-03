@@ -20,11 +20,9 @@ export class RpcModule {
         
         const modules = container.getModules();
         modules.forEach(({ providers }, moduleName: string) => {
-            console.log(providers)
             this.connectAllHandlers<Injectable>(providers, moduleName)
         });
         modules.forEach(({ controllers }, moduleName: string) => {
-            console.log(controllers)
             this.connectAllHandlers<Controller>(controllers, moduleName)
         });
     }
