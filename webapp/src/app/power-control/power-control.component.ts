@@ -4,9 +4,10 @@ import { BackendService } from '../backend/backend.service';
 import { PowerControlService } from './power-grid.service';
 
 @Component({
-  selector: 'app-power-control',
-  templateUrl: './power-control.component.html',
-  styleUrls: ['./power-control.component.scss']
+    selector: 'app-power-control',
+    templateUrl: './power-control.component.html',
+    styleUrls: ['./power-control.component.scss'],
+    standalone: false
 })
 export class PowerControlComponent implements OnInit {
 

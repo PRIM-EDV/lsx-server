@@ -5,9 +5,10 @@ import { Request } from 'proto/lsx';
 import { BaseLockdownService } from './base-lockdown.service';
 
 @Component({
-  selector: 'base-lockdown',
-  templateUrl: './base-lockdown.component.html',
-  styleUrls: ['./base-lockdown.component.scss']
+    selector: 'base-lockdown',
+    templateUrl: './base-lockdown.component.html',
+    styleUrls: ['./base-lockdown.component.scss'],
+    standalone: false
 })
 export class BaseLockdownComponent implements OnInit {
 

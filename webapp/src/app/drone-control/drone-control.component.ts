@@ -5,9 +5,10 @@ import { DroneCotrolService } from './drone-control.service';
 import { BombArea, BombAreaId, ModeSilentState } from 'proto/lsx.drone';
 
 @Component({
-  selector: 'drone-control',
-  templateUrl: './drone-control.component.html',
-  styleUrls: ['./drone-control.component.scss']
+    selector: 'drone-control',
+    templateUrl: './drone-control.component.html',
+    styleUrls: ['./drone-control.component.scss'],
+    standalone: false
 })
 export class DroneControlComponent implements OnInit {
 

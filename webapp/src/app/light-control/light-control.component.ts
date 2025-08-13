@@ -18,14 +18,13 @@ export interface Light {
 }
 
 @Component({
-  selector: 'lsx-light-control',
-  standalone: true,
-  imports: [
-    CommonModule,
-    PhElementsModule
-  ],
-  templateUrl: './light-control.component.html',
-  styleUrl: './light-control.component.scss'
+    selector: 'lsx-light-control',
+    imports: [
+        CommonModule,
+        PhElementsModule
+    ],
+    templateUrl: './light-control.component.html',
+    styleUrl: './light-control.component.scss'
 })
 export class LightControlComponent {
   public lightSwitchState = LightSwitchState;

@@ -5,9 +5,10 @@ import { BackendService } from '../backend/backend.service';
 import { PowerPlantService } from './power-plant.service';
 
 @Component({
-  selector: 'app-power-plant',
-  templateUrl: './power-plant.component.html',
-  styleUrls: ['./power-plant.component.scss']
+    selector: 'app-power-plant',
+    templateUrl: './power-plant.component.html',
+    styleUrls: ['./power-plant.component.scss'],
+    standalone: false
 })
 export class PowerPlantComponent implements OnInit {
 

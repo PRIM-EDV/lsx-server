@@ -5,9 +5,10 @@ import { BackendService } from '../backend/backend.service';
 import { DroneBombardmentService } from './drone-bombardment.service';
 
 @Component({
-  selector: 'drone-bombardment',
-  templateUrl: './drone-bombardment.component.html',
-  styleUrls: ['./drone-bombardment.component.scss']
+    selector: 'drone-bombardment',
+    templateUrl: './drone-bombardment.component.html',
+    styleUrls: ['./drone-bombardment.component.scss'],
+    standalone: false
 })
 export class DroneBombardmentComponent implements OnInit {
 

@@ -6,14 +6,13 @@ import { PowerDevice, PowerState } from 'proto/lsx.power';
 import { BackendService } from '../backend/backend.service';
 
 @Component({
-  selector: 'lsx-device-control',
-  standalone: true,
-  imports: [
-    CommonModule,
-    PhElementsModule
-  ],
-  templateUrl: './device-control.component.html',
-  styleUrl: './device-control.component.scss'
+    selector: 'lsx-device-control',
+    imports: [
+        CommonModule,
+        PhElementsModule
+    ],
+    templateUrl: './device-control.component.html',
+    styleUrl: './device-control.component.scss'
 })
 export class DeviceControlComponent {
   public powerDevice = PowerDevice;

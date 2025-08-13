@@ -4,9 +4,10 @@ import { SpeakerFluffService } from './speaker-fluff.service';
 import { Request } from 'proto/lsx';
 
 @Component({
-  selector: 'speaker-fluff',
-  templateUrl: './speaker-fluff.component.html',
-  styleUrls: ['./speaker-fluff.component.scss']
+    selector: 'speaker-fluff',
+    templateUrl: './speaker-fluff.component.html',
+    styleUrls: ['./speaker-fluff.component.scss'],
+    standalone: false
 })
 export class SpeakerFluffComponent implements OnInit {
 

@@ -4,9 +4,10 @@ import { Request } from 'proto/lsx';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
-  selector: 'speaker-announcements',
-  templateUrl: './speaker-announcements.component.html',
-  styleUrls: ['./speaker-announcements.component.scss']
+    selector: 'speaker-announcements',
+    templateUrl: './speaker-announcements.component.html',
+    styleUrls: ['./speaker-announcements.component.scss'],
+    standalone: false
 })
 export class SpeakerAnnouncementsComponent implements OnInit {
 
